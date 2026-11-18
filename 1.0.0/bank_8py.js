@@ -1,0 +1,4 @@
+var bank_8py =
+[
+    [ "modules.apps.resonators.oscillators.bank.OscillatorBankModel", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1bank_1_1_oscillator_bank_model.html", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1bank_1_1_oscillator_bank_model" ]
+];

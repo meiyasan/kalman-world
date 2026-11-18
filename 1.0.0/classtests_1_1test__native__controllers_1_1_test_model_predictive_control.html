@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_native_controllers.TestModelPredictiveControl Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_native_controllers.TestModelPredictiveControl Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_native_controllers.TestModelPredictiveControl Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="classtests_1_1test__native__controllers_1_1_test_model_predictive_control-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_native_controllers.TestModelPredictiveControl Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_native_controllers.TestModelPredictiveControl:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__native__controllers_1_1_test_model_predictive_control__inherit__graph.svg" width="222" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:acac28635324d43b89f260236d50aecfe" id="r_acac28635324d43b89f260236d50aecfe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html#acac28635324d43b89f260236d50aecfe">test_with_no_limit_in_the_way_it_is_lqr</a> (self)</td></tr>
+<tr class="separator:acac28635324d43b89f260236d50aecfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7902da1a265f0ecd405b9f5d361ff9a" id="r_ac7902da1a265f0ecd405b9f5d361ff9a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html#ac7902da1a265f0ecd405b9f5d361ff9a">test_the_limit_is_part_of_the_plan</a> (self)</td></tr>
+<tr class="separator:ac7902da1a265f0ecd405b9f5d361ff9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57751ed212157d6b380cd3e5e88962b2" id="r_a57751ed212157d6b380cd3e5e88962b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html#a57751ed212157d6b380cd3e5e88962b2">test_a_rate_limit</a> (self)</td></tr>
+<tr class="separator:a57751ed212157d6b380cd3e5e88962b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adceb89cdc250e808f87f191c0a6fb627" id="r_adceb89cdc250e808f87f191c0a6fb627"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html#adceb89cdc250e808f87f191c0a6fb627">test_the_same_run_twice</a> (self)</td></tr>
+<tr class="separator:adceb89cdc250e808f87f191c0a6fb627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8a90bcf996907a0a24532dff0f404bd" id="r_ab8a90bcf996907a0a24532dff0f404bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html#ab8a90bcf996907a0a24532dff0f404bd">test_reset_forgets_the_plan</a> (self)</td></tr>
+<tr class="separator:ab8a90bcf996907a0a24532dff0f404bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6576da932573ac220c5987f31db48e74" id="r_a6576da932573ac220c5987f31db48e74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html#a6576da932573ac220c5987f31db48e74">test_refusals</a> (self)</td></tr>
+<tr class="separator:a6576da932573ac220c5987f31db48e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a6b050fc26cafda945e699a934136f659" id="r_a6b050fc26cafda945e699a934136f659"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html#a6b050fc26cafda945e699a934136f659">rollout</a> (controller, n_steps=200)</td></tr>
+<tr class="separator:a6b050fc26cafda945e699a934136f659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">MPCKalmanController forwards to Kalman::Controllers::MPC; it has no Python
+implementation, so it is pinned against LQR and against its own limits.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00128">128</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6b050fc26cafda945e699a934136f659" name="a6b050fc26cafda945e699a934136f659"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b050fc26cafda945e699a934136f659">&#9670;&#160;</a></span>rollout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_controllers.TestModelPredictiveControl.rollout </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>controller</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n_steps</em> = <code>200</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">A noise-free run of the car: the commands asked for, and the cost.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00133">133</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  133</span>    <span class="keyword">def </span>rollout(controller, n_steps=200):</div>
+<div class="line"><span class="lineno">  134</span>        <span class="stringliteral">&quot;&quot;&quot;A noise-free run of the car: the commands asked for, and the cost.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  135</span>        model = controller.model</div>
+<div class="line"><span class="lineno">  136</span>        Qcost, Rcost, x_ref = model.control_cost()</div>
+<div class="line"><span class="lineno">  137</span>        x, asked, cost = model.x0.copy(), [], 0.0</div>
+<div class="line"><span class="lineno">  138</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_steps):</div>
+<div class="line"><span class="lineno">  139</span>            u = np.asarray(controller(x, 1e-4 * np.eye(3), k / model.fs), dtype=float).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  140</span>            applied = model.limit_control(u)</div>
+<div class="line"><span class="lineno">  141</span>            asked.append(float(u[0, 0]))</div>
+<div class="line"><span class="lineno">  142</span>            cost += ((x - x_ref).T @ Qcost @ (x - x_ref) + applied.T @ Rcost @ applied).item()   <span class="comment"># 1 x 1: numpy 2.5 refuses float() of it</span></div>
+<div class="line"><span class="lineno">  143</span>            x = np.asarray(model.decode_step(x, u=u, t=k / model.fs), dtype=float).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  144</span>        <span class="keywordflow">return</span> np.array(asked), cost, x</div>
+<div class="line"><span class="lineno">  145</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a57751ed212157d6b380cd3e5e88962b2" name="a57751ed212157d6b380cd3e5e88962b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57751ed212157d6b380cd3e5e88962b2">&#9670;&#160;</a></span>test_a_rate_limit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_controllers.TestModelPredictiveControl.test_a_rate_limit </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00170">170</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  170</span>    <span class="keyword">def </span>test_a_rate_limit(self):</div>
+<div class="line"><span class="lineno">  171</span>        model = lane(x0=(3.0, 0.0, 15.0))</div>
+<div class="line"><span class="lineno">  172</span>        mpc = MPCKalmanController(model, horizon=40, u_min=-0.1, u_max=0.1, du_max=0.01, **cost_of(model))</div>
+<div class="line"><span class="lineno">  173</span>        asked, _, x = self.rollout(mpc, 300)</div>
+<div class="line"><span class="lineno">  174</span>        self.assertLessEqual(np.abs(np.diff(asked)).max(), 0.01 + 1e-9)</div>
+<div class="line"><span class="lineno">  175</span>        self.assertLess(abs(float(x[0, 0])), 5e-2)</div>
+<div class="line"><span class="lineno">  176</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6576da932573ac220c5987f31db48e74" name="a6576da932573ac220c5987f31db48e74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6576da932573ac220c5987f31db48e74">&#9670;&#160;</a></span>test_refusals()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_controllers.TestModelPredictiveControl.test_refusals </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00188">188</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  188</span>    <span class="keyword">def </span>test_refusals(self):</div>
+<div class="line"><span class="lineno">  189</span>        <span class="keyword">with</span> self.assertRaises(RuntimeError):                <span class="comment"># limits of the wrong size: no C++ controller</span></div>
+<div class="line"><span class="lineno">  190</span>            MPCKalmanController(lane(), u_min=[-0.1, -0.1], **cost_of(lane()))(np.zeros((3, 1)), np.eye(3), 0.0)</div>
+<div class="line"><span class="lineno">  191</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;uMin must not exceed uMax&quot;</span>):</div>
+<div class="line"><span class="lineno">  192</span>            MPCKalmanController(lane(), u_min=0.1, u_max=-0.1, **cost_of(lane()))(np.zeros((3, 1)), np.eye(3), 0.0)</div>
+<div class="line"><span class="lineno">  193</span> </div>
+<div class="line"><span class="lineno">  194</span> </div>
+<div class="line"><span class="lineno">  195</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman not built&quot;)</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab8a90bcf996907a0a24532dff0f404bd" name="ab8a90bcf996907a0a24532dff0f404bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8a90bcf996907a0a24532dff0f404bd">&#9670;&#160;</a></span>test_reset_forgets_the_plan()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_controllers.TestModelPredictiveControl.test_reset_forgets_the_plan </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00182">182</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  182</span>    <span class="keyword">def </span>test_reset_forgets_the_plan(self):</div>
+<div class="line"><span class="lineno">  183</span>        mpc = MPCKalmanController(lane(), horizon=20, u_min=-0.1, u_max=0.1, **cost_of(lane()))</div>
+<div class="line"><span class="lineno">  184</span>        first = self.rollout(mpc, 30)[0]</div>
+<div class="line"><span class="lineno">  185</span>        mpc.reset()</div>
+<div class="line"><span class="lineno">  186</span>        np.testing.assert_array_equal(self.rollout(mpc, 30)[0], first)</div>
+<div class="line"><span class="lineno">  187</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac7902da1a265f0ecd405b9f5d361ff9a" name="ac7902da1a265f0ecd405b9f5d361ff9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7902da1a265f0ecd405b9f5d361ff9a">&#9670;&#160;</a></span>test_the_limit_is_part_of_the_plan()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_controllers.TestModelPredictiveControl.test_the_limit_is_part_of_the_plan </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00155">155</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  155</span>    <span class="keyword">def </span>test_the_limit_is_part_of_the_plan(self):</div>
+<div class="line"><span class="lineno">  156</span>        model = lane(x0=(3.0, 0.0, 15.0))                     <span class="comment"># 3 m off the lane centre</span></div>
+<div class="line"><span class="lineno">  157</span>        mpc = MPCKalmanController(model, horizon=40, u_min=-model.steer_limit, u_max=model.steer_limit,</div>
+<div class="line"><span class="lineno">  158</span>                                  **cost_of(model))</div>
+<div class="line"><span class="lineno">  159</span>        lqr = LQRKalmanController(lane(x0=(3.0, 0.0, 15.0)), **cost_of(model)).fit()</div>
+<div class="line"><span class="lineno">  160</span>        asked, cost, x = self.rollout(mpc, 250)</div>
+<div class="line"><span class="lineno">  161</span>        asked_lqr, cost_lqr, _ = self.rollout(lqr, 250)</div>
+<div class="line"><span class="lineno">  162</span>        self.assertLessEqual(np.abs(asked).max(), model.steer_limit + 1e-12)       <span class="comment"># never asks for more</span></div>
+<div class="line"><span class="lineno">  163</span>        self.assertGreater(np.abs(asked_lqr).max(), 2 * model.steer_limit)         <span class="comment"># LQR does, and is clipped</span></div>
+<div class="line"><span class="lineno">  164</span>        self.assertLess(abs(float(x[0, 0])), 1e-2)                                 <span class="comment"># back on the lane centre</span></div>
+<div class="line"><span class="lineno">  165</span>        self.assertLessEqual(cost, cost_lqr * (1 + 1e-6))</div>
+<div class="line"><span class="lineno">  166</span>        plan = mpc.plan()</div>
+<div class="line"><span class="lineno">  167</span>        self.assertEqual(plan.shape, (40, 1))</div>
+<div class="line"><span class="lineno">  168</span>        self.assertLessEqual(np.abs(plan).max(), model.steer_limit + 1e-12)</div>
+<div class="line"><span class="lineno">  169</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="adceb89cdc250e808f87f191c0a6fb627" name="adceb89cdc250e808f87f191c0a6fb627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adceb89cdc250e808f87f191c0a6fb627">&#9670;&#160;</a></span>test_the_same_run_twice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_controllers.TestModelPredictiveControl.test_the_same_run_twice </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00177">177</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  177</span>    <span class="keyword">def </span>test_the_same_run_twice(self):</div>
+<div class="line"><span class="lineno">  178</span>        runs = [self.rollout(MPCKalmanController(lane(), horizon=20, u_min=-0.1, u_max=0.1, **cost_of(lane())), 40)[0]</div>
+<div class="line"><span class="lineno">  179</span>                <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(2)]</div>
+<div class="line"><span class="lineno">  180</span>        np.testing.assert_array_equal(runs[0], runs[1])</div>
+<div class="line"><span class="lineno">  181</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="acac28635324d43b89f260236d50aecfe" name="acac28635324d43b89f260236d50aecfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acac28635324d43b89f260236d50aecfe">&#9670;&#160;</a></span>test_with_no_limit_in_the_way_it_is_lqr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_controllers.TestModelPredictiveControl.test_with_no_limit_in_the_way_it_is_lqr </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00146">146</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  146</span>    <span class="keyword">def </span>test_with_no_limit_in_the_way_it_is_lqr(self):</div>
+<div class="line"><span class="lineno">  147</span>        make = <span class="keyword">lambda</span>: lane(x0=(0.5, 0.02, 15.0))</div>
+<div class="line"><span class="lineno">  148</span>        lqr = LQRKalmanController(make(), **cost_of(make())).fit()</div>
+<div class="line"><span class="lineno">  149</span>        mpc = MPCKalmanController(make(), horizon=40, **cost_of(make()))</div>
+<div class="line"><span class="lineno">  150</span>        u_lqr, cost_lqr, _ = self.rollout(lqr)</div>
+<div class="line"><span class="lineno">  151</span>        u_mpc, cost_mpc, _ = self.rollout(mpc)</div>
+<div class="line"><span class="lineno">  152</span>        np.testing.assert_allclose(u_mpc, u_lqr, atol=2e-4)</div>
+<div class="line"><span class="lineno">  153</span>        self.assertAlmostEqual(cost_mpc, cost_lqr, delta=1e-3 * cost_lqr)</div>
+<div class="line"><span class="lineno">  154</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__native__controllers.html">test_native_controllers</a></li><li class="navelem"><a class="el" href="classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html">TestModelPredictiveControl</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

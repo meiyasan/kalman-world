@@ -1,0 +1,28 @@
+var classmodules_1_1mcp_1_1backend_1_1_local_backend =
+[
+    [ "__init__", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#ae190b285636431515cca003efd6b1361", null ],
+    [ "_scope", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a4c848e0c8d248f9163514890d4307af6", null ],
+    [ "catalog", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a20c26cb2db1ded8e97edcf33d95f6346", null ],
+    [ "delete_model", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#aaa9b6114790e28a6f8d1aa1846d0ed43", null ],
+    [ "describe", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a34c934b08d2c1ebe8fa353b9f0783f3b", null ],
+    [ "describe_provider", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a931825fa4aa568683be9a2ff7186ab7c", null ],
+    [ "diagnostics", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a82b4aa7fb199d67192cd13be31922912", null ],
+    [ "events", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a2975c3a5f655f6871a6764d8a6ff0a26", null ],
+    [ "fetch", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a4b56d32f2fe546754db82c91039ce5b7", null ],
+    [ "forecast", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#ae59084ab465b9545dbbab776bc027543", null ],
+    [ "load_plugin", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a3ac9056e3b428ea626a11e8e977bf04e", null ],
+    [ "models", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a7c5fb1fa1f607f42848eed1c2c2746bc", null ],
+    [ "plugins", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#aed81df18156344aa2ab05fb426bf626f", null ],
+    [ "providers", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a0100a48c908b813919192dfdb2592a69", null ],
+    [ "push_measurements", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a052375fa3d725c25c1fd6c41f6e83d83", null ],
+    [ "register_model", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#aed8fa90788a1b0d15f9eb616f3ff022b", null ],
+    [ "register_source", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a02a8dcbbfdb8ed09ae26fa967e341855", null ],
+    [ "run_control", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a27539d272d8f8da20951ba299e6053c3", null ],
+    [ "run_filter", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a2d847af3d74f2c9414589e0a2f7a6705", null ],
+    [ "run_osse", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#afbc3cba1e8e83e713e102e0df1746014", null ],
+    [ "scaffold", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#af0860d0e7026974c224e135fe1605097", null ],
+    [ "sources", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a0bc725c47ad709abfa56f21e4143081d", null ],
+    [ "whoami", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a6e0c0b09fceb725354da2b9f5d621084", null ],
+    [ "_authorize", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#af93c61c8c936af85d92551d365851607", null ],
+    [ "api", "classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a992c21007db09d257ea3916d6725e269", null ]
+];

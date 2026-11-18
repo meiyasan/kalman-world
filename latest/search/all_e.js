@@ -101,7 +101,7 @@ var searchData=
   ['documentation_20site_98',['CI and the documentation site',['../md_docs_213___deployment.html#ci-and-the-documentation-site',1,'']]],
   ['documenting_99',['Self-documenting',['../md_docs_210___r_e_s_t-_a_p_i.html#self-documenting',1,'']]],
   ['domain_20model_20instead_100',['Using a domain model instead',['../md_docs_21___getting-_started.html#using-a-domain-model-instead',1,'']]],
-  ['domains_101',['domains',['../namespacemodules_1_1apps_1_1resonators.html#a3da4e3153ecc10685c5bbb23644aa36d',1,'modules.apps.resonators.DOMAINS'],['../namespacemodules_1_1apps_1_1gravitational.html#ad51f1cd8b15d26f144673eef59d3da2c',1,'modules.apps.gravitational.DOMAINS']]],
+  ['domains_101',['domains',['../namespacemodules_1_1apps_1_1gravitational.html#ad51f1cd8b15d26f144673eef59d3da2c',1,'modules.apps.gravitational.DOMAINS'],['../namespacemodules_1_1apps_1_1resonators.html#a3da4e3153ecc10685c5bbb23644aa36d',1,'modules.apps.resonators.DOMAINS']]],
   ['dominantmode_102',['DominantMode',['../class_kalman_1_1_engines_1_1_interacting.html#a68884b6b50c488cc6910f69ec7e2ee7c',1,'Kalman::Engines::Interacting']]],
   ['done_103',['done',['../md__a_g_e_n_t_s.html#autotoc_md6-verification--required-before-claiming-done',1,'6. Verification — required before claiming done'],['../struct_kalman_1_1_sensors_1_1_detail_1_1_reader.html#a4b72073e5e09fea67a5003df9ee48788',1,'Kalman::Sensors::Detail::Reader::Done()']]],
   ['doors_104',['One facade, three front doors',['../md_docs_23___overview.html#one-facade-three-front-doors',1,'']]],
