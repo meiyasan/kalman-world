@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-g6bcb6041</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -202,7 +202,7 @@ Verify the install</h1>
 <div class="fragment"><div class="line">$ make tests                                   # full suite + coverage + native bench</div>
 <div class="line">$ python -m pytest tests/test_structure.py -q  # architecture invariants only</div>
 <div class="line">$ make linter                                  # ruff, correctness-focused</div>
-</div><!-- fragment --><p>The expected baseline is <b>953 passed, 28 skipped</b> — the skips are optional-dependency gates. A red suite is never "expected"; see <a class="el" href="md_docs_214___troubleshooting.html">Troubleshooting</a>.</p>
+</div><!-- fragment --><p>The expected baseline is <b>960 passed, 28 skipped</b> — the skips are optional-dependency gates. A red suite is never "expected"; see <a class="el" href="md_docs_214___troubleshooting.html">Troubleshooting</a>.</p>
 <p>A five-second smoke check that the package resolves:</p>
 <div class="fragment"><div class="line">$ python -c &quot;from kalman.api import catalog; print(len(catalog()[&#39;models&#39;]), &#39;models&#39;)&quot;</div>
 <div class="line">46 models</div>

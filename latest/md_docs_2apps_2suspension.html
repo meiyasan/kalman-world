@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-g6bcb6041</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -140,20 +140,20 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2suspension.html',''); i
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="suspension"></a> A quarter of a car: the body, a wheel, and the spring and damper between them, rolling over a rough road. Sensors measure how the body moves. The filter recovers the motion of the wheel as well.</p>
-<h1><a class="anchor" id="the-model-9"></a>
+<h1><a class="anchor" id="the-model-10"></a>
 The model</h1>
 <div class="fragment"><div class="line">state        x = [body height, body speed, wheel height, wheel speed]</div>
 <div class="line">input        u = the height of the road under the wheel</div>
 <div class="line">dynamics     body:   the spring and the damper pull it toward the wheel</div>
 <div class="line">             wheel:  the same forces, reversed, plus the tyre pressing on the road</div>
 </div><!-- fragment --><p>The car has two resonances: the body bouncing on its springs at about 1 Hz, and the wheel hopping on the tyre at about 10 Hz.</p>
-<h1><a class="anchor" id="how-it-is-built-10"></a>
+<h1><a class="anchor" id="how-it-is-built-11"></a>
 How it is built</h1>
 <ul>
 <li><b>Time stepping.</b> The equations are linear, so the model gives the matrix of the continuous motion and the framework turns it into an exact step with a matrix exponential. No integrator is involved and no step error is made.</li>
 <li><b>Process noise</b> is a random acceleration on each mass, carried through the same exact step. <code>process_uncertainty</code> is in m/s^1.5.</li>
 </ul>
-<h1><a class="anchor" id="using-it-11"></a>
+<h1><a class="anchor" id="using-it-13"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> SuspensionModel</div>
 <div class="line"> </div>

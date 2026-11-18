@@ -29,5 +29,6 @@ var searchData=
   ['rocketliftoffmodel_26',['RocketLiftoffModel',['../classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_model.html',1,'modules::apps::aerospace::liftoff']]],
   ['rocketliftoffobservable_27',['RocketLiftoffObservable',['../classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_observable.html',1,'modules::apps::aerospace::liftoff']]],
   ['rocketliftoffstate_28',['RocketLiftoffState',['../classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_state.html',1,'modules::apps::aerospace::liftoff']]],
-  ['router_29',['router',['../class_kalman_1_1_models_1_1_router.html',1,'Kalman::Models::Router'],['../class_kalman_1_1_routers_1_1_router.html',1,'Kalman::Routers::Router'],['../classmodules_1_1framework_1_1models_1_1route_1_1_router.html',1,'modules.framework.models.route.Router']]]
+  ['roomco2model_29',['RoomCO2Model',['../classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html',1,'modules::apps::buildings::co2']]],
+  ['router_30',['router',['../class_kalman_1_1_models_1_1_router.html',1,'Kalman::Models::Router'],['../class_kalman_1_1_routers_1_1_router.html',1,'Kalman::Routers::Router'],['../classmodules_1_1framework_1_1models_1_1route_1_1_router.html',1,'modules.framework.models.route.Router']]]
 ];

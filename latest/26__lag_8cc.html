@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-g6bcb6041</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -254,8 +254,8 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  115</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> H = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;H(0.), JH = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;JacobianH(x, 0.);</div>
 <div class="line"><span class="lineno">  116</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(H(0, 0) == 1. &amp;&amp; H(1, 6) == 1. &amp;&amp; H(1, 0) == 0. &amp;&amp; JH(1, 6) == 1. &amp;&amp; JH(1, 0) == 0.,</div>
 <div class="line"><span class="lineno">  117</span>              <span class="stringliteral">&quot;H: its row sits on that block&quot;</span>);</div>
-<div class="line"><span class="lineno">  118</span>        <span class="keyword">const</span> <span class="keyword">auto</span> sensors = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;Sensors();</div>
-<div class="line"><span class="lineno">  119</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(sensors.size() == 2 &amp;&amp; sensors[1].delay == 0. &amp;&amp; sensors[1].Read(x)(0) == 7.,</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacetests_1_1test__buildings.html#a8fa8398c4e55a777181a40569ec57f2a">sensors</a> = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;Sensors();</div>
+<div class="line"><span class="lineno">  119</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacetests_1_1test__buildings.html#a8fa8398c4e55a777181a40569ec57f2a">sensors</a>.size() == 2 &amp;&amp; sensors[1].delay == 0. &amp;&amp; sensors[1].Read(x)(0) == 7.,</div>
 <div class="line"><span class="lineno">  120</span>              <span class="stringliteral">&quot;Sensors: each reads its own block of the lagged state&quot;</span>);</div>
 <div class="line"><span class="lineno">  121</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { <a class="code hl_function" href="namespace_kalman.html#a1b6f81c0498ef1dfc3660673f49d19e7">AddSensor</a>(model, Late(0.1))-&gt;CheckShapes(); }), <span class="stringliteral">&quot;refused: a late sensor added after the lag&quot;</span>);</div>
 <div class="line"><span class="lineno">  122</span>        <span class="keyword">const</span> std::shared_ptr&lt;Models::Lag&gt; twice = <a class="code hl_function" href="namespace_kalman.html#a2ac9f8d61464031dff4c5401a027bb25">Lag</a>(model, 1);</div>
@@ -344,6 +344,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
 <div class="ttc" id="anamespaceoperations_html_a87389aecf4a4a5628dcc4b9f379700fe"><div class="ttname"><a href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">operations.cart</a></div><div class="ttdeci">cart(name=&quot;cart&quot;, q=1.0)</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00040">operations.py:40</a></div></div>
 <div class="ttc" id="anamespaceoperations_html_a8db6bc47bdd5d71f617d8c4ba59f4a1b"><div class="ttname"><a href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">operations.N</a></div><div class="ttdeci">int N</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00064">operations.py:64</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__buildings_html_a8fa8398c4e55a777181a40569ec57f2a"><div class="ttname"><a href="namespacetests_1_1test__buildings.html#a8fa8398c4e55a777181a40569ec57f2a">tests.test_buildings.sensors</a></div><div class="ttdeci">sensors(room)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00019">test_buildings.py:19</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

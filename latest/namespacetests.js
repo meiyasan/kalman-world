@@ -29,6 +29,7 @@ var namespacetests =
       [ "LX", "namespacetests_1_1test__barotropic.html#a77863973bbf8cf8c7b1d9b34a45a34b0", null ],
       [ "LY", "namespacetests_1_1test__barotropic.html#ac45be815b1c24a1cf640fcd06b97a03c", null ]
     ] ],
+    [ "test_buildings", "namespacetests_1_1test__buildings.html", "namespacetests_1_1test__buildings" ],
     [ "test_compose", "namespacetests_1_1test__compose.html", "namespacetests_1_1test__compose" ],
     [ "test_contract_parity", "namespacetests_1_1test__contract__parity.html", "namespacetests_1_1test__contract__parity" ],
     [ "test_engines", "namespacetests_1_1test__engines.html", "namespacetests_1_1test__engines" ],

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-g6bcb6041</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -164,14 +164,16 @@ $(document).ready(function(){initNavTree('md_docs_217___applications.html',''); 
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><a class="el" href="md_docs_2apps_2fusion.html">Sensor fusion</a>   </td><td class="markdownTableBodyNone">several sensors on one object   </td><td class="markdownTableBodyNone">linear   </td><td class="markdownTableBodyNone">exact    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="md_docs_2apps_2buildings.html">CO2 in a room</a>   </td><td class="markdownTableBodyNone">the air of a room, its occupants and drifting sensors   </td><td class="markdownTableBodyNone">linear   </td><td class="markdownTableBodyNone">exact    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><a class="el" href="md_docs_2apps_2vision.html">Computer vision</a>   </td><td class="markdownTableBodyNone">objects detected in video frames   </td><td class="markdownTableBodyNone">linear   </td><td class="markdownTableBodyNone">exact    </td></tr>
-<tr class="markdownTableRowEven">
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><a class="el" href="md_docs_2apps_2gps.html">GPS and relativity</a>   </td><td class="markdownTableBodyNone">a receiver and its satellites   </td><td class="markdownTableBodyNone">extended   </td><td class="markdownTableBodyNone">exact    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><a class="el" href="md_docs_2apps_2vehicles.html">Vehicles</a>   </td><td class="markdownTableBodyNone">a speed run and lane keeping   </td><td class="markdownTableBodyNone">extended   </td><td class="markdownTableBodyNone">RK4 and Euler    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a class="el" href="md_docs_2apps_2flow.html">Turbulent flow</a>   </td><td class="markdownTableBodyNone">a 2-D fluid seen through probes   </td><td class="markdownTableBodyNone">ensemble   </td><td class="markdownTableBodyNone">a spectral solver with RK4    </td></tr>
+<td class="markdownTableBodyNone"><a class="el" href="md_docs_2apps_2vehicles.html">Vehicles</a>   </td><td class="markdownTableBodyNone">a speed run and lane keeping   </td><td class="markdownTableBodyNone">extended   </td><td class="markdownTableBodyNone">RK4 and Euler    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a class="el" href="md_docs_2apps_2flow.html">Turbulent flow</a>   </td><td class="markdownTableBodyNone">a 2-D fluid seen through probes   </td><td class="markdownTableBodyNone">ensemble   </td><td class="markdownTableBodyNone">a spectral solver with RK4    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><a class="el" href="md_docs_2apps_2storms.html">Storm tracking</a>   </td><td class="markdownTableBodyNone">a cyclone and a tornado environment   </td><td class="markdownTableBodyNone">extended, several regimes   </td><td class="markdownTableBodyNone">the model's own step   </td></tr>
 </table>
 <p>"Exact" means the motion is linear, so its step is a matrix computed once with no approximation. RK4, the fourth-order Runge-Kutta scheme, is the default integrator of the framework. A model uses it only when it describes its motion by a rate of change; <a class="el" href="md_docs_2apps_2flow.html">Turbulent flow</a> explains how that differs from the solver that computes gradients in space. </p>

@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="examples/python/operations.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: examples/python/operations.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>examples/python/operations.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g6bcb6041</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('examples_2python_2operations_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">operations.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="examples_2python_2operations_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespaceoperations.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;The model operations, one after the other, on a cart.</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">Each operation takes models and gives back a model; the filter is always the</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">ordinary one. Everything is computed by the C++ library.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">    add_sensor      one more sensor on the same state</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">    lag             the last states carried along: a sensor that reports late</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">    add_instrument  sensors under one name, with a calibration</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral">    joint           a parameter estimated with the state</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">    compose         two systems side by side</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">    route           one system, two regimes</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="stringliteral">    python examples/python/operations.py</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="stringliteral">The same steps in C++: ``examples/cxx/operations.cc``.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">import</span> os</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">import</span> sys</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">import</span> warnings</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">import</span> kalman</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordflow">except</span> ImportError:                                <span class="comment"># running from a checkout that is not installed</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">sys.path.insert</a>(0, <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">os.path.join</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">os.path.dirname</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">os.path.abspath</a>(__file__)), <span class="stringliteral">&quot;..&quot;</span>, <span class="stringliteral">&quot;..&quot;</span>))</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">import</span> modules <span class="keyword">as</span> kalman</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a6b02ab8fbb79664637eeeb258c0b2537">   30</a></span>framework = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">sys.modules</a>[<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">kalman.__name__</a> + <span class="stringliteral">&quot;.framework&quot;</span>]</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a90ad02cf5d1f43d75dc6179e6dc8cd6a">   31</a></span>KalmanModel, KalmanSensor = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">framework.KalmanModel</a>, <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">framework.KalmanSensor</a></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a8a37d39fcdf1b226d7dfab1aa85d0697">   32</a></span>compose, route = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">framework.compose</a>, <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">framework.route</a></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">warnings.simplefilter</a>(<span class="stringliteral">&quot;ignore&quot;</span>)</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a11776c471e770c35298568136e6bee66">   35</a></span>FS, DT = 10.0, 0.1</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="namespaceoperations.html#adc39e17980ce6756af76ef8740539095">   36</a></span>rng = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.random.default_rng</a>(1)</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a5e2f97df7b1944e2988fe5f2e5a98ede">   37</a></span>rmse = <span class="keyword">lambda</span> a, b: <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">float</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.sqrt</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.mean</a>((<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.asarray</a>(a) - <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.asarray</a>(b)) ** 2)))</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="foldopen" id="foldopen00040" data-start="" data-end="">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">   40</a></span><span class="keyword">def </span><a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>(name=&quot;cart&quot;, q=1.0):</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="stringliteral">&quot;&quot;&quot;Position and velocity; a noisy position sensor.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    Q = q * <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.array</a>([[DT**4 / 4, DT**3 / 2], [DT**3 / 2, DT**2]])</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="namespaceoperations.html#a90ad02cf5d1f43d75dc6179e6dc8cd6a">KalmanModel</a>(name, fs=FS, F=<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.array</a>([[1, DT], [0, 1]]), H=<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.array</a>([[1.0, 0.0]]), Q=Q,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                       R=<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.array</a>([[0.25]]), x0=<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.array</a>([[0.0], [1.0]]), P0=<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.eye</a>(2))</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+</div>
+<div class="foldopen" id="foldopen00047" data-start="" data-end="">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a42dbd6d76824bcc1a1c313d95aa616d1">   47</a></span><span class="keyword">def </span><a class="code hl_function" href="namespaceoperations.html#a42dbd6d76824bcc1a1c313d95aa616d1">simulate</a>(model, steps, n=2):</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="stringliteral">&quot;&quot;&quot;Truth and readings from the model&#39;s own f and h (noise on the first ``n`` components).&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    Lq = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.linalg.cholesky</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">model.Q</a>()[:n, :n] + 1e-15 * <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.eye</a>(n))</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    Lr = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.linalg.cholesky</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">model.R</a>())</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    x, xs, zs = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.asarray</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">model.x0</a>, dtype=float).copy(), [], []</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">range</a>(steps):</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        x = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">model.f</a>(x)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        x[:n] += Lq @ <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">rng.standard_normal</a>((n, 1))</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">xs.append</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">x.ravel</a>().copy())</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">zs.append</a>((<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">model.h</a>(x) + Lr @ <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">rng.standard_normal</a>((<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">model.m</a>, 1))).<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">ravel</a>())</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.array</a>(xs), <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.array</a>(zs)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+</div>
+<div class="foldopen" id="foldopen00060" data-start="" data-end="">
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespaceoperations.html#ac41e8000765474cbf229b618aa108cf9">   60</a></span><span class="keyword">def </span><a class="code hl_function" href="namespaceoperations.html#ac41e8000765474cbf229b618aa108cf9">states</a>(record, steps):</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.asarray</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">record.xk</a>).<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">reshape</a>(steps, -1)</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">   64</a></span>N = 1000</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="comment"># --- add_sensor, then lag: a precise sensor that reports 0.3 s late -------------------------</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a1f11480557b96abc9967483a49324115">   67</a></span>camera = <a class="code hl_variable" href="namespaceoperations.html#a7cc504d8c1f12c5beff0551c79d03550">KalmanSensor</a>(<span class="stringliteral">&quot;camera&quot;</span>, G=[[1.0, 0.0]], R=0.01, delay=0.3)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a606f972c735e8ba929a5b9faee1170ec">   68</a></span>late = <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>().add_sensor(camera).lag(3)</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="namespaceoperations.html#af0ffbc72d9b143ed1d59584784e113f3">   69</a></span>truth, zk = <a class="code hl_function" href="namespaceoperations.html#a42dbd6d76824bcc1a1c313d95aa616d1">simulate</a>(late, N)</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a58b118186d2885ed8a1f00f09ab1feaa">   70</a></span>with_camera = <a class="code hl_function" href="namespaceoperations.html#ac41e8000765474cbf229b618aa108cf9">states</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">late.filter</a>(zk, reset=<span class="keyword">True</span>), N)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="namespaceoperations.html#af97ad566add10ff6f442b0b7d7d1ee27">   71</a></span>without = <a class="code hl_function" href="namespaceoperations.html#ac41e8000765474cbf229b618aa108cf9">states</a>(<a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>().filter(zk[:, :1], reset=<span class="keyword">True</span>), N)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>print(<span class="stringliteral">&quot;add_sensor + lag: position error %.3f with the late camera, %.3f without&quot;</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>      % (<a class="code hl_variable" href="namespaceoperations.html#a5e2f97df7b1944e2988fe5f2e5a98ede">rmse</a>(with_camera[:, 0], truth[:, 0]), <a class="code hl_variable" href="namespaceoperations.html#a5e2f97df7b1944e2988fe5f2e5a98ede">rmse</a>(without[:, 0], truth[:, 0])))</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>print(<span class="stringliteral">&quot;                  the state three steps ago is known to %.3f (fixed-lag smoothing)&quot;</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>      % <a class="code hl_variable" href="namespaceoperations.html#a5e2f97df7b1944e2988fe5f2e5a98ede">rmse</a>(with_camera[:, <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">late.block</a>(3)][:, 0], truth[:, 6]))</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="comment"># --- joint: the offset of an uncalibrated thermometer-like sensor ------------------------------</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="namespaceoperations.html#af71727d62654e2e96ddb3d9f3af9c155">   78</a></span>probe = <a class="code hl_variable" href="namespaceoperations.html#a7cc504d8c1f12c5beff0551c79d03550">KalmanSensor</a>(<span class="stringliteral">&quot;probe&quot;</span>, G=[[1.0, 0.0]], R=0.04)</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a854a282c5bc5ff266e7580ee836cacf8">   79</a></span>gauge = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">framework.compose</a>(probe, name=<span class="stringliteral">&quot;gauge&quot;</span>).calibrate(gain=1.0, offset=0.0)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a8450d4645c663c5bdbe1d4398e4d2119">   80</a></span>biased = <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>().add_instrument(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">framework.compose</a>(probe, name=<span class="stringliteral">&quot;gauge&quot;</span>).calibrate(1.0, 0.8))</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>truth, zk = <a class="code hl_function" href="namespaceoperations.html#a42dbd6d76824bcc1a1c313d95aa616d1">simulate</a>(biased, N)</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a39dfa2d2d3a676acd5d73a343bb5b3d7">   82</a></span>model = <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>().add_instrument(gauge).joint({<span class="stringliteral">&quot;gauge.offset&quot;</span>: (2.0, 0.0)})</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a298e0394c933626ec364884ae1c32c95">   83</a></span>record = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">model.filter</a>(zk, reset=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>print(<span class="stringliteral">&quot;joint:            gauge.offset = %.3f +/- %.3f (truth 0.8)&quot;</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>      % (<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">record.xk</a>[-1, 2], <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.sqrt</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">record.Pk</a>[-1, 2, 2])))</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="comment"># --- compose: two carts in one filter ------------------------------------------------------------</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">   88</a></span>pair = <a class="code hl_variable" href="namespaceoperations.html#a8a37d39fcdf1b226d7dfab1aa85d0697">compose</a>(<a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>(<span class="stringliteral">&quot;left&quot;</span>), <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>(<span class="stringliteral">&quot;right&quot;</span>))</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">   89</a></span>truth, zk = <a class="code hl_function" href="namespaceoperations.html#a42dbd6d76824bcc1a1c313d95aa616d1">simulate</a>(pair, N, n=4)</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a1306e6488fc3f2a5abd27a5642e961eb">   90</a></span>both = <a class="code hl_function" href="namespaceoperations.html#ac41e8000765474cbf229b618aa108cf9">states</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">pair.filter</a>(zk, reset=<span class="keyword">True</span>), N)</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>print(<span class="stringliteral">&quot;compose:          n = %d, m = %d, parts %s; position errors %.3f and %.3f&quot;</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      % (<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">pair.n</a>, <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">pair.m</a>, <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">pair.part_names</a>, <a class="code hl_variable" href="namespaceoperations.html#a5e2f97df7b1944e2988fe5f2e5a98ede">rmse</a>(both[:, 0], truth[:, 0]), <a class="code hl_variable" href="namespaceoperations.html#a5e2f97df7b1944e2988fe5f2e5a98ede">rmse</a>(both[:, 2], truth[:, 2])))</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment"># --- route: a cart that is quiet, then shaken ---------------------------------------------------------</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a249a38e1c1a7a995d81fececac331d80">   95</a></span>quiet, shaken = <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>(<span class="stringliteral">&quot;quiet&quot;</span>, q=0.01), <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>(<span class="stringliteral">&quot;shaken&quot;</span>, q=100.0)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="namespaceoperations.html#ab1d0de6ab967e1751f593e17e4c6c494">   96</a></span>_, z_quiet = <a class="code hl_function" href="namespaceoperations.html#a42dbd6d76824bcc1a1c313d95aa616d1">simulate</a>(<a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>(<span class="stringliteral">&quot;quiet&quot;</span>, q=0.01), N // 2)</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a4572dcf61282fc9e55ca0e462cd51c3c">   97</a></span>restart = <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>(<span class="stringliteral">&quot;shaken&quot;</span>, q=100.0)</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">restart.initial_state</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.array</a>([[z_quiet[-1, 0]], [1.0]]), <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.eye</a>(2))</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="namespaceoperations.html#ab6f1464f024b44a6e89384e5fce46b33">   99</a></span>_, z_shaken = <a class="code hl_function" href="namespaceoperations.html#a42dbd6d76824bcc1a1c313d95aa616d1">simulate</a>(restart, N // 2)</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a2719653ddc5ad66dda2e525bd4ecae32">  100</a></span>Pi = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.array</a>([[0.98, 0.02], [0.02, 0.98]])</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="namespaceoperations.html#a0d5dd5d9caf4a773f4100efa27322964">  101</a></span>modes = <a class="code hl_variable" href="namespaceoperations.html#a97f2370837e5289257bc6c15805753d2">route</a>([quiet, shaken], Pi)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">modes.filter</a>(<a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">np.vstack</a>([z_quiet, z_shaken]))</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">  103</a></span>mu = <a class="code hl_variable" href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">modes.mode_probabilities</a>[:, 1]</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>print(<span class="stringliteral">&quot;route:            probability of the shaken regime: %.2f in the first half, %.2f in the second&quot;</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>      % (mu[: N // 2].mean(), mu[N // 2:].mean()))</div>
+<div class="ttc" id="anamespaceoperations_html_a42dbd6d76824bcc1a1c313d95aa616d1"><div class="ttname"><a href="namespaceoperations.html#a42dbd6d76824bcc1a1c313d95aa616d1">operations.simulate</a></div><div class="ttdeci">simulate(model, steps, n=2)</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00047">operations.py:47</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a5e2f97df7b1944e2988fe5f2e5a98ede"><div class="ttname"><a href="namespaceoperations.html#a5e2f97df7b1944e2988fe5f2e5a98ede">operations.rmse</a></div><div class="ttdeci">float rmse</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00037">operations.py:37</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a7cc504d8c1f12c5beff0551c79d03550"><div class="ttname"><a href="namespaceoperations.html#a7cc504d8c1f12c5beff0551c79d03550">operations.KalmanSensor</a></div><div class="ttdeci">KalmanSensor</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00031">operations.py:31</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a87389aecf4a4a5628dcc4b9f379700fe"><div class="ttname"><a href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">operations.cart</a></div><div class="ttdeci">cart(name=&quot;cart&quot;, q=1.0)</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00040">operations.py:40</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a8a37d39fcdf1b226d7dfab1aa85d0697"><div class="ttname"><a href="namespaceoperations.html#a8a37d39fcdf1b226d7dfab1aa85d0697">operations.compose</a></div><div class="ttdeci">compose</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00032">operations.py:32</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a90ad02cf5d1f43d75dc6179e6dc8cd6a"><div class="ttname"><a href="namespaceoperations.html#a90ad02cf5d1f43d75dc6179e6dc8cd6a">operations.KalmanModel</a></div><div class="ttdeci">KalmanModel</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00031">operations.py:31</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a97f2370837e5289257bc6c15805753d2"><div class="ttname"><a href="namespaceoperations.html#a97f2370837e5289257bc6c15805753d2">operations.route</a></div><div class="ttdeci">route</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00032">operations.py:32</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_aae7484626ec81b31ea417fe7d8a436e2"><div class="ttname"><a href="namespaceoperations.html#aae7484626ec81b31ea417fe7d8a436e2">operations.pair</a></div><div class="ttdeci">pair</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00088">operations.py:88</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_ac41e8000765474cbf229b618aa108cf9"><div class="ttname"><a href="namespaceoperations.html#ac41e8000765474cbf229b618aa108cf9">operations.states</a></div><div class="ttdeci">states(record, steps)</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00060">operations.py:60</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_d28a4824dc47e487b107a5db32ef43c4.html">examples</a></li><li class="navelem"><a class="el" href="dir_d050070cc3e4bbd91d897ff8856046e0.html">python</a></li><li class="navelem"><a class="el" href="examples_2python_2operations_8py.html">operations.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

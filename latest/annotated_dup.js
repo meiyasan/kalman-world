@@ -234,6 +234,11 @@ var annotated_dup =
             [ "BallisticLinearModel", "classmodules_1_1apps_1_1ballistics_1_1linear_1_1_ballistic_linear_model.html", "classmodules_1_1apps_1_1ballistics_1_1linear_1_1_ballistic_linear_model" ]
           ] ]
         ] ],
+        [ "buildings", "namespacemodules_1_1apps_1_1buildings.html", [
+          [ "co2", "namespacemodules_1_1apps_1_1buildings_1_1co2.html", [
+            [ "RoomCO2Model", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model" ]
+          ] ]
+        ] ],
         [ "calorimeter", "namespacemodules_1_1apps_1_1calorimeter.html", [
           [ "geometry", "namespacemodules_1_1apps_1_1calorimeter_1_1geometry.html", [
             [ "CaloLayer", "classmodules_1_1apps_1_1calorimeter_1_1geometry_1_1_calo_layer.html", "classmodules_1_1apps_1_1calorimeter_1_1geometry_1_1_calo_layer" ],
@@ -768,6 +773,10 @@ var annotated_dup =
         [ "TestRocketLanding", "classtests_1_1test__apps__extra_1_1_test_rocket_landing.html", "classtests_1_1test__apps__extra_1_1_test_rocket_landing" ],
         [ "TestRocketLiftoff", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff" ]
       ] ],
+      [ "test_buildings", "namespacetests_1_1test__buildings.html", [
+        [ "TestTheBalance", "classtests_1_1test__buildings_1_1_test_the_balance.html", "classtests_1_1test__buildings_1_1_test_the_balance" ],
+        [ "TestWhatTheSensorsTell", "classtests_1_1test__buildings_1_1_test_what_the_sensors_tell.html", "classtests_1_1test__buildings_1_1_test_what_the_sensors_tell" ]
+      ] ],
       [ "test_compose", "namespacetests_1_1test__compose.html", [
         [ "TestCompose", "classtests_1_1test__compose_1_1_test_compose.html", "classtests_1_1test__compose_1_1_test_compose" ]
       ] ],
@@ -940,6 +949,7 @@ var annotated_dup =
         [ "TestNativeEngine", "classtests_1_1test__native__core_1_1_test_native_engine.html", "classtests_1_1test__native__core_1_1_test_native_engine" ],
         [ "TestNativeModel", "classtests_1_1test__native__core_1_1_test_native_model.html", "classtests_1_1test__native__core_1_1_test_native_model" ],
         [ "TestPluginPolicy", "classtests_1_1test__native__core_1_1_test_plugin_policy.html", "classtests_1_1test__native__core_1_1_test_plugin_policy" ],
+        [ "TestPointersKeepTheirArrays", "classtests_1_1test__native__core_1_1_test_pointers_keep_their_arrays.html", "classtests_1_1test__native__core_1_1_test_pointers_keep_their_arrays" ],
         [ "TestPublicNativeModule", "classtests_1_1test__native__core_1_1_test_public_native_module.html", "classtests_1_1test__native__core_1_1_test_public_native_module" ]
       ] ],
       [ "test_native_counterparts", "namespacetests_1_1test__native__counterparts.html", [

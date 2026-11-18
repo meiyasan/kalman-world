@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-g6bcb6041</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -169,7 +169,7 @@ Planning</h1>
 <td class="markdownTableBodyNone"><code>chain_lambert</code>   </td><td class="markdownTableBodyNone">a trip through several flybys, with what each flyby gives for free and what must be burnt   </td></tr>
 </table>
 <p>A flyby changes the direction of the spacecraft at no cost in fuel. <code>chain_lambert</code> reports that free change apart from the burn the trip still needs. With a deep-space manoeuvre placed between the two Venus flybys, the Cassini trip comes out close to the real mission: the notebook compares the two, quantity by quantity.</p>
-<h1><a class="anchor" id="how-it-is-built-9"></a>
+<h1><a class="anchor" id="how-it-is-built-10"></a>
 How it is built</h1>
 <ul>
 <li><b>Time stepping.</b> One RK4 step per sample, or <code>n_sub</code> of them when the spacecraft passes close to a body and the pull changes quickly.</li>
@@ -177,7 +177,7 @@ How it is built</h1>
 <li><b>Course corrections.</b> With <code>control=True</code> the interplanetary model takes a small velocity change as its input. The notebook computes these corrections from the filter's estimate and shows what each one removes.</li>
 <li><b>C++.</b> <code>TransLunarModel</code> and <code>InterplanetaryModel</code> have counterparts in <code>libKalmanApps</code> (<code><a class="el" href="class_kalman_1_1_apps_1_1_astrophysics_1_1_trans_lunar.html" title="Restricted four-body trans-lunar coast (Earth + Moon + Sun) — the counterpart of kalman....">Kalman::Apps::Astrophysics::TransLunar</a></code>, <code>::Interplanetary</code>), so <code>model.filter(z)</code> runs wholly in C++, about 10 times faster. The planets' positions the interplanetary model tabulates from the ephemeris are handed to the counterpart when it runs. A course correction (<code>control=True</code>) and an integrator of your own keep the Python step.</li>
 </ul>
-<h1><a class="anchor" id="using-it-10"></a>
+<h1><a class="anchor" id="using-it-11"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> hohmann_transfer, chain_lambert</div>
 <div class="line"> </div>

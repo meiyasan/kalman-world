@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-g6bcb6041</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -185,15 +185,17 @@ $(document).ready(function(){initNavTree('modules_2framework_2native_2____init__
 </div>
 <div class="foldopen" id="foldopen00038" data-start="" data-end="">
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="namespacemodules_1_1framework_1_1native.html#a3879141dbee0a7cdce00edd8322af542">   38</a></span><span class="keyword">def </span>dptr(arr: np.ndarray):</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="stringliteral">&quot;&quot;&quot;``double *`` cffi pointer into a C-contiguous float64 numpy array.&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">return</span> ffi.cast(<span class="stringliteral">&quot;double *&quot;</span>, arr.ctypes.data)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="stringliteral">&quot;&quot;&quot;``double *`` cffi pointer into a C-contiguous float64 numpy array, which it</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="stringliteral">    keeps alive (``ffi.from_buffer``; a cast of ``arr.ctypes.data`` would not).&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">return</span> ffi.from_buffer(<span class="stringliteral">&quot;double[]&quot;</span>, arr)</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
 </div>
-<div class="foldopen" id="foldopen00043" data-start="" data-end="">
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="namespacemodules_1_1framework_1_1native.html#abb776c193c6ede4e948f087b69696ffc">   43</a></span><span class="keyword">def </span>iptr(arr: np.ndarray):</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="stringliteral">&quot;&quot;&quot;``int *`` cffi pointer into a C-contiguous ``np.intc`` numpy array.&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">return</span> ffi.cast(<span class="stringliteral">&quot;int *&quot;</span>, arr.ctypes.data)</div>
+<div class="foldopen" id="foldopen00044" data-start="" data-end="">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="namespacemodules_1_1framework_1_1native.html#abb776c193c6ede4e948f087b69696ffc">   44</a></span><span class="keyword">def </span>iptr(arr: np.ndarray):</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="stringliteral">&quot;&quot;&quot;``int *`` cffi pointer into a C-contiguous ``np.intc`` numpy array, which it</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="stringliteral">    keeps alive.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> ffi.from_buffer(<span class="stringliteral">&quot;int[]&quot;</span>, arr)</div>
 </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

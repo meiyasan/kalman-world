@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-g6bcb6041</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -245,13 +245,15 @@ second implementation of a Kalman step was a second place for it to be wrong.
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">``double *`` cffi pointer into a C-contiguous float64 numpy array.</pre> 
+<pre class="fragment">``double *`` cffi pointer into a C-contiguous float64 numpy array, which it
+keeps alive (``ffi.from_buffer``; a cast of ``arr.ctypes.data`` would not).</pre> 
 <p class="definition">Definition at line <a class="el" href="modules_2framework_2native_2____init_____8py_source.html#l00038">38</a> of file <a class="el" href="modules_2framework_2native_2____init_____8py_source.html">__init__.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   38</span><span class="keyword">def </span>dptr(arr: np.ndarray):</div>
-<div class="line"><span class="lineno">   39</span>    <span class="stringliteral">&quot;&quot;&quot;``double *`` cffi pointer into a C-contiguous float64 numpy array.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">   40</span>    <span class="keywordflow">return</span> ffi.cast(<span class="stringliteral">&quot;double *&quot;</span>, arr.ctypes.data)</div>
-<div class="line"><span class="lineno">   41</span> </div>
+<div class="line"><span class="lineno">   39</span>    <span class="stringliteral">&quot;&quot;&quot;``double *`` cffi pointer into a C-contiguous float64 numpy array, which it</span></div>
+<div class="line"><span class="lineno">   40</span><span class="stringliteral">    keeps alive (``ffi.from_buffer``; a cast of ``arr.ctypes.data`` would not).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   41</span>    <span class="keywordflow">return</span> ffi.from_buffer(<span class="stringliteral">&quot;double[]&quot;</span>, arr)</div>
 <div class="line"><span class="lineno">   42</span> </div>
+<div class="line"><span class="lineno">   43</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -270,11 +272,13 @@ second implementation of a Kalman step was a second place for it to be wrong.
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">``int *`` cffi pointer into a C-contiguous ``np.intc`` numpy array.</pre> 
-<p class="definition">Definition at line <a class="el" href="modules_2framework_2native_2____init_____8py_source.html#l00043">43</a> of file <a class="el" href="modules_2framework_2native_2____init_____8py_source.html">__init__.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   43</span><span class="keyword">def </span>iptr(arr: np.ndarray):</div>
-<div class="line"><span class="lineno">   44</span>    <span class="stringliteral">&quot;&quot;&quot;``int *`` cffi pointer into a C-contiguous ``np.intc`` numpy array.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">   45</span>    <span class="keywordflow">return</span> ffi.cast(<span class="stringliteral">&quot;int *&quot;</span>, arr.ctypes.data)</div>
+<pre class="fragment">``int *`` cffi pointer into a C-contiguous ``np.intc`` numpy array, which it
+keeps alive.</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2native_2____init_____8py_source.html#l00044">44</a> of file <a class="el" href="modules_2framework_2native_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   44</span><span class="keyword">def </span>iptr(arr: np.ndarray):</div>
+<div class="line"><span class="lineno">   45</span>    <span class="stringliteral">&quot;&quot;&quot;``int *`` cffi pointer into a C-contiguous ``np.intc`` numpy array, which it</span></div>
+<div class="line"><span class="lineno">   46</span><span class="stringliteral">    keeps alive.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   47</span>    <span class="keywordflow">return</span> ffi.from_buffer(<span class="stringliteral">&quot;int[]&quot;</span>, arr)</div>
 </div><!-- fragment -->
 </div>
 </div>

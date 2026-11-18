@@ -8,6 +8,7 @@ var dir_59425e443f801f1f2fd8bbe4959a3ccf =
     [ "test_api.py", "test__api_8py.html", "test__api_8py" ],
     [ "test_apps_extra.py", "test__apps__extra_8py.html", "test__apps__extra_8py" ],
     [ "test_barotropic.py", "test__barotropic_8py.html", "test__barotropic_8py" ],
+    [ "test_buildings.py", "test__buildings_8py.html", "test__buildings_8py" ],
     [ "test_compose.py", "test__compose_8py.html", "test__compose_8py" ],
     [ "test_contract_parity.py", "test__contract__parity_8py.html", "test__contract__parity_8py" ],
     [ "test_engines.py", "test__engines_8py.html", "test__engines_8py" ],
