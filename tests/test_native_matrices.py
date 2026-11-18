@@ -313,6 +313,12 @@ class TestNoModelFallsBackToThePythonLoop(unittest.TestCase):
                 first = list(inspect.signature(cls.__init__).parameters)[1:2]
                 try:
                     model = cls("s") if first in (["sensor"], ["name"]) else cls()
+                    # A field (the flow models: 4096 components at their default grid) is
+                    # left to tests/test_ensemble.py and test_native_fields.py: sampling one
+                    # here keeps a 4096 x 4096 covariance per step, 16 GB for this test,
+                    # more than a CI runner has.
+                    if int(model.n) > 1000:
+                        continue
                     z = np.asarray(model.sample(20 / (model.fs or 1.0), seed=1).zk, float)
                 except Exception:
                     continue                    # needs arguments, or its default state cannot be sampled
