@@ -501,6 +501,11 @@ class KolmogorovFlowModel(NativeCounterpart, KalmanEnsembleModel, KalmanModel):
 # ======================================================================
 # OSSE twin-experiment harness
 # ======================================================================
+#: The colour of a station that has no measurement in a cycle: a grey placeholder
+#: (RGBA), so that the network stays visible while only some stations report.
+IDLE_STATION = (0.6, 0.6, 0.6, 0.55)
+
+
 class TwinExperiment:
     """
     Cycled identical-twin experiment: truth from the model's real solver,
@@ -741,7 +746,8 @@ class TwinExperiment:
 
         Default (``phases=1``): **one frame per cycle** — the analysis field
         with a **black** dot at exactly the stations that delivered a
-        measurement that cycle; idle stations stay **transparent**.  Nothing
+        measurement that cycle; idle stations stay in place as **grey**
+        placeholders, so the network is always visible.  Nothing
         pulses: the dot pattern changes between cycles only because the
         multirate network (``obs_periods=``) changes who reports.
 
@@ -775,7 +781,7 @@ class TwinExperiment:
         for ax, title in zip(axes, (r"truth $\omega$", f"{method} estimate", "error")):
             im = ax.imshow(np.zeros((g, g)), cmap=cmap, vmin=-vmax, vmax=vmax, origin="lower")
             dot = ax.scatter(ox, oy, s=16, edgecolors="none", zorder=3,
-                             facecolors=np.zeros((n_st, 4)))
+                             facecolors=np.tile(IDLE_STATION, (n_st, 1)))
             ax.set_title(title); ax.set_xticks([]); ax.set_yticks([])
             ims.append(im); dots.append(dot)
         fig.colorbar(ims[0], ax=list(axes), shrink=0.8, label="vorticity")
@@ -787,7 +793,7 @@ class TwinExperiment:
             ims[0].set_data(tr.reshape(g, g))
             ims[1].set_data(est.reshape(g, g))
             ims[2].set_data((est - tr).reshape(g, g))
-            face = np.zeros((n_st, 4))                       # transparent: idle station
+            face = np.tile(IDLE_STATION, (n_st, 1))          # grey placeholder: idle station
             n_rep = 0
             if phase == 1:
                 rep = (self.obs_mask[c] if self.obs_mask is not None
