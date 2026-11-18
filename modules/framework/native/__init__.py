@@ -36,10 +36,12 @@ def as_contiguous(arr, dtype=np.float64):
 
 
 def dptr(arr: np.ndarray):
-    """``double *`` cffi pointer into a C-contiguous float64 numpy array."""
-    return ffi.cast("double *", arr.ctypes.data)
+    """``double *`` cffi pointer into a C-contiguous float64 numpy array, which it
+    keeps alive (``ffi.from_buffer``; a cast of ``arr.ctypes.data`` would not)."""
+    return ffi.from_buffer("double[]", arr)
 
 
 def iptr(arr: np.ndarray):
-    """``int *`` cffi pointer into a C-contiguous ``np.intc`` numpy array."""
-    return ffi.cast("int *", arr.ctypes.data)
+    """``int *`` cffi pointer into a C-contiguous ``np.intc`` numpy array, which it
+    keeps alive."""
+    return ffi.from_buffer("int[]", arr)

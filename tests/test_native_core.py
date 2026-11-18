@@ -416,3 +416,25 @@ class TestApiBuildsNativeModels(unittest.TestCase):
 
         if "ballistic" in core.names():
             self.assertEqual(NativeModel("ballistic", c_drag=0.25).parameters()["c_drag"], 0.25)
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "needs the C++ core")
+class TestPointersKeepTheirArrays(unittest.TestCase):
+    """core.cdptr(a temporary) must keep the temporary alive until the C call has read
+    it. A cast of arr.ctypes.data did not: a large matrix came through as freed memory
+    (a 17-state model with an added sensor lost its transition matrix)."""
+
+    def test_a_temporary_matrix_reaches_the_model(self):
+        n = 64
+        handle = core.lib.kalman_model_create_matrices(b"pointer-test", n, 1, 0)
+        self.assertNotEqual(handle, core.ffi.NULL)
+        try:
+            F = np.arange(n * n, dtype=float).reshape(n, n) / (n * n)
+            for _ in range(20):                                    # freed memory is reused by the next allocation
+                core.check(core.lib.kalman_model_set_matrix(handle, b"F", core.cdptr(np.ascontiguousarray(F.copy()))), "F")
+                np.zeros((n, n))
+                back = np.zeros((n, n))
+                core.check(core.lib.kalman_model_F(handle, 0.0, core.dptr(back)), "F back")
+                np.testing.assert_array_equal(back, F)
+        finally:
+            core.lib.kalman_model_destroy(handle)

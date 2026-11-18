@@ -517,13 +517,16 @@ def check(rc: int, what: str):
 
 
 def dptr(arr: np.ndarray):
-    """``double *`` into a C-contiguous float64 array."""
-    return ffi.cast("double *", arr.ctypes.data)
+    """``double *`` into a C-contiguous float64 array, which it keeps alive."""
+    # ffi.from_buffer, not a cast of arr.ctypes.data: the cdata it returns keeps the
+    # array alive. A cast does not, so a temporary (cdptr(np.asarray(...))) was freed
+    # before the C call read it; large arrays then came through as freed memory.
+    return ffi.from_buffer("double[]", arr)
 
 
 def cdptr(arr: np.ndarray):
-    """``const double *`` into a C-contiguous float64 array."""
-    return ffi.cast("const double *", arr.ctypes.data)
+    """``const double *`` into a C-contiguous float64 array, which it keeps alive."""
+    return ffi.from_buffer("double[]", arr)
 
 
 def version() -> str:
