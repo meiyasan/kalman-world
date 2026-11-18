@@ -16,6 +16,7 @@ steps in time, and how to run it.
 | [Particle tracking](apps/tracking.md) | charged tracks in a drift chamber | combinatorial, stepping over layers | RK4 along the path |
 | [Space navigation](apps/space.md) | a cruise to the Moon or a planet | extended | RK4 |
 | [Sensor fusion](apps/fusion.md) | several sensors on one object | linear | exact |
+| [CO2 in a room](apps/buildings.md) | the air of a room, its occupants and drifting sensors | linear | exact |
 | [Computer vision](apps/vision.md) | objects detected in video frames | linear | exact |
 | [GPS and relativity](apps/gps.md) | a receiver and its satellites | extended | exact |
 | [Vehicles](apps/vehicles.md) | a speed run and lane keeping | extended | RK4 and Euler |

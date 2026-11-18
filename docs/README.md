@@ -51,7 +51,7 @@ Pages are numbered in reading order. If you are new, read 1 → 3 → 5 and stop
 - [`../README.md`](../README.md) — notation, filter pipeline, composite models.
 - [`../AGENTS.md`](../AGENTS.md) — conventions for changing the code (humans and LLMs).
 - [`../share/notebooks/`](../share/notebooks/) — 16 executed, output-bearing notebooks,
-  from `00_Kalman101` to `14_StormTracking`. These are the narrative documentation;
+  from `00_Kalman101` to `15_CO2Room`. These are the narrative documentation;
   these pages are the reference. Trained artefacts a notebook would otherwise
   rebuild on every run (the neural controllers and routers of `12_KalmanAI`) are
   kept under `share/notebooks/cache/<notebook>/` by `kalman.helpers.cached_fit`;
