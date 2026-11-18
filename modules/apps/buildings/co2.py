@@ -130,6 +130,7 @@ class RoomCO2Model(LinearKalmanModel):
         kwargs.setdefault("P0", np.diag(P0))
         super().__init__(sensor, F=F, B=B, H=H, Q=np.diag(q), R=np.array([[float(sigma) ** 2]]), fs=fs, **kwargs)
         self.at = tuple(at)
+
     def sensor(self, name, at, sigma=15.0, *, rate=None):
         """A CO2 sensor that reads the cell ``at`` with noise ``sigma`` [ppm],
         ``rate`` readings per second (``None``: at every step of the model)."""
@@ -139,6 +140,19 @@ class RoomCO2Model(LinearKalmanModel):
         G[0, self.index[tuple(at)]] = 1.0
         return KalmanSensor(name, G=G, R=float(sigma) ** 2, rate=rate, labels={name: "ppm"})
 
+    def schedule(self, name="schedule", sigma=0.1, *, rate=None):
+        """What is known of the number of occupants, as a sensor that reads it.
+
+        A room known to be empty (at night, say) is a reading of 0 people with a
+        small ``sigma``; at every other step the reading is NaN, and the filter
+        counts from the CO2 alone. Needs ``count_people=True``.
+        """
+        if not self.count_people:
+            raise ValueError("RoomCO2Model.schedule: the number of occupants is a state only with count_people=True.")
+        G = np.zeros((1, int(self.n)))
+        G[0, -1] = 1.0
+        return KalmanSensor(name, G=G, R=float(sigma) ** 2, rate=rate, labels={name: "people"})
+
     def field(self, x) -> np.ndarray:
         """The concentration as a grid, NaN outside the room."""
         grid = np.full(self.room.shape, np.nan)
@@ -146,3 +160,33 @@ class RoomCO2Model(LinearKalmanModel):
         for (r, c), i in self.index.items():
             grid[r, c] = x[i]
         return grid
+
+
+def empty_at_night(room, hours=(0, 6), *, tz=None, sigma=0.1, name="schedule"):
+    """The room is empty between two hours of the night: an instrument made of the
+    room's ``schedule`` sensor, whose readings are 0 people at those steps and NaN
+    at the others.
+
+    ``empty_at_night(room)`` is added to the room model; its readings
+    come with the others from ``model.measurements(start=..., end=...)`` [unix s].
+    ``hours=(0, 6)``: from midnight to 6 am, in the time zone ``tz`` (the
+    computer's when ``None``).
+    """
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from ...framework.instrument import KalmanInstrument
+    first, last = (float(h) for h in hours)
+    step = 1.0 / float(room.fs)
+
+    def readings(*, start, end, **query):
+        zone = ZoneInfo(tz) if tz else None
+        n = max(int(np.floor((float(end) - float(start)) / step)), 0)
+        out = np.full((n, 1), np.nan)
+        for k in range(n):
+            moment = datetime.fromtimestamp(float(start) + k * step, zone)
+            hour = moment.hour + moment.minute / 60.0
+            if (first <= hour < last) if first <= last else (hour >= first or hour < last):
+                out[k, 0] = 0.0
+        return out
+
+    return KalmanInstrument(name, [room.schedule(name, sigma=sigma)], provider=readings)

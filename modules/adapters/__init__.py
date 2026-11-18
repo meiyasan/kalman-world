@@ -28,9 +28,10 @@ In C++ an adapter is a class deriving from ``Kalman::Instrument``, made of
 
 This package is where adapters live, beside ``kalman.apps``: the applications
 are specific models, the adapters specific hardware, and the framework knows
-neither. One module per device, named after it. None is shipped yet: an adapter
-states a product's data sheet, and those numbers have to come from the people
-who use the device.
-"""
+neither. One module per device, named after it:
 
-__all__: list[str] = []
+- ``netatmo``: Netatmo indoor modules (CO2), from the Netatmo web API or files.
+"""
+from .netatmo import NetatmoCloud, NetatmoCSV, NetatmoModule
+
+__all__: list[str] = ["NetatmoCloud", "NetatmoCSV", "NetatmoModule"]

@@ -47,4 +47,36 @@ model = room.add_instrument(compose(B, name="B").calibrate(1.0, 0.0)).add_sensor
 record = model.joint({"B.offset": (150.0, 0.0)}).filter(zk, uk=np.ones((len(zk), 1)))
 ```
 
+## A known empty room
+
+What is known of the people is a sensor too: `room.schedule()` reads the count,
+and `empty_at_night(room, hours=(0, 6), tz=...)` is an instrument that reads 0
+people at those hours and nothing at the others. Every night then pins the
+offsets of the CO2 sensors against the outdoor level the empty room settles to.
+
+## Real sensors: Netatmo
+
+`kalman.adapters.NetatmoModule` is one Netatmo indoor module: a CO2 sensor of
+the room with its data sheet (one reading every 5 minutes, so `fs=1/300`) and
+a calibration. Its readings come from the Netatmo web API (`NetatmoCloud`,
+credentials from the environment) or from files (`NetatmoCSV`: the web page's
+export or a local logger), and are laid on the model's steps, NaN where a
+reading is missing.
+
+```python
+from kalman.apps import RoomCO2Model, empty_at_night
+from kalman.adapters import NetatmoModule, NetatmoCloud
+
+room = RoomCO2Model("unread", count_people=True, fs=1 / 300)
+cloud = NetatmoCloud()
+modules = [NetatmoModule(room, "main", (2, 2), station=STATION, source=cloud),
+           NetatmoModule(room, "desk", (2, 9), station=STATION, module=DESK, source=cloud)]
+watched = room.add_instrument(modules[0]).add_instrument(modules[1]).add_instrument(empty_at_night(room))
+zk = watched.measurements(start=t0, end=t1)
+record = watched.joint({"desk.offset": (50.0, 0.5)}).filter(zk, uk=np.ones((len(zk), 1)))
+```
+
+An offset is a slow random walk (`(sigma, drift)`): it does not return to
+where it started, so it takes no `tau`.
+
 Notebook: [15_CO2Room](../../share/notebooks/15_CO2Room.ipynb).

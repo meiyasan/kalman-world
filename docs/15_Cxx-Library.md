@@ -372,7 +372,7 @@ which includes all of it. So there are always two ways in: the whole, or one.
 | `<Kalman/Routers.h>`, `<Kalman/Controllers.h>`, `<Kalman/Tuners.h>` | `<Kalman/Routers/Bayesian.h>` ... | routing, control, tuning | `kalman.framework.routers` ... |
 | `<Kalman/Integrators.h>`, `<Kalman/Solvers.h>`, `<Kalman/Differentiators.h>`, `<Kalman/Algebra.h>`, `<Kalman/IO.h>` | `<Kalman/Integrators/RK4.h>` ... | numerics and records | |
 | `<Kalman/Apps.h>` | `<Kalman/Apps/Ballistics.h>`, then `<Kalman/Apps/Ballistics/LinearModel.h>`, `ExtendedModel.h` | the application models (libKalmanApps): one header per domain, and in its directory one per model, named for the model and not for the domain again | `kalman.apps`, `kalman.apps.ballistics` |
-| `<Kalman/Adapters.h>` | `<Kalman/Adapters/<Device>.h>` | specific hardware; none shipped yet | `kalman.adapters` |
+| `<Kalman/Adapters.h>` | `<Kalman/Adapters/<Device>.h>` | specific hardware; Netatmo in Python only so far (`kalman.adapters.netatmo`) | `kalman.adapters` |
 | `<Kalman/Learn.h>` | `<Kalman/Learn/Solvers.h>` | learned components (libKalmanLearn) | |
 | `<Kalman/Net.h>` | `<Kalman/Net/RestServer.h>` | the JSON API and its servers (libKalmanNet) | `kalman.api`, `.rest`, `.mcp` |
 

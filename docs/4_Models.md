@@ -445,7 +445,8 @@ instrument made of generic sensors, with what its data sheet and its mounting
 say (noise, rate, delay, where it is, its calibration) and where its data
 comes from. Adapters live in `kalman.adapters`, beside `kalman.apps`: the
 applications are specific models, the adapters specific hardware, and the
-framework knows neither. None is shipped yet; one looks like this:
+framework knows neither. The first shipped is `NetatmoModule`, the CO2 of a
+Netatmo indoor module ([buildings](apps/buildings.md)); one looks like this:
 
 ```python
 from kalman.framework import KalmanInstrument, DopplerSensor, PositionSensor

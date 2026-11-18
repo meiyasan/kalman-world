@@ -174,7 +174,7 @@ modules/                        → the `kalman` package
   providers/                    generic data sources (synthetic/file/sensor/remote)
   api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth
   mcp/  rest/                   transports over the facade (optional deps)
-  adapters/                     specific hardware: instruments of generic sensors (none shipped yet)
+  adapters/                     specific hardware: instruments of generic sensors (netatmo)
   apps/                         domain applications
     gravitational/ gravwave  interferometer
     resonators/    oscillators  powergrids  suspensions
