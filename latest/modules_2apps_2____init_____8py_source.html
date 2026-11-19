@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -170,7 +170,7 @@ $(document).ready(function(){initNavTree('modules_2apps_2____init_____8py_source
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">from</span> .vehicles     <span class="keyword">import</span> CarSpeedModel, CarSpeedState, CarSpeedObservable, CarLaneModel, CarLaneState, CarLaneObservable</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">from</span> .tracking      <span class="keyword">import</span> DriftChamberModel, TrackingEvent, TrackState, TrackObservable</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">from</span> .fusion        <span class="keyword">import</span> SensorFusionModel, SensorSpec</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">from</span> .buildings     <span class="keyword">import</span> RoomCO2Model, l_shaped_room</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">from</span> .buildings     <span class="keyword">import</span> RoomCO2Model, empty_at_night, l_shaped_room, ventilation_from_decay</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">from</span> .vision        <span class="keyword">import</span> (DetectionModel, BoxTrackModel, SortTracker, KalmanTrack,</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                            BoxTrackState, BoxTrackObservable, TrackedBox,</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                            box_to_xysr, xysr_to_box, iou_batch, associate_detections,</div>

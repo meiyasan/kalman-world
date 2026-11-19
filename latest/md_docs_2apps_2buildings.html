@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -165,6 +165,29 @@ Using it</h1>
 <div class="line">C = room.sensor(<span class="stringliteral">&quot;C&quot;</span>, (9, 2), rate=1 / 300)</div>
 <div class="line">model = room.add_instrument(compose(B, name=<span class="stringliteral">&quot;B&quot;</span>).calibrate(1.0, 0.0)).add_sensor(C)</div>
 <div class="line">record = model.joint({<span class="stringliteral">&quot;B.offset&quot;</span>: (150.0, 0.0)}).filter(zk, uk=np.ones((len(zk), 1)))</div>
+</div><!-- fragment --><h1><a class="anchor" id="a-known-empty-room"></a>
+A known empty room</h1>
+<p>What is known of the people is a sensor too: <code>room.schedule()</code> reads the count, and <code>empty_at_night(room, hours=(0, 6), tz=...)</code> is an instrument that reads 0 people at those hours and nothing at the others. Every night then pins the offsets of the CO2 sensors against the outdoor level the empty room settles to.</p>
+<h1><a class="anchor" id="real-sensors-netatmo"></a>
+Real sensors: Netatmo</h1>
+<p><code>kalman.adapters.NetatmoModule</code> is one Netatmo indoor module: a CO2 sensor of the room with its data sheet (one reading every 5 minutes, so <code>fs=1/300</code>) and a calibration. Its readings come from the Netatmo web API (<code>NetatmoCloud</code>, credentials from the environment) or from files (<code>NetatmoCSV</code>: the web page's export or a local logger), and are laid on the model's steps, NaN where a reading is missing.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> RoomCO2Model, empty_at_night</div>
+<div class="line"><span class="keyword">from</span> kalman.adapters <span class="keyword">import</span> NetatmoModule, NetatmoCloud</div>
+<div class="line"> </div>
+<div class="line">room = RoomCO2Model(<span class="stringliteral">&quot;unread&quot;</span>, count_people=<span class="keyword">True</span>, fs=1 / 300)</div>
+<div class="line">cloud = NetatmoCloud()</div>
+<div class="line">modules = [NetatmoModule(room, <span class="stringliteral">&quot;main&quot;</span>, (2, 2), station=STATION, source=cloud),</div>
+<div class="line">           NetatmoModule(room, <span class="stringliteral">&quot;desk&quot;</span>, (2, 9), station=STATION, module=DESK, source=cloud)]</div>
+<div class="line">watched = room.add_instrument(modules[0]).add_instrument(modules[1]).add_instrument(empty_at_night(room))</div>
+<div class="line">zk = watched.measurements(start=t0, end=t1)</div>
+<div class="line">record = watched.joint({<span class="stringliteral">&quot;desk.offset&quot;</span>: (50.0, 0.5)}).filter(zk, uk=np.ones((len(zk), 1)))</div>
+</div><!-- fragment --><p>An offset is a slow random walk (<code>(sigma, drift)</code>): it does not return to where it started, so it takes no <code>tau</code>.</p>
+<p><b>The ventilation sets the scale of the count.</b> The CO2 a person adds at steady state is <code>q / (ach V)</code>: a room believed twice as ventilated as it is counts twice the people (with <code>ach=3</code> given for a room at 2, five people are counted as 6.9). <code>ach</code> has to be measured for the room: from the decay of the CO2 after everybody has left (its rate is <code>ach</code>), or from an hour with a known number of people. <code>ventilation_from_decay(times, ppm)</code> does the first: it fits <code>a + b exp(-lambda t)</code> to each sensor's readings of the fall and returns <code>ach</code> and its standard deviation. The level <code>a</code> is fitted, so the sensors' offsets do not enter.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> ventilation_from_decay</div>
+<div class="line"> </div>
+<div class="line">evening = slice(k_left, k_left + 48)                       <span class="comment"># four hours from the moment the room empties</span></div>
+<div class="line">ach, sigma = ventilation_from_decay(t[evening], zk[evening, :5])</div>
+<div class="line">room = RoomCO2Model(<span class="stringliteral">&quot;unread&quot;</span>, count_people=<span class="keyword">True</span>, fs=1 / 300, ach=ach)</div>
 </div><!-- fragment --><p>Notebook: <a href="../../share/notebooks/15_CO2Room.ipynb">15_CO2Room</a>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

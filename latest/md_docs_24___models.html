@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -318,7 +318,7 @@ Joint models: estimating parameters with the state</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Engine   </td><td class="markdownTableBodyNone">the inner model's, or the extended engine when the inner model is linear   </td></tr>
 </table>
-<p>A parameter given a time <code>tau</code> wanders and returns to its starting value instead of drifting for ever, which suits a sensor bias or a clock offset: <code>{"offset": (sigma, drift, tau)}</code>, or <code>{"sigma": ..., "drift": ..., "tau": ...}</code>. Its variance then settles at <code>drift^2 / (1 - exp(-2 dt / tau))</code>.</p>
+<p>A parameter given a time <code>tau</code> wanders and returns to its starting value instead of drifting for ever, which suits a sensor bias or a clock offset: <code>{"offset": (sigma, drift, tau)}</code>, or <code>{"sigma": ..., "drift": ..., "tau": ...}</code>. Its variance then settles at <code>drift^2 / (1 - exp(-2 dt / tau))</code>. A <code>tau</code> needs a <code>drift &gt; 0</code> (without one the parameter would only decay to where it started); a calibration offset that does not come back takes a drift and no <code>tau</code>.</p>
 <p><b>Can the data tell them apart?</b> <code>model.observability(steps=50)</code> answers before any data: how many directions of the state the measurements determine along the model's path from its initial state, and for each state component its share (0 to 1) in the directions they do not. A gain read together with the amplitude it multiplies is the classic case: <code>z = gain * a</code> fixes the product, not the two.</p>
 <div class="fragment"><div class="line">report = gauge.joint({<span class="stringliteral">&quot;gain&quot;</span>: (0.5, 0.0)}).observability()</div>
 <div class="line">report[<span class="stringliteral">&quot;rank&quot;</span>], report[<span class="stringliteral">&quot;observable&quot;</span>]      <span class="comment"># 1, False</span></div>
@@ -420,7 +420,7 @@ Generic sensors</h2>
 </div><!-- fragment --><p>Each is one C++ class, <code><a class="el" href="class_kalman_1_1_sensors_1_1_position.html" title="Reads some components of the state: z = rotation * x[axes].">Kalman::Sensors::Position</a></code>, <code>Doppler</code> and <code>Camera</code> (<code>include/Kalman/Sensors/</code>), with its Jacobian written out. The Python class holds the C++ sensor and computes nothing: <code>sensor.g(x)</code>, its Jacobian, its noise and its settings are asked of it, and a model takes it as it is, so nothing is called back into Python during a pass.</p>
 <h2><a class="anchor" id="adapters-one-piece-of-hardware"></a>
 Adapters: one piece of hardware</h2>
-<p>The generic sensors know no product. A given device is an <b>adapter</b>: an instrument made of generic sensors, with what its data sheet and its mounting say (noise, rate, delay, where it is, its calibration) and where its data comes from. Adapters live in <code>kalman.adapters</code>, beside <code>kalman.apps</code>: the applications are specific models, the adapters specific hardware, and the framework knows neither. None is shipped yet; one looks like this:</p>
+<p>The generic sensors know no product. A given device is an <b>adapter</b>: an instrument made of generic sensors, with what its data sheet and its mounting say (noise, rate, delay, where it is, its calibration) and where its data comes from. Adapters live in <code>kalman.adapters</code>, beside <code>kalman.apps</code>: the applications are specific models, the adapters specific hardware, and the framework knows neither. The first shipped is <code>NetatmoModule</code>, the CO2 of a Netatmo indoor module (<a class="el" href="md_docs_2apps_2buildings.html">buildings</a>); one looks like this:</p>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> KalmanInstrument, DopplerSensor, PositionSensor</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>BenchRadar(KalmanInstrument):</div>

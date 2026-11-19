@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -140,13 +140,13 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2powergrid.html',''); in
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="power-grid"></a> The mains voltage is a 50 or 60 Hz wave plus harmonics at multiples of that frequency. Their size is the measure of power quality. The filter follows the amplitude and phase of each harmonic sample by sample, where a Fourier transform needs a whole window.</p>
-<h1><a class="anchor" id="the-model-8"></a>
+<h1><a class="anchor" id="the-model-7"></a>
 The model</h1>
 <div class="fragment"><div class="line">state        x = [A cos φ, A sin φ] for each harmonic</div>
 <div class="line">dynamics     x stays constant                             (F = I)</div>
 <div class="line">measurement  z(t) = Σ over harmonics of  x₁ cos ωt - x₂ sin ωt       (the raw voltage)</div>
 </div><!-- fragment --><p>The amplitude and phase of a steady wave do not change, so nothing moves in the state. The oscillation is in the measurement: <code>H</code> changes at every sample.</p>
-<h1><a class="anchor" id="how-it-is-built-8"></a>
+<h1><a class="anchor" id="how-it-is-built-7"></a>
 How it is built</h1>
 <ul>
 <li><b>Time stepping.</b> There is none to do: <code>F</code> is the identity. All the time dependence sits in <code>H(t)</code>.</li>
@@ -154,7 +154,7 @@ How it is built</h1>
 <li><b>Process noise</b> sets how fast a harmonic may change. A small value gives a quiet estimate that is slow to notice a fault.</li>
 <li><b>Distortion.</b> The total harmonic distortion follows from the estimated amplitudes, with its uncertainty.</li>
 </ul>
-<h1><a class="anchor" id="using-it-9"></a>
+<h1><a class="anchor" id="using-it-8"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> PowerGridStateModel</div>
 <div class="line"> </div>

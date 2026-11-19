@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -468,7 +468,7 @@ What to include</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>&lt;<a class="el" href="_apps_8h.html" title="Umbrella header for libKalmanApps.">Kalman/Apps.h</a>&gt;</code>   </td><td class="markdownTableBodyNone"><code>&lt;<a class="el" href="_ballistics_8h.html" title="The application models of Kalman::Apps::Ballistics.">Kalman/Apps/Ballistics.h</a>&gt;</code>, then <code>&lt;<a class="el" href="_linear_model_8h.html" title="Header of the Kalman::Apps::Ballistics::LinearModel class.">Kalman/Apps/Ballistics/LinearModel.h</a>&gt;</code>, <code><a class="el" href="_extended_model_8h.html" title="Header of the Kalman::Apps::Ballistics::ExtendedModel class.">ExtendedModel.h</a></code>   </td><td class="markdownTableBodyNone">the application models (libKalmanApps): one header per domain, and in its directory one per model, named for the model and not for the domain again   </td><td class="markdownTableBodyNone"><code>kalman.apps</code>, <code>kalman.apps.ballistics</code>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>&lt;Kalman/Adapters.h&gt;</code>   </td><td class="markdownTableBodyNone"><code>&lt;Kalman/Adapters/&lt;Device&gt;.h&gt;</code>   </td><td class="markdownTableBodyNone">specific hardware; none shipped yet   </td><td class="markdownTableBodyNone"><code>kalman.adapters</code>    </td></tr>
+<td class="markdownTableBodyNone"><code>&lt;Kalman/Adapters.h&gt;</code>   </td><td class="markdownTableBodyNone"><code>&lt;Kalman/Adapters/&lt;Device&gt;.h&gt;</code>   </td><td class="markdownTableBodyNone">specific hardware; Netatmo in Python only so far (<code>kalman.adapters.netatmo</code>)   </td><td class="markdownTableBodyNone"><code>kalman.adapters</code>    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>&lt;<a class="el" href="_learn_8h.html" title="Umbrella header for libKalmanLearn.">Kalman/Learn.h</a>&gt;</code>   </td><td class="markdownTableBodyNone"><code>&lt;<a class="el" href="learn_2include_2_kalman_2_learn_2_solvers_8h.html" title="The learned solvers.">Kalman/Learn/Solvers.h</a>&gt;</code>   </td><td class="markdownTableBodyNone">learned components (libKalmanLearn)   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
@@ -946,7 +946,7 @@ Observability</h2>
 <div class="line">obs.WeakComponents();    <span class="comment">// the amplitude and the gain: only their product is measured</span></div>
 <div class="ttc" id="aclass_kalman_1_1_observability_html"><div class="ttname"><a href="class_kalman_1_1_observability.html">Kalman::Observability</a></div><div class="ttdoc">Can the measurements tell the components of the state apart?</div><div class="ttdef"><b>Definition</b> <a href="_observability_8h_source.html#l00055">Observability.h:56</a></div></div>
 </div><!-- fragment --><p>It uses the model's own Jacobians and <code>Algebra::SymmetricEigen</code>. From Python: <code>model.observability(steps=...)</code> (<code>kalman_model_observability</code>); a joint model runs it when a pass starts and warns on a parameter the data cannot determine.</p>
-<p>A parameter of a joint model may also be given a <code>tau</code> (<code>EstimatedParameter::tau</code>): it then returns towards its starting value with <code>exp(-dt / tau)</code> per step, a first-order Gauss-Markov process, in place of a random walk.</p>
+<p>A parameter of a joint model may also be given a <code>tau</code> (<code>EstimatedParameter::tau</code>): it then returns towards its starting value with <code>exp(-dt / tau)</code> per step, a first-order Gauss-Markov process, in place of a random walk. A <code>tau</code> needs a <code>drift &gt; 0</code>; one without is refused.</p>
 <h2><a class="anchor" id="sensors-and-a-model-read-by-one-more"></a>
 Sensors, and a model read by one more</h2>
 <p><code><a class="el" href="struct_kalman_1_1_sensor.html" title="What acquires a measurement: what it reads of the state, and how well.">Kalman::Sensor</a></code> (<code><a class="el" href="_sensor_8h.html" title="Header of the Kalman::Sensor structure.">Kalman/Sensor.h</a></code>) is what acquires a measurement: a name, its readings as a function <code>g(x, t)</code> or a matrix <code>G</code>, its noise <code>R</code>, an optional Jacobian, and its channels as <code><a class="el" href="struct_kalman_1_1_component.html" title="One component of a state or of a measurement: what it is and its unit.">Kalman::Component</a></code>s (its observables: name and unit). <code>Sensor::Check(n)</code> holds every refusal, so C++ and Python refuse alike.</p>

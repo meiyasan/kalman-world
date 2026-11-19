@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.sensors.doppler.DopplerSensor Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.sensors.doppler.DopplerSensor Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.sensors.doppler.DopplerSensor Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1framework_1_1sensors_1_1doppler_1_1_doppler_sensor.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classmodules_1_1framework_1_1sensors_1_1doppler_1_1_doppler_sensor-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.sensors.doppler.DopplerSensor Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.framework.sensors.doppler.DopplerSensor:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1sensors_1_1doppler_1_1_doppler_sensor__inherit__graph.svg" width="274" height="227"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a1a46fa1b333b68149a9ae91797778464" id="r_a1a46fa1b333b68149a9ae91797778464"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1doppler_1_1_doppler_sensor.html#a1a46fa1b333b68149a9ae91797778464">__init__</a> (self, <a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ac9e3d47231de4e740b0d92260c8e07a4">name</a>, <a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#a8c59af22d341967e95eef7f41a9bb0e9">n</a>, position, velocity, sigma, <a class="el" href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a>=None, *<a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a4dc0c65e6a5d405f16ddff859a272804">labels</a>=None, <a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ae7816bddb0fe3c8c52c06258428640b0">rate</a>=None, <a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#af9d60c55cb09760134e65be66d29b9e9">delay</a>=None)</td></tr>
+<tr class="separator:a1a46fa1b333b68149a9ae91797778464"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html">modules.framework.sensors.base.NativeSensor</a></td></tr>
+<tr class="memitem:a42f24accf645fd3adfe243ca2f0d34cf inherit pub_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor" id="r_a42f24accf645fd3adfe243ca2f0d34cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#a42f24accf645fd3adfe243ca2f0d34cf">settings</a> (self)</td></tr>
+<tr class="separator:a42f24accf645fd3adfe243ca2f0d34cf inherit pub_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html">modules.framework.sensor.KalmanSensor</a></td></tr>
+<tr class="memitem:a196fcd9484c5399d07f1015a4cd065cf inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a196fcd9484c5399d07f1015a4cd065cf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a196fcd9484c5399d07f1015a4cd065cf">is_linear</a> (self)</td></tr>
+<tr class="separator:a196fcd9484c5399d07f1015a4cd065cf inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0f1f39ad4c34de355361238e707781a inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_aa0f1f39ad4c34de355361238e707781a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#aa0f1f39ad4c34de355361238e707781a">channels</a> (self)</td></tr>
+<tr class="separator:aa0f1f39ad4c34de355361238e707781a inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5319968206d2e86e3f213626435dc91 inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_af5319968206d2e86e3f213626435dc91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#af5319968206d2e86e3f213626435dc91">resolved</a> (self, n, x0=None, t0=0.0)</td></tr>
+<tr class="separator:af5319968206d2e86e3f213626435dc91 inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afafc7149aa20026fefa743a1a29b846f inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_afafc7149aa20026fefa743a1a29b846f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#afafc7149aa20026fefa743a1a29b846f">measure</a> (self, x, t=None)</td></tr>
+<tr class="separator:afafc7149aa20026fefa743a1a29b846f inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49b3cd5c2999bfb3eaff01563808a725 inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a49b3cd5c2999bfb3eaff01563808a725"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a49b3cd5c2999bfb3eaff01563808a725">observables</a> (self)</td></tr>
+<tr class="separator:a49b3cd5c2999bfb3eaff01563808a725 inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9bff3d4717ae6407415621b78a84f8e inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_ae9bff3d4717ae6407415621b78a84f8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ae9bff3d4717ae6407415621b78a84f8e">compose</a> (self, *sensors, <a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ac9e3d47231de4e740b0d92260c8e07a4">name</a>=None, <a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ae7816bddb0fe3c8c52c06258428640b0">rate</a>=None)</td></tr>
+<tr class="separator:ae9bff3d4717ae6407415621b78a84f8e inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31d8511b2647a706fe1974ec56f45555 inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a31d8511b2647a706fe1974ec56f45555"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a31d8511b2647a706fe1974ec56f45555">__or__</a> (self, other)</td></tr>
+<tr class="separator:a31d8511b2647a706fe1974ec56f45555 inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac17cd68379c3aa660872300fcd5d28c9 inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_ac17cd68379c3aa660872300fcd5d28c9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ac17cd68379c3aa660872300fcd5d28c9">__repr__</a> (self)</td></tr>
+<tr class="separator:ac17cd68379c3aa660872300fcd5d28c9 inherit pub_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html">modules.framework.sensors.base.NativeSensor</a></td></tr>
+<tr class="memitem:a8c59af22d341967e95eef7f41a9bb0e9 inherit pub_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor" id="r_a8c59af22d341967e95eef7f41a9bb0e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#a8c59af22d341967e95eef7f41a9bb0e9">n</a></td></tr>
+<tr class="separator:a8c59af22d341967e95eef7f41a9bb0e9 inherit pub_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab80b0cdfdb8e5c0fa8c1ccb6f08be899 inherit pub_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor" id="r_ab80b0cdfdb8e5c0fa8c1ccb6f08be899"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#ab80b0cdfdb8e5c0fa8c1ccb6f08be899">native</a></td></tr>
+<tr class="separator:ab80b0cdfdb8e5c0fa8c1ccb6f08be899 inherit pub_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html">modules.framework.sensor.KalmanSensor</a></td></tr>
+<tr class="memitem:ac9e3d47231de4e740b0d92260c8e07a4 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_ac9e3d47231de4e740b0d92260c8e07a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ac9e3d47231de4e740b0d92260c8e07a4">name</a></td></tr>
+<tr class="separator:ac9e3d47231de4e740b0d92260c8e07a4 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac22efd27fefb2391da25799bd351848d inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_ac22efd27fefb2391da25799bd351848d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ac22efd27fefb2391da25799bd351848d">g</a></td></tr>
+<tr class="separator:ac22efd27fefb2391da25799bd351848d inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3be5d62bfbb1e96f63ca898eafc838f inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_ae3be5d62bfbb1e96f63ca898eafc838f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ae3be5d62bfbb1e96f63ca898eafc838f">G</a></td></tr>
+<tr class="separator:ae3be5d62bfbb1e96f63ca898eafc838f inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addfbcfb71f2549c2536a883bdef8b27d inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_addfbcfb71f2549c2536a883bdef8b27d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#addfbcfb71f2549c2536a883bdef8b27d">R</a></td></tr>
+<tr class="separator:addfbcfb71f2549c2536a883bdef8b27d inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66ec2ba32aadf63ccf555061524b8ec2 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a66ec2ba32aadf63ccf555061524b8ec2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a66ec2ba32aadf63ccf555061524b8ec2">jacobian</a></td></tr>
+<tr class="separator:a66ec2ba32aadf63ccf555061524b8ec2 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7816bddb0fe3c8c52c06258428640b0 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_ae7816bddb0fe3c8c52c06258428640b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#ae7816bddb0fe3c8c52c06258428640b0">rate</a></td></tr>
+<tr class="separator:ae7816bddb0fe3c8c52c06258428640b0 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9d60c55cb09760134e65be66d29b9e9 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_af9d60c55cb09760134e65be66d29b9e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#af9d60c55cb09760134e65be66d29b9e9">delay</a></td></tr>
+<tr class="separator:af9d60c55cb09760134e65be66d29b9e9 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dc0c65e6a5d405f16ddff859a272804 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a4dc0c65e6a5d405f16ddff859a272804"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a4dc0c65e6a5d405f16ddff859a272804">labels</a></td></tr>
+<tr class="separator:a4dc0c65e6a5d405f16ddff859a272804 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12bfdfc8f51aeca4d0d188d95bc4f602 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a12bfdfc8f51aeca4d0d188d95bc4f602"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a12bfdfc8f51aeca4d0d188d95bc4f602">instrument</a></td></tr>
+<tr class="separator:a12bfdfc8f51aeca4d0d188d95bc4f602 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9cf1537e51585f5e8c411d93ff55323 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_af9cf1537e51585f5e8c411d93ff55323"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#af9cf1537e51585f5e8c411d93ff55323">calibrated</a></td></tr>
+<tr class="separator:af9cf1537e51585f5e8c411d93ff55323 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96c7640a2a2c3734aa6df25ae29f381e inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a96c7640a2a2c3734aa6df25ae29f381e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a96c7640a2a2c3734aa6df25ae29f381e">gain</a></td></tr>
+<tr class="separator:a96c7640a2a2c3734aa6df25ae29f381e inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ad7e974288239ea82fa80b7dbd3c5a1 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a9ad7e974288239ea82fa80b7dbd3c5a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a9ad7e974288239ea82fa80b7dbd3c5a1">offset</a></td></tr>
+<tr class="separator:a9ad7e974288239ea82fa80b7dbd3c5a1 inherit pub_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html">modules.framework.sensor.KalmanSensor</a></td></tr>
+<tr class="memitem:a9fd6388971bbb37eaa0f42288210ca67 inherit pub_static_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a9fd6388971bbb37eaa0f42288210ca67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a9fd6388971bbb37eaa0f42288210ca67">native</a> = None</td></tr>
+<tr class="separator:a9fd6388971bbb37eaa0f42288210ca67 inherit pub_static_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeec7555c8d813d90016e300702f2c5cd inherit pub_static_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_aeec7555c8d813d90016e300702f2c5cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#aeec7555c8d813d90016e300702f2c5cd">station</a> = None</td></tr>
+<tr class="separator:aeec7555c8d813d90016e300702f2c5cd inherit pub_static_attribs_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html">modules.framework.sensors.base.NativeSensor</a></td></tr>
+<tr class="memitem:a939303b70bfd0e9fcc35cb0dc6530ad7 inherit pro_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor" id="r_a939303b70bfd0e9fcc35cb0dc6530ad7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#a939303b70bfd0e9fcc35cb0dc6530ad7">_state</a> (self, x)</td></tr>
+<tr class="separator:a939303b70bfd0e9fcc35cb0dc6530ad7 inherit pro_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee1fd9359ab45df36979c84edad4464a inherit pro_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor" id="r_aee1fd9359ab45df36979c84edad4464a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#aee1fd9359ab45df36979c84edad4464a">_read</a> (self, x, t=0.0)</td></tr>
+<tr class="separator:aee1fd9359ab45df36979c84edad4464a inherit pro_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab2b88151bc543a248502f906ff7cf32 inherit pro_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor" id="r_aab2b88151bc543a248502f906ff7cf32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#aab2b88151bc543a248502f906ff7cf32">_jacobian</a> (self, x, t=0.0)</td></tr>
+<tr class="separator:aab2b88151bc543a248502f906ff7cf32 inherit pro_methods_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_static_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html">modules.framework.sensor.KalmanSensor</a></td></tr>
+<tr class="memitem:a01199cd35a712879a97a52e4a0d6347f inherit pro_static_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" id="r_a01199cd35a712879a97a52e4a0d6347f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a01199cd35a712879a97a52e4a0d6347f">_labels</a> (<a class="el" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html#a4dc0c65e6a5d405f16ddff859a272804">labels</a>)</td></tr>
+<tr class="separator:a01199cd35a712879a97a52e4a0d6347f inherit pro_static_methods_classmodules_1_1framework_1_1sensor_1_1_kalman_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html">modules.framework.sensors.base.NativeSensor</a></td></tr>
+<tr class="memitem:a4df5d2d62203d9392082d9cc14024dae inherit pro_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor" id="r_a4df5d2d62203d9392082d9cc14024dae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#a4df5d2d62203d9392082d9cc14024dae">_read</a></td></tr>
+<tr class="separator:a4df5d2d62203d9392082d9cc14024dae inherit pro_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f9f3ef810618c25dbe6cc2d962458c7 inherit pro_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor" id="r_a3f9f3ef810618c25dbe6cc2d962458c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#a3f9f3ef810618c25dbe6cc2d962458c7">_k</a></td></tr>
+<tr class="separator:a3f9f3ef810618c25dbe6cc2d962458c7 inherit pro_attribs_classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">The velocity along the line of sight, one channel,
+
+    v_r = v . (p - at) / |p - at|
+
+Parameters
+----------
+name : what the sensor is called.
+n : the number of state components of the model it will read.
+position, velocity : the indices of the position and of the velocity in the
+    state, as many of each (1, 2 or 3 dimensions).
+sigma : the standard deviation of the reading.
+at : where the sensor is; the origin when ``None``.
+labels, rate, delay : as for any :class:`~kalman.framework.sensor.KalmanSensor`.
+
+Where it is are its settings ``x``, ``y``, ``z`` (as many as dimensions): the
+model that takes it has the parameters ``"&lt;name&gt;.x"``, ..., which ``joint`` can
+estimate. At the sensor itself the line of sight is not defined: the reading
+is 0.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="doppler_8py_source.html#l00009">9</a> of file <a class="el" href="doppler_8py_source.html">doppler.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a1a46fa1b333b68149a9ae91797778464" name="a1a46fa1b333b68149a9ae91797778464"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a46fa1b333b68149a9ae91797778464">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.sensors.doppler.DopplerSensor.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>velocity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sigma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>at</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>labels</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>rate</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>delay</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#ac7f219fafcd0c43f7ad526d7dc5c0e06">modules.framework.sensors.base.NativeSensor</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="doppler_8py_source.html#l00030">30</a> of file <a class="el" href="doppler_8py_source.html">doppler.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   30</span>    <span class="keyword">def </span>__init__(self, name, n, position, velocity, sigma, at=None, *, labels=None, rate=None, delay=None):</div>
+<div class="line"><span class="lineno">   31</span>        position = np.atleast_1d(position).astype(float)</div>
+<div class="line"><span class="lineno">   32</span>        velocity = np.atleast_1d(velocity).astype(float)</div>
+<div class="line"><span class="lineno">   33</span>        where = () <span class="keywordflow">if</span> at <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> np.asarray(at, dtype=float).ravel()</div>
+<div class="line"><span class="lineno">   34</span>        <span class="keywordflow">if</span> velocity.size != position.size <span class="keywordflow">or</span> (len(where) <span class="keywordflow">and</span> len(where) != position.size):</div>
+<div class="line"><span class="lineno">   35</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;DopplerSensor {name!r}: position, velocity and where the sensor is take as many &quot;</span></div>
+<div class="line"><span class="lineno">   36</span>                             f<span class="stringliteral">&quot;numbers each, got {position.size}, {velocity.size} and {len(where)}.&quot;</span>)</div>
+<div class="line"><span class="lineno">   37</span>        super().__init__(<span class="stringliteral">&quot;doppler&quot;</span>, name, n, [position.size, *position, *velocity, float(sigma), *where],</div>
+<div class="line"><span class="lineno">   38</span>                         labels=labels, rate=rate, delay=delay)</div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/framework/sensors/<a class="el" href="doppler_8py_source.html">doppler.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1sensors.html">sensors</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1sensors_1_1doppler.html">doppler</a></li><li class="navelem"><a class="el" href="classmodules_1_1framework_1_1sensors_1_1doppler_1_1_doppler_sensor.html">DopplerSensor</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

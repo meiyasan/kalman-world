@@ -86,6 +86,7 @@ var namespacetests =
     [ "test_native_solvers", "namespacetests_1_1test__native__solvers.html", "namespacetests_1_1test__native__solvers" ],
     [ "test_native_tracking", "namespacetests_1_1test__native__tracking.html", "namespacetests_1_1test__native__tracking" ],
     [ "test_net_server", "namespacetests_1_1test__net__server.html", "namespacetests_1_1test__net__server" ],
+    [ "test_netatmo", "namespacetests_1_1test__netatmo.html", "namespacetests_1_1test__netatmo" ],
     [ "test_oscillators", "namespacetests_1_1test__oscillators.html", "namespacetests_1_1test__oscillators" ],
     [ "test_plots", "namespacetests_1_1test__plots.html", "namespacetests_1_1test__plots" ],
     [ "test_powergrids", "namespacetests_1_1test__powergrids.html", "namespacetests_1_1test__powergrids" ],

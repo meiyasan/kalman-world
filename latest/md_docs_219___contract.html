@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -185,7 +185,7 @@ The model: what the system is</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">setting   </td><td class="markdownTableBodyNone">a number a sensor's readings depend on (a focal length, where it is); a parameter <code>"&lt;name&gt;.&lt;setting&gt;"</code> of the model that takes the sensor, which <code>joint</code> estimates   </td><td class="markdownTableBodyNone"><code>sensor.settings</code>   </td><td class="markdownTableBodyNone"><code>Sensor::settings</code>   </td><td class="markdownTableBodyNone">in place    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">adapter   </td><td class="markdownTableBodyNone">one piece of hardware: an instrument of generic sensors with what its data sheet and its mounting say, and where its data comes from. None is shipped   </td><td class="markdownTableBodyNone">a <code>KalmanInstrument</code> subclass, in <code>kalman.adapters</code>   </td><td class="markdownTableBodyNone">a class deriving from <code><a class="el" href="struct_kalman_1_1_instrument.html" title="A set of sensors, and what they share.">Kalman::Instrument</a></code>   </td><td class="markdownTableBodyNone">written by whoever uses the hardware    </td></tr>
+<td class="markdownTableBodyNone">adapter   </td><td class="markdownTableBodyNone">one piece of hardware: an instrument of generic sensors with what its data sheet and its mounting say, and where its data comes from. <code>NetatmoModule</code> is the first   </td><td class="markdownTableBodyNone">a <code>KalmanInstrument</code> subclass, in <code>kalman.adapters</code>   </td><td class="markdownTableBodyNone">a class deriving from <code><a class="el" href="struct_kalman_1_1_instrument.html" title="A set of sensors, and what they share.">Kalman::Instrument</a></code>   </td><td class="markdownTableBodyNone">written by whoever uses the hardware    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">detector   </td><td class="markdownTableBodyNone">an instrument whose sensors are read one after the other, each at its <code>station</code>: the layers track finding runs through   </td><td class="markdownTableBodyNone"><code>KalmanInstrument(sequential=True)</code>, <code>chamber.instruments</code>   </td><td class="markdownTableBodyNone"><code>Instrument::sequential</code>, <code>Tracking::Detector::Layers</code>   </td><td class="markdownTableBodyNone">in place    </td></tr>
 <tr class="markdownTableRowOdd">

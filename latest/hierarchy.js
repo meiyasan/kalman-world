@@ -48,6 +48,7 @@ var hierarchy =
       [ "modules.mcp.backend.RemoteError", "classmodules_1_1mcp_1_1backend_1_1_remote_error.html", null ]
     ] ],
     [ "Kalman::Factory", "class_kalman_1_1_factory.html", null ],
+    [ "tests.test_netatmo.FakeNetatmo", "classtests_1_1test__netatmo_1_1_fake_netatmo.html", null ],
     [ "logging.Formatter", null, [
       [ "modules.runtime.logging.LoggerFormatter", "classmodules_1_1runtime_1_1logging_1_1_logger_formatter.html", null ]
     ] ],
@@ -179,6 +180,7 @@ var hierarchy =
       ] ]
     ] ],
     [ "modules.framework.instrument.KalmanInstrument", "classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html", [
+      [ "modules.adapters.netatmo.NetatmoModule", "classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html", null ],
       [ "tests.test_instrument_data.BenchRadar", "classtests_1_1test__instrument__data_1_1_bench_radar.html", null ]
     ] ],
     [ "KalmanObservable", null, [
@@ -575,6 +577,11 @@ var hierarchy =
       [ "tests.test_net_server.TestMcpStdio", "classtests_1_1test__net__server_1_1_test_mcp_stdio.html", null ],
       [ "tests.test_net_server.TestRestAgainstFacade", "classtests_1_1test__net__server_1_1_test_rest_against_facade.html", null ],
       [ "tests.test_net_server.TestTokensFromPython", "classtests_1_1test__net__server_1_1_test_tokens_from_python.html", null ],
+      [ "tests.test_netatmo.TestEmptyAtNight", "classtests_1_1test__netatmo_1_1_test_empty_at_night.html", null ],
+      [ "tests.test_netatmo.TestFiles", "classtests_1_1test__netatmo_1_1_test_files.html", null ],
+      [ "tests.test_netatmo.TestFiveModules", "classtests_1_1test__netatmo_1_1_test_five_modules.html", null ],
+      [ "tests.test_netatmo.TestOnSteps", "classtests_1_1test__netatmo_1_1_test_on_steps.html", null ],
+      [ "tests.test_netatmo.TestTheWebAPI", "classtests_1_1test__netatmo_1_1_test_the_web_a_p_i.html", null ],
       [ "tests.test_oscillators.TestAnalyticOscillatorModel", "classtests_1_1test__oscillators_1_1_test_analytic_oscillator_model.html", null ],
       [ "tests.test_oscillators.TestHarmonicOscillatorModel", "classtests_1_1test__oscillators_1_1_test_harmonic_oscillator_model.html", null ],
       [ "tests.test_oscillators.TestInharmonicOscillatorModel", "classtests_1_1test__oscillators_1_1_test_inharmonic_oscillator_model.html", null ],
@@ -705,6 +712,8 @@ var hierarchy =
       [ "modules.framework.abstract.contracts.KalmanProviderABC", "classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_provider_a_b_c.html", [
         [ "modules.framework.abstract.metadata.KalmanProviderMetadata", "classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html", [
           [ "modules.framework.provider.KalmanProvider", "classmodules_1_1framework_1_1provider_1_1_kalman_provider.html", [
+            [ "modules.adapters.netatmo.NetatmoCSV", "classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html", null ],
+            [ "modules.adapters.netatmo.NetatmoCloud", "classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html", null ],
             [ "modules.apps.weather.providers.era5.ERA5Provider", "classmodules_1_1apps_1_1weather_1_1providers_1_1era5_1_1_e_r_a5_provider.html", null ],
             [ "modules.apps.weather.providers.turbulence.TurbulenceProvider", "classmodules_1_1apps_1_1weather_1_1providers_1_1turbulence_1_1_turbulence_provider.html", null ],
             [ "modules.providers.file.FileProvider", "classmodules_1_1providers_1_1file_1_1_file_provider.html", null ],

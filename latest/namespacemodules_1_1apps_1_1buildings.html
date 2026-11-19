@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -157,7 +157,9 @@ Variables</h2></td></tr>
 <div class="textblock"><pre class="fragment">``kalman.apps.buildings`` — the air of a room.
 
 - ``co2`` — :class:`RoomCO2Model`, a CO2 mass balance on the cells of a room
-  (mixing, ventilation, occupants), and :func:`l_shaped_room`.
+  (mixing, ventilation, occupants), :func:`l_shaped_room`, and
+  :func:`empty_at_night`, what is known of the occupants as a sensor, and
+  :func:`ventilation_from_decay`, the room's air changes from an evening's fall.
 </pre> </div><h2 class="groupheader">Variable Documentation</h2>
 <a id="a5a769932784e0d32af932b13e158da69" name="a5a769932784e0d32af932b13e158da69"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5a769932784e0d32af932b13e158da69">&#9670;&#160;</a></span>VARIANTS</h2>
@@ -174,7 +176,7 @@ Variables</h2></td></tr>
 <div class="line"><span class="lineno">    2</span>    <span class="stringliteral">&quot;co2&quot;</span>: RoomCO2Model,</div>
 <div class="line"><span class="lineno">    3</span>}</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="modules_2apps_2buildings_2____init_____8py_source.html#l00009">9</a> of file <a class="el" href="modules_2apps_2buildings_2____init_____8py_source.html">__init__.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="modules_2apps_2buildings_2____init_____8py_source.html#l00011">11</a> of file <a class="el" href="modules_2apps_2buildings_2____init_____8py_source.html">__init__.py</a>.</p>
 
 </div>
 </div>

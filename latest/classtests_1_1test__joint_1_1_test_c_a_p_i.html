@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -155,7 +155,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__joint_8py_source.html#l00298">298</a> of file <a class="el" href="test__joint_8py_source.html">test_joint.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__joint_8py_source.html#l00300">300</a> of file <a class="el" href="test__joint_8py_source.html">test_joint.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aa181e5c6fd416a05e8c063ba89c84ee4" name="aa181e5c6fd416a05e8c063ba89c84ee4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa181e5c6fd416a05e8c063ba89c84ee4">&#9670;&#160;</a></span>test_refusals_are_reported()</h2>
@@ -173,24 +173,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__joint_8py_source.html#l00300">300</a> of file <a class="el" href="test__joint_8py_source.html">test_joint.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  300</span>    <span class="keyword">def </span>test_refusals_are_reported(self):</div>
-<div class="line"><span class="lineno">  301</span>        lib, ffi = core.lib, core.ffi</div>
-<div class="line"><span class="lineno">  302</span>        inner = lib.kalman_model_create_matrices(b<span class="stringliteral">&quot;matrices&quot;</span>, 2, 1, 0)     <span class="comment"># declares no parameter</span></div>
-<div class="line"><span class="lineno">  303</span>        self.assertNotEqual(inner, ffi.NULL)</div>
-<div class="line"><span class="lineno">  304</span>        <span class="keywordflow">try</span>:</div>
-<div class="line"><span class="lineno">  305</span>            encoded = [ffi.new(<span class="stringliteral">&quot;char[]&quot;</span>, b<span class="stringliteral">&quot;damping&quot;</span>)]</div>
-<div class="line"><span class="lineno">  306</span>            names = ffi.new(<span class="stringliteral">&quot;const char *[]&quot;</span>, encoded)</div>
-<div class="line"><span class="lineno">  307</span>            sigma, drift = ffi.new(<span class="stringliteral">&quot;double[]&quot;</span>, [0.5]), ffi.new(<span class="stringliteral">&quot;double[]&quot;</span>, [0.0])</div>
-<div class="line"><span class="lineno">  308</span>            handle = lib.kalman_model_create_joint(inner, 1, names, sigma, drift, ffi.NULL)</div>
-<div class="line"><span class="lineno">  309</span>            self.assertEqual(handle, ffi.NULL)</div>
-<div class="line"><span class="lineno">  310</span>            self.assertIn(<span class="stringliteral">&quot;damping&quot;</span>, core.last_error())</div>
-<div class="line"><span class="lineno">  311</span>            self.assertEqual(lib.kalman_model_create_joint(ffi.NULL, 1, names, sigma, drift, ffi.NULL), ffi.NULL)</div>
-<div class="line"><span class="lineno">  312</span>            self.assertEqual(lib.kalman_model_create_joint(inner, 0, names, sigma, drift, ffi.NULL), ffi.NULL)</div>
-<div class="line"><span class="lineno">  313</span>        <span class="keywordflow">finally</span>:</div>
-<div class="line"><span class="lineno">  314</span>            lib.kalman_model_destroy(inner)</div>
-<div class="line"><span class="lineno">  315</span> </div>
-<div class="line"><span class="lineno">  316</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__joint_8py_source.html#l00302">302</a> of file <a class="el" href="test__joint_8py_source.html">test_joint.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  302</span>    <span class="keyword">def </span>test_refusals_are_reported(self):</div>
+<div class="line"><span class="lineno">  303</span>        lib, ffi = core.lib, core.ffi</div>
+<div class="line"><span class="lineno">  304</span>        inner = lib.kalman_model_create_matrices(b<span class="stringliteral">&quot;matrices&quot;</span>, 2, 1, 0)     <span class="comment"># declares no parameter</span></div>
+<div class="line"><span class="lineno">  305</span>        self.assertNotEqual(inner, ffi.NULL)</div>
+<div class="line"><span class="lineno">  306</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  307</span>            encoded = [ffi.new(<span class="stringliteral">&quot;char[]&quot;</span>, b<span class="stringliteral">&quot;damping&quot;</span>)]</div>
+<div class="line"><span class="lineno">  308</span>            names = ffi.new(<span class="stringliteral">&quot;const char *[]&quot;</span>, encoded)</div>
+<div class="line"><span class="lineno">  309</span>            sigma, drift = ffi.new(<span class="stringliteral">&quot;double[]&quot;</span>, [0.5]), ffi.new(<span class="stringliteral">&quot;double[]&quot;</span>, [0.0])</div>
+<div class="line"><span class="lineno">  310</span>            handle = lib.kalman_model_create_joint(inner, 1, names, sigma, drift, ffi.NULL)</div>
+<div class="line"><span class="lineno">  311</span>            self.assertEqual(handle, ffi.NULL)</div>
+<div class="line"><span class="lineno">  312</span>            self.assertIn(<span class="stringliteral">&quot;damping&quot;</span>, core.last_error())</div>
+<div class="line"><span class="lineno">  313</span>            self.assertEqual(lib.kalman_model_create_joint(ffi.NULL, 1, names, sigma, drift, ffi.NULL), ffi.NULL)</div>
+<div class="line"><span class="lineno">  314</span>            self.assertEqual(lib.kalman_model_create_joint(inner, 0, names, sigma, drift, ffi.NULL), ffi.NULL)</div>
+<div class="line"><span class="lineno">  315</span>        <span class="keywordflow">finally</span>:</div>
+<div class="line"><span class="lineno">  316</span>            lib.kalman_model_destroy(inner)</div>
+<div class="line"><span class="lineno">  317</span> </div>
+<div class="line"><span class="lineno">  318</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

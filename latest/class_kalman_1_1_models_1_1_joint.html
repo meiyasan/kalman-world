@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -635,35 +635,35 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00049">49</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>        : fInner(std::move(inner)), fEstimated(std::move(parameters))</div>
-<div class="line"><span class="lineno">   51</span>    {</div>
-<div class="line"><span class="lineno">   52</span>        <span class="keywordflow">if</span> (!fInner) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Models::Joint: the inner model is null.&quot;</span>);</div>
-<div class="line"><span class="lineno">   53</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = fInner-&gt;NState(), p = CheckedCount(*fInner, fEstimated);</div>
-<div class="line"><span class="lineno">   54</span>        fNInner = <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>;</div>
-<div class="line"><span class="lineno">   55</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a555b3d431a0e61d50c1282aeb3abac51">SetName</a>(fInner-&gt;Name());</div>
-<div class="line"><span class="lineno">   56</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ad80f1196a0e2f8a20f16fe6d17ab528a">Allocate</a>(n + p, fInner-&gt;NMeasure(), fInner-&gt;NControl());</div>
-<div class="line"><span class="lineno">   57</span> </div>
-<div class="line"><span class="lineno">   58</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a31b4fd602e88d38b51ff86ae05e6ac1d">SetSampleRate</a>(fInner-&gt;SampleRate());</div>
-<div class="line"><span class="lineno">   59</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ae068b0068ab650340741a7b8a184eb77">SetT0</a>(fInner-&gt;T0());</div>
-<div class="line"><span class="lineno">   60</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a99ca5300612034715e7db6901b3b7b48">SetTimeUnit</a>(fInner-&gt;TimeUnit());</div>
-<div class="line"><span class="lineno">   61</span> </div>
-<div class="line"><span class="lineno">   62</span>        <span class="comment">// The parameters make the step nonlinear in the state even when the inner</span></div>
-<div class="line"><span class="lineno">   63</span>        <span class="comment">// model is linear: the linear engine would read F(t), which is not dJ/dx.</span></div>
-<div class="line"><span class="lineno">   64</span>        <span class="keyword">const</span> <a class="code hl_enumeration" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">EngineKind</a> engine = fInner-&gt;DefaultEngine();</div>
-<div class="line"><span class="lineno">   65</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ac74fcea987377be712dca59892faab3e">SetDefaultEngine</a>(engine == <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b">EngineKind::Linear</a> ? <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537">EngineKind::Extended</a> : engine);</div>
-<div class="line"><span class="lineno">   66</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a136dfe6ea3ee68d6646ce8255fb4501b">SetAnalyticJacobian</a>(<span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">   67</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#af99c4d25cce381cb7fcc37a9edb687be">SetStructure</a>(<a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">StructureKind::Maps</a>);</div>
-<div class="line"><span class="lineno">   68</span> </div>
-<div class="line"><span class="lineno">   69</span>        <a class="code hl_function" href="class_kalman_1_1_models_1_1_joint.html#af8fa58265aff040afa1c59f620712f95">AdoptInitialState</a>();</div>
-<div class="line"><span class="lineno">   70</span> </div>
-<div class="line"><span class="lineno">   71</span>        std::vector&lt;Component&gt; components = fInner-&gt;StateComponents();</div>
-<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;e : fEstimated) components.push_back({e.name, <span class="stringliteral">&quot;&quot;</span>});</div>
-<div class="line"><span class="lineno">   73</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#aa4e1dec6da53716870d3b27306e6b6d8">DeclareState</a>(std::move(components));</div>
-<div class="line"><span class="lineno">   74</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a8433b39e0476c4c3f766d0adaa15ebcf">DeclareMeasurement</a>(fInner-&gt;MeasurementComponents());</div>
-<div class="line"><span class="lineno">   75</span> </div>
-<div class="line"><span class="lineno">   76</span>        CheckActs();</div>
-<div class="line"><span class="lineno">   77</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00052">52</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>        : fInner(std::move(inner)), fEstimated(std::move(parameters))</div>
+<div class="line"><span class="lineno">   54</span>    {</div>
+<div class="line"><span class="lineno">   55</span>        <span class="keywordflow">if</span> (!fInner) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Models::Joint: the inner model is null.&quot;</span>);</div>
+<div class="line"><span class="lineno">   56</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = fInner-&gt;NState(), p = CheckedCount(*fInner, fEstimated);</div>
+<div class="line"><span class="lineno">   57</span>        fNInner = <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>;</div>
+<div class="line"><span class="lineno">   58</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a555b3d431a0e61d50c1282aeb3abac51">SetName</a>(fInner-&gt;Name());</div>
+<div class="line"><span class="lineno">   59</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ad80f1196a0e2f8a20f16fe6d17ab528a">Allocate</a>(n + p, fInner-&gt;NMeasure(), fInner-&gt;NControl());</div>
+<div class="line"><span class="lineno">   60</span> </div>
+<div class="line"><span class="lineno">   61</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a31b4fd602e88d38b51ff86ae05e6ac1d">SetSampleRate</a>(fInner-&gt;SampleRate());</div>
+<div class="line"><span class="lineno">   62</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ae068b0068ab650340741a7b8a184eb77">SetT0</a>(fInner-&gt;T0());</div>
+<div class="line"><span class="lineno">   63</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a99ca5300612034715e7db6901b3b7b48">SetTimeUnit</a>(fInner-&gt;TimeUnit());</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span>        <span class="comment">// The parameters make the step nonlinear in the state even when the inner</span></div>
+<div class="line"><span class="lineno">   66</span>        <span class="comment">// model is linear: the linear engine would read F(t), which is not dJ/dx.</span></div>
+<div class="line"><span class="lineno">   67</span>        <span class="keyword">const</span> <a class="code hl_enumeration" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">EngineKind</a> engine = fInner-&gt;DefaultEngine();</div>
+<div class="line"><span class="lineno">   68</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ac74fcea987377be712dca59892faab3e">SetDefaultEngine</a>(engine == <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b">EngineKind::Linear</a> ? <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537">EngineKind::Extended</a> : engine);</div>
+<div class="line"><span class="lineno">   69</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a136dfe6ea3ee68d6646ce8255fb4501b">SetAnalyticJacobian</a>(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   70</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#af99c4d25cce381cb7fcc37a9edb687be">SetStructure</a>(<a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">StructureKind::Maps</a>);</div>
+<div class="line"><span class="lineno">   71</span> </div>
+<div class="line"><span class="lineno">   72</span>        <a class="code hl_function" href="class_kalman_1_1_models_1_1_joint.html#af8fa58265aff040afa1c59f620712f95">AdoptInitialState</a>();</div>
+<div class="line"><span class="lineno">   73</span> </div>
+<div class="line"><span class="lineno">   74</span>        std::vector&lt;Component&gt; components = fInner-&gt;StateComponents();</div>
+<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;e : fEstimated) components.push_back({e.name, <span class="stringliteral">&quot;&quot;</span>});</div>
+<div class="line"><span class="lineno">   76</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#aa4e1dec6da53716870d3b27306e6b6d8">DeclareState</a>(std::move(components));</div>
+<div class="line"><span class="lineno">   77</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a8433b39e0476c4c3f766d0adaa15ebcf">DeclareMeasurement</a>(fInner-&gt;MeasurementComponents());</div>
+<div class="line"><span class="lineno">   78</span> </div>
+<div class="line"><span class="lineno">   79</span>        CheckActs();</div>
+<div class="line"><span class="lineno">   80</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a136dfe6ea3ee68d6646ce8255fb4501b"><div class="ttname"><a href="class_kalman_1_1_model.html#a136dfe6ea3ee68d6646ce8255fb4501b">Kalman::Model::SetAnalyticJacobian</a></div><div class="ttdeci">void SetAnalyticJacobian(bool on)</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00354">Model.h:354</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a31b4fd602e88d38b51ff86ae05e6ac1d"><div class="ttname"><a href="class_kalman_1_1_model.html#a31b4fd602e88d38b51ff86ae05e6ac1d">Kalman::Model::SetSampleRate</a></div><div class="ttdeci">void SetSampleRate(double fs)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00072">Model.cc:72</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a555b3d431a0e61d50c1282aeb3abac51"><div class="ttname"><a href="class_kalman_1_1_model.html#a555b3d431a0e61d50c1282aeb3abac51">Kalman::Model::SetName</a></div><div class="ttdeci">void SetName(std::string name)</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00144">Model.h:144</a></div></div>
@@ -674,7 +674,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_model_html_ad80f1196a0e2f8a20f16fe6d17ab528a"><div class="ttname"><a href="class_kalman_1_1_model.html#ad80f1196a0e2f8a20f16fe6d17ab528a">Kalman::Model::Allocate</a></div><div class="ttdeci">void Allocate(std::size_t n, std::size_t m, std::size_t l)</div><div class="ttdoc">Size every coefficient to (n, m, l) and seed sane defaults.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00041">Model.cc:41</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_ae068b0068ab650340741a7b8a184eb77"><div class="ttname"><a href="class_kalman_1_1_model.html#ae068b0068ab650340741a7b8a184eb77">Kalman::Model::SetT0</a></div><div class="ttdeci">void SetT0(double t0)</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00168">Model.h:168</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_af99c4d25cce381cb7fcc37a9edb687be"><div class="ttname"><a href="class_kalman_1_1_model.html#af99c4d25cce381cb7fcc37a9edb687be">Kalman::Model::SetStructure</a></div><div class="ttdeci">void SetStructure(StructureKind kind)</div><div class="ttdoc">Declare what the model is made of (see Kalman::StructureKind).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00310">Model.h:310</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_af8fa58265aff040afa1c59f620712f95"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#af8fa58265aff040afa1c59f620712f95">Kalman::Models::Joint::AdoptInitialState</a></div><div class="ttdeci">void AdoptInitialState() override</div><div class="ttdoc">The inner initial state, then the parameters as the inner model holds them now.</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00079">Joint.cc:79</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_af8fa58265aff040afa1c59f620712f95"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#af8fa58265aff040afa1c59f620712f95">Kalman::Models::Joint::AdoptInitialState</a></div><div class="ttdeci">void AdoptInitialState() override</div><div class="ttdoc">The inner initial state, then the parameters as the inner model holds them now.</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00082">Joint.cc:82</a></div></div>
 <div class="ttc" id="anamespace_kalman_html_a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d"><div class="ttname"><a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">Kalman::StructureKind::Maps</a></div><div class="ttdeci">@ Maps</div></div>
 <div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">Kalman::EngineKind</a></div><div class="ttdeci">EngineKind</div><div class="ttdoc">Which inference algorithm a model wants, and which one an engine provides.</div><div class="ttdef"><b>Definition</b> <a href="_constants_8h_source.html#l00026">Constants.h:27</a></div></div>
 <div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b">Kalman::EngineKind::Linear</a></div><div class="ttdeci">@ Linear</div><div class="ttdoc">constant-matrix predict/update (KF)</div></div>
@@ -711,30 +711,30 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a31b1bef0cbda844623343d5447c230d8">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00079">79</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   80</span>    {</div>
-<div class="line"><span class="lineno">   81</span>        <span class="comment">// The inner model&#39;s initial state, then the parameters as they are now.</span></div>
-<div class="line"><span class="lineno">   82</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = fNInner, p = fEstimated.size();</div>
-<div class="line"><span class="lineno">   83</span>        <span class="keyword">const</span> Vector &amp;s0 = fInner-&gt;X0();</div>
-<div class="line"><span class="lineno">   84</span>        <span class="keyword">const</span> Matrix &amp;<a class="code hl_function" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a> = fInner-&gt;P0();</div>
-<div class="line"><span class="lineno">   85</span>        Vector x0(n + p, 0.);</div>
-<div class="line"><span class="lineno">   86</span>        Matrix Px(n + p, n + p, 0.);</div>
-<div class="line"><span class="lineno">   87</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
-<div class="line"><span class="lineno">   88</span>        {</div>
-<div class="line"><span class="lineno">   89</span>            x0(i) = s0.Size() == <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> ? s0(i) : 0.;</div>
-<div class="line"><span class="lineno">   90</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++j)</div>
-<div class="line"><span class="lineno">   91</span>                Px(i, j) = (<a class="code hl_function" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a>.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Rows</a>() == <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> &amp;&amp; <a class="code hl_function" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a>.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Cols</a>() == <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>) ? <a class="code hl_function" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a>(i, j) : (i == j ? 1. : 0.);</div>
-<div class="line"><span class="lineno">   92</span>        }</div>
-<div class="line"><span class="lineno">   93</span>        fMean.assign(p, 0.);</div>
-<div class="line"><span class="lineno">   94</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k)</div>
-<div class="line"><span class="lineno">   95</span>        {</div>
-<div class="line"><span class="lineno">   96</span>            x0(n + k) = fInner-&gt;Parameter(fEstimated[k].name);</div>
-<div class="line"><span class="lineno">   97</span>            fMean[k] = x0(n + k);</div>
-<div class="line"><span class="lineno">   98</span>            Px(n + k, n + k) = fEstimated[k].sigma * fEstimated[k].sigma;</div>
-<div class="line"><span class="lineno">   99</span>        }</div>
-<div class="line"><span class="lineno">  100</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a4fe949c8582b82c25bb7728ddd2136ae">SetInitialState</a>(x0);</div>
-<div class="line"><span class="lineno">  101</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a03439ab774674a982f6c9c255923a9fc">SetInitialCovariance</a>(Px);</div>
-<div class="line"><span class="lineno">  102</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00082">82</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   83</span>    {</div>
+<div class="line"><span class="lineno">   84</span>        <span class="comment">// The inner model&#39;s initial state, then the parameters as they are now.</span></div>
+<div class="line"><span class="lineno">   85</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = fNInner, p = fEstimated.size();</div>
+<div class="line"><span class="lineno">   86</span>        <span class="keyword">const</span> Vector &amp;s0 = fInner-&gt;X0();</div>
+<div class="line"><span class="lineno">   87</span>        <span class="keyword">const</span> Matrix &amp;<a class="code hl_function" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a> = fInner-&gt;P0();</div>
+<div class="line"><span class="lineno">   88</span>        Vector x0(n + p, 0.);</div>
+<div class="line"><span class="lineno">   89</span>        Matrix Px(n + p, n + p, 0.);</div>
+<div class="line"><span class="lineno">   90</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
+<div class="line"><span class="lineno">   91</span>        {</div>
+<div class="line"><span class="lineno">   92</span>            x0(i) = s0.Size() == <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> ? s0(i) : 0.;</div>
+<div class="line"><span class="lineno">   93</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++j)</div>
+<div class="line"><span class="lineno">   94</span>                Px(i, j) = (<a class="code hl_function" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a>.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Rows</a>() == <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> &amp;&amp; <a class="code hl_function" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a>.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Cols</a>() == <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>) ? <a class="code hl_function" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a>(i, j) : (i == j ? 1. : 0.);</div>
+<div class="line"><span class="lineno">   95</span>        }</div>
+<div class="line"><span class="lineno">   96</span>        fMean.assign(p, 0.);</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k)</div>
+<div class="line"><span class="lineno">   98</span>        {</div>
+<div class="line"><span class="lineno">   99</span>            x0(n + k) = fInner-&gt;Parameter(fEstimated[k].name);</div>
+<div class="line"><span class="lineno">  100</span>            fMean[k] = x0(n + k);</div>
+<div class="line"><span class="lineno">  101</span>            Px(n + k, n + k) = fEstimated[k].sigma * fEstimated[k].sigma;</div>
+<div class="line"><span class="lineno">  102</span>        }</div>
+<div class="line"><span class="lineno">  103</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a4fe949c8582b82c25bb7728ddd2136ae">SetInitialState</a>(x0);</div>
+<div class="line"><span class="lineno">  104</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a03439ab774674a982f6c9c255923a9fc">SetInitialCovariance</a>(Px);</div>
+<div class="line"><span class="lineno">  105</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_matrix_html_a571e5d05d267249cd6b396250ccb8ce2"><div class="ttname"><a href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Kalman::Matrix::Rows</a></div><div class="ttdeci">std::size_t Rows() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00097">Matrix.h:97</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_matrix_html_aac29b6bb3af29976d7626d5ca569ae1c"><div class="ttname"><a href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Kalman::Matrix::Cols</a></div><div class="ttdeci">std::size_t Cols() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00098">Matrix.h:98</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a03439ab774674a982f6c9c255923a9fc"><div class="ttname"><a href="class_kalman_1_1_model.html#a03439ab774674a982f6c9c255923a9fc">Kalman::Model::SetInitialCovariance</a></div><div class="ttdeci">void SetInitialCovariance(const Matrix &amp;P0)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00308">Model.cc:308</a></div></div>
@@ -769,16 +769,16 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#ae5ece96e492ab5048ca5e916ce9dd077">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00359">359</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  360</span>    {</div>
-<div class="line"><span class="lineno">  361</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_kalman_1_1_model.html#a4100d25d50af561b4a1287e279404f0a">fNControl</a> == 0) <span class="keywordflow">return</span> Matrix();</div>
-<div class="line"><span class="lineno">  362</span>        <span class="keyword">const</span> Matrix Bs = fInner-&gt;B(t);                <span class="comment">// empty: u is added to the state directly</span></div>
-<div class="line"><span class="lineno">  363</span>        Matrix out(<a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, <a class="code hl_variable" href="class_kalman_1_1_model.html#a4100d25d50af561b4a1287e279404f0a">fNControl</a>, 0.);</div>
-<div class="line"><span class="lineno">  364</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i)</div>
-<div class="line"><span class="lineno">  365</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="class_kalman_1_1_model.html#a4100d25d50af561b4a1287e279404f0a">fNControl</a>; ++j)</div>
-<div class="line"><span class="lineno">  366</span>                out(i, j) = Bs.Empty() ? (i == j ? 1. : 0.) : Bs(i, j);</div>
-<div class="line"><span class="lineno">  367</span>        <span class="keywordflow">return</span> out;</div>
-<div class="line"><span class="lineno">  368</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00362">362</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  363</span>    {</div>
+<div class="line"><span class="lineno">  364</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_kalman_1_1_model.html#a4100d25d50af561b4a1287e279404f0a">fNControl</a> == 0) <span class="keywordflow">return</span> Matrix();</div>
+<div class="line"><span class="lineno">  365</span>        <span class="keyword">const</span> Matrix Bs = fInner-&gt;B(t);                <span class="comment">// empty: u is added to the state directly</span></div>
+<div class="line"><span class="lineno">  366</span>        Matrix out(<a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, <a class="code hl_variable" href="class_kalman_1_1_model.html#a4100d25d50af561b4a1287e279404f0a">fNControl</a>, 0.);</div>
+<div class="line"><span class="lineno">  367</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i)</div>
+<div class="line"><span class="lineno">  368</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="class_kalman_1_1_model.html#a4100d25d50af561b4a1287e279404f0a">fNControl</a>; ++j)</div>
+<div class="line"><span class="lineno">  369</span>                out(i, j) = Bs.Empty() ? (i == j ? 1. : 0.) : Bs(i, j);</div>
+<div class="line"><span class="lineno">  370</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><span class="lineno">  371</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a4100d25d50af561b4a1287e279404f0a"><div class="ttname"><a href="class_kalman_1_1_model.html#a4100d25d50af561b4a1287e279404f0a">Kalman::Model::fNControl</a></div><div class="ttdeci">std::size_t fNControl</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00082">Model.h:82</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a740ae5ec1d1610342e092f2bf7986e7f"><div class="ttname"><a href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">Kalman::Model::fNState</a></div><div class="ttdeci">std::size_t fNState</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00080">Model.h:80</a></div></div>
 </div><!-- fragment -->
@@ -856,12 +856,12 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00407">407</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  408</span>    {</div>
-<div class="line"><span class="lineno">  409</span>        Sync();</div>
-<div class="line"><span class="lineno">  410</span>        fInner-&gt;CheckShapes();</div>
-<div class="line"><span class="lineno">  411</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">Model::CheckShapes</a>();</div>
-<div class="line"><span class="lineno">  412</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00410">410</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  411</span>    {</div>
+<div class="line"><span class="lineno">  412</span>        Sync();</div>
+<div class="line"><span class="lineno">  413</span>        fInner-&gt;CheckShapes();</div>
+<div class="line"><span class="lineno">  414</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">Model::CheckShapes</a>();</div>
+<div class="line"><span class="lineno">  415</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a53fd4ea5d51ce2663698cb96b5e0e26d"><div class="ttname"><a href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">Kalman::Model::CheckShapes</a></div><div class="ttdeci">virtual void CheckShapes() const</div><div class="ttdoc">Validate every coefficient against (n, m, l).</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00326">Model.cc:326</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -893,14 +893,14 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a5d5c563a06b0cf2bc8fda5a568538622">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00414">414</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  415</span>    {</div>
-<div class="line"><span class="lineno">  416</span>        std::ostringstream os;</div>
-<div class="line"><span class="lineno">  417</span>        os &lt;&lt; <a class="code hl_function" href="class_kalman_1_1_model.html#a5d5c563a06b0cf2bc8fda5a568538622">Model::Describe</a>() &lt;&lt; <span class="stringliteral">&quot;; estimates&quot;</span>;</div>
-<div class="line"><span class="lineno">  418</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;e : fEstimated) os &lt;&lt; <span class="stringliteral">&#39; &#39;</span> &lt;&lt; e.name;</div>
-<div class="line"><span class="lineno">  419</span>        os &lt;&lt; <span class="stringliteral">&quot; of &quot;</span> &lt;&lt; fInner-&gt;Describe();</div>
-<div class="line"><span class="lineno">  420</span>        <span class="keywordflow">return</span> os.str();</div>
-<div class="line"><span class="lineno">  421</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00417">417</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  418</span>    {</div>
+<div class="line"><span class="lineno">  419</span>        std::ostringstream os;</div>
+<div class="line"><span class="lineno">  420</span>        os &lt;&lt; <a class="code hl_function" href="class_kalman_1_1_model.html#a5d5c563a06b0cf2bc8fda5a568538622">Model::Describe</a>() &lt;&lt; <span class="stringliteral">&quot;; estimates&quot;</span>;</div>
+<div class="line"><span class="lineno">  421</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;e : fEstimated) os &lt;&lt; <span class="stringliteral">&#39; &#39;</span> &lt;&lt; e.name;</div>
+<div class="line"><span class="lineno">  422</span>        os &lt;&lt; <span class="stringliteral">&quot; of &quot;</span> &lt;&lt; fInner-&gt;Describe();</div>
+<div class="line"><span class="lineno">  423</span>        <span class="keywordflow">return</span> os.str();</div>
+<div class="line"><span class="lineno">  424</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a5d5c563a06b0cf2bc8fda5a568538622"><div class="ttname"><a href="class_kalman_1_1_model.html#a5d5c563a06b0cf2bc8fda5a568538622">Kalman::Model::Describe</a></div><div class="ttdeci">virtual std::string Describe() const</div><div class="ttdoc">One-line description, for logs.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00560">Model.cc:560</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1022,7 +1022,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   93</span>        <span class="keywordflow">if</span> (w.Size() == out.Size()) out += w;</div>
 <div class="line"><span class="lineno">   94</span>        <span class="keywordflow">return</span> out;</div>
 <div class="line"><span class="lineno">   95</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_a3fe4e7326b59abc21bba39711433361e"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#a3fe4e7326b59abc21bba39711433361e">Kalman::Models::Joint::f</a></div><div class="ttdeci">Vector f(const Vector &amp;x, const Vector &amp;u, double t=0.) const override</div><div class="ttdoc">One step of the dynamics.</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00198">Joint.cc:198</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_a3fe4e7326b59abc21bba39711433361e"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#a3fe4e7326b59abc21bba39711433361e">Kalman::Models::Joint::f</a></div><div class="ttdeci">Vector f(const Vector &amp;x, const Vector &amp;u, double t=0.) const override</div><div class="ttdoc">One step of the dynamics.</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00201">Joint.cc:201</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1075,26 +1075,26 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a56c78933c56deb6037863219068d6aa9">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00216">216</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  217</span>    {</div>
-<div class="line"><span class="lineno">  218</span>        <span class="keywordflow">if</span> (w.Size() != <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>)</div>
-<div class="line"><span class="lineno">  219</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Models::Joint: the process noise has &quot;</span> + std::to_string(w.Size())</div>
-<div class="line"><span class="lineno">  220</span>                                        + <span class="stringliteral">&quot; components, &quot;</span> + std::to_string(<a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>) + <span class="stringliteral">&quot; expected.&quot;</span>);</div>
-<div class="line"><span class="lineno">  221</span>        Sync();</div>
-<div class="line"><span class="lineno">  222</span>        <span class="keyword">const</span> Vector s = Head(x), ws = Head(w);</div>
-<div class="line"><span class="lineno">  223</span>        fLastX = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
-<div class="line"><span class="lineno">  224</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
-<div class="line"><span class="lineno">  225</span>        Vector next;</div>
-<div class="line"><span class="lineno">  226</span>        <span class="keywordflow">try</span> { next = fInner-&gt;f(s, u, ws, t); }</div>
-<div class="line"><span class="lineno">  227</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
-<div class="line"><span class="lineno">  228</span>        Restore(previous);</div>
-<div class="line"><span class="lineno">  229</span> </div>
-<div class="line"><span class="lineno">  230</span>        Vector out(x);</div>
-<div class="line"><span class="lineno">  231</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i) out(i) = next(i);</div>
-<div class="line"><span class="lineno">  232</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; fEstimated.size(); ++k)</div>
-<div class="line"><span class="lineno">  233</span>            out(fNInner + k) = fMean[k] + Decay(k) * (<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(fNInner + k) - fMean[k]) + w(fNInner + k);</div>
-<div class="line"><span class="lineno">  234</span>        <span class="keywordflow">return</span> out;</div>
-<div class="line"><span class="lineno">  235</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00219">219</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  220</span>    {</div>
+<div class="line"><span class="lineno">  221</span>        <span class="keywordflow">if</span> (w.Size() != <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>)</div>
+<div class="line"><span class="lineno">  222</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Models::Joint: the process noise has &quot;</span> + std::to_string(w.Size())</div>
+<div class="line"><span class="lineno">  223</span>                                        + <span class="stringliteral">&quot; components, &quot;</span> + std::to_string(<a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>) + <span class="stringliteral">&quot; expected.&quot;</span>);</div>
+<div class="line"><span class="lineno">  224</span>        Sync();</div>
+<div class="line"><span class="lineno">  225</span>        <span class="keyword">const</span> Vector s = Head(x), ws = Head(w);</div>
+<div class="line"><span class="lineno">  226</span>        fLastX = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
+<div class="line"><span class="lineno">  227</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
+<div class="line"><span class="lineno">  228</span>        Vector next;</div>
+<div class="line"><span class="lineno">  229</span>        <span class="keywordflow">try</span> { next = fInner-&gt;f(s, u, ws, t); }</div>
+<div class="line"><span class="lineno">  230</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
+<div class="line"><span class="lineno">  231</span>        Restore(previous);</div>
+<div class="line"><span class="lineno">  232</span> </div>
+<div class="line"><span class="lineno">  233</span>        Vector out(x);</div>
+<div class="line"><span class="lineno">  234</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i) out(i) = next(i);</div>
+<div class="line"><span class="lineno">  235</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; fEstimated.size(); ++k)</div>
+<div class="line"><span class="lineno">  236</span>            out(fNInner + k) = fMean[k] + Decay(k) * (<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(fNInner + k) - fMean[k]) + w(fNInner + k);</div>
+<div class="line"><span class="lineno">  237</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><span class="lineno">  238</span>    }</div>
 <div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1173,7 +1173,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a8d71f1810843dd32dc3a3926250decf8"><div class="ttname"><a href="class_kalman_1_1_model.html#a8d71f1810843dd32dc3a3926250decf8">Kalman::Model::fContinuous</a></div><div class="ttdeci">bool fContinuous</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00105">Model.h:105</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a8e8a6b0f3ce0e9fb44ae8f1e4f08f839"><div class="ttname"><a href="class_kalman_1_1_model.html#a8e8a6b0f3ce0e9fb44ae8f1e4f08f839">Kalman::Model::F</a></div><div class="ttdeci">virtual Matrix F(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00081">Model.cc:81</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_ad2c7db1d1cf7058a81a0d090309a75d0"><div class="ttname"><a href="class_kalman_1_1_model.html#ad2c7db1d1cf7058a81a0d090309a75d0">Kalman::Model::GetIntegrator</a></div><div class="ttdeci">Integrator &amp; GetIntegrator() const</div><div class="ttdoc">The resolved integrator (built from DefaultIntegrator() if none was given).</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00228">Model.cc:228</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_a1584948642cb88eaec7b86e25179e95f"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#a1584948642cb88eaec7b86e25179e95f">Kalman::Models::Joint::B</a></div><div class="ttdeci">Matrix B(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00359">Joint.cc:359</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_a1584948642cb88eaec7b86e25179e95f"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#a1584948642cb88eaec7b86e25179e95f">Kalman::Models::Joint::B</a></div><div class="ttdeci">Matrix B(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00362">Joint.cc:362</a></div></div>
 <div class="ttc" id="anamespace_kalman_html_adc88c52258c5ba65051e3836981eb140"><div class="ttname"><a href="namespace_kalman.html#adc88c52258c5ba65051e3836981eb140">Kalman::Derivative</a></div><div class="ttdeci">std::function&lt; Vector(const Vector &amp;, const Vector &amp;, double)&gt; Derivative</div><div class="ttdoc">xdot = f(x, u, t) — the continuous dynamics an integrator steps.</div><div class="ttdef"><b>Definition</b> <a href="_integrator_8h_source.html#l00043">Integrator.h:43</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1223,23 +1223,23 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00198">198</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  199</span>    {</div>
-<div class="line"><span class="lineno">  200</span>        Sync();</div>
-<div class="line"><span class="lineno">  201</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
-<div class="line"><span class="lineno">  202</span>        fLastX = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
-<div class="line"><span class="lineno">  203</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
-<div class="line"><span class="lineno">  204</span>        Vector next;</div>
-<div class="line"><span class="lineno">  205</span>        <span class="keywordflow">try</span> { next = fInner-&gt;f(s, u, t); }</div>
-<div class="line"><span class="lineno">  206</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
-<div class="line"><span class="lineno">  207</span>        Restore(previous);</div>
-<div class="line"><span class="lineno">  208</span> </div>
-<div class="line"><span class="lineno">  209</span>        Vector out(x);                                 <span class="comment">// the parameters stay, or return towards their mean</span></div>
-<div class="line"><span class="lineno">  210</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i) out(i) = next(i);</div>
-<div class="line"><span class="lineno">  211</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; fEstimated.size(); ++k)</div>
-<div class="line"><span class="lineno">  212</span>            out(fNInner + k) = fMean[k] + Decay(k) * (<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(fNInner + k) - fMean[k]);</div>
-<div class="line"><span class="lineno">  213</span>        <span class="keywordflow">return</span> out;</div>
-<div class="line"><span class="lineno">  214</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00201">201</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  202</span>    {</div>
+<div class="line"><span class="lineno">  203</span>        Sync();</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
+<div class="line"><span class="lineno">  205</span>        fLastX = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
+<div class="line"><span class="lineno">  206</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
+<div class="line"><span class="lineno">  207</span>        Vector next;</div>
+<div class="line"><span class="lineno">  208</span>        <span class="keywordflow">try</span> { next = fInner-&gt;f(s, u, t); }</div>
+<div class="line"><span class="lineno">  209</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
+<div class="line"><span class="lineno">  210</span>        Restore(previous);</div>
+<div class="line"><span class="lineno">  211</span> </div>
+<div class="line"><span class="lineno">  212</span>        Vector out(x);                                 <span class="comment">// the parameters stay, or return towards their mean</span></div>
+<div class="line"><span class="lineno">  213</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i) out(i) = next(i);</div>
+<div class="line"><span class="lineno">  214</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; fEstimated.size(); ++k)</div>
+<div class="line"><span class="lineno">  215</span>            out(fNInner + k) = fMean[k] + Decay(k) * (<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(fNInner + k) - fMean[k]);</div>
+<div class="line"><span class="lineno">  216</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><span class="lineno">  217</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1333,17 +1333,17 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#ab52f40f2fa87eea03913a2768e899216">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00237">237</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  238</span>    {</div>
-<div class="line"><span class="lineno">  239</span>        Sync();</div>
-<div class="line"><span class="lineno">  240</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
-<div class="line"><span class="lineno">  241</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
-<div class="line"><span class="lineno">  242</span>        Vector z;</div>
-<div class="line"><span class="lineno">  243</span>        <span class="keywordflow">try</span> { z = fInner-&gt;h(s, t); }</div>
-<div class="line"><span class="lineno">  244</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
-<div class="line"><span class="lineno">  245</span>        Restore(previous);</div>
-<div class="line"><span class="lineno">  246</span>        <span class="keywordflow">return</span> z;</div>
-<div class="line"><span class="lineno">  247</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00240">240</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  241</span>    {</div>
+<div class="line"><span class="lineno">  242</span>        Sync();</div>
+<div class="line"><span class="lineno">  243</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
+<div class="line"><span class="lineno">  244</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
+<div class="line"><span class="lineno">  245</span>        Vector z;</div>
+<div class="line"><span class="lineno">  246</span>        <span class="keywordflow">try</span> { z = fInner-&gt;h(s, t); }</div>
+<div class="line"><span class="lineno">  247</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
+<div class="line"><span class="lineno">  248</span>        Restore(previous);</div>
+<div class="line"><span class="lineno">  249</span>        <span class="keywordflow">return</span> z;</div>
+<div class="line"><span class="lineno">  250</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1511,40 +1511,40 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#ae74a793d24da7307b1c0274f74c299e9">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00289">289</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  290</span>    {</div>
-<div class="line"><span class="lineno">  291</span>        Sync();</div>
-<div class="line"><span class="lineno">  292</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = fNInner, p = fEstimated.size();</div>
-<div class="line"><span class="lineno">  293</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
-<div class="line"><span class="lineno">  294</span>        Vector theta(p);</div>
-<div class="line"><span class="lineno">  295</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) theta(k) = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(n + k);</div>
-<div class="line"><span class="lineno">  296</span> </div>
-<div class="line"><span class="lineno">  297</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
-<div class="line"><span class="lineno">  298</span>        Matrix Js, Jt;</div>
-<div class="line"><span class="lineno">  299</span>        <span class="keywordflow">try</span></div>
-<div class="line"><span class="lineno">  300</span>        {</div>
-<div class="line"><span class="lineno">  301</span>            Js = fInner-&gt;Jacobian(s, u, t);</div>
-<div class="line"><span class="lineno">  302</span>            <span class="keyword">const</span> Vector uu(u);</div>
-<div class="line"><span class="lineno">  303</span>            Jt = <a class="code hl_function" href="namespace_kalman_1_1_differentiators.html#afbbd6ce846e557568df7bc6944fc1e20">Differentiators::Jacobian</a>(</div>
-<div class="line"><span class="lineno">  304</span>                ParameterScheme(),</div>
-<div class="line"><span class="lineno">  305</span>                [<span class="keyword">this</span>, &amp;s, &amp;uu, t](<span class="keyword">const</span> Vector &amp;th) {</div>
-<div class="line"><span class="lineno">  306</span>                    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; th.Size(); ++k) fInner-&gt;SetParameter(fEstimated[k].name, th(k));</div>
-<div class="line"><span class="lineno">  307</span>                    <span class="keywordflow">return</span> fInner-&gt;f(s, uu, t);</div>
-<div class="line"><span class="lineno">  308</span>                },</div>
-<div class="line"><span class="lineno">  309</span>                theta, ParameterStep());</div>
-<div class="line"><span class="lineno">  310</span>        }</div>
-<div class="line"><span class="lineno">  311</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
-<div class="line"><span class="lineno">  312</span>        Restore(previous);</div>
-<div class="line"><span class="lineno">  313</span> </div>
-<div class="line"><span class="lineno">  314</span>        Matrix J(n + p, n + p, 0.);</div>
-<div class="line"><span class="lineno">  315</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
-<div class="line"><span class="lineno">  316</span>        {</div>
-<div class="line"><span class="lineno">  317</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++j) J(i, j) = Js(i, j);</div>
-<div class="line"><span class="lineno">  318</span>            <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) J(i, n + k) = Jt(i, k);</div>
-<div class="line"><span class="lineno">  319</span>        }</div>
-<div class="line"><span class="lineno">  320</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) J(n + k, n + k) = Decay(k);</div>
-<div class="line"><span class="lineno">  321</span>        <span class="keywordflow">return</span> J;</div>
-<div class="line"><span class="lineno">  322</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00292">292</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  293</span>    {</div>
+<div class="line"><span class="lineno">  294</span>        Sync();</div>
+<div class="line"><span class="lineno">  295</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = fNInner, p = fEstimated.size();</div>
+<div class="line"><span class="lineno">  296</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
+<div class="line"><span class="lineno">  297</span>        Vector theta(p);</div>
+<div class="line"><span class="lineno">  298</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) theta(k) = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(n + k);</div>
+<div class="line"><span class="lineno">  299</span> </div>
+<div class="line"><span class="lineno">  300</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
+<div class="line"><span class="lineno">  301</span>        Matrix Js, Jt;</div>
+<div class="line"><span class="lineno">  302</span>        <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  303</span>        {</div>
+<div class="line"><span class="lineno">  304</span>            Js = fInner-&gt;Jacobian(s, u, t);</div>
+<div class="line"><span class="lineno">  305</span>            <span class="keyword">const</span> Vector uu(u);</div>
+<div class="line"><span class="lineno">  306</span>            Jt = <a class="code hl_function" href="namespace_kalman_1_1_differentiators.html#afbbd6ce846e557568df7bc6944fc1e20">Differentiators::Jacobian</a>(</div>
+<div class="line"><span class="lineno">  307</span>                ParameterScheme(),</div>
+<div class="line"><span class="lineno">  308</span>                [<span class="keyword">this</span>, &amp;s, &amp;uu, t](<span class="keyword">const</span> Vector &amp;th) {</div>
+<div class="line"><span class="lineno">  309</span>                    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; th.Size(); ++k) fInner-&gt;SetParameter(fEstimated[k].name, th(k));</div>
+<div class="line"><span class="lineno">  310</span>                    <span class="keywordflow">return</span> fInner-&gt;f(s, uu, t);</div>
+<div class="line"><span class="lineno">  311</span>                },</div>
+<div class="line"><span class="lineno">  312</span>                theta, ParameterStep());</div>
+<div class="line"><span class="lineno">  313</span>        }</div>
+<div class="line"><span class="lineno">  314</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
+<div class="line"><span class="lineno">  315</span>        Restore(previous);</div>
+<div class="line"><span class="lineno">  316</span> </div>
+<div class="line"><span class="lineno">  317</span>        Matrix J(n + p, n + p, 0.);</div>
+<div class="line"><span class="lineno">  318</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
+<div class="line"><span class="lineno">  319</span>        {</div>
+<div class="line"><span class="lineno">  320</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++j) J(i, j) = Js(i, j);</div>
+<div class="line"><span class="lineno">  321</span>            <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) J(i, n + k) = Jt(i, k);</div>
+<div class="line"><span class="lineno">  322</span>        }</div>
+<div class="line"><span class="lineno">  323</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) J(n + k, n + k) = Decay(k);</div>
+<div class="line"><span class="lineno">  324</span>        <span class="keywordflow">return</span> J;</div>
+<div class="line"><span class="lineno">  325</span>    }</div>
 <div class="ttc" id="anamespace_kalman_1_1_differentiators_html_afbbd6ce846e557568df7bc6944fc1e20"><div class="ttname"><a href="namespace_kalman_1_1_differentiators.html#afbbd6ce846e557568df7bc6944fc1e20">Kalman::Differentiators::Jacobian</a></div><div class="ttdeci">Matrix Jacobian(DifferentiatorKind kind, const Map &amp;fn, const Vector &amp;x, double step=0., const Vector *y0=nullptr)</div><div class="ttdoc">d fn / dx at x with the scheme kind, without building an object (step &lt;= 0: the default).</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8cc_source.html#l00085">Differentiator.cc:85</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1587,38 +1587,38 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a4b10c079475ed1d5ca555e80fd420d70">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00324">324</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  325</span>    {</div>
-<div class="line"><span class="lineno">  326</span>        Sync();</div>
-<div class="line"><span class="lineno">  327</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = fNInner, p = fEstimated.size(), <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> = <a class="code hl_variable" href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">fNMeasure</a>;</div>
-<div class="line"><span class="lineno">  328</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
-<div class="line"><span class="lineno">  329</span>        Vector theta(p);</div>
-<div class="line"><span class="lineno">  330</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) theta(k) = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(n + k);</div>
-<div class="line"><span class="lineno">  331</span> </div>
-<div class="line"><span class="lineno">  332</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
-<div class="line"><span class="lineno">  333</span>        Matrix Hs, Ht;</div>
-<div class="line"><span class="lineno">  334</span>        <span class="keywordflow">try</span></div>
-<div class="line"><span class="lineno">  335</span>        {</div>
-<div class="line"><span class="lineno">  336</span>            Hs = fInner-&gt;JacobianH(s, t);</div>
-<div class="line"><span class="lineno">  337</span>            Ht = <a class="code hl_function" href="namespace_kalman_1_1_differentiators.html#afbbd6ce846e557568df7bc6944fc1e20">Differentiators::Jacobian</a>(</div>
-<div class="line"><span class="lineno">  338</span>                ParameterScheme(),</div>
-<div class="line"><span class="lineno">  339</span>                [<span class="keyword">this</span>, &amp;s, t](<span class="keyword">const</span> Vector &amp;th) {</div>
-<div class="line"><span class="lineno">  340</span>                    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; th.Size(); ++k) fInner-&gt;SetParameter(fEstimated[k].name, th(k));</div>
-<div class="line"><span class="lineno">  341</span>                    <span class="keywordflow">return</span> fInner-&gt;h(s, t);</div>
-<div class="line"><span class="lineno">  342</span>                },</div>
-<div class="line"><span class="lineno">  343</span>                theta, ParameterStep());</div>
-<div class="line"><span class="lineno">  344</span>        }</div>
-<div class="line"><span class="lineno">  345</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
-<div class="line"><span class="lineno">  346</span>        Restore(previous);</div>
-<div class="line"><span class="lineno">  347</span> </div>
-<div class="line"><span class="lineno">  348</span>        Matrix <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>(<a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>, n + p, 0.);</div>
-<div class="line"><span class="lineno">  349</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>; ++i)</div>
-<div class="line"><span class="lineno">  350</span>        {</div>
-<div class="line"><span class="lineno">  351</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++j) <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>(i, j) = Hs(i, j);</div>
-<div class="line"><span class="lineno">  352</span>            <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>(i, n + k) = Ht(i, k);</div>
-<div class="line"><span class="lineno">  353</span>        }</div>
-<div class="line"><span class="lineno">  354</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>;</div>
-<div class="line"><span class="lineno">  355</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00327">327</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  328</span>    {</div>
+<div class="line"><span class="lineno">  329</span>        Sync();</div>
+<div class="line"><span class="lineno">  330</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = fNInner, p = fEstimated.size(), <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> = <a class="code hl_variable" href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">fNMeasure</a>;</div>
+<div class="line"><span class="lineno">  331</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
+<div class="line"><span class="lineno">  332</span>        Vector theta(p);</div>
+<div class="line"><span class="lineno">  333</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) theta(k) = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(n + k);</div>
+<div class="line"><span class="lineno">  334</span> </div>
+<div class="line"><span class="lineno">  335</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
+<div class="line"><span class="lineno">  336</span>        Matrix Hs, Ht;</div>
+<div class="line"><span class="lineno">  337</span>        <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  338</span>        {</div>
+<div class="line"><span class="lineno">  339</span>            Hs = fInner-&gt;JacobianH(s, t);</div>
+<div class="line"><span class="lineno">  340</span>            Ht = <a class="code hl_function" href="namespace_kalman_1_1_differentiators.html#afbbd6ce846e557568df7bc6944fc1e20">Differentiators::Jacobian</a>(</div>
+<div class="line"><span class="lineno">  341</span>                ParameterScheme(),</div>
+<div class="line"><span class="lineno">  342</span>                [<span class="keyword">this</span>, &amp;s, t](<span class="keyword">const</span> Vector &amp;th) {</div>
+<div class="line"><span class="lineno">  343</span>                    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; th.Size(); ++k) fInner-&gt;SetParameter(fEstimated[k].name, th(k));</div>
+<div class="line"><span class="lineno">  344</span>                    <span class="keywordflow">return</span> fInner-&gt;h(s, t);</div>
+<div class="line"><span class="lineno">  345</span>                },</div>
+<div class="line"><span class="lineno">  346</span>                theta, ParameterStep());</div>
+<div class="line"><span class="lineno">  347</span>        }</div>
+<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
+<div class="line"><span class="lineno">  349</span>        Restore(previous);</div>
+<div class="line"><span class="lineno">  350</span> </div>
+<div class="line"><span class="lineno">  351</span>        Matrix <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>(<a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>, n + p, 0.);</div>
+<div class="line"><span class="lineno">  352</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>; ++i)</div>
+<div class="line"><span class="lineno">  353</span>        {</div>
+<div class="line"><span class="lineno">  354</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++j) <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>(i, j) = Hs(i, j);</div>
+<div class="line"><span class="lineno">  355</span>            <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; p; ++k) <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>(i, n + k) = Ht(i, k);</div>
+<div class="line"><span class="lineno">  356</span>        }</div>
+<div class="line"><span class="lineno">  357</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>;</div>
+<div class="line"><span class="lineno">  358</span>    }</div>
 <div class="ttc" id="a_f_f_t_8cc_html_a64c6389273788a3c6349b8f7db98de06"><div class="ttname"><a href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a></div><div class="ttdeci">std::size_t m</div><div class="ttdef"><b>Definition</b> <a href="_f_f_t_8cc_source.html#l00155">FFT.cc:155</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_aa0e2e05201daaaadb274655c3ebd581d"><div class="ttname"><a href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">Kalman::Model::fNMeasure</a></div><div class="ttdeci">std::size_t fNMeasure</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00081">Model.h:81</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_aacbe9e5f27bbdff8ee2536853993a47e"><div class="ttname"><a href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">Kalman::Model::H</a></div><div class="ttdeci">virtual Matrix H(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00082">Model.cc:82</a></div></div>
@@ -1651,16 +1651,16 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a6aa7a82c784691ddbdd3a01c5fa9ae12">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00370">370</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  371</span>    {</div>
-<div class="line"><span class="lineno">  372</span>        <span class="keyword">const</span> Matrix Ls = fInner-&gt;L(t);</div>
-<div class="line"><span class="lineno">  373</span>        <span class="keywordflow">if</span> (Ls.Empty()) <span class="keywordflow">return</span> Matrix();               <span class="comment">// identity coupling throughout</span></div>
-<div class="line"><span class="lineno">  374</span>        Matrix out(<a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, 0.);</div>
-<div class="line"><span class="lineno">  375</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i)</div>
-<div class="line"><span class="lineno">  376</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; fNInner; ++j) out(i, j) = Ls(i, j);</div>
-<div class="line"><span class="lineno">  377</span>        <span class="keywordflow">for</span> (std::size_t i = fNInner; i &lt; <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>; ++i) out(i, i) = 1.;</div>
-<div class="line"><span class="lineno">  378</span>        <span class="keywordflow">return</span> out;</div>
-<div class="line"><span class="lineno">  379</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00373">373</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  374</span>    {</div>
+<div class="line"><span class="lineno">  375</span>        <span class="keyword">const</span> Matrix Ls = fInner-&gt;L(t);</div>
+<div class="line"><span class="lineno">  376</span>        <span class="keywordflow">if</span> (Ls.Empty()) <span class="keywordflow">return</span> Matrix();               <span class="comment">// identity coupling throughout</span></div>
+<div class="line"><span class="lineno">  377</span>        Matrix out(<a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, 0.);</div>
+<div class="line"><span class="lineno">  378</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i)</div>
+<div class="line"><span class="lineno">  379</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; fNInner; ++j) out(i, j) = Ls(i, j);</div>
+<div class="line"><span class="lineno">  380</span>        <span class="keywordflow">for</span> (std::size_t i = fNInner; i &lt; <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>; ++i) out(i, i) = 1.;</div>
+<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><span class="lineno">  382</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1741,17 +1741,17 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#adee12d5611cb574ff3f650b14b78c18b">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00277">277</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  278</span>    {</div>
-<div class="line"><span class="lineno">  279</span>        Sync();</div>
-<div class="line"><span class="lineno">  280</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
-<div class="line"><span class="lineno">  281</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
-<div class="line"><span class="lineno">  282</span>        Vector z;</div>
-<div class="line"><span class="lineno">  283</span>        <span class="keywordflow">try</span> { z = fInner-&gt;MeasureWithNoise(s, v, t); }</div>
-<div class="line"><span class="lineno">  284</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
-<div class="line"><span class="lineno">  285</span>        Restore(previous);</div>
-<div class="line"><span class="lineno">  286</span>        <span class="keywordflow">return</span> z;</div>
-<div class="line"><span class="lineno">  287</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00280">280</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  281</span>    {</div>
+<div class="line"><span class="lineno">  282</span>        Sync();</div>
+<div class="line"><span class="lineno">  283</span>        <span class="keyword">const</span> Vector s = Head(x);</div>
+<div class="line"><span class="lineno">  284</span>        <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(x);</div>
+<div class="line"><span class="lineno">  285</span>        Vector z;</div>
+<div class="line"><span class="lineno">  286</span>        <span class="keywordflow">try</span> { z = fInner-&gt;MeasureWithNoise(s, v, t); }</div>
+<div class="line"><span class="lineno">  287</span>        <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
+<div class="line"><span class="lineno">  288</span>        Restore(previous);</div>
+<div class="line"><span class="lineno">  289</span>        <span class="keywordflow">return</span> z;</div>
+<div class="line"><span class="lineno">  290</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1811,25 +1811,25 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#ab6a9abc04fc8e4f6f334563b6ff7359d">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00381">381</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  382</span>    {</div>
-<div class="line"><span class="lineno">  383</span>        Sync();</div>
-<div class="line"><span class="lineno">  384</span>        Matrix Qs;</div>
-<div class="line"><span class="lineno">  385</span>        <span class="keywordflow">if</span> (fLastX.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>() == <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>)</div>
-<div class="line"><span class="lineno">  386</span>        {</div>
-<div class="line"><span class="lineno">  387</span>            <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(fLastX);</div>
-<div class="line"><span class="lineno">  388</span>            <span class="keywordflow">try</span> { Qs = fInner-&gt;Q(t); }</div>
-<div class="line"><span class="lineno">  389</span>            <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
-<div class="line"><span class="lineno">  390</span>            Restore(previous);</div>
-<div class="line"><span class="lineno">  391</span>        }</div>
-<div class="line"><span class="lineno">  392</span>        <span class="keywordflow">else</span> Qs = fInner-&gt;Q(t);</div>
-<div class="line"><span class="lineno">  393</span>        Matrix out(<a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, 0.);</div>
-<div class="line"><span class="lineno">  394</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i)</div>
-<div class="line"><span class="lineno">  395</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; fNInner; ++j) out(i, j) = Qs(i, j);</div>
-<div class="line"><span class="lineno">  396</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; fEstimated.size(); ++k)</div>
-<div class="line"><span class="lineno">  397</span>            out(fNInner + k, fNInner + k) = fEstimated[k].drift * fEstimated[k].drift;</div>
-<div class="line"><span class="lineno">  398</span>        <span class="keywordflow">return</span> out;</div>
-<div class="line"><span class="lineno">  399</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00384">384</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  385</span>    {</div>
+<div class="line"><span class="lineno">  386</span>        Sync();</div>
+<div class="line"><span class="lineno">  387</span>        Matrix Qs;</div>
+<div class="line"><span class="lineno">  388</span>        <span class="keywordflow">if</span> (fLastX.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>() == <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>)</div>
+<div class="line"><span class="lineno">  389</span>        {</div>
+<div class="line"><span class="lineno">  390</span>            <span class="keyword">const</span> <span class="keyword">auto</span> previous = Apply(fLastX);</div>
+<div class="line"><span class="lineno">  391</span>            <span class="keywordflow">try</span> { Qs = fInner-&gt;Q(t); }</div>
+<div class="line"><span class="lineno">  392</span>            <span class="keywordflow">catch</span> (...) { Restore(previous); <span class="keywordflow">throw</span>; }</div>
+<div class="line"><span class="lineno">  393</span>            Restore(previous);</div>
+<div class="line"><span class="lineno">  394</span>        }</div>
+<div class="line"><span class="lineno">  395</span>        <span class="keywordflow">else</span> Qs = fInner-&gt;Q(t);</div>
+<div class="line"><span class="lineno">  396</span>        Matrix out(<a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, 0.);</div>
+<div class="line"><span class="lineno">  397</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInner; ++i)</div>
+<div class="line"><span class="lineno">  398</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; fNInner; ++j) out(i, j) = Qs(i, j);</div>
+<div class="line"><span class="lineno">  399</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; fEstimated.size(); ++k)</div>
+<div class="line"><span class="lineno">  400</span>            out(fNInner + k, fNInner + k) = fEstimated[k].drift * fEstimated[k].drift;</div>
+<div class="line"><span class="lineno">  401</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><span class="lineno">  402</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html_aaacb0bc54c976b6c03f43b1d861d7877"><div class="ttname"><a href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Kalman::Vector::Size</a></div><div class="ttdeci">std::size_t Size() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00050">Matrix.h:50</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1860,11 +1860,11 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00401">401</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  402</span>    {</div>
-<div class="line"><span class="lineno">  403</span>        Sync();</div>
-<div class="line"><span class="lineno">  404</span>        <span class="keywordflow">return</span> fInner-&gt;R(t);</div>
-<div class="line"><span class="lineno">  405</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00404">404</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  405</span>    {</div>
+<div class="line"><span class="lineno">  406</span>        Sync();</div>
+<div class="line"><span class="lineno">  407</span>        <span class="keywordflow">return</span> fInner-&gt;R(t);</div>
+<div class="line"><span class="lineno">  408</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1894,35 +1894,35 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#afc4eeb435ac6a1541064616e84b97cef">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00249">249</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  250</span>    {</div>
-<div class="line"><span class="lineno">  251</span>        Sync();</div>
-<div class="line"><span class="lineno">  252</span>        std::vector&lt;Sensor&gt; out = fInner-&gt;Sensors();</div>
-<div class="line"><span class="lineno">  253</span>        std::size_t first = 0;</div>
-<div class="line"><span class="lineno">  254</span>        <span class="keywordflow">for</span> (Sensor &amp;sensor : out)</div>
-<div class="line"><span class="lineno">  255</span>        {</div>
-<div class="line"><span class="lineno">  256</span>            <span class="keyword">const</span> std::size_t k = sensor.Channels(), row = first;</div>
-<div class="line"><span class="lineno">  257</span>            first += k;</div>
-<div class="line"><span class="lineno">  258</span>            sensor.G = Matrix();</div>
-<div class="line"><span class="lineno">  259</span>            sensor.calibrated = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  260</span>            sensor.g = [<span class="keyword">this</span>, row, k](<span class="keyword">const</span> Vector &amp;<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>, <span class="keywordtype">double</span> t) {</div>
-<div class="line"><span class="lineno">  261</span>                <span class="keyword">const</span> Vector z = this-&gt;<a class="code hl_function" href="class_kalman_1_1_models_1_1_joint.html#ab95c206a84a20ad75c9b7a1084772fab">h</a>(x, t);</div>
-<div class="line"><span class="lineno">  262</span>                Vector part(k);</div>
-<div class="line"><span class="lineno">  263</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; k; ++i) part(i) = z(row + i);</div>
-<div class="line"><span class="lineno">  264</span>                <span class="keywordflow">return</span> part;</div>
-<div class="line"><span class="lineno">  265</span>            };</div>
-<div class="line"><span class="lineno">  266</span>            sensor.jacobian = [<span class="keyword">this</span>, row, k](<span class="keyword">const</span> Vector &amp;<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>, <span class="keywordtype">double</span> t) {</div>
-<div class="line"><span class="lineno">  267</span>                <span class="keyword">const</span> Matrix <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a> = this-&gt;<a class="code hl_function" href="class_kalman_1_1_models_1_1_joint.html#af61315dd8f01da5542c4b5e612a7533f">JacobianH</a>(x, t);</div>
-<div class="line"><span class="lineno">  268</span>                Matrix part(k, <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, 0.);</div>
-<div class="line"><span class="lineno">  269</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; k; ++i)</div>
-<div class="line"><span class="lineno">  270</span>                    <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>; ++j) part(i, j) = <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>(row + i, j);</div>
-<div class="line"><span class="lineno">  271</span>                <span class="keywordflow">return</span> part;</div>
-<div class="line"><span class="lineno">  272</span>            };</div>
-<div class="line"><span class="lineno">  273</span>        }</div>
-<div class="line"><span class="lineno">  274</span>        <span class="keywordflow">return</span> out;</div>
-<div class="line"><span class="lineno">  275</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_ab95c206a84a20ad75c9b7a1084772fab"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#ab95c206a84a20ad75c9b7a1084772fab">Kalman::Models::Joint::h</a></div><div class="ttdeci">Vector h(const Vector &amp;x, double t=0.) const override</div><div class="ttdoc">The observation map. Default: H x.</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00237">Joint.cc:237</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_af61315dd8f01da5542c4b5e612a7533f"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#af61315dd8f01da5542c4b5e612a7533f">Kalman::Models::Joint::JacobianH</a></div><div class="ttdeci">Matrix JacobianH(const Vector &amp;x, double t=0.) const override</div><div class="ttdoc">dh/dx — H(t) when analytic, central differences otherwise.</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00324">Joint.cc:324</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_joint_8cc_source.html#l00252">252</a> of file <a class="el" href="_joint_8cc_source.html">Joint.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  253</span>    {</div>
+<div class="line"><span class="lineno">  254</span>        Sync();</div>
+<div class="line"><span class="lineno">  255</span>        std::vector&lt;Sensor&gt; out = fInner-&gt;Sensors();</div>
+<div class="line"><span class="lineno">  256</span>        std::size_t first = 0;</div>
+<div class="line"><span class="lineno">  257</span>        <span class="keywordflow">for</span> (Sensor &amp;sensor : out)</div>
+<div class="line"><span class="lineno">  258</span>        {</div>
+<div class="line"><span class="lineno">  259</span>            <span class="keyword">const</span> std::size_t k = sensor.Channels(), row = first;</div>
+<div class="line"><span class="lineno">  260</span>            first += k;</div>
+<div class="line"><span class="lineno">  261</span>            sensor.G = Matrix();</div>
+<div class="line"><span class="lineno">  262</span>            sensor.calibrated = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  263</span>            sensor.g = [<span class="keyword">this</span>, row, k](<span class="keyword">const</span> Vector &amp;<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>, <span class="keywordtype">double</span> t) {</div>
+<div class="line"><span class="lineno">  264</span>                <span class="keyword">const</span> Vector z = this-&gt;<a class="code hl_function" href="class_kalman_1_1_models_1_1_joint.html#ab95c206a84a20ad75c9b7a1084772fab">h</a>(x, t);</div>
+<div class="line"><span class="lineno">  265</span>                Vector part(k);</div>
+<div class="line"><span class="lineno">  266</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; k; ++i) part(i) = z(row + i);</div>
+<div class="line"><span class="lineno">  267</span>                <span class="keywordflow">return</span> part;</div>
+<div class="line"><span class="lineno">  268</span>            };</div>
+<div class="line"><span class="lineno">  269</span>            sensor.jacobian = [<span class="keyword">this</span>, row, k](<span class="keyword">const</span> Vector &amp;<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>, <span class="keywordtype">double</span> t) {</div>
+<div class="line"><span class="lineno">  270</span>                <span class="keyword">const</span> Matrix <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a> = this-&gt;<a class="code hl_function" href="class_kalman_1_1_models_1_1_joint.html#af61315dd8f01da5542c4b5e612a7533f">JacobianH</a>(x, t);</div>
+<div class="line"><span class="lineno">  271</span>                Matrix part(k, <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, 0.);</div>
+<div class="line"><span class="lineno">  272</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; k; ++i)</div>
+<div class="line"><span class="lineno">  273</span>                    <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>; ++j) part(i, j) = <a class="code hl_function" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>(row + i, j);</div>
+<div class="line"><span class="lineno">  274</span>                <span class="keywordflow">return</span> part;</div>
+<div class="line"><span class="lineno">  275</span>            };</div>
+<div class="line"><span class="lineno">  276</span>        }</div>
+<div class="line"><span class="lineno">  277</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><span class="lineno">  278</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_ab95c206a84a20ad75c9b7a1084772fab"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#ab95c206a84a20ad75c9b7a1084772fab">Kalman::Models::Joint::h</a></div><div class="ttdeci">Vector h(const Vector &amp;x, double t=0.) const override</div><div class="ttdoc">The observation map. Default: H x.</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00240">Joint.cc:240</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_joint_html_af61315dd8f01da5542c4b5e612a7533f"><div class="ttname"><a href="class_kalman_1_1_models_1_1_joint.html#af61315dd8f01da5542c4b5e612a7533f">Kalman::Models::Joint::JacobianH</a></div><div class="ttdeci">Matrix JacobianH(const Vector &amp;x, double t=0.) const override</div><div class="ttdoc">dh/dx — H(t) when analytic, central differences otherwise.</div><div class="ttdef"><b>Definition</b> <a href="_joint_8cc_source.html#l00327">Joint.cc:327</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
