@@ -190,3 +190,43 @@ def empty_at_night(room, hours=(0, 6), *, tz=None, sigma=0.1, name="schedule"):
         return out
 
     return KalmanInstrument(name, [room.schedule(name, sigma=sigma)], provider=readings)
+
+
+def ventilation_from_decay(times, ppm):
+    """The ventilation of a room [air changes per hour] from the fall of its CO2
+    once everybody has left, and its standard deviation.
+
+    With nobody breathing, the balance leaves ``c(t) = a + b exp(-lambda t)``:
+    the rate of the fall is the ventilation. The level ``a`` it falls to is
+    fitted too, so a sensor's offset and the outdoor level do not enter.
+
+    ``times`` [s] and ``ppm`` are the readings of the fall only (from the moment
+    the room empties until the level is flat, or the next person comes in);
+    ``ppm`` holds one column per sensor, each fitted alone and the rates
+    averaged by their uncertainties. NaN readings are left out.
+    """
+    from scipy.optimize import curve_fit
+    t = np.asarray(times, dtype=float).reshape(-1)
+    c = np.asarray(ppm, dtype=float).reshape(len(t), -1)
+    t = t - t[0]
+    fall = lambda t, a, b, lam: a + b * np.exp(-lam * t)
+    rates, variances = [], []
+    for column in c.T:
+        read = np.isfinite(column)
+        if read.sum() < 6:
+            continue
+        tr, cr = t[read], column[read]
+        start = (cr[-3:].mean(), max(cr[:3].mean() - cr[-3:].mean(), 1.0), 3.0 / max(tr[-1], 1.0))
+        try:
+            best, cov = curve_fit(fall, tr, cr, p0=start, bounds=([-np.inf, 0.0, 0.0], np.inf))
+        except RuntimeError:
+            continue
+        if np.isfinite(cov[2, 2]) and cov[2, 2] > 0.0 and best[2] > 0.0:
+            rates.append(best[2])
+            variances.append(cov[2, 2])
+    if not rates:
+        raise ValueError("ventilation_from_decay: no fall of the CO2 could be fitted; give the readings from the "
+                         "moment the room empties, at least six per sensor.")
+    weights = 1.0 / np.asarray(variances)
+    rate = float(np.sum(weights * np.asarray(rates)) / np.sum(weights))
+    return rate * 3600.0, float(np.sqrt(1.0 / np.sum(weights))) * 3600.0

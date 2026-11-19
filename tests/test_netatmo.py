@@ -13,7 +13,7 @@ from zoneinfo import ZoneInfo
 import numpy as np
 
 from modules.adapters.netatmo import NetatmoCloud, NetatmoCSV, NetatmoModule, on_steps
-from modules.apps.buildings import RoomCO2Model, empty_at_night
+from modules.apps.buildings import RoomCO2Model, empty_at_night, ventilation_from_decay
 from modules.framework import compose
 from modules.framework.native import core
 
@@ -183,6 +183,12 @@ class TestFiveModules(unittest.TestCase):
             zk = watched.measurements(start=T0, end=T0 + T * step)
 
         self.assertEqual(zk.shape, (T, 7))
+
+        # the ventilation, from the fall after the last person left at 6 pm of the first day (truth: 2 per hour)
+        left = int(np.flatnonzero(hour == 18)[0])
+        ach, sigma = ventilation_from_decay(t[left:left + 48], zk[left:left + 48, 1:6])
+        self.assertLess(abs(ach - 2.0), max(3 * sigma, 0.1))
+        self.assertLess(sigma, 0.2)
         estimated = [n for n in spots if n != "main"]
         run = watched.joint({f"{n}.offset": (60.0, 0.5) for n in estimated}).filter(zk, uk=np.ones((T, 1)), reset=True)
         n = counting.n

@@ -3,12 +3,13 @@
 
 - ``co2`` — :class:`RoomCO2Model`, a CO2 mass balance on the cells of a room
   (mixing, ventilation, occupants), :func:`l_shaped_room`, and
-  :func:`empty_at_night`, what is known of the occupants as a sensor.
+  :func:`empty_at_night`, what is known of the occupants as a sensor, and
+  :func:`ventilation_from_decay`, the room's air changes from an evening's fall.
 """
-from .co2 import RoomCO2Model, empty_at_night, l_shaped_room
+from .co2 import RoomCO2Model, empty_at_night, l_shaped_room, ventilation_from_decay
 
 VARIANTS = {
     "co2": RoomCO2Model,
 }
 
-__all__ = ["RoomCO2Model", "empty_at_night", "l_shaped_room", "VARIANTS"]
+__all__ = ["RoomCO2Model", "empty_at_night", "l_shaped_room", "ventilation_from_decay", "VARIANTS"]

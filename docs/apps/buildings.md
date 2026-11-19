@@ -84,6 +84,17 @@ steady state is `q / (ach V)`: a room believed twice as ventilated as it is
 counts twice the people (with `ach=3` given for a room at 2, five people are
 counted as 6.9). `ach` has to be measured for the room: from the decay of the
 CO2 after everybody has left (its rate is `ach`), or from an hour with a known
-number of people.
+number of people. `ventilation_from_decay(times, ppm)` does the first: it fits
+`a + b exp(-lambda t)` to each sensor's readings of the fall and returns `ach`
+and its standard deviation. The level `a` is fitted, so the sensors' offsets do
+not enter.
+
+```python
+from kalman.apps import ventilation_from_decay
+
+evening = slice(k_left, k_left + 48)                       # four hours from the moment the room empties
+ach, sigma = ventilation_from_decay(t[evening], zk[evening, :5])
+room = RoomCO2Model("unread", count_people=True, fs=1 / 300, ach=ach)
+```
 
 Notebook: [15_CO2Room](../../share/notebooks/15_CO2Room.ipynb).
