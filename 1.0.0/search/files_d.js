@@ -35,7 +35,7 @@ var searchData=
   ['constants_2epy_32',['constants.py',['../constants_8py.html',1,'']]],
   ['contracts_2epy_33',['contracts.py',['../contracts_8py.html',1,'']]],
   ['contributing_2emd_34',['CONTRIBUTING.md',['../_c_o_n_t_r_i_b_u_t_i_n_g_8md.html',1,'']]],
-  ['control_2epy_35',['control.py',['../apps_2gravitational_2interferometer_2control_8py.html',1,'(Global Namespace)'],['../framework_2control_8py.html',1,'(Global Namespace)']]],
+  ['control_2epy_35',['control.py',['../framework_2control_8py.html',1,'(Global Namespace)'],['../apps_2gravitational_2interferometer_2control_8py.html',1,'(Global Namespace)']]],
   ['controller_2ecc_36',['Controller.cc',['../_controller_8cc.html',1,'']]],
   ['controller_2eh_37',['Controller.h',['../_controller_8h.html',1,'']]],
   ['controllers_2ecc_38',['Controllers.cc',['../_controllers_8cc.html',1,'']]],

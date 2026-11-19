@@ -153,8 +153,8 @@ $(document).ready(function(){initNavTree('test__buildings_8py_source.html',''); 
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>sys.path.insert(0, <span class="stringliteral">&quot;.&quot;</span>)</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps.html">modules.apps</a> <span class="keyword">import</span> RoomCO2Model, l_shaped_room</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework.html">modules.framework</a> <span class="keyword">import</span> compose</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps.html">modules.apps</a> <span class="keyword">import</span> RoomCO2Model, air_conditioner, door, l_shaped_room, ventilation_from_decay, window</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework.html">modules.framework</a> <span class="keyword">import</span> compose, route</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a> <span class="keyword">import</span> core</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__buildings.html#ad4c1889abf343d4d6e251b6aeb3f1400">   14</a></span>T = 240</div>
@@ -252,11 +252,171 @@ $(document).ready(function(){initNavTree('test__buildings_8py_source.html',''); 
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        error = <span class="keyword">lambda</span> r: np.sqrt(np.mean((r.xk[60:, :n - 1] - data.xk[60:]) ** 2))</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        self.assertLess(error(record), 0.5 * error(plain))</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
 </div>
 </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    unittest.main()</div>
+<div class="foldopen" id="foldopen00091" data-start="" data-end="">
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__buildings.html#a2e02ea81f0c245d721a042cda87f6ce7">   91</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__buildings.html#a2e02ea81f0c245d721a042cda87f6ce7">fall</a>(room, steps=180, start=1200.0):</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="stringliteral">&quot;&quot;&quot;The room&#39;s own fall from ``start`` ppm with nobody in: times [s] and the mean level.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    x = np.full((room.n, 1), start)</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    levels = []</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(steps):</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        levels.append(float(np.mean(x)))</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        x = room.f(x, u=np.array([[0.0], [1.0]]), t=k * 60.0)</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> 60.0 * np.arange(steps), np.asarray(levels)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+</div>
+<div class="foldopen" id="foldopen00101" data-start="" data-end="">
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_openings.html">  101</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__buildings_1_1_test_openings.html">TestOpenings</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="stringliteral">&quot;&quot;&quot;A window, a door, an air conditioner: what each does to the balance.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="foldopen" id="foldopen00104" data-start="" data-end="">
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_openings.html#abfe778136dd2ae8719821433736476a8">  104</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_openings.html#abfe778136dd2ae8719821433736476a8">test_shut_openings_change_nothing</a>(self):</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        plain = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>)</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        fitted = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0)]), door(<span class="stringliteral">&quot;door&quot;</span>, [(0, 5)]), air_conditioner()])</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        np.testing.assert_array_equal(fitted.F(), plain.F())</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        np.testing.assert_array_equal(fitted.B(), plain.B())</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+</div>
+<div class="foldopen" id="foldopen00110" data-start="" data-end="">
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_openings.html#a1a4b98629f65e4de20e19d2506a53afb">  110</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_openings.html#a1a4b98629f65e4de20e19d2506a53afb">test_fresh_air_adds_to_the_ventilation</a>(self):</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="stringliteral">&quot;&quot;&quot;An air conditioner with an intake of 3 air changes per hour, in a room at 2: the fall is at 5.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        ach, _ = ventilation_from_decay(*<a class="code hl_function" href="namespacetests_1_1test__buildings.html#a2e02ea81f0c245d721a042cda87f6ce7">fall</a>(RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[air_conditioner(ach=3.0, on=<span class="keyword">True</span>)])))</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        self.assertAlmostEqual(ach, 5.0, delta=0.01)</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+</div>
+<div class="foldopen" id="foldopen00115" data-start="" data-end="">
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_openings.html#a27ab6c732a8006e35cbe9616f8595bf2">  115</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_openings.html#a27ab6c732a8006e35cbe9616f8595bf2">test_a_recirculating_unit_stirs_and_renews_nothing</a>(self):</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        people = np.array([[4.0], [1.0]])</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        spread = {}</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="keywordflow">for</span> on <span class="keywordflow">in</span> (<span class="keyword">False</span>, <span class="keyword">True</span>):</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[air_conditioner(ach=0.0, mixing=0.1, on=on)])</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            ach, _ = ventilation_from_decay(*<a class="code hl_function" href="namespacetests_1_1test__buildings.html#a2e02ea81f0c245d721a042cda87f6ce7">fall</a>(room))</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            self.assertAlmostEqual(ach, 2.0, delta=0.01)        <span class="comment"># the fall is the room&#39;s own, on or off</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            x = room.x0</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(600):</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                x = room.f(x, u=people)</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            spread[on] = float(np.ptp(x))</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        self.assertLess(spread[<span class="keyword">True</span>], 0.5 * spread[<span class="keyword">False</span>])       <span class="comment"># and the room is more even</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+</div>
+<div class="foldopen" id="foldopen00128" data-start="" data-end="">
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_openings.html#a8cadacf74a0710e55c2b9abe1a396bcb">  128</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_openings.html#a8cadacf74a0710e55c2b9abe1a396bcb">test_a_window_airs_the_room_from_its_side</a>(self):</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        opened = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0), (5, 0)], flow=0.1, open=<span class="keyword">True</span>)])</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        shut = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>)</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        people = np.array([[4.0], [1.0]])</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        xo, xs = opened.x0, shut.x0</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(600):</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            xo, xs = opened.f(xo, u=people), shut.f(xs, u=people)</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        self.assertLess(float(np.mean(xo)), float(np.mean(xs)) - 100.0)</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        field = opened.field(xo)</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        self.assertLess(field[4, 0], field[4, 5])                 <span class="comment"># lowest at the window</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+</div>
+<div class="foldopen" id="foldopen00139" data-start="" data-end="">
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_openings.html#abb76a44f36def449f22129f7884ec4dc">  139</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_openings.html#abb76a44f36def449f22129f7884ec4dc">test_a_door_lets_in_the_air_beyond</a>(self):</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="stringliteral">&quot;&quot;&quot;An empty room whose door gives on a corridor at 900 ppm settles between the two levels.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[door(<span class="stringliteral">&quot;door&quot;</span>, [(0, 5)], flow=0.05, beyond=900.0, open=<span class="keyword">True</span>)])</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        x = room.x0</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(600):</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            x = room.f(x, u=np.array([[0.0], [1.0]]))</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        field = room.field(x)</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        self.assertGreater(np.nanmin(field), 420.0)</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        self.assertLess(np.nanmax(field), 900.0)</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        self.assertEqual(np.unravel_index(np.nanargmax(field), field.shape), (0, 5))</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+</div>
+<div class="foldopen" id="foldopen00150" data-start="" data-end="">
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_openings.html#a554b1d8bffa48349ff247b8a1e1b4161">  150</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_openings.html#a554b1d8bffa48349ff247b8a1e1b4161">test_a_schedule_follows_the_steps</a>(self):</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        steps = np.zeros(10)</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        steps[4:7] = 1.0</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0)], open=steps)])</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        opened = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0)], open=<span class="keyword">True</span>)])</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        np.testing.assert_array_equal(room.F(t=3 * 60.0), RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>).F())</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        np.testing.assert_array_equal(room.F(t=5 * 60.0), opened.F())</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        np.testing.assert_array_equal(room.F(t=8 * 60.0), RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>).F())</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
+</div>
+<div class="foldopen" id="foldopen00159" data-start="" data-end="">
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_openings.html#abf0f7c9dc0ec92b8ff4239896b927490">  159</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_openings.html#abf0f7c9dc0ec92b8ff4239896b927490">test_variant_and_what_is_refused</a>(self):</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, count_people=<span class="keyword">True</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0)])])</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        opened = room.variant(window=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        self.assertTrue(opened.count_people)</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        self.assertFalse(np.array_equal(opened.F(), room.F()))</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keyword">with</span> self.assertRaises(KeyError):</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            room.variant(skylight=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(10, 10)])])       <span class="comment"># not in the room</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;w&quot;</span>, [(4, 0)]), door(<span class="stringliteral">&quot;w&quot;</span>, [(0, 5)])])</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;needs the C++ core&quot;)</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00173" data-start="" data-end="">
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html">  173</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html">TestCountingWithAWindow</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="stringliteral">&quot;&quot;&quot;Four people; the window is open for an hour. The count holds when the window</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="stringliteral">    is reported, and when it is not but the filter weighs both regimes; it falls</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="stringliteral">    when the window is left out.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a89273eaab1680118390f592bd43f0310">  178</a></span>    SPOTS = {<span class="stringliteral">&quot;B&quot;</span>: (2, 9), <span class="stringliteral">&quot;C&quot;</span>: (9, 2), <span class="stringliteral">&quot;D&quot;</span>: (5, 5)}</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="foldopen" id="foldopen00180" data-start="" data-end="">
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a704ce2ee6fe1af49d8da3817d3a90977">  180</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a704ce2ee6fe1af49d8da3817d3a90977">build</a>(self, count, opened):</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, count_people=count,</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                            openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0), (5, 0)], flow=0.1, open=opened)])</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        model = room</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        <span class="keywordflow">for</span> name, at <span class="keywordflow">in</span> self.<a class="code hl_variable" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a89273eaab1680118390f592bd43f0310">SPOTS</a>.items():</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            model = model.add_sensor(room.sensor(name, at))</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keywordflow">return</span> room, model</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+</div>
+<div class="foldopen" id="foldopen00188" data-start="" data-end="">
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#ab6d317228efebb6fe995e5bd1faf39af">  188</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#ab6d317228efebb6fe995e5bd1faf39af">test_known_ignored_and_routed</a>(self):</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        warnings.simplefilter(<span class="stringliteral">&quot;ignore&quot;</span>)</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        people = np.where(MINUTE &lt; 30, 0, 4).astype(float)</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        opened = ((MINUTE &gt;= 120) &amp; (MINUTE &lt; 180)).astype(float)</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        _, truth = self.<a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a704ce2ee6fe1af49d8da3817d3a90977">build</a>(<span class="keyword">False</span>, opened)</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        data = truth.sample(T * 60, uk=np.column_stack([people, np.ones(T)]), seed=2)</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        ones = np.ones((T, 1))</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        while_open = slice(150, 180)</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        room, known = self.<a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a704ce2ee6fe1af49d8da3817d3a90977">build</a>(<span class="keyword">True</span>, opened)</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        count = known.filter(data.zk, uk=ones, reset=<span class="keyword">True</span>).xk[:, room.n - 1]</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        self.assertAlmostEqual(count[while_open].mean(), 4.0, delta=0.3)</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        _, ignored = self.<a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a704ce2ee6fe1af49d8da3817d3a90977">build</a>(<span class="keyword">True</span>, <span class="keyword">False</span>)</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        count = ignored.filter(data.zk, uk=ones, reset=<span class="keyword">True</span>).xk[:, room.n - 1]</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        self.assertLess(count[while_open].mean(), 3.0)</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        _, shut = self.<a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a704ce2ee6fe1af49d8da3817d3a90977">build</a>(<span class="keyword">True</span>, <span class="keyword">False</span>)</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        _, wide = self.<a class="code hl_function" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a704ce2ee6fe1af49d8da3817d3a90977">build</a>(<span class="keyword">True</span>, <span class="keyword">True</span>)</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        modes = route([shut, wide], np.array([[0.98, 0.02], [0.02, 0.98]]))</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        count = modes.filter(data.zk, uk=ones, reset=<span class="keyword">True</span>).xk[:, room.n - 1]</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        self.assertAlmostEqual(count[while_open].mean(), 4.0, delta=0.3)</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        is_open = modes.mode_probabilities[:, 1]</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        self.assertGreater(is_open[while_open].mean(), 0.9)       <span class="comment"># the filter says when it was open</span></div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        self.assertLess(is_open[60:115].mean(), 0.1)</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        self.assertLess(is_open[200:].mean(), 0.1)</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
+</div>
+</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    unittest.main()</div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_counting_with_a_window_html"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html">tests.test_buildings.TestCountingWithAWindow</a></div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00173">test_buildings.py:173</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_counting_with_a_window_html_a704ce2ee6fe1af49d8da3817d3a90977"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a704ce2ee6fe1af49d8da3817d3a90977">tests.test_buildings.TestCountingWithAWindow.build</a></div><div class="ttdeci">build(self, count, opened)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00180">test_buildings.py:180</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_counting_with_a_window_html_a89273eaab1680118390f592bd43f0310"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#a89273eaab1680118390f592bd43f0310">tests.test_buildings.TestCountingWithAWindow.SPOTS</a></div><div class="ttdeci">dict SPOTS</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00178">test_buildings.py:178</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_counting_with_a_window_html_ab6d317228efebb6fe995e5bd1faf39af"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html#ab6d317228efebb6fe995e5bd1faf39af">tests.test_buildings.TestCountingWithAWindow.test_known_ignored_and_routed</a></div><div class="ttdeci">test_known_ignored_and_routed(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00188">test_buildings.py:188</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_openings_html"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_openings.html">tests.test_buildings.TestOpenings</a></div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00101">test_buildings.py:101</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_openings_html_a1a4b98629f65e4de20e19d2506a53afb"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_openings.html#a1a4b98629f65e4de20e19d2506a53afb">tests.test_buildings.TestOpenings.test_fresh_air_adds_to_the_ventilation</a></div><div class="ttdeci">test_fresh_air_adds_to_the_ventilation(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00110">test_buildings.py:110</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_openings_html_a27ab6c732a8006e35cbe9616f8595bf2"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_openings.html#a27ab6c732a8006e35cbe9616f8595bf2">tests.test_buildings.TestOpenings.test_a_recirculating_unit_stirs_and_renews_nothing</a></div><div class="ttdeci">test_a_recirculating_unit_stirs_and_renews_nothing(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00115">test_buildings.py:115</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_openings_html_a554b1d8bffa48349ff247b8a1e1b4161"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_openings.html#a554b1d8bffa48349ff247b8a1e1b4161">tests.test_buildings.TestOpenings.test_a_schedule_follows_the_steps</a></div><div class="ttdeci">test_a_schedule_follows_the_steps(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00150">test_buildings.py:150</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_openings_html_a8cadacf74a0710e55c2b9abe1a396bcb"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_openings.html#a8cadacf74a0710e55c2b9abe1a396bcb">tests.test_buildings.TestOpenings.test_a_window_airs_the_room_from_its_side</a></div><div class="ttdeci">test_a_window_airs_the_room_from_its_side(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00128">test_buildings.py:128</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_openings_html_abb76a44f36def449f22129f7884ec4dc"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_openings.html#abb76a44f36def449f22129f7884ec4dc">tests.test_buildings.TestOpenings.test_a_door_lets_in_the_air_beyond</a></div><div class="ttdeci">test_a_door_lets_in_the_air_beyond(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00139">test_buildings.py:139</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_openings_html_abf0f7c9dc0ec92b8ff4239896b927490"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_openings.html#abf0f7c9dc0ec92b8ff4239896b927490">tests.test_buildings.TestOpenings.test_variant_and_what_is_refused</a></div><div class="ttdeci">test_variant_and_what_is_refused(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00159">test_buildings.py:159</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_openings_html_abfe778136dd2ae8719821433736476a8"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_openings.html#abfe778136dd2ae8719821433736476a8">tests.test_buildings.TestOpenings.test_shut_openings_change_nothing</a></div><div class="ttdeci">test_shut_openings_change_nothing(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00104">test_buildings.py:104</a></div></div>
 <div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_the_balance_html"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_the_balance.html">tests.test_buildings.TestTheBalance</a></div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00024">test_buildings.py:24</a></div></div>
 <div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_the_balance_html_a7c0f2844d4557f90e1d354f3bc5bf85f"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_the_balance.html#a7c0f2844d4557f90e1d354f3bc5bf85f">tests.test_buildings.TestTheBalance.test_the_room</a></div><div class="ttdeci">test_the_room(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00026">test_buildings.py:26</a></div></div>
 <div class="ttc" id="aclasstests_1_1test__buildings_1_1_test_the_balance_html_ab745bc4e74e18e3f5cdec4c1ee2a43f7"><div class="ttname"><a href="classtests_1_1test__buildings_1_1_test_the_balance.html#ab745bc4e74e18e3f5cdec4c1ee2a43f7">tests.test_buildings.TestTheBalance.test_an_empty_room_stays_at_the_outdoor_level</a></div><div class="ttdeci">test_an_empty_room_stays_at_the_outdoor_level(self)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00033">test_buildings.py:33</a></div></div>
@@ -272,6 +432,7 @@ $(document).ready(function(){initNavTree('test__buildings_8py_source.html',''); 
 <div class="ttc" id="anamespacemodules_1_1framework_1_1constants_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1constants.html">modules.framework.constants</a></div><div class="ttdef"><b>Definition</b> <a href="constants_8py_source.html#l00001">constants.py:1</a></div></div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1native_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2native_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 <div class="ttc" id="anamespacemodules_1_1framework_html"><div class="ttname"><a href="namespacemodules_1_1framework.html">modules.framework</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__buildings_html_a2e02ea81f0c245d721a042cda87f6ce7"><div class="ttname"><a href="namespacetests_1_1test__buildings.html#a2e02ea81f0c245d721a042cda87f6ce7">tests.test_buildings.fall</a></div><div class="ttdeci">fall(room, steps=180, start=1200.0)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00091">test_buildings.py:91</a></div></div>
 <div class="ttc" id="anamespacetests_1_1test__buildings_html_a8fa8398c4e55a777181a40569ec57f2a"><div class="ttname"><a href="namespacetests_1_1test__buildings.html#a8fa8398c4e55a777181a40569ec57f2a">tests.test_buildings.sensors</a></div><div class="ttdeci">sensors(room)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00019">test_buildings.py:19</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

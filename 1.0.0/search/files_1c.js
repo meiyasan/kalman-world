@@ -20,7 +20,7 @@ var searchData=
   ['spec_2epy_17',['spec.py',['../spec_8py.html',1,'']]],
   ['spectral_2ecc_18',['Spectral.cc',['../_spectral_8cc.html',1,'']]],
   ['spectral_2eh_19',['Spectral.h',['../_spectral_8h.html',1,'']]],
-  ['spectral_2epy_20',['spectral.py',['../framework_2solvers_2spectral_8py.html',1,'(Global Namespace)'],['../apps_2gravitational_2interferometer_2spectral_8py.html',1,'(Global Namespace)']]],
+  ['spectral_2epy_20',['spectral.py',['../apps_2gravitational_2interferometer_2spectral_8py.html',1,'(Global Namespace)'],['../framework_2solvers_2spectral_8py.html',1,'(Global Namespace)']]],
   ['speed_2epy_21',['speed.py',['../speed_8py.html',1,'']]],
   ['store_2epy_22',['store.py',['../store_8py.html',1,'']]],
   ['storm_2eh_23',['Storm.h',['../_storm_8h.html',1,'']]],

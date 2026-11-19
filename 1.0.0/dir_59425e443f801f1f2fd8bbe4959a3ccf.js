@@ -42,6 +42,7 @@ var dir_59425e443f801f1f2fd8bbe4959a3ccf =
     [ "test_native_solvers.py", "test__native__solvers_8py.html", "test__native__solvers_8py" ],
     [ "test_native_tracking.py", "test__native__tracking_8py.html", "test__native__tracking_8py" ],
     [ "test_net_server.py", "test__net__server_8py.html", "test__net__server_8py" ],
+    [ "test_netatmo.py", "test__netatmo_8py.html", "test__netatmo_8py" ],
     [ "test_oscillators.py", "test__oscillators_8py.html", "test__oscillators_8py" ],
     [ "test_plots.py", "test__plots_8py.html", "test__plots_8py" ],
     [ "test_powergrids.py", "test__powergrids_8py.html", "test__powergrids_8py" ],

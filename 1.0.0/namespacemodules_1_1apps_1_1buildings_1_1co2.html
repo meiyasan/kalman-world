@@ -145,13 +145,25 @@ $(document).ready(function(){initNavTree('namespacemodules_1_1apps_1_1buildings_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_opening.html">Opening</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html">RoomCO2Model</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:afe0934fbbf33a2cf15af3cba6d116178" id="r_afe0934fbbf33a2cf15af3cba6d116178"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1buildings_1_1co2.html#afe0934fbbf33a2cf15af3cba6d116178">window</a> (name, cells, flow=0.1, *open=False)</td></tr>
+<tr class="separator:afe0934fbbf33a2cf15af3cba6d116178"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e81a7d968633f54132725c2a0f31662" id="r_a4e81a7d968633f54132725c2a0f31662"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1buildings_1_1co2.html#a4e81a7d968633f54132725c2a0f31662">door</a> (name, cells, flow=0.05, *beyond=600.0, open=False)</td></tr>
+<tr class="separator:a4e81a7d968633f54132725c2a0f31662"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c5b462f9967ff53684cd1c4d24d6980" id="r_a3c5b462f9967ff53684cd1c4d24d6980"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1buildings_1_1co2.html#a3c5b462f9967ff53684cd1c4d24d6980">air_conditioner</a> (name=&quot;ac&quot;, *ach=0.0, mixing=0.03, on=False)</td></tr>
+<tr class="separator:a3c5b462f9967ff53684cd1c4d24d6980"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a0f44afe8e1cedc3294711fe2825ad9" id="r_a6a0f44afe8e1cedc3294711fe2825ad9"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1buildings_1_1co2.html#a6a0f44afe8e1cedc3294711fe2825ad9">l_shaped_room</a> (int rows=12, int cols=12)</td></tr>
 <tr class="separator:a6a0f44afe8e1cedc3294711fe2825ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b710785ffaf1ab093678fbed525d99" id="r_a06b710785ffaf1ab093678fbed525d99"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1buildings_1_1co2.html#a06b710785ffaf1ab093678fbed525d99">empty_at_night</a> (room, hours=(0, 6), *tz=None, sigma=0.1, name=&quot;schedule&quot;)</td></tr>
+<tr class="separator:a06b710785ffaf1ab093678fbed525d99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8619b06d0476b54f0ef27cd4b9085c7e" id="r_a8619b06d0476b54f0ef27cd4b9085c7e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1buildings_1_1co2.html#a8619b06d0476b54f0ef27cd4b9085c7e">ventilation_from_decay</a> (times, ppm)</td></tr>
+<tr class="separator:a8619b06d0476b54f0ef27cd4b9085c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">CO2 in a room: a mass balance on a grid of cells.
@@ -176,10 +188,211 @@ With ``count_people=True`` the number of occupants is not given but estimated:
 it becomes the last component of the state, a number that drifts slowly
 (people come and go), and ``u = [1]``. The model stays linear.
 
+Openings change the balance while they are open (:class:`Opening`): a window
+exchanges the air of its cells with the outdoors, a door with the space beyond
+it, and an air conditioner brings fresh air to the whole room, or only stirs
+it. An opening that is always open or always shut leaves the model a model of
+matrices; one that follows a known schedule (a contact sensor, the unit's own
+signal) makes ``F`` and ``B`` functions of time, each the exact discretization
+of the balance in that configuration. An opening nobody reports is two models,
+shut and open, under ``route``.
+
 The model's own sensor reads one cell. Other sensors are added with the
 framework's operations; a sensor that drifts is an instrument with a
 calibration, whose offset ``joint`` estimates with the field.
 </pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a3c5b462f9967ff53684cd1c4d24d6980" name="a3c5b462f9967ff53684cd1c4d24d6980"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c5b462f9967ff53684cd1c4d24d6980">&#9670;&#160;</a></span>air_conditioner()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.buildings.co2.air_conditioner </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>name</em> = <code>&quot;ac&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>ach</em> = <code>0.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mixing</em> = <code>0.03</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>on</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">An air conditioner: while on it stirs the room (``mixing`` [m^2/s]) and,
+when it has a fresh-air intake, renews it (``ach`` more air changes per hour;
+0 for a unit that only recirculates).</pre> 
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00106">106</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  106</span><span class="keyword">def </span>air_conditioner(name=&quot;ac&quot;, *, ach=0.0, mixing=0.03, on=False):</div>
+<div class="line"><span class="lineno">  107</span>    <span class="stringliteral">&quot;&quot;&quot;An air conditioner: while on it stirs the room (``mixing`` [m^2/s]) and,</span></div>
+<div class="line"><span class="lineno">  108</span><span class="stringliteral">    when it has a fresh-air intake, renews it (``ach`` more air changes per hour;</span></div>
+<div class="line"><span class="lineno">  109</span><span class="stringliteral">    0 for a unit that only recirculates).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  110</span>    <span class="keywordflow">return</span> Opening(name, <span class="keywordtype">None</span>, ach=ach, mixing=mixing, open=on)</div>
+<div class="line"><span class="lineno">  111</span> </div>
+<div class="line"><span class="lineno">  112</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4e81a7d968633f54132725c2a0f31662" name="a4e81a7d968633f54132725c2a0f31662"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e81a7d968633f54132725c2a0f31662">&#9670;&#160;</a></span>door()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.buildings.co2.door </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cells</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>flow</em> = <code>0.05</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>beyond</em> = <code>600.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>open</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">A door on another space whose CO2 is ``beyond`` [ppm]: ``flow`` [m^3/s]
+through its ``cells`` while open.</pre> 
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00100">100</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  100</span><span class="keyword">def </span>door(name, cells, flow=0.05, *, beyond=600.0, open=False):</div>
+<div class="line"><span class="lineno">  101</span>    <span class="stringliteral">&quot;&quot;&quot;A door on another space whose CO2 is ``beyond`` [ppm]: ``flow`` [m^3/s]</span></div>
+<div class="line"><span class="lineno">  102</span><span class="stringliteral">    through its ``cells`` while open.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  103</span>    <span class="keywordflow">return</span> Opening(name, cells, flow=flow, level=beyond, open=open)</div>
+<div class="line"><span class="lineno">  104</span> </div>
+<div class="line"><span class="lineno">  105</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a06b710785ffaf1ab093678fbed525d99" name="a06b710785ffaf1ab093678fbed525d99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06b710785ffaf1ab093678fbed525d99">&#9670;&#160;</a></span>empty_at_night()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.buildings.co2.empty_at_night </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>room</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>hours</em> = <code>(0,&#160;6)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>tz</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sigma</em> = <code>0.1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>name</em> = <code>&quot;schedule&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The room is empty between two hours of the night: an instrument made of the
+room's ``schedule`` sensor, whose readings are 0 people at those steps and NaN
+at the others.
+
+``empty_at_night(room)`` is added to the room model; its readings
+come with the others from ``model.measurements(start=..., end=...)`` [unix s].
+``hours=(0, 6)``: from midnight to 6 am, in the time zone ``tz`` (the
+computer's when ``None``).
+</pre> 
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00293">293</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  293</span><span class="keyword">def </span>empty_at_night(room, hours=(0, 6), *, tz=<span class="keywordtype">None</span>, sigma=0.1, name=<span class="stringliteral">&quot;schedule&quot;</span>):</div>
+<div class="line"><span class="lineno">  294</span>    <span class="stringliteral">&quot;&quot;&quot;The room is empty between two hours of the night: an instrument made of the</span></div>
+<div class="line"><span class="lineno">  295</span><span class="stringliteral">    room&#39;s ``schedule`` sensor, whose readings are 0 people at those steps and NaN</span></div>
+<div class="line"><span class="lineno">  296</span><span class="stringliteral">    at the others.</span></div>
+<div class="line"><span class="lineno">  297</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  298</span><span class="stringliteral">    ``empty_at_night(room)`` is added to the room model; its readings</span></div>
+<div class="line"><span class="lineno">  299</span><span class="stringliteral">    come with the others from ``model.measurements(start=..., end=...)`` [unix s].</span></div>
+<div class="line"><span class="lineno">  300</span><span class="stringliteral">    ``hours=(0, 6)``: from midnight to 6 am, in the time zone ``tz`` (the</span></div>
+<div class="line"><span class="lineno">  301</span><span class="stringliteral">    computer&#39;s when ``None``).</span></div>
+<div class="line"><span class="lineno">  302</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  303</span>    <span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div>
+<div class="line"><span class="lineno">  304</span>    <span class="keyword">from</span> zoneinfo <span class="keyword">import</span> ZoneInfo</div>
+<div class="line"><span class="lineno">  305</span>    <span class="keyword">from</span> ...framework.instrument <span class="keyword">import</span> KalmanInstrument</div>
+<div class="line"><span class="lineno">  306</span>    first, last = (float(h) <span class="keywordflow">for</span> h <span class="keywordflow">in</span> hours)</div>
+<div class="line"><span class="lineno">  307</span>    step = 1.0 / float(room.fs)</div>
+<div class="line"><span class="lineno">  308</span> </div>
+<div class="line"><span class="lineno">  309</span>    <span class="keyword">def </span>readings(*, start, end, **query):</div>
+<div class="line"><span class="lineno">  310</span>        zone = ZoneInfo(tz) <span class="keywordflow">if</span> tz <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  311</span>        n = max(int(np.floor((float(end) - float(start)) / step)), 0)</div>
+<div class="line"><span class="lineno">  312</span>        out = np.full((n, 1), np.nan)</div>
+<div class="line"><span class="lineno">  313</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n):</div>
+<div class="line"><span class="lineno">  314</span>            moment = datetime.fromtimestamp(float(start) + k * step, zone)</div>
+<div class="line"><span class="lineno">  315</span>            hour = moment.hour + moment.minute / 60.0</div>
+<div class="line"><span class="lineno">  316</span>            <span class="keywordflow">if</span> (first &lt;= hour &lt; last) <span class="keywordflow">if</span> first &lt;= last <span class="keywordflow">else</span> (hour &gt;= first <span class="keywordflow">or</span> hour &lt; last):</div>
+<div class="line"><span class="lineno">  317</span>                out[k, 0] = 0.0</div>
+<div class="line"><span class="lineno">  318</span>        <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  319</span> </div>
+<div class="line"><span class="lineno">  320</span>    <span class="keywordflow">return</span> KalmanInstrument(name, [room.schedule(name, sigma=sigma)], provider=readings)</div>
+<div class="line"><span class="lineno">  321</span> </div>
+<div class="line"><span class="lineno">  322</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a6a0f44afe8e1cedc3294711fe2825ad9" name="a6a0f44afe8e1cedc3294711fe2825ad9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6a0f44afe8e1cedc3294711fe2825ad9">&#9670;&#160;</a></span>l_shaped_room()</h2>
 
@@ -206,14 +419,140 @@ calibration, whose offset ``joint`` estimates with the field.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">The cells of an L-shaped room: the grid without its upper-right quarter.</pre> 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00036">36</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   36</span><span class="keyword">def </span>l_shaped_room(rows: int = 12, cols: int = 12) -&gt; np.ndarray:</div>
-<div class="line"><span class="lineno">   37</span>    <span class="stringliteral">&quot;&quot;&quot;The cells of an L-shaped room: the grid without its upper-right quarter.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">   38</span>    room = np.ones((rows, cols), dtype=bool)</div>
-<div class="line"><span class="lineno">   39</span>    room[rows // 2:, cols // 2:] = <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">   40</span>    <span class="keywordflow">return</span> room</div>
-<div class="line"><span class="lineno">   41</span> </div>
-<div class="line"><span class="lineno">   42</span> </div>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00113">113</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  113</span><span class="keyword">def </span>l_shaped_room(rows: int = 12, cols: int = 12) -&gt; np.ndarray:</div>
+<div class="line"><span class="lineno">  114</span>    <span class="stringliteral">&quot;&quot;&quot;The cells of an L-shaped room: the grid without its upper-right quarter.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  115</span>    room = np.ones((rows, cols), dtype=bool)</div>
+<div class="line"><span class="lineno">  116</span>    room[rows // 2:, cols // 2:] = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  117</span>    <span class="keywordflow">return</span> room</div>
+<div class="line"><span class="lineno">  118</span> </div>
+<div class="line"><span class="lineno">  119</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8619b06d0476b54f0ef27cd4b9085c7e" name="a8619b06d0476b54f0ef27cd4b9085c7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8619b06d0476b54f0ef27cd4b9085c7e">&#9670;&#160;</a></span>ventilation_from_decay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.buildings.co2.ventilation_from_decay </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>times</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ppm</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The ventilation of a room [air changes per hour] from the fall of its CO2
+once everybody has left, and its standard deviation.
+
+With nobody breathing, the balance leaves ``c(t) = a + b exp(-lambda t)``:
+the rate of the fall is the ventilation. The level ``a`` it falls to is
+fitted too, so a sensor's offset and the outdoor level do not enter.
+
+``times`` [s] and ``ppm`` are the readings of the fall only (from the moment
+the room empties until the level is flat, or the next person comes in);
+``ppm`` holds one column per sensor, each fitted alone and the rates
+averaged by their uncertainties. NaN readings are left out.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00323">323</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  323</span><span class="keyword">def </span>ventilation_from_decay(times, ppm):</div>
+<div class="line"><span class="lineno">  324</span>    <span class="stringliteral">&quot;&quot;&quot;The ventilation of a room [air changes per hour] from the fall of its CO2</span></div>
+<div class="line"><span class="lineno">  325</span><span class="stringliteral">    once everybody has left, and its standard deviation.</span></div>
+<div class="line"><span class="lineno">  326</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  327</span><span class="stringliteral">    With nobody breathing, the balance leaves ``c(t) = a + b exp(-lambda t)``:</span></div>
+<div class="line"><span class="lineno">  328</span><span class="stringliteral">    the rate of the fall is the ventilation. The level ``a`` it falls to is</span></div>
+<div class="line"><span class="lineno">  329</span><span class="stringliteral">    fitted too, so a sensor&#39;s offset and the outdoor level do not enter.</span></div>
+<div class="line"><span class="lineno">  330</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  331</span><span class="stringliteral">    ``times`` [s] and ``ppm`` are the readings of the fall only (from the moment</span></div>
+<div class="line"><span class="lineno">  332</span><span class="stringliteral">    the room empties until the level is flat, or the next person comes in);</span></div>
+<div class="line"><span class="lineno">  333</span><span class="stringliteral">    ``ppm`` holds one column per sensor, each fitted alone and the rates</span></div>
+<div class="line"><span class="lineno">  334</span><span class="stringliteral">    averaged by their uncertainties. NaN readings are left out.</span></div>
+<div class="line"><span class="lineno">  335</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  336</span>    <span class="keyword">from</span> scipy.optimize <span class="keyword">import</span> curve_fit</div>
+<div class="line"><span class="lineno">  337</span>    t = np.asarray(times, dtype=float).reshape(-1)</div>
+<div class="line"><span class="lineno">  338</span>    c = np.asarray(ppm, dtype=float).reshape(len(t), -1)</div>
+<div class="line"><span class="lineno">  339</span>    t = t - t[0]</div>
+<div class="line"><span class="lineno">  340</span>    fall = <span class="keyword">lambda</span> t, a, b, lam: a + b * np.exp(-lam * t)</div>
+<div class="line"><span class="lineno">  341</span>    rates, variances = [], []</div>
+<div class="line"><span class="lineno">  342</span>    <span class="keywordflow">for</span> column <span class="keywordflow">in</span> c.T:</div>
+<div class="line"><span class="lineno">  343</span>        read = np.isfinite(column)</div>
+<div class="line"><span class="lineno">  344</span>        <span class="keywordflow">if</span> read.sum() &lt; 6:</div>
+<div class="line"><span class="lineno">  345</span>            <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  346</span>        tr, cr = t[read], column[read]</div>
+<div class="line"><span class="lineno">  347</span>        start = (cr[-3:].mean(), max(cr[:3].mean() - cr[-3:].mean(), 1.0), 3.0 / max(tr[-1], 1.0))</div>
+<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  349</span>            best, cov = curve_fit(fall, tr, cr, p0=start, bounds=([-np.inf, 0.0, 0.0], np.inf))</div>
+<div class="line"><span class="lineno">  350</span>        <span class="keywordflow">except</span> RuntimeError:</div>
+<div class="line"><span class="lineno">  351</span>            <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  352</span>        <span class="keywordflow">if</span> np.isfinite(cov[2, 2]) <span class="keywordflow">and</span> cov[2, 2] &gt; 0.0 <span class="keywordflow">and</span> best[2] &gt; 0.0:</div>
+<div class="line"><span class="lineno">  353</span>            rates.append(best[2])</div>
+<div class="line"><span class="lineno">  354</span>            variances.append(cov[2, 2])</div>
+<div class="line"><span class="lineno">  355</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> rates:</div>
+<div class="line"><span class="lineno">  356</span>        <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;ventilation_from_decay: no fall of the CO2 could be fitted; give the readings from the &quot;</span></div>
+<div class="line"><span class="lineno">  357</span>                         <span class="stringliteral">&quot;moment the room empties, at least six per sensor.&quot;</span>)</div>
+<div class="line"><span class="lineno">  358</span>    weights = 1.0 / np.asarray(variances)</div>
+<div class="line"><span class="lineno">  359</span>    rate = float(np.sum(weights * np.asarray(rates)) / np.sum(weights))</div>
+<div class="line"><span class="lineno">  360</span>    <span class="keywordflow">return</span> rate * 3600.0, float(np.sqrt(1.0 / np.sum(weights))) * 3600.0</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afe0934fbbf33a2cf15af3cba6d116178" name="afe0934fbbf33a2cf15af3cba6d116178"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe0934fbbf33a2cf15af3cba6d116178">&#9670;&#160;</a></span>window()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.buildings.co2.window </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cells</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>flow</em> = <code>0.1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>open</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">A window on the outdoors: ``flow`` [m^3/s] through its ``cells`` while open.</pre> 
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00095">95</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span><span class="keyword">def </span>window(name, cells, flow=0.1, *, open=False):</div>
+<div class="line"><span class="lineno">   96</span>    <span class="stringliteral">&quot;&quot;&quot;A window on the outdoors: ``flow`` [m^3/s] through its ``cells`` while open.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   97</span>    <span class="keywordflow">return</span> Opening(name, cells, flow=flow, open=open)</div>
+<div class="line"><span class="lineno">   98</span> </div>
+<div class="line"><span class="lineno">   99</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

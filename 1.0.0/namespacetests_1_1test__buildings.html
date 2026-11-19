@@ -146,6 +146,10 @@ $(document).ready(function(){initNavTree('namespacetests_1_1test__buildings.html
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_counting_with_a_window.html">TestCountingWithAWindow</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_openings.html">TestOpenings</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_the_balance.html">TestTheBalance</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_what_the_sensors_tell.html">TestWhatTheSensorsTell</a></td></tr>
@@ -155,6 +159,8 @@ Classes</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a8fa8398c4e55a777181a40569ec57f2a" id="r_a8fa8398c4e55a777181a40569ec57f2a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__buildings.html#a8fa8398c4e55a777181a40569ec57f2a">sensors</a> (room)</td></tr>
 <tr class="separator:a8fa8398c4e55a777181a40569ec57f2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e02ea81f0c245d721a042cda87f6ce7" id="r_a2e02ea81f0c245d721a042cda87f6ce7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__buildings.html#a2e02ea81f0c245d721a042cda87f6ce7">fall</a> (room, steps=180, start=1200.0)</td></tr>
+<tr class="separator:a2e02ea81f0c245d721a042cda87f6ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -167,6 +173,52 @@ Variables</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">The CO2 mass balance of a room (kalman.apps.buildings).</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a2e02ea81f0c245d721a042cda87f6ce7" name="a2e02ea81f0c245d721a042cda87f6ce7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e02ea81f0c245d721a042cda87f6ce7">&#9670;&#160;</a></span>fall()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_buildings.fall </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>room</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>180</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>start</em> = <code>1200.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The room's own fall from ``start`` ppm with nobody in: times [s] and the mean level.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__buildings_8py_source.html#l00091">91</a> of file <a class="el" href="test__buildings_8py_source.html">test_buildings.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   91</span><span class="keyword">def </span>fall(room, steps=180, start=1200.0):</div>
+<div class="line"><span class="lineno">   92</span>    <span class="stringliteral">&quot;&quot;&quot;The room&#39;s own fall from ``start`` ppm with nobody in: times [s] and the mean level.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   93</span>    x = np.full((room.n, 1), start)</div>
+<div class="line"><span class="lineno">   94</span>    levels = []</div>
+<div class="line"><span class="lineno">   95</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(steps):</div>
+<div class="line"><span class="lineno">   96</span>        levels.append(float(np.mean(x)))</div>
+<div class="line"><span class="lineno">   97</span>        x = room.f(x, u=np.array([[0.0], [1.0]]), t=k * 60.0)</div>
+<div class="line"><span class="lineno">   98</span>    <span class="keywordflow">return</span> 60.0 * np.arange(steps), np.asarray(levels)</div>
+<div class="line"><span class="lineno">   99</span> </div>
+<div class="line"><span class="lineno">  100</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a8fa8398c4e55a777181a40569ec57f2a" name="a8fa8398c4e55a777181a40569ec57f2a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8fa8398c4e55a777181a40569ec57f2a">&#9670;&#160;</a></span>sensors()</h2>
 

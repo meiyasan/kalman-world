@@ -136,9 +136,17 @@ $(document).ready(function(){initNavTree('namespacemodules_1_1adapters.html','')
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle"><div class="title">modules.adapters Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacemodules_1_1adapters_1_1netatmo" id="r_namespacemodules_1_1adapters_1_1netatmo"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1adapters_1_1netatmo.html">netatmo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Adapters: one piece of hardware each.
 
@@ -170,9 +178,9 @@ In C++ an adapter is a class deriving from ``Kalman::Instrument``, made of
 
 This package is where adapters live, beside ``kalman.apps``: the applications
 are specific models, the adapters specific hardware, and the framework knows
-neither. One module per device, named after it. None is shipped yet: an adapter
-states a product's data sheet, and those numbers have to come from the people
-who use the device.
+neither. One module per device, named after it:
+
+- ``netatmo``: Netatmo indoor modules (CO2), from the Netatmo web API or files.
 </pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->

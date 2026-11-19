@@ -279,7 +279,7 @@ Static Protected Member Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   42</span>    {</div>
 <div class="line"><span class="lineno">   43</span>        <span class="keyword">const</span> std::size_t M = nis.Cols();</div>
 <div class="line"><span class="lineno">   44</span>        <span class="keyword">const</span> std::size_t have = std::min(window, nis.Rows());</div>
-<div class="line"><span class="lineno">   45</span>        <span class="keyword">const</span> std::size_t pad = window - have;</div>
+<div class="line"><span class="lineno">   45</span>        <span class="keyword">const</span> std::size_t pad = <a class="code hl_function" href="namespacemodules_1_1apps_1_1buildings_1_1co2.html#afe0934fbbf33a2cf15af3cba6d116178">window</a> - have;</div>
 <div class="line"><span class="lineno">   46</span> </div>
 <div class="line"><span class="lineno">   47</span>        Matrix out(window, M, 1.0);            <span class="comment">// 1.0 = the chi2(1) mean</span></div>
 <div class="line"><span class="lineno">   48</span>        <span class="keywordflow">for</span> (std::size_t r = 0; r &lt; have; ++r)</div>
@@ -287,6 +287,7 @@ Static Protected Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   50</span>                out(pad + r, j) = nis(nis.Rows() - have + r, j);</div>
 <div class="line"><span class="lineno">   51</span>        <span class="keywordflow">return</span> out;</div>
 <div class="line"><span class="lineno">   52</span>    }</div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1buildings_1_1co2_html_afe0934fbbf33a2cf15af3cba6d116178"><div class="ttname"><a href="namespacemodules_1_1apps_1_1buildings_1_1co2.html#afe0934fbbf33a2cf15af3cba6d116178">modules.apps.buildings.co2.window</a></div><div class="ttdeci">window(name, cells, flow=0.1, *open=False)</div><div class="ttdef"><b>Definition</b> <a href="co2_8py_source.html#l00095">co2.py:95</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -172,6 +172,13 @@ var annotated_dup =
       [ "Vector", "class_kalman_1_1_vector.html", "class_kalman_1_1_vector" ]
     ] ],
     [ "modules", "namespacemodules.html", [
+      [ "adapters", "namespacemodules_1_1adapters.html", [
+        [ "netatmo", "namespacemodules_1_1adapters_1_1netatmo.html", [
+          [ "NetatmoCloud", "classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html", "classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud" ],
+          [ "NetatmoCSV", "classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html", "classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v" ],
+          [ "NetatmoModule", "classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html", "classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module" ]
+        ] ]
+      ] ],
       [ "api", "namespacemodules_1_1api.html", [
         [ "auth", "namespacemodules_1_1api_1_1auth.html", [
           [ "AuthError", "classmodules_1_1api_1_1auth_1_1_auth_error.html", null ],
@@ -236,6 +243,7 @@ var annotated_dup =
         ] ],
         [ "buildings", "namespacemodules_1_1apps_1_1buildings.html", [
           [ "co2", "namespacemodules_1_1apps_1_1buildings_1_1co2.html", [
+            [ "Opening", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_opening.html", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_opening" ],
             [ "RoomCO2Model", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model" ]
           ] ]
         ] ],
@@ -774,6 +782,8 @@ var annotated_dup =
         [ "TestRocketLiftoff", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff" ]
       ] ],
       [ "test_buildings", "namespacetests_1_1test__buildings.html", [
+        [ "TestCountingWithAWindow", "classtests_1_1test__buildings_1_1_test_counting_with_a_window.html", "classtests_1_1test__buildings_1_1_test_counting_with_a_window" ],
+        [ "TestOpenings", "classtests_1_1test__buildings_1_1_test_openings.html", "classtests_1_1test__buildings_1_1_test_openings" ],
         [ "TestTheBalance", "classtests_1_1test__buildings_1_1_test_the_balance.html", "classtests_1_1test__buildings_1_1_test_the_balance" ],
         [ "TestWhatTheSensorsTell", "classtests_1_1test__buildings_1_1_test_what_the_sensors_tell.html", "classtests_1_1test__buildings_1_1_test_what_the_sensors_tell" ]
       ] ],
@@ -1018,6 +1028,14 @@ var annotated_dup =
         [ "TestMcpStdio", "classtests_1_1test__net__server_1_1_test_mcp_stdio.html", "classtests_1_1test__net__server_1_1_test_mcp_stdio" ],
         [ "TestRestAgainstFacade", "classtests_1_1test__net__server_1_1_test_rest_against_facade.html", "classtests_1_1test__net__server_1_1_test_rest_against_facade" ],
         [ "TestTokensFromPython", "classtests_1_1test__net__server_1_1_test_tokens_from_python.html", "classtests_1_1test__net__server_1_1_test_tokens_from_python" ]
+      ] ],
+      [ "test_netatmo", "namespacetests_1_1test__netatmo.html", [
+        [ "FakeNetatmo", "classtests_1_1test__netatmo_1_1_fake_netatmo.html", "classtests_1_1test__netatmo_1_1_fake_netatmo" ],
+        [ "TestEmptyAtNight", "classtests_1_1test__netatmo_1_1_test_empty_at_night.html", "classtests_1_1test__netatmo_1_1_test_empty_at_night" ],
+        [ "TestFiles", "classtests_1_1test__netatmo_1_1_test_files.html", "classtests_1_1test__netatmo_1_1_test_files" ],
+        [ "TestFiveModules", "classtests_1_1test__netatmo_1_1_test_five_modules.html", "classtests_1_1test__netatmo_1_1_test_five_modules" ],
+        [ "TestOnSteps", "classtests_1_1test__netatmo_1_1_test_on_steps.html", "classtests_1_1test__netatmo_1_1_test_on_steps" ],
+        [ "TestTheWebAPI", "classtests_1_1test__netatmo_1_1_test_the_web_a_p_i.html", "classtests_1_1test__netatmo_1_1_test_the_web_a_p_i" ]
       ] ],
       [ "test_oscillators", "namespacetests_1_1test__oscillators.html", [
         [ "TestAnalyticOscillatorModel", "classtests_1_1test__oscillators_1_1_test_analytic_oscillator_model.html", "classtests_1_1test__oscillators_1_1_test_analytic_oscillator_model" ],

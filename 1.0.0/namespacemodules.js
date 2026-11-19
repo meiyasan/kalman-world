@@ -1,6 +1,6 @@
 var namespacemodules =
 [
-    [ "adapters", "namespacemodules_1_1adapters.html", null ],
+    [ "adapters", "namespacemodules_1_1adapters.html", "namespacemodules_1_1adapters" ],
     [ "api", "namespacemodules_1_1api.html", "namespacemodules_1_1api" ],
     [ "apps", "namespacemodules_1_1apps.html", "namespacemodules_1_1apps" ],
     [ "framework", "namespacemodules_1_1framework.html", "namespacemodules_1_1framework" ],

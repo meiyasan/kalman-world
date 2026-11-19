@@ -148,15 +148,18 @@ $(document).ready(function(){initNavTree('modules_2apps_2buildings_2____init____
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral">``kalman.apps.buildings`` — the air of a room.</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">- ``co2`` — :class:`RoomCO2Model`, a CO2 mass balance on the cells of a room</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">  (mixing, ventilation, occupants), and :func:`l_shaped_room`.</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">from</span> .co2 <span class="keyword">import</span> RoomCO2Model, l_shaped_room</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1buildings.html#a5a769932784e0d32af932b13e158da69">    9</a></span>VARIANTS = {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="stringliteral">&quot;co2&quot;</span>: RoomCO2Model,</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>}</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>__all__ = [<span class="stringliteral">&quot;RoomCO2Model&quot;</span>, <span class="stringliteral">&quot;l_shaped_room&quot;</span>, <span class="stringliteral">&quot;VARIANTS&quot;</span>]</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">  (mixing, ventilation, occupants), :func:`l_shaped_room`, and</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">  :func:`empty_at_night`, what is known of the occupants as a sensor, and</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">  :func:`ventilation_from_decay`, the room&#39;s air changes from an evening&#39;s fall.</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">from</span> .co2 <span class="keyword">import</span> (Opening, RoomCO2Model, air_conditioner, door, empty_at_night, l_shaped_room,</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>                  ventilation_from_decay, window)</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1buildings.html#a5a769932784e0d32af932b13e158da69">   12</a></span>VARIANTS = {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="stringliteral">&quot;co2&quot;</span>: RoomCO2Model,</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>}</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>__all__ = [<span class="stringliteral">&quot;Opening&quot;</span>, <span class="stringliteral">&quot;air_conditioner&quot;</span>, <span class="stringliteral">&quot;door&quot;</span>, <span class="stringliteral">&quot;window&quot;</span>, <span class="stringliteral">&quot;RoomCO2Model&quot;</span>, <span class="stringliteral">&quot;empty_at_night&quot;</span>, <span class="stringliteral">&quot;l_shaped_room&quot;</span>, <span class="stringliteral">&quot;ventilation_from_decay&quot;</span>, <span class="stringliteral">&quot;VARIANTS&quot;</span>]</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->

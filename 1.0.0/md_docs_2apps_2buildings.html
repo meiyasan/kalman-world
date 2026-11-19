@@ -140,14 +140,14 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2buildings.html',''); in
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="co2-in-a-room"></a> People in a room breathe out CO2 and ventilation brings outdoor air in. A few CO2 sensors, each reporting at its own rate, read the air at a few points; the filter estimates the CO2 in every part of the room, how many people are in it, and how far a sensor has drifted.</p>
-<h1><a class="anchor" id="the-model-1"></a>
+<h1><a class="anchor" id="the-model-2"></a>
 The model</h1>
 <div class="fragment"><div class="line">state        x = the CO2 concentration in each cell of the room [ppm]</div>
 <div class="line">                 (+ the number of people, with count_people=True)</div>
 <div class="line">dynamics     dc/dt = D lap(c) - lambda (c - c_out) + S / V</div>
 <div class="line">measurement  one CO2 sensor reads one cell</div>
 </div><!-- fragment --><p>The room is a set of cells of a grid; an L-shaped room is the grid without one quarter (<code>l_shaped_room()</code>). <code>D lap(c)</code> mixes neighbouring cells, and no air crosses a wall. <code>lambda</code> is the ventilation in air changes per second, <code>c_out</code> the outdoor concentration, <code>S / V</code> the breath of the occupants spread over the seats.</p>
-<h1><a class="anchor" id="how-it-is-built-1"></a>
+<h1><a class="anchor" id="how-it-is-built-2"></a>
 How it is built</h1>
 <ul>
 <li><b>Linear, so matrices.</b> The balance is linear: its step over a minute is a matrix exponential computed once, and the model runs on the linear engine.</li>
@@ -155,7 +155,7 @@ How it is built</h1>
 <li><b>Sensors at their own rates.</b> <code>model.sensor(name, (row, column), rate=...)</code> gives a CO2 sensor; one that has nothing new gives no number, and the filter skips it.</li>
 <li><b>A drifted sensor is an instrument.</b> <code>compose(sensor, name="B").calibrate(1, 0)</code> gives the model <code>B.gain</code> and <code>B.offset</code>; <code>joint</code> estimates the offset with the field, as long as other sensors read the same air without it.</li>
 </ul>
-<h1><a class="anchor" id="using-it-2"></a>
+<h1><a class="anchor" id="using-it-3"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> RoomCO2Model</div>
 <div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> compose</div>
@@ -165,6 +165,60 @@ Using it</h1>
 <div class="line">C = room.sensor(<span class="stringliteral">&quot;C&quot;</span>, (9, 2), rate=1 / 300)</div>
 <div class="line">model = room.add_instrument(compose(B, name=<span class="stringliteral">&quot;B&quot;</span>).calibrate(1.0, 0.0)).add_sensor(C)</div>
 <div class="line">record = model.joint({<span class="stringliteral">&quot;B.offset&quot;</span>: (150.0, 0.0)}).filter(zk, uk=np.ones((len(zk), 1)))</div>
+</div><!-- fragment --><h1><a class="anchor" id="windows-doors-and-air-conditioning"></a>
+Windows, doors and air conditioning</h1>
+<p>An opening changes the balance while it is open:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone">what it does   </th><th class="markdownTableHeadNone">made with    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">window   </td><td class="markdownTableBodyNone">exchanges the air of its cells with the outdoors   </td><td class="markdownTableBodyNone"><code>window(name, cells, flow=0.1)</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">door   </td><td class="markdownTableBodyNone">exchanges it with the space beyond, at its own CO2 level   </td><td class="markdownTableBodyNone"><code>door(name, cells, flow=0.05, beyond=600)</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">air conditioner   </td><td class="markdownTableBodyNone">stirs the room; with a fresh-air intake, also renews it   </td><td class="markdownTableBodyNone"><code>air_conditioner(ach=0, mixing=0.03)</code>   </td></tr>
+</table>
+<p><code>flow</code> is in m^3/s. An air conditioner that only recirculates has <code>ach=0</code>: it makes the room more even and removes nothing. Whether a unit brings fresh air is read from the room itself: <code>ventilation_from_decay</code> on an evening with the unit on, and on one with it off; the difference is its <code>ach</code>.</p>
+<p>How open each one is, is said in one of three ways:</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> RoomCO2Model, window, air_conditioner</div>
+<div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> route</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># always (a model of matrices)</span></div>
+<div class="line">room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0), (5, 0)], open=<span class="keyword">True</span>)])</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># reported: one value per step of the model (a contact sensor, the unit&#39;s own signal)</span></div>
+<div class="line">room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, count_people=<span class="keyword">True</span>,</div>
+<div class="line">                    openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0), (5, 0)], open=contact), air_conditioner(ach=1.5, on=running)])</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># not reported: the two regimes under route; the filter says when it was open</span></div>
+<div class="line">shut = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, count_people=<span class="keyword">True</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0), (5, 0)])])</div>
+<div class="line">modes = route([shut, shut.variant(window=<span class="keyword">True</span>)], [[0.98, 0.02], [0.02, 0.98]])</div>
+<div class="line">record = modes.filter(zk, uk=np.ones((len(zk), 1)))</div>
+<div class="line">modes.mode_probabilities[:, 1]                             <span class="comment"># the probability that the window is open</span></div>
+</div><!-- fragment --><p>With four people and the window open for an hour, the count stays at 4.0 when the window is reported, and at 4.0 when it is routed (which finds the hour); with the window left out of the model it falls to 2.3. A reported opening makes <code>F</code> and <code>B</code> functions of time, each the exact step of the balance in that configuration.</p>
+<h1><a class="anchor" id="a-known-empty-room"></a>
+A known empty room</h1>
+<p>What is known of the people is a sensor too: <code>room.schedule()</code> reads the count, and <code>empty_at_night(room, hours=(0, 6), tz=...)</code> is an instrument that reads 0 people at those hours and nothing at the others. Every night then pins the offsets of the CO2 sensors against the outdoor level the empty room settles to.</p>
+<h1><a class="anchor" id="real-sensors-netatmo"></a>
+Real sensors: Netatmo</h1>
+<p><code>kalman.adapters.NetatmoModule</code> is one Netatmo indoor module: a CO2 sensor of the room with its data sheet (one reading every 5 minutes, so <code>fs=1/300</code>) and a calibration. Its readings come from the Netatmo web API (<code>NetatmoCloud</code>, credentials from the environment) or from files (<code>NetatmoCSV</code>: the web page's export or a local logger), and are laid on the model's steps, NaN where a reading is missing.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> RoomCO2Model, empty_at_night</div>
+<div class="line"><span class="keyword">from</span> kalman.adapters <span class="keyword">import</span> NetatmoModule, NetatmoCloud</div>
+<div class="line"> </div>
+<div class="line">room = RoomCO2Model(<span class="stringliteral">&quot;unread&quot;</span>, count_people=<span class="keyword">True</span>, fs=1 / 300)</div>
+<div class="line">cloud = NetatmoCloud()</div>
+<div class="line">modules = [NetatmoModule(room, <span class="stringliteral">&quot;main&quot;</span>, (2, 2), station=STATION, source=cloud),</div>
+<div class="line">           NetatmoModule(room, <span class="stringliteral">&quot;desk&quot;</span>, (2, 9), station=STATION, module=DESK, source=cloud)]</div>
+<div class="line">watched = room.add_instrument(modules[0]).add_instrument(modules[1]).add_instrument(empty_at_night(room))</div>
+<div class="line">zk = watched.measurements(start=t0, end=t1)</div>
+<div class="line">record = watched.joint({<span class="stringliteral">&quot;desk.offset&quot;</span>: (50.0, 0.5)}).filter(zk, uk=np.ones((len(zk), 1)))</div>
+</div><!-- fragment --><p>An offset is a slow random walk (<code>(sigma, drift)</code>): it does not return to where it started, so it takes no <code>tau</code>.</p>
+<p><b>The ventilation sets the scale of the count.</b> The CO2 a person adds at steady state is <code>q / (ach V)</code>: a room believed twice as ventilated as it is counts twice the people (with <code>ach=3</code> given for a room at 2, five people are counted as 6.9). <code>ach</code> has to be measured for the room: from the decay of the CO2 after everybody has left (its rate is <code>ach</code>), or from an hour with a known number of people. <code>ventilation_from_decay(times, ppm)</code> does the first: it fits <code>a + b exp(-lambda t)</code> to each sensor's readings of the fall and returns <code>ach</code> and its standard deviation. The level <code>a</code> is fitted, so the sensors' offsets do not enter.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> ventilation_from_decay</div>
+<div class="line"> </div>
+<div class="line">evening = slice(k_left, k_left + 48)                       <span class="comment"># four hours from the moment the room empties</span></div>
+<div class="line">ach, sigma = ventilation_from_decay(t[evening], zk[evening, :5])</div>
+<div class="line">room = RoomCO2Model(<span class="stringliteral">&quot;unread&quot;</span>, count_people=<span class="keyword">True</span>, fs=1 / 300, ach=ach)</div>
 </div><!-- fragment --><p>Notebook: <a href="../../share/notebooks/15_CO2Room.ipynb">15_CO2Room</a>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

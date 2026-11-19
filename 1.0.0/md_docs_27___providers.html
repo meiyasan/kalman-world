@@ -172,6 +172,7 @@ Shipped providers</h1>
 <td class="markdownTableBodyNone"><code>turbulence</code>   </td><td class="markdownTableBodyNone"><code>TurbulenceProvider</code>   </td><td class="markdownTableBodyNone">Kraichnan / NSKT turbulence datasets   </td></tr>
 </table>
 <p>The two weather providers live with their domain (<code>kalman.apps.weather.providers</code>) and are registered into <code>kalman.providers</code> alongside the generic ones.</p>
+<p>A hardware adapter brings the providers of its device with it: <code>NetatmoCloud</code> (the Netatmo web API) and <code>NetatmoCSV</code> (exported or logged files) are in <code>kalman.adapters.netatmo</code>. They are handed to the adapter's instruments (<code>NetatmoModule(..., source=cloud)</code>) and are not resolved by kind. Their secrets are outbound credentials like any other (<code>NETATMO_CLIENT_ID</code>, <code>NETATMO_CLIENT_SECRET</code>, <code>NETATMO_REFRESH_TOKEN</code>, or <code>~/.kalman/credentials.json</code>).</p>
 <h1><a class="anchor" id="resolving-one"></a>
 Resolving one</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.providers <span class="keyword">import</span> resolve_provider</div>
