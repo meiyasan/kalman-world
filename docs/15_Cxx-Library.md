@@ -1142,7 +1142,7 @@ runs it when a pass starts and warns on a parameter the data cannot determine.
 A parameter of a joint model may also be given a `tau`
 (`EstimatedParameter::tau`): it then returns towards its starting value with
 `exp(-dt / tau)` per step, a first-order Gauss-Markov process, in place of a
-random walk.
+random walk. A `tau` needs a `drift > 0`; one without is refused.
 
 ### Sensors, and a model read by one more
 

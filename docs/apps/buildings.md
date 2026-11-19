@@ -79,4 +79,11 @@ record = watched.joint({"desk.offset": (50.0, 0.5)}).filter(zk, uk=np.ones((len(
 An offset is a slow random walk (`(sigma, drift)`): it does not return to
 where it started, so it takes no `tau`.
 
+**The ventilation sets the scale of the count.** The CO2 a person adds at
+steady state is `q / (ach V)`: a room believed twice as ventilated as it is
+counts twice the people (with `ach=3` given for a room at 2, five people are
+counted as 6.9). `ach` has to be measured for the room: from the decay of the
+CO2 after everybody has left (its rate is `ach`), or from an hour with a known
+number of people.
+
 Notebook: [15_CO2Room](../../share/notebooks/15_CO2Room.ipynb).

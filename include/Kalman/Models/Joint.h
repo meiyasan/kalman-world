@@ -86,7 +86,7 @@ namespace Kalman
         std::string name;
         double sigma = 0.;  ///< standard deviation of the initial guess (> 0)
         double drift = 0.;  ///< standard deviation of the noise added to it per step (>= 0)
-        double tau = 0.;    ///< time over which it returns to its starting value; 0: never (a random walk)
+        double tau = 0.;    ///< time over which it returns to its starting value; 0: never (a random walk); needs a drift > 0
     };
 }
 

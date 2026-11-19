@@ -221,6 +221,8 @@ class TestTau(unittest.TestCase):
         self.assertEqual(Gauge().joint({"offset": (1.0, 0.1)}).estimated["offset"], (1.0, 0.1, 0.0))
         with self.assertRaisesRegex(ValueError, "tau of 'offset' must be >= 0"):
             Gauge().joint({"offset": (1.0, 0.1, -1.0)})
+        with self.assertRaisesRegex(ValueError, "needs a drift > 0"):      # it would only decay, unestimated
+            Gauge().joint({"offset": (1.0, 0.0, 2.0)})
 
     def test_it_decays_towards_its_starting_value(self):
         phi = np.exp(-0.1 / 2.0)

@@ -41,6 +41,13 @@ The two weather providers live with their domain
 (`kalman.apps.weather.providers`) and are registered into `kalman.providers`
 alongside the generic ones.
 
+A hardware adapter brings the providers of its device with it: `NetatmoCloud`
+(the Netatmo web API) and `NetatmoCSV` (exported or logged files) are in
+`kalman.adapters.netatmo`. They are handed to the adapter's instruments
+(`NetatmoModule(..., source=cloud)`) and are not resolved by kind. Their
+secrets are outbound credentials like any other (`NETATMO_CLIENT_ID`,
+`NETATMO_CLIENT_SECRET`, `NETATMO_REFRESH_TOKEN`, or `~/.kalman/credentials.json`).
+
 ## Resolving one
 
 ```python

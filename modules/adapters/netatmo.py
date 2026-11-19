@@ -21,7 +21,7 @@ Where the readings come from:
 
 - :class:`NetatmoCloud`: the Netatmo web API (``getmeasure``), the only interface
   Netatmo documents. ``scale="max"`` gives every reading; ``"30min"`` and longer
-  give averages. The credentials come from the environment, never from the
+  give averages. The credentials are outbound secrets, never in the
   repository (see the class);
 - :class:`NetatmoCSV`: files on disk, the export of the Netatmo web page or a
   local logger's ``time, co2`` columns. The station has no documented local
@@ -56,6 +56,7 @@ import csv
 import json
 import os
 import time as _time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -64,6 +65,7 @@ import numpy as np
 from ..framework.constants import KalmanProviderKind
 from ..framework.instrument import KalmanInstrument
 from ..framework.provider import KalmanProvider
+from ..providers.credentials import get_credential
 
 STEP = 300.0                                       # seconds between two readings of a module
 API = "https://api.netatmo.com"
@@ -120,11 +122,17 @@ class NetatmoModule(KalmanInstrument):
 class NetatmoCloud(KalmanProvider):
     """The CO2 of Netatmo modules, from the Netatmo web API.
 
-    The credentials of a Netatmo app (dev.netatmo.com) come from the environment:
-    ``NETATMO_CLIENT_ID``, ``NETATMO_CLIENT_SECRET`` and ``NETATMO_REFRESH_TOKEN``
-    (scope ``read_station``). Netatmo hands back a new refresh token with each
-    access token; it is kept in the file ``NETATMO_TOKEN_FILE`` when that is set
-    (``~/.config/kalman/netatmo.json``, say: outside the repository).
+    The credentials of a Netatmo app (dev.netatmo.com, scope ``read_station``)
+    are outbound secrets, resolved like every provider's
+    (:mod:`kalman.providers.credentials`): from the environment,
+    ``NETATMO_CLIENT_ID``, ``NETATMO_CLIENT_SECRET`` and ``NETATMO_REFRESH_TOKEN``,
+    or from ``~/.kalman/credentials.json`` (``netatmo_client_id``, ...). They are
+    never in the repository.
+
+    Netatmo replaces the refresh token each time it is used, and the old one stops
+    working: the new one is kept in ``~/.kalman/netatmo.json`` (``token_file=`` or
+    ``NETATMO_TOKEN_FILE`` for another place), readable by its owner only, and is
+    the one used next time.
 
     ``scale``: ``"max"`` for every reading, ``"30min"``, ``"1hour"``, ... for averages.
     """
@@ -136,20 +144,12 @@ class NetatmoCloud(KalmanProvider):
     MEASUREMENTS = ({"name": "co2", "units": "ppm", "description": "CO2 of one indoor module"},)
     REQUIRES = ("NETATMO_CLIENT_ID", "NETATMO_CLIENT_SECRET", "NETATMO_REFRESH_TOKEN")
     PAGE = 1024                                    # readings per request, at most
+    TOKENS = "~/.kalman/netatmo.json"              # where the replaced refresh token is kept
 
-    def __init__(self, *, scale="max", client_id=None, client_secret=None, refresh_token=None, token_file=None,
-                 opener=None, cache=True):
+    def __init__(self, *, scale="max", token_file=None, opener=None, cache=True):
         super().__init__(cache=cache)
-        env = os.environ.get
         self.scale = scale
-        self.client_id = client_id or env("NETATMO_CLIENT_ID")
-        self.client_secret = client_secret or env("NETATMO_CLIENT_SECRET")
-        self.token_file = token_file or env("NETATMO_TOKEN_FILE")
-        saved = {}
-        if self.token_file and os.path.exists(self.token_file):
-            with open(self.token_file, encoding="utf-8") as f:
-                saved = json.load(f)
-        self.refresh_token = refresh_token or saved.get("refresh_token") or env("NETATMO_REFRESH_TOKEN")
+        self.token_file = os.path.expanduser(token_file or os.environ.get("NETATMO_TOKEN_FILE") or self.TOKENS)
         self._open = opener or (lambda request: urllib.request.urlopen(request, timeout=30))
         self._access, self._expires = None, 0.0
 
@@ -163,23 +163,44 @@ class NetatmoCloud(KalmanProvider):
         with self._open(request) as response:
             return json.loads(response.read().decode())
 
+    def _kept(self):
+        """The refresh token kept from the last run, or ``None``."""
+        try:
+            with open(self.token_file, encoding="utf-8") as f:
+                return json.load(f).get("refresh_token")
+        except (OSError, ValueError):
+            return None
+
+    def _keep(self, refresh_token):
+        """Write the new refresh token: owner-only from its creation, replaced in one move."""
+        os.makedirs(os.path.dirname(self.token_file), mode=0o700, exist_ok=True)
+        draft = self.token_file + ".new"
+        with os.fdopen(os.open(draft, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600), "w", encoding="utf-8") as f:
+            json.dump({"refresh_token": refresh_token}, f)
+        os.replace(draft, self.token_file)
+
     def _token(self):
         if self._access and _time.time() < self._expires - 60:
             return self._access
-        missing = [k for k, v in zip(self.REQUIRES, (self.client_id, self.client_secret, self.refresh_token)) if not v]
-        if missing:
-            raise RuntimeError(f"NetatmoCloud: set {', '.join(missing)} in the environment.")
-        answer = self._call("/oauth2/token", {"grant_type": "refresh_token", "refresh_token": self.refresh_token,
-                                              "client_id": self.client_id, "client_secret": self.client_secret},
-                            post=True)
+        secret = lambda key: get_credential(f"netatmo_{key}", env=f"NETATMO_{key.upper()}")   # fail-closed
+        client_id, client_secret = secret("client_id"), secret("client_secret")
+        kept = self._kept()
+        given = get_credential("netatmo_refresh_token", env="NETATMO_REFRESH_TOKEN", required=kept is None)
+        answer = None
+        for refresh_token in dict.fromkeys(t for t in (kept, given) if t):      # the kept one first
+            try:
+                answer = self._call("/oauth2/token", {"grant_type": "refresh_token", "refresh_token": refresh_token,
+                                                      "client_id": client_id, "client_secret": client_secret},
+                                    post=True)
+                break
+            except urllib.error.HTTPError as refused:
+                last = refused
+        if answer is None:
+            raise PermissionError("NetatmoCloud: Netatmo refused the refresh token; make a new one on dev.netatmo.com "
+                                  f"and set NETATMO_REFRESH_TOKEN ({last}).") from last
         self._access, self._expires = answer["access_token"], _time.time() + float(answer.get("expires_in", 10800))
-        if answer.get("refresh_token") and answer["refresh_token"] != self.refresh_token:
-            self.refresh_token = answer["refresh_token"]
-            if self.token_file:
-                os.makedirs(os.path.dirname(os.path.abspath(self.token_file)), exist_ok=True)
-                with open(self.token_file, "w", encoding="utf-8") as f:
-                    json.dump({"refresh_token": self.refresh_token}, f)
-                os.chmod(self.token_file, 0o600)
+        if answer.get("refresh_token"):
+            self._keep(answer["refresh_token"])
         return self._access
 
     def readings(self, station, module, start, end):
@@ -242,8 +263,11 @@ class NetatmoCSV(KalmanProvider):
         delimiter = ";" if lines[i].count(";") >= lines[i].count(",") else ","
         rows = list(csv.reader(lines[i:], delimiter=delimiter))
         header = [h.strip().strip('"').lower() for h in rows[0]]
-        when = next(j for j, h in enumerate(header) if h in ("timestamp", "time", "unix", "t"))
-        what = next(j for j, h in enumerate(header) if h.startswith("co2"))
+        when = next((j for j, h in enumerate(header) if h in ("timestamp", "time", "unix", "t")), None)
+        what = next((j for j, h in enumerate(header) if h.startswith("co2")), None)
+        if when is None or what is None:
+            raise ValueError(f"NetatmoCSV: {path} needs a time column (Timestamp or time, unix seconds) and a CO2 "
+                             f"column; its header is {rows[0]}.")
         times, ppm = [], []
         for row in rows[1:]:
             try:

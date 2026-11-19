@@ -41,6 +41,9 @@ namespace Kalman::Models
                     throw std::invalid_argument("Models::Joint: the drift of '" + p.name + "' must be >= 0.");
                 if (!(p.tau >= 0.))
                     throw std::invalid_argument("Models::Joint: the tau of '" + p.name + "' must be >= 0.");
+                if (p.tau > 0. && !(p.drift > 0.))
+                    throw std::invalid_argument("Models::Joint: the tau of '" + p.name + "' needs a drift > 0: without "
+                                                "one the parameter only decays to where it started and is not estimated.");
             }
             return parameters.size();
         }

@@ -6,6 +6,7 @@ import os
 import tempfile
 import unittest
 import warnings
+from unittest import mock
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -91,24 +92,54 @@ class FakeNetatmo:
 
 class TestTheWebAPI(unittest.TestCase):
 
-    def test_pages_and_a_rotated_token(self):
+    SECRETS = {"NETATMO_CLIENT_ID": "id", "NETATMO_CLIENT_SECRET": "secret", "NETATMO_REFRESH_TOKEN": "first"}
+
+    def test_pages_and_a_replaced_token(self):
         fake = FakeNetatmo()
-        with tempfile.TemporaryDirectory() as d:
-            token_file = os.path.join(d, "netatmo.json")
-            cloud = NetatmoCloud(client_id="id", client_secret="secret", refresh_token="first",
-                                 token_file=token_file, opener=fake)
+        with tempfile.TemporaryDirectory() as d, mock.patch.dict(os.environ, self.SECRETS):
+            token_file = os.path.join(d, "kept", "netatmo.json")
+            cloud = NetatmoCloud(token_file=token_file, opener=fake)
             times, ppm = cloud.readings("70:ee:50:00:00:01", "03:00:00:00:00:02", 0, 2500 * 300)
             self.assertEqual(len(times), 2500)                  # three pages of at most 1024
             self.assertEqual(sum("getmeasure" in c.full_url for c in fake.calls), 3)
             self.assertEqual(sum("oauth2" in c.full_url for c in fake.calls), 1)
+            self.assertIn(b"refresh_token=first", fake.calls[0].data)
             self.assertEqual(json.load(open(token_file)), {"refresh_token": "rotated"})
             self.assertEqual(os.stat(token_file).st_mode & 0o777, 0o600)
 
-    def test_no_credentials_says_which(self):
-        for key in NetatmoCloud.REQUIRES:
-            os.environ.pop(key, None)
-        with self.assertRaisesRegex(RuntimeError, "NETATMO_CLIENT_ID"):
-            NetatmoCloud(opener=FakeNetatmo()).readings("s", None, 0, 300)
+            again = FakeNetatmo()                               # the next run uses the token that was kept
+            NetatmoCloud(token_file=token_file, opener=again).readings("s", None, 0, 300)
+            self.assertIn(b"refresh_token=rotated", again.calls[0].data)
+
+    def test_a_refused_kept_token_falls_back_on_the_given_one(self):
+        import urllib.error
+        fake = FakeNetatmo()
+
+        def opener(request):
+            if request.data and b"refresh_token=stale" in request.data:
+                raise urllib.error.HTTPError(request.full_url, 400, "invalid_grant", None, None)
+            return fake(request)
+
+        with tempfile.TemporaryDirectory() as d, mock.patch.dict(os.environ, self.SECRETS):
+            token_file = os.path.join(d, "netatmo.json")
+            json.dump({"refresh_token": "stale"}, open(token_file, "w"))
+            NetatmoCloud(token_file=token_file, opener=opener).readings("s", None, 0, 300)
+            self.assertEqual(json.load(open(token_file)), {"refresh_token": "rotated"})
+
+    def test_no_credentials_fails_closed(self):
+        from modules.providers import credentials
+        empty = {k: v for k, v in os.environ.items() if not k.startswith("NETATMO_")}
+        with tempfile.TemporaryDirectory() as d, mock.patch.dict(os.environ, empty, clear=True), \
+                mock.patch.object(credentials, "_STORE", os.path.join(d, "none.json")):
+            with self.assertRaisesRegex(PermissionError, "NETATMO_CLIENT_ID"):
+                NetatmoCloud(token_file=os.path.join(d, "t.json"), opener=FakeNetatmo()).readings("s", None, 0, 300)
+
+    def test_a_file_without_the_columns_says_so(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "m.csv")
+            open(path, "w").write("date,co2 level,timezone\n1,2,3\n")
+            with self.assertRaisesRegex(ValueError, "time column"):
+                NetatmoCSV.parse(path)
 
 
 @unittest.skipUnless(core.HAS_CXX_CORE, "needs the C++ core")

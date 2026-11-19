@@ -113,7 +113,7 @@ $ python -m pytest tests/test_structure.py -q  # architecture invariants only
 $ make linter                                  # ruff, correctness-focused
 ```
 
-The expected baseline is **969 passed, 28 skipped** — the skips are
+The expected baseline is **971 passed, 28 skipped** — the skips are
 optional-dependency gates. A red suite is never "expected"; see
 [Troubleshooting](14_Troubleshooting.md).
 

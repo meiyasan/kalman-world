@@ -265,6 +265,8 @@ A parameter given a time `tau` wanders and returns to its starting value
 instead of drifting for ever, which suits a sensor bias or a clock offset:
 `{"offset": (sigma, drift, tau)}`, or `{"sigma": ..., "drift": ..., "tau": ...}`.
 Its variance then settles at `drift^2 / (1 - exp(-2 dt / tau))`.
+A `tau` needs a `drift > 0` (without one the parameter would only decay to where
+it started); a calibration offset that does not come back takes a drift and no `tau`.
 
 **Can the data tell them apart?** `model.observability(steps=50)` answers
 before any data: how many directions of the state the measurements determine
