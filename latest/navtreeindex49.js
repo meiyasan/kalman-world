@@ -1,8 +1,8 @@
 var NAVTREEINDEX49 =
 {
 "framework_2solvers_2spectral_8py_source.html":[12,2,0,5,3,10,2],
-"functions.html":[12,1,3,0],
 "functions.html":[12,1,3,0,0],
+"functions.html":[12,1,3,0],
 "functions_a.html":[12,1,3,0,1],
 "functions_b.html":[12,1,3,0,2],
 "functions_c.html":[12,1,3,0,3],
@@ -124,8 +124,8 @@ var NAVTREEINDEX49 =
 "globals_d.html":[12,2,1,0,2],
 "globals_defs.html":[12,2,1,4],
 "globals_e.html":[12,2,1,0,3],
-"globals_func.html":[12,2,1,1],
 "globals_func.html":[12,2,1,1,0],
+"globals_func.html":[12,2,1,1],
 "globals_func_e.html":[12,2,1,1,1],
 "globals_func_k.html":[12,2,1,1,2],
 "globals_func_m.html":[12,2,1,1,3],

@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="include/Kalman/Models/Lag.h Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: include/Kalman/Models/Lag.h Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>include/Kalman/Models/Lag.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g1021062d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_lag_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Lag.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_lag_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#ifndef KALMAN_MODELS_LAG_H</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#define KALMAN_MODELS_LAG_H</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#include &quot;<a class="code" href="include_2_kalman_2_model_8h.html">Kalman/Model.h</a>&quot;</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_kalman_1_1_models.html">Kalman::Models</a></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>{</div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="};">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html">   56</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_kalman_1_1_models_1_1_lag.html">Lag</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            std::shared_ptr&lt;Model&gt; fInner;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            std::size_t fNInner = 0;            <span class="comment">// n of the inner model</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            std::size_t fDepth = 0;             <span class="comment">// L: the number of past states carried</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keyword">mutable</span> <span class="keywordtype">double</span> fDelaysAt = -1.;     <span class="comment">// the sample rate fRowBlock was computed for</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keyword">mutable</span> std::vector&lt;std::size_t&gt; fRowBlock;   <span class="comment">// for each row of z, the block it reads</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="keyword">mutable</span> std::vector&lt;std::size_t&gt; fBlocksRead; <span class="comment">// the distinct blocks, ascending</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keyword">mutable</span> <span class="keywordtype">bool</span> fDelayed = <span class="keyword">false</span>;      <span class="comment">// whether any row reads a past block</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordtype">void</span> Sync() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> Shift(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;head) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <a class="code hl_class" href="class_kalman_1_1_models_1_1_lag.html">Lag</a>(std::shared_ptr&lt;Model&gt; inner, std::size_t depth);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#ae52b595f73bd57a105c7575100f7f7c2">   80</a></span>            <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#ae52b595f73bd57a105c7575100f7f7c2">Title</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Lag Model&quot;</span>; }</div>
+<div class="foldopen" id="foldopen00081" data-start="{" data-end="}">
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#abc16dd80c0f0e515bf13cea4813d5f8d">   81</a></span>            <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#abc16dd80c0f0e515bf13cea4813d5f8d">Description</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="keyword">            </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;A model that carries its last states: for sensors that report late, and fixed-lag smoothing.&quot;</span>; }</div>
+</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#a697d46bc225c225db9172e99d8c1ebca">   84</a></span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;<a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a697d46bc225c225db9172e99d8c1ebca">Inner</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *fInner; }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#a660813887071a53f06ac3348f090636d">   85</a></span>            <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;<a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a660813887071a53f06ac3348f090636d">Inner</a>() { <span class="keywordflow">return</span> *fInner; }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#a0a47af2128866b851572e6baae223bee">   87</a></span>            std::size_t <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a0a47af2128866b851572e6baae223bee">Depth</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fDepth; }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#aac8501abe6b4dd116e9194002ea254c8">   89</a></span>            std::size_t <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#aac8501abe6b4dd116e9194002ea254c8">NInner</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fNInner; }</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a41a7dcd792fd297c480fb7ad918c2465">Block</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, std::size_t steps) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            std::size_t <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#af435ed39c3c637ca5ecfc89883f135c7">Delay</a>(std::size_t i) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            std::vector&lt;Sensor&gt; <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a642273d0927f417db69eb60afe26706f">Sensors</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#a35faa0f5a93a8475b4461a6673e20222">   99</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a35faa0f5a93a8475b4461a6673e20222">CheckDelays</a>()<span class="keyword"> const override </span>{}</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            <span class="comment">// --- maps ----------------------------------------------------------</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#ab09a5f581876577faa814bac04fc2004">f</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;u, <span class="keywordtype">double</span> t = 0.) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a1c48e9affb6eb0be43a770ccaba8e51f">h</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keywordtype">double</span> t = 0.) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a4a1b0daeba579304675bd0fa233bec65">Jacobian</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;u, <span class="keywordtype">double</span> t = 0.) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#ae2f35dc394a0827678ef349347e45132">JacobianH</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keywordtype">double</span> t = 0.) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <span class="keyword">using </span><a class="code hl_function" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Model::f</a>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#af8e56f5c16a86ab37d6dda746c4adea9">  108</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#af8e56f5c16a86ab37d6dda746c4adea9">HasProcessNoiseInput</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> fInner-&gt;HasProcessNoiseInput(); }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#ab09a5f581876577faa814bac04fc2004">f</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;u, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;w, <span class="keywordtype">double</span> t) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#a153f81830ce8d1abc17e45da2ae3f62e">  110</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a153f81830ce8d1abc17e45da2ae3f62e">HasMeasurementNoiseInput</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> fInner-&gt;HasMeasurementNoiseInput(); }</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a1af06883f9f1270ad43982d0e66ab0ef">MeasureWithNoise</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;v, <span class="keywordtype">double</span> t) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#a4f7181fd2d07f89de508a9415e002deb">  112</a></span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a4f7181fd2d07f89de508a9415e002deb">LimitControl</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;u)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> fInner-&gt;LimitControl(u); }</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            <span class="comment">// --- coefficients --------------------------------------------------</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a2594ca835318ecf903576b58c3db3042">F</a>(<span class="keywordtype">double</span> t = 0.) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a8ae7b4f9f8b2ec83d196764e9c0306ae">H</a>(<span class="keywordtype">double</span> t = 0.) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a7833b961eea67f8f79270b6f63707151">B</a>(<span class="keywordtype">double</span> t = 0.) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a6d0a9989039955499c2efafeb2a5ca0c">L</a>(<span class="keywordtype">double</span> t = 0.) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#afb8bbedfb763a4b8567e44c049c6d45f">Q</a>(<span class="keywordtype">double</span> t = 0.) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#a69e8cf396541510a0d1029c16d9ed48c">  120</a></span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a69e8cf396541510a0d1029c16d9ed48c">R</a>(<span class="keywordtype">double</span> t = 0.)<span class="keyword"> const override </span>{ Sync(); <span class="keywordflow">return</span> fInner-&gt;R(t); }</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            <span class="comment">// --- the parameters are the inner model&#39;s ---------------------------</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#aa47be6ecb4d5dbeae3f5695b097b84b2">  123</a></span>            std::vector&lt;std::string&gt; <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#aa47be6ecb4d5dbeae3f5695b097b84b2">ParameterNames</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> fInner-&gt;ParameterNames(); }</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#a07651cffc525c1a02d3be45f5bab242b">  124</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a07651cffc525c1a02d3be45f5bab242b">HasParameter</a>(<span class="keyword">const</span> std::string &amp;name)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> fInner-&gt;HasParameter(name); }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#afc2a3ad7a9bdff6191bf350757a5253c">  125</a></span>            <span class="keywordtype">double</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#afc2a3ad7a9bdff6191bf350757a5253c">Parameter</a>(<span class="keyword">const</span> std::string &amp;name)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> fInner-&gt;Parameter(name); }</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_lag.html#ae63115286b768e2f033f75f3c20f7d5f">  126</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#ae63115286b768e2f033f75f3c20f7d5f">SetParameter</a>(<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">double</span> value)<span class="keyword"> override </span>{ fInner-&gt;SetParameter(name, value); }</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a7589ffb5c872d6018e125fb60e7709d8">AdoptInitialState</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#ad7d227870cb3fa07b72e1369a68830b5">CheckShapes</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            std::string <a class="code hl_function" href="class_kalman_1_1_models_1_1_lag.html#a2329deb5cac71e7de8e4f9cb954af0a5">Describe</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    };</div>
+</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>}</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="preprocessor">#endif </span><span class="comment">// KALMAN_MODELS_LAG_H</span></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html"><div class="ttname"><a href="class_kalman_1_1_model.html">Kalman::Model</a></div><div class="ttdoc">The system — WHAT is being estimated.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00071">Model.h:72</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a770dbdd333866b8733fa9cfcb95dcede"><div class="ttname"><a href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Kalman::Model::f</a></div><div class="ttdeci">virtual Vector f(const Vector &amp;x, const Vector &amp;u, double t=0.) const</div><div class="ttdoc">One step of the dynamics.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00104">Model.cc:104</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html">Kalman::Models::Lag</a></div><div class="ttdoc">A model that carries its last L states along with the present one.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00056">Lag.h:57</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a07651cffc525c1a02d3be45f5bab242b"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a07651cffc525c1a02d3be45f5bab242b">Kalman::Models::Lag::HasParameter</a></div><div class="ttdeci">bool HasParameter(const std::string &amp;name) const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00124">Lag.h:124</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a0a47af2128866b851572e6baae223bee"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a0a47af2128866b851572e6baae223bee">Kalman::Models::Lag::Depth</a></div><div class="ttdeci">std::size_t Depth() const</div><div class="ttdoc">L: the number of past states carried.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00087">Lag.h:87</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a153f81830ce8d1abc17e45da2ae3f62e"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a153f81830ce8d1abc17e45da2ae3f62e">Kalman::Models::Lag::HasMeasurementNoiseInput</a></div><div class="ttdeci">bool HasMeasurementNoiseInput() const override</div><div class="ttdoc">True when h takes the measurement noise as an argument: see h(x, v, t).</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00110">Lag.h:110</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a1af06883f9f1270ad43982d0e66ab0ef"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a1af06883f9f1270ad43982d0e66ab0ef">Kalman::Models::Lag::MeasureWithNoise</a></div><div class="ttdeci">Vector MeasureWithNoise(const Vector &amp;x, const Vector &amp;v, double t) const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00189">Lag.cc:189</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a1c48e9affb6eb0be43a770ccaba8e51f"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a1c48e9affb6eb0be43a770ccaba8e51f">Kalman::Models::Lag::h</a></div><div class="ttdeci">Vector h(const Vector &amp;x, double t=0.) const override</div><div class="ttdoc">The observation map. Default: H x.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00173">Lag.cc:173</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a2329deb5cac71e7de8e4f9cb954af0a5"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a2329deb5cac71e7de8e4f9cb954af0a5">Kalman::Models::Lag::Describe</a></div><div class="ttdeci">std::string Describe() const override</div><div class="ttdoc">One-line description, for logs.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00305">Lag.cc:305</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a2594ca835318ecf903576b58c3db3042"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a2594ca835318ecf903576b58c3db3042">Kalman::Models::Lag::F</a></div><div class="ttdeci">Matrix F(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00162">Lag.cc:162</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a35faa0f5a93a8475b4461a6673e20222"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a35faa0f5a93a8475b4461a6673e20222">Kalman::Models::Lag::CheckDelays</a></div><div class="ttdeci">void CheckDelays() const override</div><div class="ttdoc">The delays are what this model is for (see Model::CheckDelays()).</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00099">Lag.h:99</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a41a7dcd792fd297c480fb7ad918c2465"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a41a7dcd792fd297c480fb7ad918c2465">Kalman::Models::Lag::Block</a></div><div class="ttdeci">Vector Block(const Vector &amp;x, std::size_t steps) const</div><div class="ttdoc">The state as it was steps ago, out of x.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00103">Lag.cc:103</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a4a1b0daeba579304675bd0fa233bec65"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a4a1b0daeba579304675bd0fa233bec65">Kalman::Models::Lag::Jacobian</a></div><div class="ttdeci">Matrix Jacobian(const Vector &amp;x, const Vector &amp;u, double t=0.) const override</div><div class="ttdoc">df/dx — F(t) when analytic, central differences otherwise.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00151">Lag.cc:151</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a4f7181fd2d07f89de508a9415e002deb"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a4f7181fd2d07f89de508a9415e002deb">Kalman::Models::Lag::LimitControl</a></div><div class="ttdeci">Vector LimitControl(const Vector &amp;u) const override</div><div class="ttdoc">Actuator-limit hook: the command the plant can actually deliver.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00112">Lag.h:112</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a642273d0927f417db69eb60afe26706f"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a642273d0927f417db69eb60afe26706f">Kalman::Models::Lag::Sensors</a></div><div class="ttdeci">std::vector&lt; Sensor &gt; Sensors() const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00262">Lag.cc:262</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a660813887071a53f06ac3348f090636d"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a660813887071a53f06ac3348f090636d">Kalman::Models::Lag::Inner</a></div><div class="ttdeci">Model &amp; Inner()</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00085">Lag.h:85</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a697d46bc225c225db9172e99d8c1ebca"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a697d46bc225c225db9172e99d8c1ebca">Kalman::Models::Lag::Inner</a></div><div class="ttdeci">const Model &amp; Inner() const</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00084">Lag.h:84</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a69e8cf396541510a0d1029c16d9ed48c"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a69e8cf396541510a0d1029c16d9ed48c">Kalman::Models::Lag::R</a></div><div class="ttdeci">Matrix R(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00120">Lag.h:120</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a6d0a9989039955499c2efafeb2a5ca0c"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a6d0a9989039955499c2efafeb2a5ca0c">Kalman::Models::Lag::L</a></div><div class="ttdeci">Matrix L(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00241">Lag.cc:241</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a7589ffb5c872d6018e125fb60e7709d8"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a7589ffb5c872d6018e125fb60e7709d8">Kalman::Models::Lag::AdoptInitialState</a></div><div class="ttdeci">void AdoptInitialState() override</div><div class="ttdoc">The inner initial state in every block; its covariance on each block.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00057">Lag.cc:57</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a7833b961eea67f8f79270b6f63707151"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a7833b961eea67f8f79270b6f63707151">Kalman::Models::Lag::B</a></div><div class="ttdeci">Matrix B(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00230">Lag.cc:230</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_a8ae7b4f9f8b2ec83d196764e9c0306ae"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#a8ae7b4f9f8b2ec83d196764e9c0306ae">Kalman::Models::Lag::H</a></div><div class="ttdeci">Matrix H(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00217">Lag.cc:217</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_aa47be6ecb4d5dbeae3f5695b097b84b2"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#aa47be6ecb4d5dbeae3f5695b097b84b2">Kalman::Models::Lag::ParameterNames</a></div><div class="ttdeci">std::vector&lt; std::string &gt; ParameterNames() const override</div><div class="ttdoc">The declared names, sorted.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00123">Lag.h:123</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_aac8501abe6b4dd116e9194002ea254c8"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#aac8501abe6b4dd116e9194002ea254c8">Kalman::Models::Lag::NInner</a></div><div class="ttdeci">std::size_t NInner() const</div><div class="ttdoc">The state dimension of the inner model: the size of one block.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00089">Lag.h:89</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_ab09a5f581876577faa814bac04fc2004"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#ab09a5f581876577faa814bac04fc2004">Kalman::Models::Lag::f</a></div><div class="ttdeci">Vector f(const Vector &amp;x, const Vector &amp;u, double t=0.) const override</div><div class="ttdoc">One step of the dynamics.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00132">Lag.cc:132</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_abc16dd80c0f0e515bf13cea4813d5f8d"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#abc16dd80c0f0e515bf13cea4813d5f8d">Kalman::Models::Lag::Description</a></div><div class="ttdeci">const char * Description() const override</div><div class="ttdoc">One sentence on what it does.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00081">Lag.h:81</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_ad7d227870cb3fa07b72e1369a68830b5"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#ad7d227870cb3fa07b72e1369a68830b5">Kalman::Models::Lag::CheckShapes</a></div><div class="ttdeci">void CheckShapes() const override</div><div class="ttdoc">Validate every coefficient against (n, m, l).</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00298">Lag.cc:298</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_ae2f35dc394a0827678ef349347e45132"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#ae2f35dc394a0827678ef349347e45132">Kalman::Models::Lag::JacobianH</a></div><div class="ttdeci">Matrix JacobianH(const Vector &amp;x, double t=0.) const override</div><div class="ttdoc">dh/dx — H(t) when analytic, central differences otherwise.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00203">Lag.cc:203</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_ae52b595f73bd57a105c7575100f7f7c2"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#ae52b595f73bd57a105c7575100f7f7c2">Kalman::Models::Lag::Title</a></div><div class="ttdeci">const char * Title() const override</div><div class="ttdoc">Human-readable name of the kind of thing this is.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00080">Lag.h:80</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_ae63115286b768e2f033f75f3c20f7d5f"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#ae63115286b768e2f033f75f3c20f7d5f">Kalman::Models::Lag::SetParameter</a></div><div class="ttdeci">void SetParameter(const std::string &amp;name, double value) override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00126">Lag.h:126</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_af435ed39c3c637ca5ecfc89883f135c7"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#af435ed39c3c637ca5ecfc89883f135c7">Kalman::Models::Lag::Delay</a></div><div class="ttdeci">std::size_t Delay(std::size_t i) const</div><div class="ttdoc">The number of steps the sensor reading row i of the measurement is late by.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00116">Lag.cc:116</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_af8e56f5c16a86ab37d6dda746c4adea9"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#af8e56f5c16a86ab37d6dda746c4adea9">Kalman::Models::Lag::HasProcessNoiseInput</a></div><div class="ttdeci">bool HasProcessNoiseInput() const override</div><div class="ttdoc">True when f takes the process noise as an argument: see f(x, u, w, t).</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00108">Lag.h:108</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_afb8bbedfb763a4b8567e44c049c6d45f"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#afb8bbedfb763a4b8567e44c049c6d45f">Kalman::Models::Lag::Q</a></div><div class="ttdeci">Matrix Q(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8cc_source.html#l00252">Lag.cc:252</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html_afc2a3ad7a9bdff6191bf350757a5253c"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html#afc2a3ad7a9bdff6191bf350757a5253c">Kalman::Models::Lag::Parameter</a></div><div class="ttdeci">double Parameter(const std::string &amp;name) const override</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00125">Lag.h:125</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="ainclude_2_kalman_2_model_8h_html"><div class="ttname"><a href="include_2_kalman_2_model_8h.html">Model.h</a></div><div class="ttdoc">Header of the Kalman::Model class.</div></div>
+<div class="ttc" id="anamespace_kalman_1_1_models_html"><div class="ttname"><a href="namespace_kalman_1_1_models.html">Kalman::Models</a></div><div class="ttdef"><b>Definition</b> <a href="_callback_8h_source.html#l00042">Callback.h:43</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3fe9a22a30d55b8646dbe94bd625f96a.html">Kalman</a></li><li class="navelem"><a class="el" href="dir_d5ab1dd41ebeeefad4048b6505be632b.html">Models</a></li><li class="navelem"><a class="el" href="_lag_8h.html">Lag.h</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>
