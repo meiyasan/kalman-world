@@ -138,4 +138,4 @@ ach, sigma = ventilation_from_decay(t[evening], zk[evening, :5])
 room = RoomCO2Model("unread", count_people=True, fs=1 / 300, ach=ach)
 ```
 
-Notebook: [15_CO2Room](../../share/notebooks/15_CO2Room.ipynb).
+Notebook: [15_CO2Room](../../share/notebooks/15_CO2Room.ipynb), whose last step opens a window.
