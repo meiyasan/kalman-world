@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
+   &#160;<span id="projectnumber">1.0.0-4-gbd0f8762</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -246,7 +246,7 @@ The seven roles</h2>
 <div class="line">make tests                     # or: python -m pytest tests/ -q</div>
 <div class="line">python -m pytest tests/test_structure.py -q     # architecture invariants</div>
 <div class="line">make linter                    # ruff, correctness-focused</div>
-</div><!-- fragment --><p>Current baseline: <b>971 passed, 28 skipped</b> (skips are optional-dependency gates), and 28 of 28 in the C++ suite (<code>ctest</code>). The suite must stay green; a red suite is never "expected".</p>
+</div><!-- fragment --><p>Current baseline: <b>979 passed, 28 skipped</b> (skips are optional-dependency gates), and 28 of 28 in the C++ suite (<code>ctest</code>). The suite must stay green; a red suite is never "expected".</p>
 <p>Install the optional extras to exercise the transports for real rather than skipping them — <code>make setup</code>. The MCP server is covered by a <b>live stdio session</b> test that spawns <code>python -m kalman.mcp</code> and drives it as a client; it caught a real breakage when SDK 2.0 renamed <code>FastMCP</code> to <code>MCPServer</code>, which a mocked test would have missed.</p>
 <p>If you touch <code>apps/</code> layout, also verify the notebooks still import:</p>
 <div class="fragment"><div class="line">python - &lt;&lt;&#39;PY&#39;</div>

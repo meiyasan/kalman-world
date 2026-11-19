@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
+   &#160;<span id="projectnumber">1.0.0-4-gbd0f8762</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -170,26 +170,27 @@ $(document).ready(function(){initNavTree('modules_2apps_2____init_____8py_source
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">from</span> .vehicles     <span class="keyword">import</span> CarSpeedModel, CarSpeedState, CarSpeedObservable, CarLaneModel, CarLaneState, CarLaneObservable</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">from</span> .tracking      <span class="keyword">import</span> DriftChamberModel, TrackingEvent, TrackState, TrackObservable</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">from</span> .fusion        <span class="keyword">import</span> SensorFusionModel, SensorSpec</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">from</span> .buildings     <span class="keyword">import</span> RoomCO2Model, empty_at_night, l_shaped_room, ventilation_from_decay</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">from</span> .vision        <span class="keyword">import</span> (DetectionModel, BoxTrackModel, SortTracker, KalmanTrack,</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                            BoxTrackState, BoxTrackObservable, TrackedBox,</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                            box_to_xysr, xysr_to_box, iou_batch, associate_detections,</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>                            mot_detections, sort_mot_hypothesis, mot_sequences_from_root,</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                            evaluate_mot, synthetic_multi)</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">from</span> .gps           <span class="keyword">import</span> GPSModel, GPSConstellation, GPSState, GPSObservable</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">from</span> .weather       <span class="keyword">import</span> (NS2D, KolmogorovFlowModel, FlowObservable, TwinExperiment,</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                            StormModel, StormState, StormObservable, synthetic_track,</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                            synthetic_steered_track, analytic_steering, analytic_environment,</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                            LearnedIntensityModel, japan_steering, field_steering,</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                            japan_region, landfall_probability, JAPAN_BBOX,</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                            TornadoEnvironmentModel, TornadoState, TornadoObservable,</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                            synthetic_environment, brazil_season, brazil_tornado_scenario,</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                            seasonal_tornado_probability)</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">from</span> .gravitational.interferometer <span class="keyword">import</span> (InterferometerModel,</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                              InterferometerK1, InterferometerH1,</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                              InterferometerL1, InterferometerV1,</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                              welch_psd, find_peaks_in_band,</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                              fit_lorentzian_peak, group_peaks_into_windows)</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">from</span> .buildings     <span class="keyword">import</span> (Opening, RoomCO2Model, air_conditioner, door, empty_at_night, l_shaped_room,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                             ventilation_from_decay, window)</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">from</span> .vision        <span class="keyword">import</span> (DetectionModel, BoxTrackModel, SortTracker, KalmanTrack,</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                            BoxTrackState, BoxTrackObservable, TrackedBox,</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>                            box_to_xysr, xysr_to_box, iou_batch, associate_detections,</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                            mot_detections, sort_mot_hypothesis, mot_sequences_from_root,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                            evaluate_mot, synthetic_multi)</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">from</span> .gps           <span class="keyword">import</span> GPSModel, GPSConstellation, GPSState, GPSObservable</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">from</span> .weather       <span class="keyword">import</span> (NS2D, KolmogorovFlowModel, FlowObservable, TwinExperiment,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                            StormModel, StormState, StormObservable, synthetic_track,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                            synthetic_steered_track, analytic_steering, analytic_environment,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                            LearnedIntensityModel, japan_steering, field_steering,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                            japan_region, landfall_probability, JAPAN_BBOX,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                            TornadoEnvironmentModel, TornadoState, TornadoObservable,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                            synthetic_environment, brazil_season, brazil_tornado_scenario,</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                            seasonal_tornado_probability)</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">from</span> .gravitational.interferometer <span class="keyword">import</span> (InterferometerModel,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                              InterferometerK1, InterferometerH1,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                              InterferometerL1, InterferometerV1,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                              welch_psd, find_peaks_in_band,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                              fit_lorentzian_peak, group_peaks_into_windows)</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->

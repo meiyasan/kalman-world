@@ -1,0 +1,521 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/adapters/netatmo.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/adapters/netatmo.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/adapters/netatmo.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-4-gbd0f8762</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('netatmo_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">netatmo.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="netatmo_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacemodules_1_1adapters_1_1netatmo.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Netatmo indoor modules: the CO2 of a room, five minutes at a time.</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">A Netatmo weather station has a main indoor module and up to three additional</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">indoor modules; each reads CO2 (with temperature, humidity and, for the main one,</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">noise and pressure) and reports about every five minutes. A room watched by five</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">modules takes two stations: each module says which station it belongs to.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">What the data sheet gives, and what this adapter takes from it:</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">- CO2 from 0 to 5000 ppm, accuracy +/- 50 ppm or +/- 5 %. Most of that is an</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">  offset that moves slowly (the sensor ages, and the module recalibrates</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="stringliteral">  itself), so a module is an instrument with a calibration: its</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="stringliteral">  ``&quot;&lt;name&gt;.offset&quot;`` is estimated with ``joint``, as a slow random walk (a</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="stringliteral">  ``drift`` per step, no ``tau``: an offset does not return to where it started);</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="stringliteral">- the noise from one reading to the next is much smaller than that accuracy:</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="stringliteral">  ``sigma`` (20 ppm by default) is that noise, to be checked on a quiet night;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="stringliteral">- one reading every five minutes: the room model steps every five minutes</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="stringliteral">  (``RoomCO2Model(..., fs=1/300)``).</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="stringliteral">Where the readings come from:</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">- :class:`NetatmoCloud`: the Netatmo web API (``getmeasure``), the only interface</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">  Netatmo documents. ``scale=&quot;max&quot;`` gives every reading; ``&quot;30min&quot;`` and longer</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral">  give averages. The credentials are outbound secrets, never in the</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="stringliteral">  repository (see the class);</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="stringliteral">- :class:`NetatmoCSV`: files on disk, the export of the Netatmo web page or a</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="stringliteral">  local logger&#39;s ``time, co2`` columns. The station has no documented local</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="stringliteral">  interface; a local reader (HomeKit, a logger) writes such a file, or is any</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="stringliteral">  function returning ``(times, ppm)``, given as ``source=``.</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="stringliteral">Either way the readings are laid on the model&#39;s steps from ``start``: a step</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="stringliteral">with no reading is NaN, which the filter skips::</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="stringliteral">    from kalman.apps import RoomCO2Model, empty_at_night</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="stringliteral">    from kalman.adapters import NetatmoModule, NetatmoCloud</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="stringliteral">    room = RoomCO2Model(&quot;unread&quot;, count_people=True, fs=1 / 300)   # every reading comes from a module</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="stringliteral">    cloud = NetatmoCloud()                                     # credentials from the environment</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="stringliteral">    modules = [NetatmoModule(room, &quot;main&quot;, (2, 2), station=STATION_1, source=cloud),</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="stringliteral">               NetatmoModule(room, &quot;desk&quot;, (2, 9), station=STATION_1, module=MODULE_1, source=cloud),</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="stringliteral">               ...]</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="stringliteral">    watched = room</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="stringliteral">    for module in modules:</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="stringliteral">        watched = watched.add_instrument(module)</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="stringliteral">    watched = watched.add_instrument(empty_at_night(room))    # nobody between midnight and 6 am</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="stringliteral">    zk = watched.measurements(start=t0, end=t1)                # fetched, on the 5-minute steps</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="stringliteral">    run = watched.joint({f&quot;{m.name}.offset&quot;: (50.0, 0.5) for m in modules[1:]}).filter(zk, uk=np.ones((len(zk), 1)))</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="stringliteral">The outdoor level (``outdoor=``) is what the empty room settles to, so the</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="stringliteral">offsets are measured against it. It is not known better than about 20 ppm, so</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="stringliteral">one module is kept as the reference and the others&#39; offsets are estimated.</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keyword">import</span> csv</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">import</span> json</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">import</span> os</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">import</span> time <span class="keyword">as</span> _time</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">import</span> urllib.error</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">import</span> urllib.parse</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">import</span> urllib.request</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keyword">from</span> ..framework.constants <span class="keyword">import</span> KalmanProviderKind</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="keyword">from</span> ..framework.instrument <span class="keyword">import</span> KalmanInstrument</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">from</span> ..framework.provider <span class="keyword">import</span> KalmanProvider</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keyword">from</span> ..providers.credentials <span class="keyword">import</span> get_credential</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="namespacemodules_1_1adapters_1_1netatmo.html#aed0146655265aae5d742e1ef82f35e11">   70</a></span>STEP = 300.0                                       <span class="comment"># seconds between two readings of a module</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="namespacemodules_1_1adapters_1_1netatmo.html#a8a9ed4355275113c9eed95ab8234fd2d">   71</a></span>API = <span class="stringliteral">&quot;https://api.netatmo.com&quot;</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="foldopen" id="foldopen00074" data-start="" data-end="">
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="namespacemodules_1_1adapters_1_1netatmo.html#a7a7f71c9fc860352370db038e5e6476f">   74</a></span><span class="keyword">def </span>on_steps(times, values, start, end, step=STEP):</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="stringliteral">&quot;&quot;&quot;Readings at ``times`` [unix s] laid on the steps ``start, start + step, ...``</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="stringliteral">    before ``end``: one row per step, the mean of the readings within half a step</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="stringliteral">    of it, NaN where there is none.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    n = int(np.floor((float(end) - float(start)) / float(step)))</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    out = np.full(max(n, 0), np.nan)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">if</span> n &lt;= 0:</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordflow">return</span> out.reshape(0, 1)</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    t = np.asarray(times, dtype=float).reshape(-1)</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    v = np.asarray(values, dtype=float).reshape(-1)</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    k = np.rint((t - float(start)) / float(step)).astype(np.int64)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    keep = (k &gt;= 0) &amp; (k &lt; n) &amp; np.isfinite(v)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    sums, counts = np.zeros(n), np.zeros(n)</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    np.add.at(sums, k[keep], v[keep])</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    np.add.at(counts, k[keep], 1.0)</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    read = counts &gt; 0</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    out[read] = sums[read] / counts[read]</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="keywordflow">return</span> out.reshape(n, 1)</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+</div>
+<div class="foldopen" id="foldopen00094" data-start="" data-end="">
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html">   94</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html">NetatmoModule</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html">KalmanInstrument</a>):</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="stringliteral">&quot;&quot;&quot;One Netatmo indoor module, reading the CO2 of one cell of a room.</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="stringliteral">    Parameters</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="stringliteral">    ----------</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="stringliteral">    room : the room model (a :class:`~kalman.apps.RoomCO2Model`); the module reads its cell ``at``.</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="stringliteral">    name : what the module is called; its offset is the parameter ``&quot;&lt;name&gt;.offset&quot;``.</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="stringliteral">    at : ``(row, column)`` of the cell where it stands.</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="stringliteral">    station : the station&#39;s id (the main module&#39;s MAC address).</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="stringliteral">    module : the additional module&#39;s id; ``None`` for the main module.</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="stringliteral">    source : where the readings come from: :class:`NetatmoCloud`, :class:`NetatmoCSV`,</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="stringliteral">        or a function ``(station, module, start, end) -&gt; (times, ppm)``.</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="stringliteral">    sigma : the noise from one reading to the next [ppm].</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="stringliteral">    offset : the offset the module is believed to have [ppm].</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="foldopen" id="foldopen00110" data-start="" data-end="">
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a0ae4dc4beca59373b00dcc7383080abe">  110</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a0ae4dc4beca59373b00dcc7383080abe">__init__</a>(self, room, name, at, *, station, module=None, source=None, sigma=20.0, offset=0.0):</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#ae6aaf637b8658b58c522845b34bedc00">  111</a></span>        self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#ad875acf134d21268accc2597e40b5a94">station</a>, self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#ae6aaf637b8658b58c522845b34bedc00">module</a>, self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a3b9a0a1ac8a151514c4fe9b696132c0b">source</a> = station, module, source</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        provider = <span class="keywordtype">None</span> <span class="keywordflow">if</span> source <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a9dd8ed1129e714c93edc3ee5fd330ba7">_readings</a></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        super().<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a0ae4dc4beca59373b00dcc7383080abe">__init__</a>(name, [room.sensor(name, at, sigma=sigma)], rate=1.0 / STEP, offset=offset,</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                         provider=provider)</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+</div>
+<div class="foldopen" id="foldopen00116" data-start="" data-end="">
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a9dd8ed1129e714c93edc3ee5fd330ba7">  116</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a9dd8ed1129e714c93edc3ee5fd330ba7">_readings</a>(self, *, start, end, **query):</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        fetch = self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a3b9a0a1ac8a151514c4fe9b696132c0b">source</a>.readings <span class="keywordflow">if</span> hasattr(self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a3b9a0a1ac8a151514c4fe9b696132c0b">source</a>, <span class="stringliteral">&quot;readings&quot;</span>) <span class="keywordflow">else</span> self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a3b9a0a1ac8a151514c4fe9b696132c0b">source</a></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        times, ppm = fetch(self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#ad875acf134d21268accc2597e40b5a94">station</a>, self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#ae6aaf637b8658b58c522845b34bedc00">module</a>, start, end, **query)</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <span class="keywordflow">return</span> on_steps(times, ppm, start, end)</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00122" data-start="" data-end="">
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html">  122</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html">NetatmoCloud</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">KalmanProvider</a>):</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="stringliteral">&quot;&quot;&quot;The CO2 of Netatmo modules, from the Netatmo web API.</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="stringliteral">    The credentials of a Netatmo app (dev.netatmo.com, scope ``read_station``)</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="stringliteral">    are outbound secrets, resolved like every provider&#39;s</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="stringliteral">    (:mod:`kalman.providers.credentials`): from the environment,</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="stringliteral">    ``NETATMO_CLIENT_ID``, ``NETATMO_CLIENT_SECRET`` and ``NETATMO_REFRESH_TOKEN``,</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="stringliteral">    or from ``~/.kalman/credentials.json`` (``netatmo_client_id``, ...). They are</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="stringliteral">    never in the repository.</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="stringliteral">    Netatmo replaces the refresh token each time it is used, and the old one stops</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="stringliteral">    working: the new one is kept in ``~/.kalman/netatmo.json`` (``token_file=`` or</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="stringliteral">    ``NETATMO_TOKEN_FILE`` for another place), readable by its owner only, and is</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="stringliteral">    the one used next time.</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="stringliteral">    ``scale``: ``&quot;max&quot;`` for every reading, ``&quot;30min&quot;``, ``&quot;1hour&quot;``, ... for averages.</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a60bef88864d949f2f2f65e5421a4be3c">  140</a></span>    NAME = <span class="stringliteral">&quot;Netatmo Cloud&quot;</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae0aa562cdb50d447f28bde7230cc85d6">  141</a></span>    DESCRIPTION = <span class="stringliteral">&quot;CO2 readings of Netatmo indoor modules, from the Netatmo web API (getmeasure).&quot;</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ad2bc2a69c00e955c243cc745b71f02cb">  142</a></span>    VERSION = <span class="stringliteral">&quot;1.0&quot;</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a70171ac0de4ebddd3ef05419edc65623">  143</a></span>    KIND = KalmanProviderKind.REMOTE</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#aabea8843cf1db3f7821c713447391522">  144</a></span>    MEASUREMENTS = ({<span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;co2&quot;</span>, <span class="stringliteral">&quot;units&quot;</span>: <span class="stringliteral">&quot;ppm&quot;</span>, <span class="stringliteral">&quot;description&quot;</span>: <span class="stringliteral">&quot;CO2 of one indoor module&quot;</span>},)</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ac6426f6cc5f1ec8d9c235897b066ce74">  145</a></span>    REQUIRES = (<span class="stringliteral">&quot;NETATMO_CLIENT_ID&quot;</span>, <span class="stringliteral">&quot;NETATMO_CLIENT_SECRET&quot;</span>, <span class="stringliteral">&quot;NETATMO_REFRESH_TOKEN&quot;</span>)</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2945bb3f77c18f33c0783aafdac98c22">  146</a></span>    PAGE = 1024                                    <span class="comment"># readings per request, at most</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a17a8409f07908924a7490a1097f4d93d">  147</a></span>    TOKENS = <span class="stringliteral">&quot;~/.kalman/netatmo.json&quot;</span>              <span class="comment"># where the replaced refresh token is kept</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="foldopen" id="foldopen00149" data-start="" data-end="">
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a9ca7a159345f7368a07844d198461e24">  149</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a9ca7a159345f7368a07844d198461e24">__init__</a>(self, *, scale=&quot;max&quot;, token_file=None, opener=None, cache=True):</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        super().<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a9ca7a159345f7368a07844d198461e24">__init__</a>(cache=cache)</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a42ef5834184c4c78840483f54c382a71">  151</a></span>        self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a42ef5834184c4c78840483f54c382a71">scale</a> = scale</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae9d5d472cbeff198b6401104fda7db99">  152</a></span>        self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae9d5d472cbeff198b6401104fda7db99">token_file</a> = os.path.expanduser(token_file <span class="keywordflow">or</span> os.environ.get(<span class="stringliteral">&quot;NETATMO_TOKEN_FILE&quot;</span>) <span class="keywordflow">or</span> self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a17a8409f07908924a7490a1097f4d93d">TOKENS</a>)</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a1362f5eb0506db2cc9019b9589377841">  153</a></span>        self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a1362f5eb0506db2cc9019b9589377841">_open</a> = opener <span class="keywordflow">or</span> (<span class="keyword">lambda</span> request: urllib.request.urlopen(request, timeout=30))</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a8f86075506c6e8d921eb67531da865bd">  154</a></span>        self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a8f86075506c6e8d921eb67531da865bd">_access</a>, self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ad5a4fa4816e9b8f36d4378795e5873b4">_expires</a> = <span class="keywordtype">None</span>, 0.0</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+</div>
+<div class="foldopen" id="foldopen00156" data-start="" data-end="">
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a368f2fd38e36498790af069cadabdc8e">  156</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a368f2fd38e36498790af069cadabdc8e">_call</a>(self, path, params, *, post=False):</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        data = urllib.parse.urlencode(params)</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keywordflow">if</span> post:</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            request = urllib.request.Request(API + path, data=data.encode(), method=<span class="stringliteral">&quot;POST&quot;</span>)</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            request = urllib.request.Request(f<span class="stringliteral">&quot;{API}{path}?{data}&quot;</span>)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            request.add_header(<span class="stringliteral">&quot;Authorization&quot;</span>, f<span class="stringliteral">&quot;Bearer {self._token()}&quot;</span>)</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="keyword">with</span> self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a1362f5eb0506db2cc9019b9589377841">_open</a>(request) <span class="keyword">as</span> response:</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            <span class="keywordflow">return</span> json.loads(response.read().decode())</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+</div>
+<div class="foldopen" id="foldopen00166" data-start="" data-end="">
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2bac38b4059d9ef3f2225412c7c68250">  166</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2bac38b4059d9ef3f2225412c7c68250">_kept</a>(self):</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <span class="stringliteral">&quot;&quot;&quot;The refresh token kept from the last run, or ``None``.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            <span class="keyword">with</span> open(self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae9d5d472cbeff198b6401104fda7db99">token_file</a>, encoding=<span class="stringliteral">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                <span class="keywordflow">return</span> json.load(f).get(<span class="stringliteral">&quot;refresh_token&quot;</span>)</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        <span class="keywordflow">except</span> (OSError, ValueError):</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+</div>
+<div class="foldopen" id="foldopen00174" data-start="" data-end="">
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a01fdd681a362e7ef90da4b6a6031e651">  174</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a01fdd681a362e7ef90da4b6a6031e651">_keep</a>(self, refresh_token):</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="stringliteral">&quot;&quot;&quot;Write the new refresh token: owner-only from its creation, replaced in one move.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        os.makedirs(os.path.dirname(self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae9d5d472cbeff198b6401104fda7db99">token_file</a>), mode=0o700, exist_ok=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        draft = self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae9d5d472cbeff198b6401104fda7db99">token_file</a> + <span class="stringliteral">&quot;.new&quot;</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        <span class="keyword">with</span> os.fdopen(os.open(draft, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600), <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>            json.dump({<span class="stringliteral">&quot;refresh_token&quot;</span>: refresh_token}, f)</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        os.replace(draft, self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae9d5d472cbeff198b6401104fda7db99">token_file</a>)</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+</div>
+<div class="foldopen" id="foldopen00182" data-start="" data-end="">
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a7f492d7d43c06ab47372555c8e6a1161">  182</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a7f492d7d43c06ab47372555c8e6a1161">_token</a>(self):</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        <span class="keywordflow">if</span> self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a8f86075506c6e8d921eb67531da865bd">_access</a> <span class="keywordflow">and</span> _time.time() &lt; self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ad5a4fa4816e9b8f36d4378795e5873b4">_expires</a> - 60:</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a8f86075506c6e8d921eb67531da865bd">_access</a></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        secret = <span class="keyword">lambda</span> key: get_credential(f<span class="stringliteral">&quot;netatmo_{key}&quot;</span>, env=f<span class="stringliteral">&quot;NETATMO_{key.upper()}&quot;</span>)   <span class="comment"># fail-closed</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        client_id, client_secret = secret(<span class="stringliteral">&quot;client_id&quot;</span>), secret(<span class="stringliteral">&quot;client_secret&quot;</span>)</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        kept = self.<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2bac38b4059d9ef3f2225412c7c68250">_kept</a>()</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        given = get_credential(<span class="stringliteral">&quot;netatmo_refresh_token&quot;</span>, env=<span class="stringliteral">&quot;NETATMO_REFRESH_TOKEN&quot;</span>, required=kept <span class="keywordflow">is</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        answer = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <span class="keywordflow">for</span> refresh_token <span class="keywordflow">in</span> dict.fromkeys(t <span class="keywordflow">for</span> t <span class="keywordflow">in</span> (kept, given) <span class="keywordflow">if</span> t):      <span class="comment"># the kept one first</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                answer = self.<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a368f2fd38e36498790af069cadabdc8e">_call</a>(<span class="stringliteral">&quot;/oauth2/token&quot;</span>, {<span class="stringliteral">&quot;grant_type&quot;</span>: <span class="stringliteral">&quot;refresh_token&quot;</span>, <span class="stringliteral">&quot;refresh_token&quot;</span>: refresh_token,</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                                                      <span class="stringliteral">&quot;client_id&quot;</span>: client_id, <span class="stringliteral">&quot;client_secret&quot;</span>: client_secret},</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                                    post=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            <span class="keywordflow">except</span> urllib.error.HTTPError <span class="keyword">as</span> refused:</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                last = refused</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        <span class="keywordflow">if</span> answer <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            <span class="keywordflow">raise</span> PermissionError(<span class="stringliteral">&quot;NetatmoCloud: Netatmo refused the refresh token; make a new one on dev.netatmo.com &quot;</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                                  f<span class="stringliteral">&quot;and set NETATMO_REFRESH_TOKEN ({last}).&quot;</span>) <span class="keyword">from</span> last</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a8f86075506c6e8d921eb67531da865bd">_access</a>, self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ad5a4fa4816e9b8f36d4378795e5873b4">_expires</a> = answer[<span class="stringliteral">&quot;access_token&quot;</span>], _time.time() + float(answer.get(<span class="stringliteral">&quot;expires_in&quot;</span>, 10800))</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        <span class="keywordflow">if</span> answer.get(<span class="stringliteral">&quot;refresh_token&quot;</span>):</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>            self.<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a01fdd681a362e7ef90da4b6a6031e651">_keep</a>(answer[<span class="stringliteral">&quot;refresh_token&quot;</span>])</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a8f86075506c6e8d921eb67531da865bd">_access</a></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+</div>
+<div class="foldopen" id="foldopen00206" data-start="" data-end="">
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a6f09aacd160e72d47d21c7878e7fec43">  206</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a6f09aacd160e72d47d21c7878e7fec43">readings</a>(self, station, module, start, end):</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="stringliteral">&quot;&quot;&quot;``(times, ppm)`` of one module between ``start`` and ``end`` [unix s].&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        <span class="keyword">def </span>produce():</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            times, ppm, begin = [], [], int(start)</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>            <span class="keywordflow">while</span> begin &lt; int(end):</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                params = {<span class="stringliteral">&quot;device_id&quot;</span>: station, <span class="stringliteral">&quot;scale&quot;</span>: self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a42ef5834184c4c78840483f54c382a71">scale</a>, <span class="stringliteral">&quot;type&quot;</span>: <span class="stringliteral">&quot;co2&quot;</span>, <span class="stringliteral">&quot;date_begin&quot;</span>: begin,</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a59bea77576288e39a74e72037dca4bd0">  212</a></span>                          <span class="stringliteral">&quot;date_end&quot;</span>: int(end), <span class="stringliteral">&quot;limit&quot;</span>: self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2945bb3f77c18f33c0783aafdac98c22">PAGE</a><a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a59bea77576288e39a74e72037dca4bd0">PAGE</a>, <span class="stringliteral">&quot;optimize&quot;</span>: <span class="stringliteral">&quot;false&quot;</span>, <span class="stringliteral">&quot;real_time&quot;</span>: <span class="stringliteral">&quot;true&quot;</span>}</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                <span class="keywordflow">if</span> module:</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                    params[<span class="stringliteral">&quot;module_id&quot;</span>] = module</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                body = self.<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a368f2fd38e36498790af069cadabdc8e">_call</a>(<span class="stringliteral">&quot;/api/getmeasure&quot;</span>, params).get(<span class="stringliteral">&quot;body&quot;</span>) <span class="keywordflow">or</span> {}</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                page = sorted((int(t), v[0]) <span class="keywordflow">for</span> t, v <span class="keywordflow">in</span> body.items() <span class="keywordflow">if</span> v <span class="keywordflow">and</span> v[0] <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> page:</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                    <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                times += [t <span class="keywordflow">for</span> t, _ <span class="keywordflow">in</span> page]</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                ppm += [v <span class="keywordflow">for</span> _, v <span class="keywordflow">in</span> page]</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                <span class="keywordflow">if</span> len(page) &lt; self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2945bb3f77c18f33c0783aafdac98c22">PAGE</a><a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a59bea77576288e39a74e72037dca4bd0">PAGE</a>:</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                    <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                begin = page[-1][0] + 1</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            <span class="keywordflow">return</span> np.asarray(times, dtype=float), np.asarray(ppm, dtype=float)</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        <span class="keywordflow">return</span> self.<a class="code hl_function" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a10cad0ae2f6eec30a58620587fd832a6">_cached</a>((station, module, int(start), int(end), self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a42ef5834184c4c78840483f54c382a71">scale</a>), produce)</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+</div>
+<div class="foldopen" id="foldopen00227" data-start="" data-end="">
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a0b7b18b66fd2253426cc463592dfb002">  227</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a0b7b18b66fd2253426cc463592dfb002">fetch</a>(self, station, module=None, start=None, end=None):</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        times, ppm = self.<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a6f09aacd160e72d47d21c7878e7fec43">readings</a>(station, module, start, end)</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;time&quot;</span>: times, <span class="stringliteral">&quot;zk&quot;</span>: ppm.reshape(-1, 1), <span class="stringliteral">&quot;meta&quot;</span>: {<span class="stringliteral">&quot;units&quot;</span>: <span class="stringliteral">&quot;ppm&quot;</span>, <span class="stringliteral">&quot;scale&quot;</span>: self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a42ef5834184c4c78840483f54c382a71">scale</a>}}</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00232" data-start="" data-end="">
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html">  232</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html">NetatmoCSV</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">KalmanProvider</a>):</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    <span class="stringliteral">&quot;&quot;&quot;The CO2 of Netatmo modules, from files: one per module.</span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="stringliteral">    ``files`` maps a module id (the station&#39;s id for the main module) to a file.</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="stringliteral">    A file is the export of the Netatmo web page (``;``-separated, a few lines of</span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="stringliteral">    title, then a header with ``Timestamp`` and ``CO2``), or any table whose</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="stringliteral">    header names a time column (``Timestamp``, ``time``: unix seconds) and a</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span><span class="stringliteral">    ``CO2`` column.</span></div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#ab7d5726cb64f2d21d926df5523673ce0">  242</a></span>    NAME = <span class="stringliteral">&quot;Netatmo CSV&quot;</span></div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#ab9762218fd8b4d4f8bafb46e05efa97e">  243</a></span>    DESCRIPTION = <span class="stringliteral">&quot;CO2 readings of Netatmo indoor modules, from exported or logged files.&quot;</span></div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a4d1ae972d56d89d296644336050cefa1">  244</a></span>    VERSION = <span class="stringliteral">&quot;1.0&quot;</span></div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a34b102497d6b4156c1a55b51fcc4ff30">  245</a></span>    KIND = KalmanProviderKind.FILE</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a18ab332fb6137752c074ab5565905e24">  246</a></span>    MEASUREMENTS = NetatmoCloud.MEASUREMENTS</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="foldopen" id="foldopen00248" data-start="" data-end="">
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a9c06ae072de4bbf8ed255d543bc5e42c">  248</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a9c06ae072de4bbf8ed255d543bc5e42c">__init__</a>(self, files, *, cache=True):</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        super().<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a9c06ae072de4bbf8ed255d543bc5e42c">__init__</a>(cache=cache)</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#ae62dbdd7d369d9733a7bbca7e080bfaf">  250</a></span>        self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#ae62dbdd7d369d9733a7bbca7e080bfaf">files</a> = dict(files)</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> </div>
+</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    <span class="preprocessor">@staticmethod</span></div>
+<div class="foldopen" id="foldopen00253" data-start="" data-end="">
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a24bcd5826f2369a288bf11bafe761e97">  253</a></span>    <span class="keyword">def </span>parse(path):</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        <span class="stringliteral">&quot;&quot;&quot;``(times, ppm)`` from one file.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        <span class="keyword">with</span> open(path, encoding=<span class="stringliteral">&quot;utf-8-sig&quot;</span>, newline=<span class="stringliteral">&quot;&quot;</span>) <span class="keyword">as</span> f:</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>            lines = f.read().splitlines()</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        <span class="keywordflow">for</span> i, line <span class="keywordflow">in</span> enumerate(lines):</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            lower = line.lower()</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            <span class="keywordflow">if</span> <span class="stringliteral">&quot;co2&quot;</span> <span class="keywordflow">in</span> lower <span class="keywordflow">and</span> (<span class="stringliteral">&quot;timestamp&quot;</span> <span class="keywordflow">in</span> lower <span class="keywordflow">or</span> <span class="stringliteral">&quot;time&quot;</span> <span class="keywordflow">in</span> lower):</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>                <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;NetatmoCSV: {path} has no header with a time and a CO2 column.&quot;</span>)</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        delimiter = <span class="stringliteral">&quot;;&quot;</span> <span class="keywordflow">if</span> lines[i].count(<span class="stringliteral">&quot;;&quot;</span>) &gt;= lines[i].count(<span class="stringliteral">&quot;,&quot;</span>) <span class="keywordflow">else</span> <span class="stringliteral">&quot;,&quot;</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        rows = list(csv.reader(lines[i:], delimiter=delimiter))</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        header = [h.strip().strip(<span class="stringliteral">&#39;&quot;&#39;</span>).lower() <span class="keywordflow">for</span> h <span class="keywordflow">in</span> rows[0]]</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        when = next((j <span class="keywordflow">for</span> j, h <span class="keywordflow">in</span> enumerate(header) <span class="keywordflow">if</span> h <span class="keywordflow">in</span> (<span class="stringliteral">&quot;timestamp&quot;</span>, <span class="stringliteral">&quot;time&quot;</span>, <span class="stringliteral">&quot;unix&quot;</span>, <span class="stringliteral">&quot;t&quot;</span>)), <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        what = next((j <span class="keywordflow">for</span> j, h <span class="keywordflow">in</span> enumerate(header) <span class="keywordflow">if</span> h.startswith(<span class="stringliteral">&quot;co2&quot;</span>)), <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        <span class="keywordflow">if</span> when <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> what <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;NetatmoCSV: {path} needs a time column (Timestamp or time, unix seconds) and a CO2 &quot;</span></div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                             f<span class="stringliteral">&quot;column; its header is {rows[0]}.&quot;</span>)</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        times, ppm = [], []</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        <span class="keywordflow">for</span> row <span class="keywordflow">in</span> rows[1:]:</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                moment, value = float(row[when]), float(row[what])</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>            <span class="keywordflow">except</span> (ValueError, IndexError):             <span class="comment"># a missing reading: the row is skipped whole</span></div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            times.append(moment)</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>            ppm.append(value)</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        <span class="keywordflow">return</span> np.asarray(times), np.asarray(ppm)</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
+</div>
+<div class="foldopen" id="foldopen00281" data-start="" data-end="">
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a72a6ab0ea90520bf80549c6fc59ebf89">  281</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a72a6ab0ea90520bf80549c6fc59ebf89">readings</a>(self, station, module, start, end):</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        key = module <span class="keywordflow">or</span> station</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        <span class="keywordflow">if</span> key <span class="keywordflow">not</span> <span class="keywordflow">in</span> self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#ae62dbdd7d369d9733a7bbca7e080bfaf">files</a>:</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>            <span class="keywordflow">raise</span> KeyError(f<span class="stringliteral">&quot;NetatmoCSV: no file for module {key!r}; it has {sorted(self.files)}.&quot;</span>)</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        times, ppm = self.<a class="code hl_function" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a10cad0ae2f6eec30a58620587fd832a6">_cached</a>(key, <span class="keyword">lambda</span>: self.<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a24bcd5826f2369a288bf11bafe761e97">parse</a>(self.<a class="code hl_variable" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#ae62dbdd7d369d9733a7bbca7e080bfaf">files</a>[key]))</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        keep = (times &gt;= float(start)) &amp; (times &lt; float(end))</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        <span class="keywordflow">return</span> times[keep], ppm[keep]</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
+</div>
+<div class="foldopen" id="foldopen00289" data-start="" data-end="">
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno"><a class="line" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a58f15c91011d474024dc035d240d67db">  289</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a58f15c91011d474024dc035d240d67db">fetch</a>(self, station, module=None, start=None, end=None):</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        times, ppm = self.<a class="code hl_function" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a72a6ab0ea90520bf80549c6fc59ebf89">readings</a>(station, module, start, end)</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;time&quot;</span>: times, <span class="stringliteral">&quot;zk&quot;</span>: ppm.reshape(-1, 1), <span class="stringliteral">&quot;meta&quot;</span>: {<span class="stringliteral">&quot;units&quot;</span>: <span class="stringliteral">&quot;ppm&quot;</span>}}</div>
+</div>
+</div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v_html"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html">modules.adapters.netatmo.NetatmoCSV</a></div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00232">netatmo.py:232</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v_html_a24bcd5826f2369a288bf11bafe761e97"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a24bcd5826f2369a288bf11bafe761e97">modules.adapters.netatmo.NetatmoCSV.parse</a></div><div class="ttdeci">parse(path)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00253">netatmo.py:253</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v_html_a58f15c91011d474024dc035d240d67db"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a58f15c91011d474024dc035d240d67db">modules.adapters.netatmo.NetatmoCSV.fetch</a></div><div class="ttdeci">fetch(self, station, module=None, start=None, end=None)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00289">netatmo.py:289</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v_html_a72a6ab0ea90520bf80549c6fc59ebf89"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a72a6ab0ea90520bf80549c6fc59ebf89">modules.adapters.netatmo.NetatmoCSV.readings</a></div><div class="ttdeci">readings(self, station, module, start, end)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00281">netatmo.py:281</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v_html_a9c06ae072de4bbf8ed255d543bc5e42c"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#a9c06ae072de4bbf8ed255d543bc5e42c">modules.adapters.netatmo.NetatmoCSV.__init__</a></div><div class="ttdeci">__init__(self, files, *cache=True)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00248">netatmo.py:248</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v_html_ae62dbdd7d369d9733a7bbca7e080bfaf"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_c_s_v.html#ae62dbdd7d369d9733a7bbca7e080bfaf">modules.adapters.netatmo.NetatmoCSV.files</a></div><div class="ttdeci">files</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00250">netatmo.py:250</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html">modules.adapters.netatmo.NetatmoCloud</a></div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00122">netatmo.py:122</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a01fdd681a362e7ef90da4b6a6031e651"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a01fdd681a362e7ef90da4b6a6031e651">modules.adapters.netatmo.NetatmoCloud._keep</a></div><div class="ttdeci">_keep(self, refresh_token)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00174">netatmo.py:174</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a0b7b18b66fd2253426cc463592dfb002"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a0b7b18b66fd2253426cc463592dfb002">modules.adapters.netatmo.NetatmoCloud.fetch</a></div><div class="ttdeci">fetch(self, station, module=None, start=None, end=None)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00227">netatmo.py:227</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a1362f5eb0506db2cc9019b9589377841"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a1362f5eb0506db2cc9019b9589377841">modules.adapters.netatmo.NetatmoCloud._open</a></div><div class="ttdeci">_open</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00153">netatmo.py:153</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a17a8409f07908924a7490a1097f4d93d"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a17a8409f07908924a7490a1097f4d93d">modules.adapters.netatmo.NetatmoCloud.TOKENS</a></div><div class="ttdeci">str TOKENS</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00147">netatmo.py:147</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a2945bb3f77c18f33c0783aafdac98c22"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2945bb3f77c18f33c0783aafdac98c22">modules.adapters.netatmo.NetatmoCloud.PAGE</a></div><div class="ttdeci">int PAGE</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00146">netatmo.py:146</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a2bac38b4059d9ef3f2225412c7c68250"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2bac38b4059d9ef3f2225412c7c68250">modules.adapters.netatmo.NetatmoCloud._kept</a></div><div class="ttdeci">_kept(self)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00166">netatmo.py:166</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a368f2fd38e36498790af069cadabdc8e"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a368f2fd38e36498790af069cadabdc8e">modules.adapters.netatmo.NetatmoCloud._call</a></div><div class="ttdeci">_call(self, path, params, *post=False)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00156">netatmo.py:156</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a42ef5834184c4c78840483f54c382a71"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a42ef5834184c4c78840483f54c382a71">modules.adapters.netatmo.NetatmoCloud.scale</a></div><div class="ttdeci">scale</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00151">netatmo.py:151</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a59bea77576288e39a74e72037dca4bd0"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a59bea77576288e39a74e72037dca4bd0">modules.adapters.netatmo.NetatmoCloud.PAGE</a></div><div class="ttdeci">PAGE</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00212">netatmo.py:212</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a6f09aacd160e72d47d21c7878e7fec43"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a6f09aacd160e72d47d21c7878e7fec43">modules.adapters.netatmo.NetatmoCloud.readings</a></div><div class="ttdeci">readings(self, station, module, start, end)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00206">netatmo.py:206</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a7f492d7d43c06ab47372555c8e6a1161"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a7f492d7d43c06ab47372555c8e6a1161">modules.adapters.netatmo.NetatmoCloud._token</a></div><div class="ttdeci">_token(self)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00182">netatmo.py:182</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a8f86075506c6e8d921eb67531da865bd"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a8f86075506c6e8d921eb67531da865bd">modules.adapters.netatmo.NetatmoCloud._access</a></div><div class="ttdeci">_access</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00154">netatmo.py:154</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_a9ca7a159345f7368a07844d198461e24"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a9ca7a159345f7368a07844d198461e24">modules.adapters.netatmo.NetatmoCloud.__init__</a></div><div class="ttdeci">__init__(self, *scale=&quot;max&quot;, token_file=None, opener=None, cache=True)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00149">netatmo.py:149</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_ad5a4fa4816e9b8f36d4378795e5873b4"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ad5a4fa4816e9b8f36d4378795e5873b4">modules.adapters.netatmo.NetatmoCloud._expires</a></div><div class="ttdeci">_expires</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00154">netatmo.py:154</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud_html_ae9d5d472cbeff198b6401104fda7db99"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae9d5d472cbeff198b6401104fda7db99">modules.adapters.netatmo.NetatmoCloud.token_file</a></div><div class="ttdeci">token_file</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00152">netatmo.py:152</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_module_html"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html">modules.adapters.netatmo.NetatmoModule</a></div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00094">netatmo.py:94</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_module_html_a0ae4dc4beca59373b00dcc7383080abe"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a0ae4dc4beca59373b00dcc7383080abe">modules.adapters.netatmo.NetatmoModule.__init__</a></div><div class="ttdeci">__init__(self, room, name, at, *station, module=None, source=None, sigma=20.0, offset=0.0)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00110">netatmo.py:110</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_module_html_a3b9a0a1ac8a151514c4fe9b696132c0b"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a3b9a0a1ac8a151514c4fe9b696132c0b">modules.adapters.netatmo.NetatmoModule.source</a></div><div class="ttdeci">source</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00111">netatmo.py:111</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_module_html_a9dd8ed1129e714c93edc3ee5fd330ba7"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#a9dd8ed1129e714c93edc3ee5fd330ba7">modules.adapters.netatmo.NetatmoModule._readings</a></div><div class="ttdeci">_readings(self, *start, end, **query)</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00116">netatmo.py:116</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_module_html_ad875acf134d21268accc2597e40b5a94"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#ad875acf134d21268accc2597e40b5a94">modules.adapters.netatmo.NetatmoModule.station</a></div><div class="ttdeci">station</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00111">netatmo.py:111</a></div></div>
+<div class="ttc" id="aclassmodules_1_1adapters_1_1netatmo_1_1_netatmo_module_html_ae6aaf637b8658b58c522845b34bedc00"><div class="ttname"><a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_module.html#ae6aaf637b8658b58c522845b34bedc00">modules.adapters.netatmo.NetatmoModule.module</a></div><div class="ttdeci">module</div><div class="ttdef"><b>Definition</b> <a href="netatmo_8py_source.html#l00111">netatmo.py:111</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1instrument_1_1_kalman_instrument_html"><div class="ttname"><a href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html">modules.framework.instrument.KalmanInstrument</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2instrument_8py_source.html#l00048">instrument.py:48</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1provider_1_1_kalman_provider_html"><div class="ttname"><a href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">modules.framework.provider.KalmanProvider</a></div><div class="ttdef"><b>Definition</b> <a href="provider_8py_source.html#l00020">provider.py:20</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1provider_1_1_kalman_provider_html_a10cad0ae2f6eec30a58620587fd832a6"><div class="ttname"><a href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a10cad0ae2f6eec30a58620587fd832a6">modules.framework.provider.KalmanProvider._cached</a></div><div class="ttdeci">_cached(self, key, produce)</div><div class="ttdef"><b>Definition</b> <a href="provider_8py_source.html#l00089">provider.py:89</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_0bbf8646161768a5e361b0e61aaae062.html">adapters</a></li><li class="navelem"><a class="el" href="netatmo_8py.html">netatmo.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

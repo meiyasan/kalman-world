@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-gba9b5e59</span>
+   &#160;<span id="projectnumber">1.0.0-4-gbd0f8762</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -140,6 +140,7 @@ $(document).ready(function(){initNavTree('classmodules_1_1apps_1_1buildings_1_1c
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">modules.apps.buildings.co2.RoomCO2Model Class Reference</div></div>
 </div><!--header-->
@@ -152,8 +153,10 @@ Inheritance diagram for modules.apps.buildings.co2.RoomCO2Model:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3c651604361c2af2c4ab4149430e204e" id="r_a3c651604361c2af2c4ab4149430e204e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a3c651604361c2af2c4ab4149430e204e">__init__</a> (self, str <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a8db7fb457d4818a5485a7f549342d1a3">sensor</a>=&quot;co2&quot;, <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a678ec0c8b03b96b97f624e8e1ceea104">at</a>=(2, 2), *<a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a3f0aa0ca243e28e63de8d84e7e121d76">room</a>=None, float <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#add532f077f46e486f2e47702a82a5d86">cell</a>=0.5, float <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a762303e8c05d2be9fe8811ec796bdfdb">height</a>=2.5, float mixing=0.02, float ach=2.0, float <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a62156927f670429fc2069b0a71977931">outdoor</a>=420.0, <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a5703abf11ba1c3949356ddc1ace6e17c">seats</a>=None, float emission=0.005, float sigma=15.0, float process_uncertainty=2.0, bool <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a01519a7b7ba575e04a0e87ea9cde3410">count_people</a>=False, float people_drift=0.3, float <a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a420f835f3dafac5ea971bd25654b9a5f">fs</a>=1/60, **kwargs)</td></tr>
-<tr class="separator:a3c651604361c2af2c4ab4149430e204e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a438a8c0e1b699b398236fd426ed832b1" id="r_a438a8c0e1b699b398236fd426ed832b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a438a8c0e1b699b398236fd426ed832b1">__init__</a> (self, str <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a8db7fb457d4818a5485a7f549342d1a3">sensor</a>=&quot;co2&quot;, <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a678ec0c8b03b96b97f624e8e1ceea104">at</a>=(2, 2), *<a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a3f0aa0ca243e28e63de8d84e7e121d76">room</a>=None, float <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#add532f077f46e486f2e47702a82a5d86">cell</a>=0.5, float <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a762303e8c05d2be9fe8811ec796bdfdb">height</a>=2.5, float mixing=0.02, float ach=2.0, float <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a62156927f670429fc2069b0a71977931">outdoor</a>=420.0, <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a5703abf11ba1c3949356ddc1ace6e17c">seats</a>=None, float emission=0.005, float sigma=15.0, float process_uncertainty=2.0, bool <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a01519a7b7ba575e04a0e87ea9cde3410">count_people</a>=False, float people_drift=0.3, <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#ade01f84d24dc981bbd29f3c925a07c84">openings</a>=(), float <a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a420f835f3dafac5ea971bd25654b9a5f">fs</a>=1/60, **kwargs)</td></tr>
+<tr class="separator:a438a8c0e1b699b398236fd426ed832b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab39d9ac37876eacf0deb027b9b24be7d" id="r_ab39d9ac37876eacf0deb027b9b24be7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#ab39d9ac37876eacf0deb027b9b24be7d">variant</a> (self, **open)</td></tr>
+<tr class="separator:ab39d9ac37876eacf0deb027b9b24be7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8db7fb457d4818a5485a7f549342d1a3" id="r_a8db7fb457d4818a5485a7f549342d1a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a8db7fb457d4818a5485a7f549342d1a3">sensor</a> (self, <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a14a4e351ed86dadadb83ab64e78f0236">name</a>, <a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a678ec0c8b03b96b97f624e8e1ceea104">at</a>, sigma=15.0, *rate=None)</td></tr>
 <tr class="separator:a8db7fb457d4818a5485a7f549342d1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad863cf11e4f93ce9f2e9943589d50b49" id="r_ad863cf11e4f93ce9f2e9943589d50b49"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#ad863cf11e4f93ce9f2e9943589d50b49">schedule</a> (self, <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a14a4e351ed86dadadb83ab64e78f0236">name</a>=&quot;schedule&quot;, sigma=0.1, *rate=None)</td></tr>
@@ -340,6 +343,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a62156927f670429fc2069b0a71977931"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5703abf11ba1c3949356ddc1ace6e17c" id="r_a5703abf11ba1c3949356ddc1ace6e17c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a5703abf11ba1c3949356ddc1ace6e17c">seats</a></td></tr>
 <tr class="separator:a5703abf11ba1c3949356ddc1ace6e17c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade01f84d24dc981bbd29f3c925a07c84" id="r_ade01f84d24dc981bbd29f3c925a07c84"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#ade01f84d24dc981bbd29f3c925a07c84">openings</a></td></tr>
+<tr class="separator:ade01f84d24dc981bbd29f3c925a07c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a678ec0c8b03b96b97f624e8e1ceea104" id="r_a678ec0c8b03b96b97f624e8e1ceea104"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a678ec0c8b03b96b97f624e8e1ceea104">at</a></td></tr>
 <tr class="separator:a678ec0c8b03b96b97f624e8e1ceea104"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">modules.framework.model.KalmanModel</a></td></tr>
@@ -464,6 +469,58 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a8a3f72a07002657f1b3a18310cce8703 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata" id="r_a8a3f72a07002657f1b3a18310cce8703"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a8a3f72a07002657f1b3a18310cce8703">metadata</a> = None</td></tr>
 <tr class="separator:a8a3f72a07002657f1b3a18310cce8703 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a2ab143c6e06c0d3a5d01c422e1f04ba4" id="r_a2ab143c6e06c0d3a5d01c422e1f04ba4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html#a2ab143c6e06c0d3a5d01c422e1f04ba4">_made_with</a></td></tr>
+<tr class="separator:a2ab143c6e06c0d3a5d01c422e1f04ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">modules.framework.model.KalmanModel</a></td></tr>
+<tr class="memitem:a03ea229ab0aff2801b73a9e08ecda8b9 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a03ea229ab0aff2801b73a9e08ecda8b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a03ea229ab0aff2801b73a9e08ecda8b9">_integrator_override</a></td></tr>
+<tr class="separator:a03ea229ab0aff2801b73a9e08ecda8b9 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84133408d4e047a57001cd640d999e2e inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a84133408d4e047a57001cd640d999e2e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a84133408d4e047a57001cd640d999e2e">_solver_override</a></td></tr>
+<tr class="separator:a84133408d4e047a57001cd640d999e2e inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58ff805de91505a3309319e7a57677ca inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a58ff805de91505a3309319e7a57677ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a58ff805de91505a3309319e7a57677ca">_integrator_inst</a></td></tr>
+<tr class="separator:a58ff805de91505a3309319e7a57677ca inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13879d96f94541e703166208315066bf inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a13879d96f94541e703166208315066bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a13879d96f94541e703166208315066bf">_solver_inst</a></td></tr>
+<tr class="separator:a13879d96f94541e703166208315066bf inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a353bd4b110379b708746f2b04e4d26c0 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a353bd4b110379b708746f2b04e4d26c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a353bd4b110379b708746f2b04e4d26c0">_Ac</a></td></tr>
+<tr class="separator:a353bd4b110379b708746f2b04e4d26c0 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6854ceb2ab96ad58b2c92994034670e3 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a6854ceb2ab96ad58b2c92994034670e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a6854ceb2ab96ad58b2c92994034670e3">_Qc</a></td></tr>
+<tr class="separator:a6854ceb2ab96ad58b2c92994034670e3 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad078ad643c828ded12869e3f8809c1ef inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_ad078ad643c828ded12869e3f8809c1ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#ad078ad643c828ded12869e3f8809c1ef">_Lc</a></td></tr>
+<tr class="separator:ad078ad643c828ded12869e3f8809c1ef inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6948e14169b385af5c631153a37cfaa9 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a6948e14169b385af5c631153a37cfaa9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a6948e14169b385af5c631153a37cfaa9">_decoded_noise</a></td></tr>
+<tr class="separator:a6948e14169b385af5c631153a37cfaa9 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3be912a45ce76233071c1b2a14ff4d34 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a3be912a45ce76233071c1b2a14ff4d34"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a3be912a45ce76233071c1b2a14ff4d34">_F</a></td></tr>
+<tr class="separator:a3be912a45ce76233071c1b2a14ff4d34 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf19585bfefd3c23ade47b0a990ac22e inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_aaf19585bfefd3c23ade47b0a990ac22e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#aaf19585bfefd3c23ade47b0a990ac22e">_H</a></td></tr>
+<tr class="separator:aaf19585bfefd3c23ade47b0a990ac22e inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f8ca11badb5d9d90a5ffd9f1e2a9c05 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a7f8ca11badb5d9d90a5ffd9f1e2a9c05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a7f8ca11badb5d9d90a5ffd9f1e2a9c05">_B</a></td></tr>
+<tr class="separator:a7f8ca11badb5d9d90a5ffd9f1e2a9c05 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6631166f4533a83c73272ad166fe82e0 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a6631166f4533a83c73272ad166fe82e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a6631166f4533a83c73272ad166fe82e0">_L</a></td></tr>
+<tr class="separator:a6631166f4533a83c73272ad166fe82e0 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a942caadd90f0ad49d01c2a13a5215df4 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a942caadd90f0ad49d01c2a13a5215df4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a942caadd90f0ad49d01c2a13a5215df4">_M</a></td></tr>
+<tr class="separator:a942caadd90f0ad49d01c2a13a5215df4 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd370640dc81eb669196f709668766d3 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_afd370640dc81eb669196f709668766d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#afd370640dc81eb669196f709668766d3">_is_linear</a></td></tr>
+<tr class="separator:afd370640dc81eb669196f709668766d3 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a347b3f3f35efb8c55bb89a4c6fd1b634 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a347b3f3f35efb8c55bb89a4c6fd1b634"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a347b3f3f35efb8c55bb89a4c6fd1b634">_Q</a></td></tr>
+<tr class="separator:a347b3f3f35efb8c55bb89a4c6fd1b634 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34353ee019d03486898744f901c2c9dc inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a34353ee019d03486898744f901c2c9dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a34353ee019d03486898744f901c2c9dc">_R</a></td></tr>
+<tr class="separator:a34353ee019d03486898744f901c2c9dc inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22f6d1a5d66978a4f067cb4d4ac37c20 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a22f6d1a5d66978a4f067cb4d4ac37c20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a22f6d1a5d66978a4f067cb4d4ac37c20">_sensor_name</a></td></tr>
+<tr class="separator:a22f6d1a5d66978a4f067cb4d4ac37c20 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a938e13ab30ac0fcb5bdcb3e06152741b inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a938e13ab30ac0fcb5bdcb3e06152741b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a938e13ab30ac0fcb5bdcb3e06152741b">_labels</a></td></tr>
+<tr class="separator:a938e13ab30ac0fcb5bdcb3e06152741b inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef821f629c8723bc9f9732bf7aa08707 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_aef821f629c8723bc9f9732bf7aa08707"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#aef821f629c8723bc9f9732bf7aa08707">_observables_enum</a></td></tr>
+<tr class="separator:aef821f629c8723bc9f9732bf7aa08707 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8b4e386ec45bf4888d600481bd86703 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_af8b4e386ec45bf4888d600481bd86703"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#af8b4e386ec45bf4888d600481bd86703">_states_enum</a></td></tr>
+<tr class="separator:af8b4e386ec45bf4888d600481bd86703 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html">modules.framework.abstract.metadata.KalmanModelMetadata</a></td></tr>
+<tr class="memitem:a898f127a4fb0599a055b098b61f6fe4d inherit pro_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata" id="r_a898f127a4fb0599a055b098b61f6fe4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a898f127a4fb0599a055b098b61f6fe4d">_labels</a></td></tr>
+<tr class="separator:a898f127a4fb0599a055b098b61f6fe4d inherit pro_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin.html">modules.framework.abstract.mixins.KalmanRunMixin</a></td></tr>
+<tr class="memitem:a8501cd259a37957f1c9b9348b9e88340 inherit pro_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin" id="r_a8501cd259a37957f1c9b9348b9e88340"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin.html#a8501cd259a37957f1c9b9348b9e88340">_filter</a></td></tr>
+<tr class="separator:a8501cd259a37957f1c9b9348b9e88340 inherit pro_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_static_methods_classmodules_1_1framework_1_1model_1_1_kalman_model"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classmodules_1_1framework_1_1model_1_1_kalman_model')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">modules.framework.model.KalmanModel</a></td></tr>
@@ -530,53 +587,6 @@ Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_static_methods_classmodules_1_1framework_1_1model_1_1_kalman_model"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classmodules_1_1framework_1_1model_1_1_kalman_model')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">modules.framework.model.KalmanModel</a></td></tr>
 <tr class="memitem:a50cfcf0a2a01f1725b248169b442fd64 inherit pro_static_methods_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a50cfcf0a2a01f1725b248169b442fd64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a50cfcf0a2a01f1725b248169b442fd64">_validate_kind</a> (value, allowed, label)</td></tr>
 <tr class="separator:a50cfcf0a2a01f1725b248169b442fd64 inherit pro_static_methods_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">modules.framework.model.KalmanModel</a></td></tr>
-<tr class="memitem:a03ea229ab0aff2801b73a9e08ecda8b9 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a03ea229ab0aff2801b73a9e08ecda8b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a03ea229ab0aff2801b73a9e08ecda8b9">_integrator_override</a></td></tr>
-<tr class="separator:a03ea229ab0aff2801b73a9e08ecda8b9 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84133408d4e047a57001cd640d999e2e inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a84133408d4e047a57001cd640d999e2e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a84133408d4e047a57001cd640d999e2e">_solver_override</a></td></tr>
-<tr class="separator:a84133408d4e047a57001cd640d999e2e inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58ff805de91505a3309319e7a57677ca inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a58ff805de91505a3309319e7a57677ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a58ff805de91505a3309319e7a57677ca">_integrator_inst</a></td></tr>
-<tr class="separator:a58ff805de91505a3309319e7a57677ca inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13879d96f94541e703166208315066bf inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a13879d96f94541e703166208315066bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a13879d96f94541e703166208315066bf">_solver_inst</a></td></tr>
-<tr class="separator:a13879d96f94541e703166208315066bf inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a353bd4b110379b708746f2b04e4d26c0 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a353bd4b110379b708746f2b04e4d26c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a353bd4b110379b708746f2b04e4d26c0">_Ac</a></td></tr>
-<tr class="separator:a353bd4b110379b708746f2b04e4d26c0 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6854ceb2ab96ad58b2c92994034670e3 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a6854ceb2ab96ad58b2c92994034670e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a6854ceb2ab96ad58b2c92994034670e3">_Qc</a></td></tr>
-<tr class="separator:a6854ceb2ab96ad58b2c92994034670e3 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad078ad643c828ded12869e3f8809c1ef inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_ad078ad643c828ded12869e3f8809c1ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#ad078ad643c828ded12869e3f8809c1ef">_Lc</a></td></tr>
-<tr class="separator:ad078ad643c828ded12869e3f8809c1ef inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6948e14169b385af5c631153a37cfaa9 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a6948e14169b385af5c631153a37cfaa9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a6948e14169b385af5c631153a37cfaa9">_decoded_noise</a></td></tr>
-<tr class="separator:a6948e14169b385af5c631153a37cfaa9 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3be912a45ce76233071c1b2a14ff4d34 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a3be912a45ce76233071c1b2a14ff4d34"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a3be912a45ce76233071c1b2a14ff4d34">_F</a></td></tr>
-<tr class="separator:a3be912a45ce76233071c1b2a14ff4d34 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf19585bfefd3c23ade47b0a990ac22e inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_aaf19585bfefd3c23ade47b0a990ac22e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#aaf19585bfefd3c23ade47b0a990ac22e">_H</a></td></tr>
-<tr class="separator:aaf19585bfefd3c23ade47b0a990ac22e inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f8ca11badb5d9d90a5ffd9f1e2a9c05 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a7f8ca11badb5d9d90a5ffd9f1e2a9c05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a7f8ca11badb5d9d90a5ffd9f1e2a9c05">_B</a></td></tr>
-<tr class="separator:a7f8ca11badb5d9d90a5ffd9f1e2a9c05 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6631166f4533a83c73272ad166fe82e0 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a6631166f4533a83c73272ad166fe82e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a6631166f4533a83c73272ad166fe82e0">_L</a></td></tr>
-<tr class="separator:a6631166f4533a83c73272ad166fe82e0 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a942caadd90f0ad49d01c2a13a5215df4 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a942caadd90f0ad49d01c2a13a5215df4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a942caadd90f0ad49d01c2a13a5215df4">_M</a></td></tr>
-<tr class="separator:a942caadd90f0ad49d01c2a13a5215df4 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd370640dc81eb669196f709668766d3 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_afd370640dc81eb669196f709668766d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#afd370640dc81eb669196f709668766d3">_is_linear</a></td></tr>
-<tr class="separator:afd370640dc81eb669196f709668766d3 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a347b3f3f35efb8c55bb89a4c6fd1b634 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a347b3f3f35efb8c55bb89a4c6fd1b634"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a347b3f3f35efb8c55bb89a4c6fd1b634">_Q</a></td></tr>
-<tr class="separator:a347b3f3f35efb8c55bb89a4c6fd1b634 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34353ee019d03486898744f901c2c9dc inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a34353ee019d03486898744f901c2c9dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a34353ee019d03486898744f901c2c9dc">_R</a></td></tr>
-<tr class="separator:a34353ee019d03486898744f901c2c9dc inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22f6d1a5d66978a4f067cb4d4ac37c20 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a22f6d1a5d66978a4f067cb4d4ac37c20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a22f6d1a5d66978a4f067cb4d4ac37c20">_sensor_name</a></td></tr>
-<tr class="separator:a22f6d1a5d66978a4f067cb4d4ac37c20 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a938e13ab30ac0fcb5bdcb3e06152741b inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_a938e13ab30ac0fcb5bdcb3e06152741b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a938e13ab30ac0fcb5bdcb3e06152741b">_labels</a></td></tr>
-<tr class="separator:a938e13ab30ac0fcb5bdcb3e06152741b inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef821f629c8723bc9f9732bf7aa08707 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_aef821f629c8723bc9f9732bf7aa08707"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#aef821f629c8723bc9f9732bf7aa08707">_observables_enum</a></td></tr>
-<tr class="separator:aef821f629c8723bc9f9732bf7aa08707 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8b4e386ec45bf4888d600481bd86703 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model" id="r_af8b4e386ec45bf4888d600481bd86703"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#af8b4e386ec45bf4888d600481bd86703">_states_enum</a></td></tr>
-<tr class="separator:af8b4e386ec45bf4888d600481bd86703 inherit pro_attribs_classmodules_1_1framework_1_1model_1_1_kalman_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html">modules.framework.abstract.metadata.KalmanModelMetadata</a></td></tr>
-<tr class="memitem:a898f127a4fb0599a055b098b61f6fe4d inherit pro_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata" id="r_a898f127a4fb0599a055b098b61f6fe4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a898f127a4fb0599a055b098b61f6fe4d">_labels</a></td></tr>
-<tr class="separator:a898f127a4fb0599a055b098b61f6fe4d inherit pro_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin.html">modules.framework.abstract.mixins.KalmanRunMixin</a></td></tr>
-<tr class="memitem:a8501cd259a37957f1c9b9348b9e88340 inherit pro_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin" id="r_a8501cd259a37957f1c9b9348b9e88340"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin.html#a8501cd259a37957f1c9b9348b9e88340">_filter</a></td></tr>
-<tr class="separator:a8501cd259a37957f1c9b9348b9e88340 inherit pro_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html">modules.framework.abstract.metadata.KalmanModelMetadata</a></td></tr>
 <tr class="memitem:a1db55ac9916847b587b0de0b866f033d inherit pro_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata" id="r_a1db55ac9916847b587b0de0b866f033d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a1db55ac9916847b587b0de0b866f033d">_Q</a> = None</td></tr>
 <tr class="separator:a1db55ac9916847b587b0de0b866f033d inherit pro_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -611,12 +621,14 @@ count_people : estimate the number of occupants as the last state component
     instead of taking it as an input.
 people_drift : how much that number may change in a step, a standard
     deviation [people]; used with ``count_people``.
+openings : the windows, doors and air conditioners of the room
+    (:class:`Opening`, or :func:`window`, :func:`door`, :func:`air_conditioner`).
 fs : steps per second; one step a minute by default.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00043">43</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00120">120</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a3c651604361c2af2c4ab4149430e204e" name="a3c651604361c2af2c4ab4149430e204e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c651604361c2af2c4ab4149430e204e">&#9670;&#160;</a></span>__init__()</h2>
+<a id="a438a8c0e1b699b398236fd426ed832b1" name="a438a8c0e1b699b398236fd426ed832b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a438a8c0e1b699b398236fd426ed832b1">&#9670;&#160;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -714,6 +726,12 @@ fs : steps per second; one step a minute by default.
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>openings</em> = <code>()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">float &#160;</td>
           <td class="paramname"><em>fs</em> = <code>1&#160;/&#160;60</code>, </td>
         </tr>
@@ -733,67 +751,106 @@ fs : steps per second; one step a minute by default.
 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1models_1_1linear_1_1_linear_kalman_model.html#aa7d30e5272e6f71d67849f41f976df88">modules.framework.models.linear.LinearKalmanModel</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00071">71</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   74</span>                 count_people: bool = <span class="keyword">False</span>, people_drift: float = 0.3, fs: float = 1 / 60, **kwargs):</div>
-<div class="line"><span class="lineno">   75</span>        self.room = l_shaped_room() <span class="keywordflow">if</span> room <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> np.asarray(room, dtype=bool)</div>
-<div class="line"><span class="lineno">   76</span>        rows, cols = self.room.shape</div>
-<div class="line"><span class="lineno">   77</span>        self.cells = [(r, c) <span class="keywordflow">for</span> r <span class="keywordflow">in</span> range(rows) <span class="keywordflow">for</span> c <span class="keywordflow">in</span> range(cols) <span class="keywordflow">if</span> self.room[r, c]]</div>
-<div class="line"><span class="lineno">   78</span>        index = {rc: i <span class="keywordflow">for</span> i, rc <span class="keywordflow">in</span> enumerate(self.cells)}</div>
-<div class="line"><span class="lineno">   79</span>        self.index = index</div>
-<div class="line"><span class="lineno">   80</span>        cells_n = len(self.cells)</div>
-<div class="line"><span class="lineno">   81</span>        self.count_people = bool(count_people)</div>
-<div class="line"><span class="lineno">   82</span>        n = cells_n + (1 <span class="keywordflow">if</span> self.count_people <span class="keywordflow">else</span> 0)</div>
-<div class="line"><span class="lineno">   83</span>        self.cell, self.height, self.outdoor = float(cell), float(height), float(outdoor)</div>
-<div class="line"><span class="lineno">   84</span>        seats = [(1, 1), (1, 2), (2, 1), (2, 2)] <span class="keywordflow">if</span> seats <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> [tuple(s) <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seats]</div>
-<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">for</span> s <span class="keywordflow">in</span> [tuple(at), *seats]:</div>
-<div class="line"><span class="lineno">   86</span>            <span class="keywordflow">if</span> s <span class="keywordflow">not</span> <span class="keywordflow">in</span> index:</div>
-<div class="line"><span class="lineno">   87</span>                <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;RoomCO2Model: the cell {s} is not in the room.&quot;</span>)</div>
-<div class="line"><span class="lineno">   88</span>        self.seats = seats</div>
-<div class="line"><span class="lineno">   89</span> </div>
-<div class="line"><span class="lineno">   90</span>        <span class="comment"># The continuous balance dc/dt = A c + Bc u, u = [occupants, 1].</span></div>
-<div class="line"><span class="lineno">   91</span>        lam = float(ach) / 3600.0</div>
-<div class="line"><span class="lineno">   92</span>        A = np.zeros((n, n))</div>
-<div class="line"><span class="lineno">   93</span>        A[:cells_n, :cells_n] = -lam * np.eye(cells_n)</div>
-<div class="line"><span class="lineno">   94</span>        k = float(mixing) / self.cell ** 2</div>
-<div class="line"><span class="lineno">   95</span>        <span class="keywordflow">for</span> (r, c), i <span class="keywordflow">in</span> index.items():</div>
-<div class="line"><span class="lineno">   96</span>            <span class="keywordflow">for</span> nb <span class="keywordflow">in</span> ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):</div>
-<div class="line"><span class="lineno">   97</span>                j = index.get(nb)</div>
-<div class="line"><span class="lineno">   98</span>                <span class="keywordflow">if</span> j <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:                       <span class="comment"># a wall exchanges nothing</span></div>
-<div class="line"><span class="lineno">   99</span>                    A[i, i] -= k</div>
-<div class="line"><span class="lineno">  100</span>                    A[i, j] += k</div>
-<div class="line"><span class="lineno">  101</span>        volume = self.cell * self.cell * self.height                     <span class="comment"># of one cell [m^3]</span></div>
-<div class="line"><span class="lineno">  102</span>        per_person = float(emission) * 1e-3 / volume * 1e6                <span class="comment"># ppm/s in one cell</span></div>
-<div class="line"><span class="lineno">  103</span>        breath = np.zeros(n)</div>
-<div class="line"><span class="lineno">  104</span>        <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seats:</div>
-<div class="line"><span class="lineno">  105</span>            breath[index[s]] += per_person / len(seats)</div>
-<div class="line"><span class="lineno">  106</span>        outdoor_air = np.zeros(n)</div>
-<div class="line"><span class="lineno">  107</span>        outdoor_air[:cells_n] = lam * self.outdoor</div>
-<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">if</span> self.count_people:</div>
-<div class="line"><span class="lineno">  109</span>            A[:, cells_n] = breath                      <span class="comment"># the occupants are the last state</span></div>
-<div class="line"><span class="lineno">  110</span>            Bc = outdoor_air.reshape(n, 1)</div>
-<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  112</span>            Bc = np.column_stack([breath, outdoor_air])</div>
-<div class="line"><span class="lineno">  113</span> </div>
-<div class="line"><span class="lineno">  114</span>        <span class="comment"># Exact discretization over one step, the inputs held: exp([[A, Bc], [0, 0]] dt).</span></div>
-<div class="line"><span class="lineno">  115</span>        dt = 1.0 / float(fs)</div>
-<div class="line"><span class="lineno">  116</span>        l = Bc.shape[1]</div>
-<div class="line"><span class="lineno">  117</span>        block = np.zeros((n + l, n + l))</div>
-<div class="line"><span class="lineno">  118</span>        block[:n, :n], block[:n, n:] = A, Bc</div>
-<div class="line"><span class="lineno">  119</span>        E = expm(block * dt)</div>
-<div class="line"><span class="lineno">  120</span>        F, B = E[:n, :n], E[:n, n:]</div>
-<div class="line"><span class="lineno">  121</span>        H = np.zeros((1, n))</div>
-<div class="line"><span class="lineno">  122</span>        H[0, index[tuple(at)]] = 1.0</div>
-<div class="line"><span class="lineno">  123</span>        q = np.full(n, float(process_uncertainty) ** 2)</div>
-<div class="line"><span class="lineno">  124</span>        x0 = np.full((n, 1), self.outdoor)</div>
-<div class="line"><span class="lineno">  125</span>        P0 = np.full(n, 50.0 ** 2)</div>
-<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">if</span> self.count_people:</div>
-<div class="line"><span class="lineno">  127</span>            q[-1] = float(people_drift) ** 2</div>
-<div class="line"><span class="lineno">  128</span>            x0[-1], P0[-1] = 0.0, 10.0 ** 2</div>
-<div class="line"><span class="lineno">  129</span>        kwargs.setdefault(<span class="stringliteral">&quot;x0&quot;</span>, x0)</div>
-<div class="line"><span class="lineno">  130</span>        kwargs.setdefault(<span class="stringliteral">&quot;P0&quot;</span>, np.diag(P0))</div>
-<div class="line"><span class="lineno">  131</span>        super().__init__(sensor, F=F, B=B, H=H, Q=np.diag(q), R=np.array([[float(sigma) ** 2]]), fs=fs, **kwargs)</div>
-<div class="line"><span class="lineno">  132</span>        self.at = tuple(at)</div>
-<div class="line"><span class="lineno">  133</span> </div>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00150">150</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  153</span>                 count_people: bool = <span class="keyword">False</span>, people_drift: float = 0.3, openings=(), fs: float = 1 / 60, **kwargs):</div>
+<div class="line"><span class="lineno">  154</span>        self._made_with = dict(sensor=sensor, at=at, room=room, cell=cell, height=height, mixing=mixing, ach=ach,</div>
+<div class="line"><span class="lineno">  155</span>                               outdoor=outdoor, seats=seats, emission=emission, sigma=sigma,</div>
+<div class="line"><span class="lineno">  156</span>                               process_uncertainty=process_uncertainty, count_people=count_people,</div>
+<div class="line"><span class="lineno">  157</span>                               people_drift=people_drift, openings=tuple(openings), fs=fs, **kwargs)</div>
+<div class="line"><span class="lineno">  158</span>        self.room = l_shaped_room() <span class="keywordflow">if</span> room <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> np.asarray(room, dtype=bool)</div>
+<div class="line"><span class="lineno">  159</span>        rows, cols = self.room.shape</div>
+<div class="line"><span class="lineno">  160</span>        self.cells = [(r, c) <span class="keywordflow">for</span> r <span class="keywordflow">in</span> range(rows) <span class="keywordflow">for</span> c <span class="keywordflow">in</span> range(cols) <span class="keywordflow">if</span> self.room[r, c]]</div>
+<div class="line"><span class="lineno">  161</span>        index = {rc: i <span class="keywordflow">for</span> i, rc <span class="keywordflow">in</span> enumerate(self.cells)}</div>
+<div class="line"><span class="lineno">  162</span>        self.index = index</div>
+<div class="line"><span class="lineno">  163</span>        cells_n = len(self.cells)</div>
+<div class="line"><span class="lineno">  164</span>        self.count_people = bool(count_people)</div>
+<div class="line"><span class="lineno">  165</span>        n = cells_n + (1 <span class="keywordflow">if</span> self.count_people <span class="keywordflow">else</span> 0)</div>
+<div class="line"><span class="lineno">  166</span>        self.cell, self.height, self.outdoor = float(cell), float(height), float(outdoor)</div>
+<div class="line"><span class="lineno">  167</span>        seats = [(1, 1), (1, 2), (2, 1), (2, 2)] <span class="keywordflow">if</span> seats <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> [tuple(s) <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seats]</div>
+<div class="line"><span class="lineno">  168</span>        <span class="keywordflow">for</span> s <span class="keywordflow">in</span> [tuple(at), *seats]:</div>
+<div class="line"><span class="lineno">  169</span>            <span class="keywordflow">if</span> s <span class="keywordflow">not</span> <span class="keywordflow">in</span> index:</div>
+<div class="line"><span class="lineno">  170</span>                <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;RoomCO2Model: the cell {s} is not in the room.&quot;</span>)</div>
+<div class="line"><span class="lineno">  171</span>        self.seats = seats</div>
+<div class="line"><span class="lineno">  172</span>        self.openings = list(openings)</div>
+<div class="line"><span class="lineno">  173</span>        names = [o.name <span class="keywordflow">for</span> o <span class="keywordflow">in</span> self.openings]</div>
+<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">if</span> len(set(names)) != len(names):</div>
+<div class="line"><span class="lineno">  175</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;RoomCO2Model: two openings of one name ({names}).&quot;</span>)</div>
+<div class="line"><span class="lineno">  176</span> </div>
+<div class="line"><span class="lineno">  177</span>        <span class="comment"># The continuous balance dc/dt = A c + Bc u, u = [occupants, 1].</span></div>
+<div class="line"><span class="lineno">  178</span>        lam = float(ach) / 3600.0</div>
+<div class="line"><span class="lineno">  179</span>        volume = self.cell * self.cell * self.height                     <span class="comment"># of one cell [m^3]</span></div>
+<div class="line"><span class="lineno">  180</span>        neighbours = np.zeros((cells_n, cells_n))                        <span class="comment"># the exchange between cells, per unit k</span></div>
+<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">for</span> (r, c), i <span class="keywordflow">in</span> index.items():</div>
+<div class="line"><span class="lineno">  182</span>            <span class="keywordflow">for</span> nb <span class="keywordflow">in</span> ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):</div>
+<div class="line"><span class="lineno">  183</span>                j = index.get(nb)</div>
+<div class="line"><span class="lineno">  184</span>                <span class="keywordflow">if</span> j <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:                       <span class="comment"># a wall exchanges nothing</span></div>
+<div class="line"><span class="lineno">  185</span>                    neighbours[i, i] -= 1.0</div>
+<div class="line"><span class="lineno">  186</span>                    neighbours[i, j] += 1.0</div>
+<div class="line"><span class="lineno">  187</span>        per_person = float(emission) * 1e-3 / volume * 1e6                <span class="comment"># ppm/s in one cell</span></div>
+<div class="line"><span class="lineno">  188</span>        breath = np.zeros(n)</div>
+<div class="line"><span class="lineno">  189</span>        <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seats:</div>
+<div class="line"><span class="lineno">  190</span>            breath[index[s]] += per_person / len(seats)</div>
+<div class="line"><span class="lineno">  191</span>        rates = []                                      <span class="comment"># per opening: its exchange in each cell [1/s], fully open</span></div>
+<div class="line"><span class="lineno">  192</span>        <span class="keywordflow">for</span> o <span class="keywordflow">in</span> self.openings:</div>
+<div class="line"><span class="lineno">  193</span>            rate = np.zeros(cells_n)</div>
+<div class="line"><span class="lineno">  194</span>            <span class="keywordflow">if</span> o.cells <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  195</span>                rate[:] = o.ach / 3600.0 <span class="keywordflow">if</span> o.ach <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> o.flow / (volume * cells_n)</div>
+<div class="line"><span class="lineno">  196</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  197</span>                <span class="keywordflow">for</span> c <span class="keywordflow">in</span> o.cells:</div>
+<div class="line"><span class="lineno">  198</span>                    <span class="keywordflow">if</span> c <span class="keywordflow">not</span> <span class="keywordflow">in</span> index:</div>
+<div class="line"><span class="lineno">  199</span>                        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;RoomCO2Model: the cell {c} of {o.name!r} is not in the room.&quot;</span>)</div>
+<div class="line"><span class="lineno">  200</span>                per_cell = o.ach / 3600.0 * cells_n <span class="keywordflow">if</span> o.ach <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> o.flow / volume</div>
+<div class="line"><span class="lineno">  201</span>                rate[[index[c] <span class="keywordflow">for</span> c <span class="keywordflow">in</span> o.cells]] = per_cell / len(o.cells)</div>
+<div class="line"><span class="lineno">  202</span>            rates.append(rate)</div>
+<div class="line"><span class="lineno">  203</span>        dt = 1.0 / float(fs)</div>
+<div class="line"><span class="lineno">  204</span>        made = {}</div>
+<div class="line"><span class="lineno">  205</span> </div>
+<div class="line"><span class="lineno">  206</span>        <span class="keyword">def </span>matrices(states):</div>
+<div class="line"><span class="lineno">  207</span>            <span class="stringliteral">&quot;&quot;&quot;``F`` and ``B`` over one step with each opening as open as ``states`` says: the</span></div>
+<div class="line"><span class="lineno">  208</span><span class="stringliteral">            exact discretization, the inputs held, exp([[A, Bc], [0, 0]] dt).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  209</span>            <span class="keywordflow">if</span> states <span class="keywordflow">not</span> <span class="keywordflow">in</span> made:</div>
+<div class="line"><span class="lineno">  210</span>                exchange = np.full(cells_n, lam)</div>
+<div class="line"><span class="lineno">  211</span>                incoming = np.full(cells_n, lam * self.outdoor)</div>
+<div class="line"><span class="lineno">  212</span>                k = float(mixing)</div>
+<div class="line"><span class="lineno">  213</span>                <span class="keywordflow">for</span> o, rate, s <span class="keywordflow">in</span> zip(self.openings, rates, states):</div>
+<div class="line"><span class="lineno">  214</span>                    exchange = exchange + s * rate</div>
+<div class="line"><span class="lineno">  215</span>                    incoming = incoming + s * rate * (self.outdoor <span class="keywordflow">if</span> o.level <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> o.level)</div>
+<div class="line"><span class="lineno">  216</span>                    k += s * o.mixing</div>
+<div class="line"><span class="lineno">  217</span>                A = np.zeros((n, n))</div>
+<div class="line"><span class="lineno">  218</span>                A[:cells_n, :cells_n] = k / self.cell ** 2 * neighbours - np.diag(exchange)</div>
+<div class="line"><span class="lineno">  219</span>                outdoor_air = np.zeros(n)</div>
+<div class="line"><span class="lineno">  220</span>                outdoor_air[:cells_n] = incoming</div>
+<div class="line"><span class="lineno">  221</span>                <span class="keywordflow">if</span> self.count_people:</div>
+<div class="line"><span class="lineno">  222</span>                    A[:, cells_n] = breath                  <span class="comment"># the occupants are the last state</span></div>
+<div class="line"><span class="lineno">  223</span>                    Bc = outdoor_air.reshape(n, 1)</div>
+<div class="line"><span class="lineno">  224</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  225</span>                    Bc = np.column_stack([breath, outdoor_air])</div>
+<div class="line"><span class="lineno">  226</span>                width = Bc.shape[1]</div>
+<div class="line"><span class="lineno">  227</span>                block = np.zeros((n + width, n + width))</div>
+<div class="line"><span class="lineno">  228</span>                block[:n, :n], block[:n, n:] = A, Bc</div>
+<div class="line"><span class="lineno">  229</span>                E = expm(block * dt)</div>
+<div class="line"><span class="lineno">  230</span>                made[states] = (E[:n, :n], E[:n, n:])</div>
+<div class="line"><span class="lineno">  231</span>            <span class="keywordflow">return</span> made[states]</div>
+<div class="line"><span class="lineno">  232</span> </div>
+<div class="line"><span class="lineno">  233</span>        fs_ = float(fs)</div>
+<div class="line"><span class="lineno">  234</span>        states_at = <span class="keyword">lambda</span> t: tuple(o.state(t, fs_) <span class="keywordflow">for</span> o <span class="keywordflow">in</span> self.openings)</div>
+<div class="line"><span class="lineno">  235</span>        <span class="keywordflow">if</span> any(o.scheduled <span class="keywordflow">for</span> o <span class="keywordflow">in</span> self.openings):     <span class="comment"># a known schedule: F and B follow it</span></div>
+<div class="line"><span class="lineno">  236</span>            F, B = (<span class="keyword">lambda</span> t=<span class="keywordtype">None</span>: matrices(states_at(t))[0]), (<span class="keyword">lambda</span> t=<span class="keywordtype">None</span>: matrices(states_at(t))[1])</div>
+<div class="line"><span class="lineno">  237</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  238</span>            F, B = matrices(states_at(<span class="keywordtype">None</span>))</div>
+<div class="line"><span class="lineno">  239</span>        H = np.zeros((1, n))</div>
+<div class="line"><span class="lineno">  240</span>        H[0, index[tuple(at)]] = 1.0</div>
+<div class="line"><span class="lineno">  241</span>        q = np.full(n, float(process_uncertainty) ** 2)</div>
+<div class="line"><span class="lineno">  242</span>        x0 = np.full((n, 1), self.outdoor)</div>
+<div class="line"><span class="lineno">  243</span>        P0 = np.full(n, 50.0 ** 2)</div>
+<div class="line"><span class="lineno">  244</span>        <span class="keywordflow">if</span> self.count_people:</div>
+<div class="line"><span class="lineno">  245</span>            q[-1] = float(people_drift) ** 2</div>
+<div class="line"><span class="lineno">  246</span>            x0[-1], P0[-1] = 0.0, 10.0 ** 2</div>
+<div class="line"><span class="lineno">  247</span>        kwargs.setdefault(<span class="stringliteral">&quot;x0&quot;</span>, x0)</div>
+<div class="line"><span class="lineno">  248</span>        kwargs.setdefault(<span class="stringliteral">&quot;P0&quot;</span>, np.diag(P0))</div>
+<div class="line"><span class="lineno">  249</span>        super().__init__(sensor, F=F, B=B, H=H, Q=np.diag(q), R=np.array([[float(sigma) ** 2]]), fs=fs, **kwargs)</div>
+<div class="line"><span class="lineno">  250</span>        self.at = tuple(at)</div>
+<div class="line"><span class="lineno">  251</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -824,16 +881,16 @@ fs : steps per second; one step a minute by default.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">The concentration as a grid, NaN outside the room.</pre> 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00156">156</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  156</span>    <span class="keyword">def </span>field(self, x) -&gt; np.ndarray:</div>
-<div class="line"><span class="lineno">  157</span>        <span class="stringliteral">&quot;&quot;&quot;The concentration as a grid, NaN outside the room.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  158</span>        grid = np.full(self.room.shape, np.nan)</div>
-<div class="line"><span class="lineno">  159</span>        x = np.asarray(x, dtype=float).reshape(-1)</div>
-<div class="line"><span class="lineno">  160</span>        <span class="keywordflow">for</span> (r, c), i <span class="keywordflow">in</span> self.index.items():</div>
-<div class="line"><span class="lineno">  161</span>            grid[r, c] = x[i]</div>
-<div class="line"><span class="lineno">  162</span>        <span class="keywordflow">return</span> grid</div>
-<div class="line"><span class="lineno">  163</span> </div>
-<div class="line"><span class="lineno">  164</span> </div>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00284">284</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  284</span>    <span class="keyword">def </span>field(self, x) -&gt; np.ndarray:</div>
+<div class="line"><span class="lineno">  285</span>        <span class="stringliteral">&quot;&quot;&quot;The concentration as a grid, NaN outside the room.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  286</span>        grid = np.full(self.room.shape, np.nan)</div>
+<div class="line"><span class="lineno">  287</span>        x = np.asarray(x, dtype=float).reshape(-1)</div>
+<div class="line"><span class="lineno">  288</span>        <span class="keywordflow">for</span> (r, c), i <span class="keywordflow">in</span> self.index.items():</div>
+<div class="line"><span class="lineno">  289</span>            grid[r, c] = x[i]</div>
+<div class="line"><span class="lineno">  290</span>        <span class="keywordflow">return</span> grid</div>
+<div class="line"><span class="lineno">  291</span> </div>
+<div class="line"><span class="lineno">  292</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -880,20 +937,20 @@ A room known to be empty (at night, say) is a reading of 0 people with a
 small ``sigma``; at every other step the reading is NaN, and the filter
 counts from the CO2 alone. Needs ``count_people=True``.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00143">143</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  143</span>    <span class="keyword">def </span>schedule(self, name=&quot;schedule&quot;, sigma=0.1, *, rate=None):</div>
-<div class="line"><span class="lineno">  144</span>        <span class="stringliteral">&quot;&quot;&quot;What is known of the number of occupants, as a sensor that reads it.</span></div>
-<div class="line"><span class="lineno">  145</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  146</span><span class="stringliteral">        A room known to be empty (at night, say) is a reading of 0 people with a</span></div>
-<div class="line"><span class="lineno">  147</span><span class="stringliteral">        small ``sigma``; at every other step the reading is NaN, and the filter</span></div>
-<div class="line"><span class="lineno">  148</span><span class="stringliteral">        counts from the CO2 alone. Needs ``count_people=True``.</span></div>
-<div class="line"><span class="lineno">  149</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  150</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.count_people:</div>
-<div class="line"><span class="lineno">  151</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;RoomCO2Model.schedule: the number of occupants is a state only with count_people=True.&quot;</span>)</div>
-<div class="line"><span class="lineno">  152</span>        G = np.zeros((1, int(self.n)))</div>
-<div class="line"><span class="lineno">  153</span>        G[0, -1] = 1.0</div>
-<div class="line"><span class="lineno">  154</span>        <span class="keywordflow">return</span> KalmanSensor(name, G=G, R=float(sigma) ** 2, rate=rate, labels={name: <span class="stringliteral">&quot;people&quot;</span>})</div>
-<div class="line"><span class="lineno">  155</span> </div>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00271">271</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  271</span>    <span class="keyword">def </span>schedule(self, name=&quot;schedule&quot;, sigma=0.1, *, rate=None):</div>
+<div class="line"><span class="lineno">  272</span>        <span class="stringliteral">&quot;&quot;&quot;What is known of the number of occupants, as a sensor that reads it.</span></div>
+<div class="line"><span class="lineno">  273</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  274</span><span class="stringliteral">        A room known to be empty (at night, say) is a reading of 0 people with a</span></div>
+<div class="line"><span class="lineno">  275</span><span class="stringliteral">        small ``sigma``; at every other step the reading is NaN, and the filter</span></div>
+<div class="line"><span class="lineno">  276</span><span class="stringliteral">        counts from the CO2 alone. Needs ``count_people=True``.</span></div>
+<div class="line"><span class="lineno">  277</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  278</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.count_people:</div>
+<div class="line"><span class="lineno">  279</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;RoomCO2Model.schedule: the number of occupants is a state only with count_people=True.&quot;</span>)</div>
+<div class="line"><span class="lineno">  280</span>        G = np.zeros((1, int(self.n)))</div>
+<div class="line"><span class="lineno">  281</span>        G[0, -1] = 1.0</div>
+<div class="line"><span class="lineno">  282</span>        <span class="keywordflow">return</span> KalmanSensor(name, G=G, R=float(sigma) ** 2, rate=rate, labels={name: <span class="stringliteral">&quot;people&quot;</span>})</div>
+<div class="line"><span class="lineno">  283</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -942,20 +999,85 @@ counts from the CO2 alone. Needs ``count_people=True``.
 </div><div class="memdoc">
 <pre class="fragment">A CO2 sensor that reads the cell ``at`` with noise ``sigma`` [ppm],
 ``rate`` readings per second (``None``: at every step of the model).</pre> 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00134">134</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  134</span>    <span class="keyword">def </span>sensor(self, name, at, sigma=15.0, *, rate=None):</div>
-<div class="line"><span class="lineno">  135</span>        <span class="stringliteral">&quot;&quot;&quot;A CO2 sensor that reads the cell ``at`` with noise ``sigma`` [ppm],</span></div>
-<div class="line"><span class="lineno">  136</span><span class="stringliteral">        ``rate`` readings per second (``None``: at every step of the model).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  137</span>        <span class="keywordflow">if</span> tuple(at) <span class="keywordflow">not</span> <span class="keywordflow">in</span> self.index:</div>
-<div class="line"><span class="lineno">  138</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;RoomCO2Model.sensor: the cell {at} is not in the room.&quot;</span>)</div>
-<div class="line"><span class="lineno">  139</span>        G = np.zeros((1, int(self.n)))</div>
-<div class="line"><span class="lineno">  140</span>        G[0, self.index[tuple(at)]] = 1.0</div>
-<div class="line"><span class="lineno">  141</span>        <span class="keywordflow">return</span> KalmanSensor(name, G=G, R=float(sigma) ** 2, rate=rate, labels={name: <span class="stringliteral">&quot;ppm&quot;</span>})</div>
-<div class="line"><span class="lineno">  142</span> </div>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00262">262</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  262</span>    <span class="keyword">def </span>sensor(self, name, at, sigma=15.0, *, rate=None):</div>
+<div class="line"><span class="lineno">  263</span>        <span class="stringliteral">&quot;&quot;&quot;A CO2 sensor that reads the cell ``at`` with noise ``sigma`` [ppm],</span></div>
+<div class="line"><span class="lineno">  264</span><span class="stringliteral">        ``rate`` readings per second (``None``: at every step of the model).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  265</span>        <span class="keywordflow">if</span> tuple(at) <span class="keywordflow">not</span> <span class="keywordflow">in</span> self.index:</div>
+<div class="line"><span class="lineno">  266</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;RoomCO2Model.sensor: the cell {at} is not in the room.&quot;</span>)</div>
+<div class="line"><span class="lineno">  267</span>        G = np.zeros((1, int(self.n)))</div>
+<div class="line"><span class="lineno">  268</span>        G[0, self.index[tuple(at)]] = 1.0</div>
+<div class="line"><span class="lineno">  269</span>        <span class="keywordflow">return</span> KalmanSensor(name, G=G, R=float(sigma) ** 2, rate=rate, labels={name: <span class="stringliteral">&quot;ppm&quot;</span>})</div>
+<div class="line"><span class="lineno">  270</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab39d9ac37876eacf0deb027b9b24be7d" name="ab39d9ac37876eacf0deb027b9b24be7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab39d9ac37876eacf0deb027b9b24be7d">&#9670;&#160;</a></span>variant()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.buildings.co2.RoomCO2Model.variant </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>open</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The same room with some openings set otherwise: ``room.variant(window=True)``.
+The two are the modes of ``route`` when nobody reports the window.</pre> 
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00252">252</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  252</span>    <span class="keyword">def </span>variant(self, **open):</div>
+<div class="line"><span class="lineno">  253</span>        <span class="stringliteral">&quot;&quot;&quot;The same room with some openings set otherwise: ``room.variant(window=True)``.</span></div>
+<div class="line"><span class="lineno">  254</span><span class="stringliteral">        The two are the modes of ``route`` when nobody reports the window.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  255</span>        unknown = set(open) - {o.name <span class="keywordflow">for</span> o <span class="keywordflow">in</span> self.openings}</div>
+<div class="line"><span class="lineno">  256</span>        <span class="keywordflow">if</span> unknown:</div>
+<div class="line"><span class="lineno">  257</span>            <span class="keywordflow">raise</span> KeyError(f<span class="stringliteral">&quot;RoomCO2Model has no opening {sorted(unknown)}; it has {[o.name for o in self.openings]}.&quot;</span>)</div>
+<div class="line"><span class="lineno">  258</span>        openings = [Opening(o.name, o.cells, flow=o.flow, ach=o.ach, level=o.level, mixing=o.mixing,</div>
+<div class="line"><span class="lineno">  259</span>                            open=open.get(o.name, o.open)) <span class="keywordflow">for</span> o <span class="keywordflow">in</span> self.openings]</div>
+<div class="line"><span class="lineno">  260</span>        <span class="keywordflow">return</span> type(self)(**{**self._made_with, <span class="stringliteral">&quot;openings&quot;</span>: openings})</div>
+<div class="line"><span class="lineno">  261</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a2ab143c6e06c0d3a5d01c422e1f04ba4" name="a2ab143c6e06c0d3a5d01c422e1f04ba4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ab143c6e06c0d3a5d01c422e1f04ba4">&#9670;&#160;</a></span>_made_with</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.buildings.co2.RoomCO2Model._made_with</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00154">154</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+
+</div>
+</div>
 <a id="a678ec0c8b03b96b97f624e8e1ceea104" name="a678ec0c8b03b96b97f624e8e1ceea104"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a678ec0c8b03b96b97f624e8e1ceea104">&#9670;&#160;</a></span>at</h2>
 
@@ -968,7 +1090,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00132">132</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00250">250</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -984,7 +1106,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00083">83</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00166">166</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1000,7 +1122,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00077">77</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00160">160</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1016,7 +1138,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00081">81</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00164">164</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1040,7 +1162,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00068">68</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00147">147</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1056,7 +1178,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00083">83</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00166">166</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1072,7 +1194,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00079">79</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00162">162</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1096,7 +1218,23 @@ counts from the CO2 alone. Needs ``count_people=True``.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00067">67</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00146">146</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+
+</div>
+</div>
+<a id="ade01f84d24dc981bbd29f3c925a07c84" name="ade01f84d24dc981bbd29f3c925a07c84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade01f84d24dc981bbd29f3c925a07c84">&#9670;&#160;</a></span>openings</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.buildings.co2.RoomCO2Model.openings</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00172">172</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1112,7 +1250,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00083">83</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00166">166</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1128,7 +1266,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00075">75</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00158">158</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1144,7 +1282,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00088">88</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00171">171</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>
@@ -1168,7 +1306,7 @@ counts from the CO2 alone. Needs ``count_people=True``.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00069">69</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="co2_8py_source.html#l00148">148</a> of file <a class="el" href="co2_8py_source.html">co2.py</a>.</p>
 
 </div>
 </div>

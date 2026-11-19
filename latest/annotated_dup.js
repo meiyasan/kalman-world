@@ -243,6 +243,7 @@ var annotated_dup =
         ] ],
         [ "buildings", "namespacemodules_1_1apps_1_1buildings.html", [
           [ "co2", "namespacemodules_1_1apps_1_1buildings_1_1co2.html", [
+            [ "Opening", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_opening.html", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_opening" ],
             [ "RoomCO2Model", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model" ]
           ] ]
         ] ],
@@ -781,6 +782,8 @@ var annotated_dup =
         [ "TestRocketLiftoff", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff" ]
       ] ],
       [ "test_buildings", "namespacetests_1_1test__buildings.html", [
+        [ "TestCountingWithAWindow", "classtests_1_1test__buildings_1_1_test_counting_with_a_window.html", "classtests_1_1test__buildings_1_1_test_counting_with_a_window" ],
+        [ "TestOpenings", "classtests_1_1test__buildings_1_1_test_openings.html", "classtests_1_1test__buildings_1_1_test_openings" ],
         [ "TestTheBalance", "classtests_1_1test__buildings_1_1_test_the_balance.html", "classtests_1_1test__buildings_1_1_test_the_balance" ],
         [ "TestWhatTheSensorsTell", "classtests_1_1test__buildings_1_1_test_what_the_sensors_tell.html", "classtests_1_1test__buildings_1_1_test_what_the_sensors_tell" ]
       ] ],
