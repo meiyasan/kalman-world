@@ -24,7 +24,8 @@ from .astrophysics       import (TransLunarModel, TransLunarState, TransLunarObs
 from .vehicles     import CarSpeedModel, CarSpeedState, CarSpeedObservable, CarLaneModel, CarLaneState, CarLaneObservable
 from .tracking      import DriftChamberModel, TrackingEvent, TrackState, TrackObservable
 from .fusion        import SensorFusionModel, SensorSpec
-from .buildings     import RoomCO2Model, empty_at_night, l_shaped_room, ventilation_from_decay
+from .buildings     import (Opening, RoomCO2Model, air_conditioner, door, empty_at_night, l_shaped_room,
+                             ventilation_from_decay, window)
 from .vision        import (DetectionModel, BoxTrackModel, SortTracker, KalmanTrack,
                             BoxTrackState, BoxTrackObservable, TrackedBox,
                             box_to_xysr, xysr_to_box, iou_batch, associate_detections,

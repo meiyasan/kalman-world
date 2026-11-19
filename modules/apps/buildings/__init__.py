@@ -6,10 +6,11 @@
   :func:`empty_at_night`, what is known of the occupants as a sensor, and
   :func:`ventilation_from_decay`, the room's air changes from an evening's fall.
 """
-from .co2 import RoomCO2Model, empty_at_night, l_shaped_room, ventilation_from_decay
+from .co2 import (Opening, RoomCO2Model, air_conditioner, door, empty_at_night, l_shaped_room,
+                  ventilation_from_decay, window)
 
 VARIANTS = {
     "co2": RoomCO2Model,
 }
 
-__all__ = ["RoomCO2Model", "empty_at_night", "l_shaped_room", "ventilation_from_decay", "VARIANTS"]
+__all__ = ["Opening", "air_conditioner", "door", "window", "RoomCO2Model", "empty_at_night", "l_shaped_room", "ventilation_from_decay", "VARIANTS"]

@@ -20,6 +20,15 @@ With ``count_people=True`` the number of occupants is not given but estimated:
 it becomes the last component of the state, a number that drifts slowly
 (people come and go), and ``u = [1]``. The model stays linear.
 
+Openings change the balance while they are open (:class:`Opening`): a window
+exchanges the air of its cells with the outdoors, a door with the space beyond
+it, and an air conditioner brings fresh air to the whole room, or only stirs
+it. An opening that is always open or always shut leaves the model a model of
+matrices; one that follows a known schedule (a contact sensor, the unit's own
+signal) makes ``F`` and ``B`` functions of time, each the exact discretization
+of the balance in that configuration. An opening nobody reports is two models,
+shut and open, under ``route``.
+
 The model's own sensor reads one cell. Other sensors are added with the
 framework's operations; a sensor that drifts is an instrument with a
 calibration, whose offset ``joint`` estimates with the field.
@@ -31,6 +40,74 @@ from scipy.linalg import expm
 
 from ...framework.models.linear import LinearKalmanModel
 from ...framework.sensor import KalmanSensor
+
+
+class Opening:
+    """Something that changes the air of the room while it is open: a window, a
+    door, an air conditioner.
+
+    Parameters
+    ----------
+    name : what it is called.
+    cells : the cells it acts on, ``(row, column)`` each; ``None`` for the whole room.
+    flow : the air it exchanges while open [m^3/s], shared by its cells.
+    ach : that exchange as air changes per hour of the whole room, in place of ``flow``.
+    level : the CO2 of the air that comes in [ppm]; ``None`` for the outdoor level.
+    mixing : what it adds to the room's mixing coefficient while open [m^2/s].
+    open : ``True`` or ``False`` for always; or how open it is at each step, an
+        array (0 shut, 1 open, one value per step of the model) or a function of
+        the time [s].
+    """
+
+    def __init__(self, name, cells=None, *, flow=0.0, ach=None, level=None, mixing=0.0, open=False):
+        if not isinstance(name, str) or not name:
+            raise ValueError("Opening: an opening needs a name.")
+        if float(flow) < 0.0 or float(mixing) < 0.0 or (ach is not None and float(ach) < 0.0):
+            raise ValueError(f"Opening {name!r}: flow, ach and mixing cannot be negative.")
+        self.name = name
+        self.cells = None if cells is None else [tuple(c) for c in cells]
+        self.flow, self.ach = float(flow), None if ach is None else float(ach)
+        self.level = None if level is None else float(level)
+        self.mixing = float(mixing)
+        self.open = open
+
+    @property
+    def scheduled(self):
+        """``True`` when how open it is changes with time."""
+        return not isinstance(self.open, (bool, int, float, np.bool_))
+
+    def state(self, t, fs):
+        """How open it is at time ``t`` [s], from 0 to 1."""
+        if not self.scheduled:
+            value = float(self.open)
+        elif callable(self.open):
+            value = float(self.open(0.0 if t is None else float(t)))
+        else:
+            steps = np.asarray(self.open, dtype=float).reshape(-1)
+            k = 0 if t is None else int(round(float(t) * fs))
+            value = float(steps[min(max(k, 0), len(steps) - 1)])
+        return min(max(round(value, 3), 0.0), 1.0)
+
+    def __repr__(self):
+        return f"Opening({self.name!r}, open={'scheduled' if self.scheduled else bool(self.open)})"
+
+
+def window(name, cells, flow=0.1, *, open=False):
+    """A window on the outdoors: ``flow`` [m^3/s] through its ``cells`` while open."""
+    return Opening(name, cells, flow=flow, open=open)
+
+
+def door(name, cells, flow=0.05, *, beyond=600.0, open=False):
+    """A door on another space whose CO2 is ``beyond`` [ppm]: ``flow`` [m^3/s]
+    through its ``cells`` while open."""
+    return Opening(name, cells, flow=flow, level=beyond, open=open)
+
+
+def air_conditioner(name="ac", *, ach=0.0, mixing=0.03, on=False):
+    """An air conditioner: while on it stirs the room (``mixing`` [m^2/s]) and,
+    when it has a fresh-air intake, renews it (``ach`` more air changes per hour;
+    0 for a unit that only recirculates)."""
+    return Opening(name, None, ach=ach, mixing=mixing, open=on)
 
 
 def l_shaped_room(rows: int = 12, cols: int = 12) -> np.ndarray:
@@ -61,6 +138,8 @@ class RoomCO2Model(LinearKalmanModel):
         instead of taking it as an input.
     people_drift : how much that number may change in a step, a standard
         deviation [people]; used with ``count_people``.
+    openings : the windows, doors and air conditioners of the room
+        (:class:`Opening`, or :func:`window`, :func:`door`, :func:`air_conditioner`).
     fs : steps per second; one step a minute by default.
     """
 
@@ -71,7 +150,11 @@ class RoomCO2Model(LinearKalmanModel):
     def __init__(self, sensor: str = "co2", at=(2, 2), *, room=None, cell: float = 0.5, height: float = 2.5,
                  mixing: float = 0.02, ach: float = 2.0, outdoor: float = 420.0, seats=None,
                  emission: float = 0.005, sigma: float = 15.0, process_uncertainty: float = 2.0,
-                 count_people: bool = False, people_drift: float = 0.3, fs: float = 1 / 60, **kwargs):
+                 count_people: bool = False, people_drift: float = 0.3, openings=(), fs: float = 1 / 60, **kwargs):
+        self._made_with = dict(sensor=sensor, at=at, room=room, cell=cell, height=height, mixing=mixing, ach=ach,
+                               outdoor=outdoor, seats=seats, emission=emission, sigma=sigma,
+                               process_uncertainty=process_uncertainty, count_people=count_people,
+                               people_drift=people_drift, openings=tuple(openings), fs=fs, **kwargs)
         self.room = l_shaped_room() if room is None else np.asarray(room, dtype=bool)
         rows, cols = self.room.shape
         self.cells = [(r, c) for r in range(rows) for c in range(cols) if self.room[r, c]]
@@ -86,38 +169,73 @@ class RoomCO2Model(LinearKalmanModel):
             if s not in index:
                 raise ValueError(f"RoomCO2Model: the cell {s} is not in the room.")
         self.seats = seats
+        self.openings = list(openings)
+        names = [o.name for o in self.openings]
+        if len(set(names)) != len(names):
+            raise ValueError(f"RoomCO2Model: two openings of one name ({names}).")
 
         # The continuous balance dc/dt = A c + Bc u, u = [occupants, 1].
         lam = float(ach) / 3600.0
-        A = np.zeros((n, n))
-        A[:cells_n, :cells_n] = -lam * np.eye(cells_n)
-        k = float(mixing) / self.cell ** 2
+        volume = self.cell * self.cell * self.height                     # of one cell [m^3]
+        neighbours = np.zeros((cells_n, cells_n))                        # the exchange between cells, per unit k
         for (r, c), i in index.items():
             for nb in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
                 j = index.get(nb)
                 if j is not None:                       # a wall exchanges nothing
-                    A[i, i] -= k
-                    A[i, j] += k
-        volume = self.cell * self.cell * self.height                     # of one cell [m^3]
+                    neighbours[i, i] -= 1.0
+                    neighbours[i, j] += 1.0
         per_person = float(emission) * 1e-3 / volume * 1e6                # ppm/s in one cell
         breath = np.zeros(n)
         for s in seats:
             breath[index[s]] += per_person / len(seats)
-        outdoor_air = np.zeros(n)
-        outdoor_air[:cells_n] = lam * self.outdoor
-        if self.count_people:
-            A[:, cells_n] = breath                      # the occupants are the last state
-            Bc = outdoor_air.reshape(n, 1)
-        else:
-            Bc = np.column_stack([breath, outdoor_air])
-
-        # Exact discretization over one step, the inputs held: exp([[A, Bc], [0, 0]] dt).
+        rates = []                                      # per opening: its exchange in each cell [1/s], fully open
+        for o in self.openings:
+            rate = np.zeros(cells_n)
+            if o.cells is None:
+                rate[:] = o.ach / 3600.0 if o.ach is not None else o.flow / (volume * cells_n)
+            else:
+                for c in o.cells:
+                    if c not in index:
+                        raise ValueError(f"RoomCO2Model: the cell {c} of {o.name!r} is not in the room.")
+                per_cell = o.ach / 3600.0 * cells_n if o.ach is not None else o.flow / volume
+                rate[[index[c] for c in o.cells]] = per_cell / len(o.cells)
+            rates.append(rate)
         dt = 1.0 / float(fs)
-        l = Bc.shape[1]
-        block = np.zeros((n + l, n + l))
-        block[:n, :n], block[:n, n:] = A, Bc
-        E = expm(block * dt)
-        F, B = E[:n, :n], E[:n, n:]
+        made = {}
+
+        def matrices(states):
+            """``F`` and ``B`` over one step with each opening as open as ``states`` says: the
+            exact discretization, the inputs held, exp([[A, Bc], [0, 0]] dt)."""
+            if states not in made:
+                exchange = np.full(cells_n, lam)
+                incoming = np.full(cells_n, lam * self.outdoor)
+                k = float(mixing)
+                for o, rate, s in zip(self.openings, rates, states):
+                    exchange = exchange + s * rate
+                    incoming = incoming + s * rate * (self.outdoor if o.level is None else o.level)
+                    k += s * o.mixing
+                A = np.zeros((n, n))
+                A[:cells_n, :cells_n] = k / self.cell ** 2 * neighbours - np.diag(exchange)
+                outdoor_air = np.zeros(n)
+                outdoor_air[:cells_n] = incoming
+                if self.count_people:
+                    A[:, cells_n] = breath                  # the occupants are the last state
+                    Bc = outdoor_air.reshape(n, 1)
+                else:
+                    Bc = np.column_stack([breath, outdoor_air])
+                width = Bc.shape[1]
+                block = np.zeros((n + width, n + width))
+                block[:n, :n], block[:n, n:] = A, Bc
+                E = expm(block * dt)
+                made[states] = (E[:n, :n], E[:n, n:])
+            return made[states]
+
+        fs_ = float(fs)
+        states_at = lambda t: tuple(o.state(t, fs_) for o in self.openings)
+        if any(o.scheduled for o in self.openings):     # a known schedule: F and B follow it
+            F, B = (lambda t=None: matrices(states_at(t))[0]), (lambda t=None: matrices(states_at(t))[1])
+        else:
+            F, B = matrices(states_at(None))
         H = np.zeros((1, n))
         H[0, index[tuple(at)]] = 1.0
         q = np.full(n, float(process_uncertainty) ** 2)
@@ -130,6 +248,16 @@ class RoomCO2Model(LinearKalmanModel):
         kwargs.setdefault("P0", np.diag(P0))
         super().__init__(sensor, F=F, B=B, H=H, Q=np.diag(q), R=np.array([[float(sigma) ** 2]]), fs=fs, **kwargs)
         self.at = tuple(at)
+
+    def variant(self, **open):
+        """The same room with some openings set otherwise: ``room.variant(window=True)``.
+        The two are the modes of ``route`` when nobody reports the window."""
+        unknown = set(open) - {o.name for o in self.openings}
+        if unknown:
+            raise KeyError(f"RoomCO2Model has no opening {sorted(unknown)}; it has {[o.name for o in self.openings]}.")
+        openings = [Opening(o.name, o.cells, flow=o.flow, ach=o.ach, level=o.level, mixing=o.mixing,
+                            open=open.get(o.name, o.open)) for o in self.openings]
+        return type(self)(**{**self._made_with, "openings": openings})
 
     def sensor(self, name, at, sigma=15.0, *, rate=None):
         """A CO2 sensor that reads the cell ``at`` with noise ``sigma`` [ppm],

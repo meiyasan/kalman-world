@@ -47,6 +47,47 @@ model = room.add_instrument(compose(B, name="B").calibrate(1.0, 0.0)).add_sensor
 record = model.joint({"B.offset": (150.0, 0.0)}).filter(zk, uk=np.ones((len(zk), 1)))
 ```
 
+## Windows, doors and air conditioning
+
+An opening changes the balance while it is open:
+
+| | what it does | made with |
+|---|---|---|
+| window | exchanges the air of its cells with the outdoors | `window(name, cells, flow=0.1)` |
+| door | exchanges it with the space beyond, at its own CO2 level | `door(name, cells, flow=0.05, beyond=600)` |
+| air conditioner | stirs the room; with a fresh-air intake, also renews it | `air_conditioner(ach=0, mixing=0.03)` |
+
+`flow` is in m^3/s. An air conditioner that only recirculates has `ach=0`: it
+makes the room more even and removes nothing. Whether a unit brings fresh air
+is read from the room itself: `ventilation_from_decay` on an evening with the
+unit on, and on one with it off; the difference is its `ach`.
+
+How open each one is, is said in one of three ways:
+
+```python
+from kalman.apps import RoomCO2Model, window, air_conditioner
+from kalman.framework import route
+
+# always (a model of matrices)
+room = RoomCO2Model("A", openings=[window("window", [(4, 0), (5, 0)], open=True)])
+
+# reported: one value per step of the model (a contact sensor, the unit's own signal)
+room = RoomCO2Model("A", count_people=True,
+                    openings=[window("window", [(4, 0), (5, 0)], open=contact), air_conditioner(ach=1.5, on=running)])
+
+# not reported: the two regimes under route; the filter says when it was open
+shut = RoomCO2Model("A", count_people=True, openings=[window("window", [(4, 0), (5, 0)])])
+modes = route([shut, shut.variant(window=True)], [[0.98, 0.02], [0.02, 0.98]])
+record = modes.filter(zk, uk=np.ones((len(zk), 1)))
+modes.mode_probabilities[:, 1]                             # the probability that the window is open
+```
+
+With four people and the window open for an hour, the count stays at 4.0 when
+the window is reported, and at 4.0 when it is routed (which finds the hour);
+with the window left out of the model it falls to 2.3. A reported opening
+makes `F` and `B` functions of time, each the exact step of the balance in
+that configuration.
+
 ## A known empty room
 
 What is known of the people is a sensor too: `room.schedule()` reads the count,
