@@ -51,15 +51,16 @@ class OscillatorModel(Composite):
     dfc : float
         Window half-width [Hz].
     Q : float | list
-        Quality factor (scalar, or one per kept mode).
+        Quality factor: one for every mode, or one per frequency given.
     fs : float
     measurement_uncertainty : float
         Standard deviation of the white noise of the real input signal, per sample
         at ``fs``.  The model converts it to the noise of the demodulated,
         decimated envelope (see ``__init__``).
-    process_uncertainty : float
+    process_uncertainty : float | list
         Standard deviation of the random change of each envelope component per
-        filter step (the filter runs at the decimated rate ``4·dfc``).
+        filter step (the filter runs at the decimated rate ``4·dfc``): one for
+        every mode, or one per frequency given (see :func:`line_process_noise`).
     p0 : float, optional
         Initial variance of each envelope component.  Default: ``(1000·σ)²``, a
         prior loose enough that the first measurements set the amplitude.
@@ -84,13 +85,24 @@ class OscillatorModel(Composite):
                  process_uncertainty=1e-3, p0=None, **kwargs):
 
         freqs = np.atleast_1d(np.asarray(frequencies, dtype=float))
-        in_band = freqs[np.abs(freqs - fc) <= dfc]                # ← the window mask
+        kept = np.abs(freqs - fc) <= dfc                          # ← the window mask
+        in_band = freqs[kept]
         if in_band.size == 0:
             raise ValueError(
                 f"OscillatorModel: no frequency within window {fc}±{dfc} Hz "
                 f"(candidates: {np.round(freqs, 3)})")
 
-        Qs = [float(Q)] * len(in_band) if np.isscalar(Q) else list(Q)
+        def per_mode(value, what):
+            """A scalar for every kept mode, or one value per given frequency, masked like them."""
+            if np.isscalar(value):
+                return [float(value)] * len(in_band)
+            value = np.asarray(value, dtype=float).ravel()
+            if len(value) != len(freqs):
+                raise ValueError(f"OscillatorModel: {what} has {len(value)} values for {len(freqs)} frequencies.")
+            return list(value[kept])
+
+        Qs = per_mode(Q, "Q")
+        process = per_mode(process_uncertainty, "process_uncertainty")
         self.fc = float(fc)
         self.dfc = float(dfc)
         self.frequencies = in_band
@@ -111,9 +123,9 @@ class OscillatorModel(Composite):
                       f"{sensor}@{f:.3f}Hz", fs=self._fs_dec,
                       f0=f, fc=fc, Q=q,
                       measurement_uncertainty=sigma_envelope,
-                      process_uncertainty=process_uncertainty,
+                      process_uncertainty=w,
                       P0=p0_var * np.eye(2))
-                  for f, q in zip(in_band, Qs)]
+                  for f, q, w in zip(in_band, Qs, process)]
 
         super().__init__(*blocks, readout=KalmanReadout.SUMMED, **kwargs)
         self.fs = self._fs_dec

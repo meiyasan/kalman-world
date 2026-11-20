@@ -1683,7 +1683,7 @@ namespace
                   const double *zk, const double *uk, kalman_control_fn control, void *user, int smooth,
                   double *x_prior, double *P_prior, double *x_post, double *P_post,
                   double *x_smooth, double *P_smooth, double *innovations, double *transitions,
-                  double *controls)
+                  double *controls, double steady = 0., int *steady_from = nullptr, double *P_last = nullptr)
     {
         if (N <= 0) throw std::invalid_argument("N must be positive");
         if (!zk) throw std::invalid_argument("null zk");
@@ -1704,6 +1704,9 @@ namespace
         }
 
         Kalman::Filter filter(&M, &E);
+        filter.SetSteadyState(steady);
+        // The covariances of every step are kept only when they are asked for.
+        filter.SetKeepCovariances(P_prior || P_post || transitions || smooth);
         if (control)
         {
             FunctionController controller(&M, control, user);
@@ -1724,6 +1727,9 @@ namespace
             if (smooth && P_smooth) Copy(filter.SmoothedCovariances()[k], P_smooth + k * n * n, n, n, "P_smooth");
             if (controls && control && l > 0) Copy(filter.Controls()[k], controls + k * l, l, "controls");
         }
+        if (steady_from)
+            *steady_from = filter.SteadyFrom() == static_cast<std::size_t>(-1) ? -1 : static_cast<int>(filter.SteadyFrom());
+        if (P_last) Copy(filter.Covariance(), P_last, n, n, "P_last");
         return 0;
     }
 }
@@ -1736,6 +1742,18 @@ int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int 
     return Guard([&] {
         return RunFilter(model, engine, N, zk, uk, nullptr, nullptr, smooth, x_prior, P_prior, x_post, P_post,
                          x_smooth, P_smooth, innovations, transitions, nullptr);
+    });
+}
+
+int kalman_filter_run_steady(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                             const double *zk, const double *uk, double tolerance,
+                             double *x_prior, double *P_prior, double *x_post, double *P_post,
+                             double *innovations, double *transitions, double *P_last, int *steady_from)
+{
+    return Guard([&] {
+        if (!(tolerance > 0.)) throw std::invalid_argument("the tolerance must be > 0");
+        return RunFilter(model, engine, N, zk, uk, nullptr, nullptr, 0, x_prior, P_prior, x_post, P_post,
+                         nullptr, nullptr, innovations, transitions, nullptr, tolerance, steady_from, P_last);
     });
 }
 

@@ -545,6 +545,22 @@ int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int 
                       double *x_smooth, double *P_smooth, double *innovations, double *transitions);
 
 /**
+ * kalman_filter_run() with the steady-state gain (Kalman::Filter::SetSteadyState):
+ * once the corrected covariance changes by less than `tolerance` (relative) from
+ * one complete step to the next, the covariance and the gain are frozen and a step
+ * costs only the mean. For a model of constant matrices on the linear engine.
+ *
+ * The per-step covariances and transitions are kept only when P_prior, P_post or
+ * transitions is given; with all three NULL a long run of a large model holds
+ * only its means. P_last (n x n, may be NULL) receives the covariance the run
+ * ended with; steady_from (may be NULL) the step it froze at, or -1.
+ */
+int kalman_filter_run_steady(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                             const double *zk, const double *uk, double tolerance,
+                             double *x_prior, double *P_prior, double *x_post, double *P_post,
+                             double *innovations, double *transitions, double *P_last, int *steady_from);
+
+/**
  * A control policy for a closed loop: from the belief before the step (`x`, n;
  * `P`, n x n), the time and the previous step's innovation (`nu`, m; zeros on the
  * first step), write the command (`u`, l). Return 0, or non-zero to stop the run.

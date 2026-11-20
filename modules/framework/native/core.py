@@ -250,6 +250,10 @@ int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int 
                       const double *zk, const double *uk, int smooth,
                       double *x_prior, double *P_prior, double *x_post, double *P_post,
                       double *x_smooth, double *P_smooth, double *innovations, double *transitions);
+int kalman_filter_run_steady(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                             const double *zk, const double *uk, double tolerance,
+                             double *x_prior, double *P_prior, double *x_post, double *P_post,
+                             double *innovations, double *transitions, double *P_last, int *steady_from);
 typedef int (*kalman_control_fn)(void *user, const double *x, const double *P, double t,
                                  const double *nu, double *u);
 int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *engine, int N,
@@ -645,14 +649,18 @@ def create_engine(kind="extended", **params):
     return ffi.gc(h, L.kalman_engine_destroy)
 
 
-def run_filter(model_handle, engine_handle, n, m, l, zk, uk=None, smooth=False, control=None):
+def run_filter(model_handle, engine_handle, n, m, l, zk, uk=None, smooth=False, control=None, steady=0.0):
     """The fused pass: Kalman::Filter over ``zk`` (N x m; NaN = missing) with ``uk``
     (N x l or None) on a native model and engine. Returns the per-step arrays.
 
     ``control`` closes the loop: a function ``control(x, P, t, nu=nu) -> u`` called
     at every step with the belief before the step (``x`` (n,1), ``P`` (n,n)) and the
     previous innovation (``nu`` (m,1), zeros at first). The commands applied are
-    returned as ``controls`` (N x l)."""
+    returned as ``controls`` (N x l).
+
+    ``steady`` > 0 runs with the steady-state gain (``Kalman::Filter::SetSteadyState``,
+    that relative tolerance) and returns the means, the innovations, the last
+    covariance ``P_last`` and the step it froze at ``steady_from`` (-1: never)."""
     L = require()
     zk = np.ascontiguousarray(np.asarray(zk, dtype=np.float64).reshape(-1, m))
     N = zk.shape[0]
@@ -660,6 +668,22 @@ def run_filter(model_handle, engine_handle, n, m, l, zk, uk=None, smooth=False, 
         return _run_closed_loop(L, model_handle, engine_handle, n, m, l, zk, N, smooth, control)
     if uk is not None and l > 0:
         uk = np.ascontiguousarray(np.asarray(uk, dtype=np.float64).reshape(N, l))
+    if steady:
+        if smooth:
+            raise ValueError("run_filter: the steady-state gain keeps no covariance to smooth with.")
+        # The means only, and the covariance the run ended with: each step holds
+        # n numbers, not 3 n^2.
+        out = {"x_prior": np.empty((N, n)), "x_post": np.empty((N, n)), "innovations": np.empty((N, m)),
+               "P_last": np.empty((n, n))}
+        frozen = ffi.new("int *")
+        rc = L.kalman_filter_run_steady(
+            model_handle, engine_handle, int(N), cdptr(zk),
+            cdptr(uk) if (uk is not None and l > 0) else ffi.NULL, float(steady),
+            dptr(out["x_prior"]), ffi.NULL, dptr(out["x_post"]), ffi.NULL,
+            dptr(out["innovations"]), ffi.NULL, dptr(out["P_last"]), frozen)
+        check(rc, "kalman_filter_run_steady")
+        out["steady_from"] = int(frozen[0])
+        return out
     out = {"x_prior": np.empty((N, n)), "P_prior": np.empty((N, n, n)),
            "x_post": np.empty((N, n)), "P_post": np.empty((N, n, n)),
            "innovations": np.empty((N, m)), "transitions": np.empty((N, n, n))}

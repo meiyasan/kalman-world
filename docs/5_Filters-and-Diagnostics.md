@@ -72,6 +72,26 @@ truth = kf.sample(10.0)                 # synthetic truth + measurements
 [Control and Routing](8_Control-and-Routing.md). `record=False` skips
 building the `KalmanRecord` when you only want the run state.
 
+### The steady-state gain
+
+For a model of constant matrices the covariance settles, and with it the gain.
+`kf.forward(zk, steady=1e-9)` freezes both once the corrected covariance changes
+by less than that relative tolerance from one step to the next; from then on a
+step moves only the mean (`x = F x`, `x += K (z - H x)`), with no covariance
+arithmetic. `kf.steady_from` is the step it froze at.
+
+- The means are the full filter's, to the tolerance: it is a speed option, not an
+  approximation of the model.
+- No covariance is kept per step: every step of the record carries the last
+  one, and `backward()` is refused. A long run of a large model then holds `n`
+  numbers a step instead of `3 n^2`.
+- A step with a missing channel runs in full and unfreezes it; it freezes again
+  once it has settled. Data with many gaps gains little.
+- It runs in `Kalman::Filter` (`SetSteadyState`), on the linear engine, with no
+  controller; anything else is refused.
+- A model whose lines are very narrow (a high `Q`) settles slowly: the covariance
+  freezes after a few damping times, not before.
+
 ### The record
 
 Every run returns a frozen `KalmanRecord`:

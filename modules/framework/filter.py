@@ -154,6 +154,11 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
 
         # --- a tuner beside the controller: it retunes Q or R at the same point of the step ---
         tuner = kwargs.pop("tuner", None)
+        # --- the steady-state gain: once the covariance has settled, a step moves only the mean ---
+        steady = float(kwargs.pop("steady", 0.0) or 0.0)
+        if steady < 0:
+            raise ValueError("forward(): steady= is a relative tolerance >= 0 (0 turns it off).")
+        self._steady, self._steady_used, self.steady_from = steady, False, None
         if tuner is not None:
             if uk is not None and not callable(uk):
                 raise ValueError("forward(): a tuner goes with a controller (uk=controller, tuner=...) or alone, "
@@ -191,18 +196,23 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
 
         # --- main loop (engine does predict + masked update); a constant-matrix
         # linear model with no control callback can run the whole pass fused in C ---
+        if steady and uk_fn is not None:
+            raise ValueError("forward(): the steady-state gain takes no controller.")
         counterpart = self._native_counterpart(uk_fn)
         if counterpart is not None:
             self._forward_counterpart(counterpart, zk, uk, uk_fn)
-        elif self._retuned_operation_eligible(uk_fn):
+        elif self._retuned_operation_eligible(uk_fn) and not steady:
             self._forward_retuned_operation(zk, uk_fn)
         elif self._native_forward_eligible(uk_fn):
             self._forward_native(zk, uk)
         elif self._matrices_eligible(uk_fn):
             self._forward_matrices(zk, uk, uk_fn)
-        elif self._callback_eligible(uk_fn):
+        elif self._callback_eligible(uk_fn) and not steady:
             self._forward_callback(zk, uk, uk_fn)
         else:
+            if steady:
+                raise ValueError("forward(): the steady-state gain runs in the C++ filter, on a model of constant "
+                                 "matrices; this model and engine run the Python loop.")
             t = float(self.model.t0) if self.model.t0 is not None else 0.0
             dt = 1.0 / self.sample_rate() if self.sample_rate() else 1.0
             nu = np.zeros((self.model.m, 1))
@@ -339,7 +349,8 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
         engine = core.create_engine(self._counterpart_engine())
         if uk_fn is None:
-            out = core.run_filter(handle, engine, n, m, l, zk, uk[:len(zk)] if l > 0 else None)
+            out = core.run_filter(handle, engine, n, m, l, zk, uk[:len(zk)] if l > 0 else None,
+                                  steady=getattr(self, "_steady", 0.0))
             self._store_pass(out, zk, uk)
             return
 
@@ -418,9 +429,11 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         elif model.l > 0:
             # One command per measurement, as the Python loop reads them (a longer
             # program is cut, like the loop that stops at the last measurement).
-            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, model.l, zk, uk[:len(zk)])
+            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, model.l, zk, uk[:len(zk)],
+                                  steady=getattr(self, "_steady", 0.0))
         else:
-            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, 0, zk)
+            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, 0, zk,
+                                  steady=getattr(self, "_steady", 0.0))
         self._store_pass(out, zk, uk)
 
     # ------------------------------------------------------------------
@@ -498,6 +511,18 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         N = len(zk)
         self.measurement.extend(as_contiguous(zk))
         self.control.extend(as_contiguous(uk))
+        if "P_last" in out:
+            # The steady-state gain: no covariance per step was kept. Every step
+            # refers to the one the run ended with (one array, not N copies).
+            self._steady_used, self.steady_from = True, out["steady_from"]
+            P = out["P_last"]
+            self.prior.extend((out["x_prior"][k].reshape(n, 1), P) for k in range(N))
+            self.posterior.extend((out["x_post"][k].reshape(n, 1), P) for k in range(N))
+            self.transition.extend(None for _ in range(N))
+            self.innovation.extend(out["innovations"][k].reshape(m, 1) for k in range(N))
+            self.x = out["x_post"][-1].reshape(n, 1)
+            self.P = P
+            return
         self.prior.extend((out["x_prior"][k].reshape(n, 1), out["P_prior"][k]) for k in range(N))
         self.posterior.extend((out["x_post"][k].reshape(n, 1), out["P_post"][k]) for k in range(N))
         self.transition.extend(out["transitions"][k] for k in range(N))
@@ -516,8 +541,8 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
     # above whenever the model/engine don't fit this shape.
     # ------------------------------------------------------------------
     def _native_forward_eligible(self, uk_fn) -> bool:
-        if uk_fn is not None:
-            return False
+        if uk_fn is not None or getattr(self, "_steady", 0.0):
+            return False                        # the steady-state gain is Kalman::Filter's (the matrices path)
         from .native import HAS_C_ACCEL
         if not HAS_C_ACCEL:
             return False
@@ -590,6 +615,9 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
             self.pass_records = self._pass_records(KalmanStateFlavor.SMOOTHED)
             return self.pass_records
 
+        if getattr(self, "_steady_used", False):
+            raise RuntimeError("backward(): the forward pass ran with the steady-state gain and kept no covariance "
+                               "per step; run forward() without steady= to smooth.")
         N = len(self.posterior)
         assert N > 0, "No posterior estimates available for smoothing. (run forward() first?)"
         assert len(self.prior) == N, "Prior estimates must match the number of posterior estimates."

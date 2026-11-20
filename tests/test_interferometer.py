@@ -459,5 +459,56 @@ class TestDetectorSubclasses(unittest.TestCase):
                                           run="O3GK", cache=False)
 
 
+# ===========================================================================
+# One process noise per line, and the steady-state gain
+# ===========================================================================
+
+def _two_lines(fs=4096.0, duration=32.0, seed=1):
+    t = np.arange(int(duration * fs)) / fs
+    rng = np.random.default_rng(seed)
+    return 1e-3 * rng.standard_normal(t.size) + np.sin(2 * np.pi * 175.003 * t) + 0.5 * np.sin(2 * np.pi * 176.2 * t)
+
+
+class TestPerLineSettings(unittest.TestCase):
+
+    def test_q_and_noise_follow_the_kept_lines(self):
+        """A frequency outside the window is dropped with its own Q and process noise, not the next one's."""
+        win = OscillatorModel("K1", [170.0, 175.0, 176.2], fc=175.5, dfc=4.0, Q=[1.0e3, 2.0e4, 3.0e4],
+                              process_uncertainty=[9.0, 1e-3, 2e-3])
+        self.assertEqual(list(win.frequencies), [175.0, 176.2])
+        self.assertEqual([p.process_uncertainty for p in win.models], [1e-3, 2e-3])
+
+    def test_one_value_per_given_frequency(self):
+        with self.assertRaisesRegex(ValueError, "process_uncertainty has 1 values for 2 frequencies"):
+            OscillatorModel("K1", [175.0, 176.2], fc=175.5, dfc=4.0, process_uncertainty=[1e-3])
+
+
+class TestSteadyStateGain(unittest.TestCase):
+
+    def _model(self, fs=4096.0):
+        return InterferometerModel("K1", [OscillatorModel("K1", [175.0, 176.2], fc=175.5, dfc=4.0, Q=[1e4, 1e4], fs=fs,
+                                                          measurement_uncertainty=1e-3,
+                                                          process_uncertainty=[1e-3, 2e-3])])
+
+    def test_same_subtraction_as_the_full_filter(self):
+        x = _two_lines()
+        full_model, steady_model = self._model(), self._model()
+        full = full_model.subtract(x, KalmanFilter(full_model).forward(x))
+        kf = KalmanFilter(steady_model)
+        steady = steady_model.subtract(x, kf.forward(x, steady=1e-10))
+        self.assertIsNotNone(kf.steady_from)
+        self.assertGreaterEqual(kf.steady_from, 0)
+        np.testing.assert_allclose(steady[4 * 4096:], full[4 * 4096:], atol=1e-9)
+
+    def test_no_smoothing_and_no_controller(self):
+        x = _two_lines(duration=4.0)
+        kf = KalmanFilter(self._model())
+        kf.forward(x, steady=1e-10)
+        with self.assertRaisesRegex(RuntimeError, "steady-state gain"):
+            kf.backward()
+        with self.assertRaisesRegex(ValueError, "no controller"):
+            KalmanFilter(self._model()).forward(x, uk=lambda *a, **k: np.zeros((0, 1)), steady=1e-10)
+
+
 if __name__ == "__main__":
     unittest.main()

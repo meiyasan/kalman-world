@@ -6,10 +6,24 @@
 #include "Check.h"
 #include "Fixtures.h"
 
+#include <algorithm>
 #include <cmath>
+#include <cstdio>
 #include <limits>
+#include <stdexcept>
 
 using namespace Kalman;
+
+namespace
+{
+    template <typename Fn>
+    bool Throws(Fn fn)
+    {
+        try { fn(); }
+        catch (const std::exception &) { return true; }
+        return false;
+    }
+}
 
 int main()
 {
@@ -119,6 +133,41 @@ int main()
         CHECK(sigma[1999] < sigma[0], "record: uncertainty shrinks as evidence accumulates");
         CHECK_CLOSE(fwd.Time(0), 0., 1e-12, "record: starts at t0");
         CHECK_CLOSE(fwd.Time(100), 1.0, 1e-9, "record: time advances at 1/fs");
+    }
+
+    // --- the steady-state gain --------------------------------------------------
+    // A model of constant matrices: once the covariance has settled, freezing it and
+    // the gain changes nothing but the cost. A dropout runs in full and freezes again.
+    {
+        std::vector<Vector> z = sampler.Measurements();
+        for (std::size_t k = 900; k < 910; ++k) z[k](0) = std::numeric_limits<double>::quiet_NaN();
+
+        Filters::KF full(&model);
+        const Record a = full.Forward(z);
+
+        Filters::KF steady(&model);
+        steady.SetSteadyState(1e-9);
+        const Record b = steady.Forward(z);
+        CHECK(steady.SteadyFrom() != static_cast<std::size_t>(-1) && steady.SteadyFrom() < 900,
+              "steady: the covariance freezes before the dropout");
+
+        double worst = 0.;
+        for (std::size_t k = 0; k < 2000; ++k)
+            worst = std::max(worst, std::abs(a.State(k)(0) - b.State(k)(0)));
+        CHECK(worst < 1e-6, "steady: the same means as the full filter to 1e-6 (noise 0.2), dropout included");
+
+        Filters::KF lean(&model);
+        lean.SetSteadyState(1e-9);
+        lean.SetKeepCovariances(false);
+        const Record c = lean.Forward(z);
+        CHECK(std::abs(c.State(1999)(0) - b.State(1999)(0)) < 1e-12, "steady: without the covariances, the same means");
+        CHECK(lean.PosteriorCovariances()[1999].Empty(), "steady: no covariance kept per step");
+        CHECK(Throws([&] { lean.Backward(); }), "steady: no smoothing without the covariances");
+
+        CHECK(Throws([&] { steady.SetSteadyState(-1.); }), "steady: a negative tolerance is refused");
+        Filters::EKF ekf(&model);
+        ekf.SetSteadyState(1e-12);
+        CHECK(Throws([&] { ekf.Forward(z); }), "steady: refused on another engine than the linear one");
     }
 
     return Check::Summary("linear");

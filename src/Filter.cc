@@ -76,6 +76,13 @@ namespace Kalman
         throw std::runtime_error(os.str());
     }
 
+    void Filter::SetSteadyState(double tolerance)
+    {
+        if (!(tolerance >= 0.))
+            throw std::invalid_argument("Kalman::Filter::SetSteadyState: the tolerance must be >= 0 (0 turns it off).");
+        fSteadyTolerance = tolerance;
+    }
+
     void Filter::SetEngine(Engine *engine)
     {
         if (!engine) throw std::runtime_error("Kalman::Filter: the engine must not be null.");
@@ -140,6 +147,23 @@ namespace Kalman
         const double dt = fModel->DeltaT();
         double t = fModel->T0();
 
+        // The steady-state gain: only where the covariance does converge to one value.
+        const bool steady = fSteadyTolerance > 0.;
+        if (steady)
+        {
+            if (fModel->Structure() != StructureKind::Matrices)
+                throw std::runtime_error("Kalman::Filter::Forward: the steady-state gain needs a model of constant "
+                                         "matrices (StructureKind::Matrices).");
+            if (fEngine->Kind() != EngineKind::Linear)
+                throw std::runtime_error(std::string("Kalman::Filter::Forward: the steady-state gain needs the linear "
+                                                     "engine, not the ") + fEngine->Title() + ".");
+            if (controller || tuner)
+                throw std::runtime_error("Kalman::Filter::Forward: the steady-state gain takes no controller or tuner.");
+        }
+        bool frozen = false;
+        Matrix gain, PPriorSteady, PPostSteady, previous;
+        fSteadyFrom = static_cast<std::size_t>(-1);
+
         fPriorX.reserve(fPriorX.size() + N);
         fPostX.reserve(fPostX.size() + N);
 
@@ -168,26 +192,82 @@ namespace Kalman
                 u = l > 0 ? &command : nullptr;
             }
 
-            // --- predict --------------------------------------------------
-            Vector xPrior;
-            Matrix PPrior, F;
-            fEngine->Predict(*fModel, fX, fP, u, t, xPrior, PPrior, F);
+            const bool complete = steady && Utils::ValidChannels(z).size() == m;
+            if (steady && !complete)
+            {
+                frozen = false;                           // a missing channel: the covariance moves again
+                previous = Matrix();
+            }
 
-            // --- innovation (kept for diagnostics, before the correction) --
-            Vector nu;
-            Matrix S;
-            fEngine->Innovation(*fModel, xPrior, PPrior, z, t, nu, S);
+            Vector xPrior, xPost, nu;
+            Matrix PPrior, PPost, F;
+            if (frozen)
+            {
+                // --- the steady state: the gain is fixed, only the mean moves --
+                fEngine->Propagate(*fModel, fX, u, t, xPrior, F);
+                Vector zpred;
+                Matrix H;
+                fEngine->Measure(*fModel, xPrior, t, zpred, H);
+                nu = z;
+                nu -= zpred;
+                xPost = xPrior;
+                xPost += gain * nu;
+                PPrior = PPriorSteady;
+                PPost = PPostSteady;
+            }
+            else
+            {
+                // --- predict --------------------------------------------------
+                fEngine->Predict(*fModel, fX, fP, u, t, xPrior, PPrior, F);
 
-            // --- update ---------------------------------------------------
-            Vector xPost;
-            Matrix PPost;
-            fEngine->Update(*fModel, xPrior, PPrior, z, t, xPost, PPost);
+                // --- innovation (kept for diagnostics, before the correction) --
+                Matrix S;
+                fEngine->Innovation(*fModel, xPrior, PPrior, z, t, nu, S);
+
+                // --- update ---------------------------------------------------
+                fEngine->Update(*fModel, xPrior, PPrior, z, t, xPost, PPost);
+
+                if (complete)
+                {
+                    if (!previous.Empty())
+                    {
+                        double change = 0., scale = 0.;
+                        for (std::size_t i = 0; i < PPost.Rows(); ++i)
+                            for (std::size_t j = 0; j < PPost.Cols(); ++j)
+                            {
+                                change = std::max(change, std::abs(PPost(i, j) - previous(i, j)));
+                                scale = std::max(scale, std::abs(PPost(i, j)));
+                            }
+                        if (change <= fSteadyTolerance * scale)
+                        {
+                            Vector zpred;
+                            Matrix H;
+                            fEngine->Measure(*fModel, xPrior, t, zpred, H);
+                            gain = PPrior * H.Transpose() * Utils::Inverse(S);
+                            PPriorSteady = PPrior;
+                            PPostSteady = PPost;
+                            frozen = true;
+                            if (fSteadyFrom == static_cast<std::size_t>(-1)) fSteadyFrom = k;
+                        }
+                    }
+                    previous = PPost;
+                }
+            }
 
             fPriorX.push_back(xPrior);
-            fPriorP.push_back(PPrior);
             fPostX.push_back(xPost);
-            fPostP.push_back(PPost);
-            fTransition.push_back(F);
+            if (fKeepCovariances)
+            {
+                fPriorP.push_back(PPrior);
+                fPostP.push_back(PPost);
+                fTransition.push_back(F);
+            }
+            else
+            {
+                fPriorP.emplace_back();
+                fPostP.emplace_back();
+                fTransition.emplace_back();
+            }
             fMeasure.push_back(z);
             fControl.push_back(u ? *u : Vector());
             fInnovation.push_back(nu);
@@ -207,6 +287,9 @@ namespace Kalman
     {
         const std::size_t N = NSteps();
         if (N == 0) throw std::runtime_error("Kalman::Filter::Backward: run Forward() first.");
+        if (!fKeepCovariances)
+            throw std::runtime_error("Kalman::Filter::Backward: the covariances of the forward pass were not kept "
+                                     "(SetKeepCovariances(false)).");
         if (!fEngine->HasSmoother())
             throw std::runtime_error(std::string("Kalman::Filter::Backward: the ") + fEngine->Title()
                                      + " has no RTS smoother; use Forward() only.");

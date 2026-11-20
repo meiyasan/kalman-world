@@ -72,6 +72,10 @@ namespace Kalman
             std::vector<Vector> fInnovation;  // per step: nu = z - h(x_prior)
             std::vector<double> fTime;        // per step: time tag
 
+            double fSteadyTolerance = 0.;     // > 0: freeze the covariance once it has settled (SetSteadyState)
+            bool fKeepCovariances = true;     // false: the per-step covariances are not stored
+            std::size_t fSteadyFrom = static_cast<std::size_t>(-1);   // the step the covariance froze at
+
             std::vector<Vector> fSmoothX;     // filled by Backward()
             std::vector<Matrix> fSmoothP;
 
@@ -101,6 +105,37 @@ namespace Kalman
 
             /// Drop the run and rewind the belief to the model's x0 / P0.
             void Reset();
+
+            /**
+             * \brief Run with the steady-state gain once the covariance has settled.
+             *
+             * For a model of constant matrices the covariance converges, and with it
+             * the gain. Once the corrected covariance changes by less than
+             * \p tolerance (relative, largest entry) from one complete step to the
+             * next, the covariance and the gain are frozen: a step is then
+             * `x = F x + B u`, `x += K (z - H x)`, with no covariance arithmetic.
+             * A step with a missing channel runs in full and unfreezes it; it freezes
+             * again when it has settled. 0 (the default) turns it off.
+             *
+             * Only for a model of constant matrices (StructureKind::Matrices) run by
+             * the linear engine, with no controller or tuner; Forward() refuses
+             * anything else.
+             */
+            void SetSteadyState(double tolerance);
+            double SteadyTolerance() const { return fSteadyTolerance; }
+            /// The step the covariance froze at in the last run, or -1 (as size_t) when it did not.
+            std::size_t SteadyFrom() const { return fSteadyFrom; }
+
+            /**
+             * \brief Keep the predicted and corrected covariances and the transition
+             * of every step (the default), or not.
+             *
+             * They are `3 n^2` numbers a step; a long run of a large model may not
+             * hold them. Without them the records carry no covariance, Backward()
+             * is refused, and Covariance() is the last one.
+             */
+            void SetKeepCovariances(bool keep) { fKeepCovariances = keep; }
+            bool KeepsCovariances() const { return fKeepCovariances; }
 
             /**
              * \brief Run the forward pass over \p zk.
