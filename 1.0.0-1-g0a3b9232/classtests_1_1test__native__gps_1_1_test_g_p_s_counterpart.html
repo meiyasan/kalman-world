@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_native_gps.TestGPSCounterpart Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_native_gps.TestGPSCounterpart Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_native_gps.TestGPSCounterpart Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g0a3b9232</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_native_gps.TestGPSCounterpart Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_native_gps.TestGPSCounterpart:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart__inherit__graph.svg" width="202" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a9dec65e6bd761f6970d7b334c7670fd1" id="r_a9dec65e6bd761f6970d7b334c7670fd1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html#a9dec65e6bd761f6970d7b334c7670fd1">check</a> (self, **kw)</td></tr>
+<tr class="separator:a9dec65e6bd761f6970d7b334c7670fd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9801a4e6cfce6a4351a5158f1fe56d7d" id="r_a9801a4e6cfce6a4351a5158f1fe56d7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html#a9801a4e6cfce6a4351a5158f1fe56d7d">test_fixed_constellation</a> (self)</td></tr>
+<tr class="separator:a9801a4e6cfce6a4351a5158f1fe56d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f9185f54c529c4f5ea0db08a4cd75ab" id="r_a7f9185f54c529c4f5ea0db08a4cd75ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html#a7f9185f54c529c4f5ea0db08a4cd75ab">test_fewer_satellites_another_rate_no_correction</a> (self)</td></tr>
+<tr class="separator:a7f9185f54c529c4f5ea0db08a4cd75ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35725d955499bd4b15d860445d43988c" id="r_a35725d955499bd4b15d860445d43988c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html#a35725d955499bd4b15d860445d43988c">test_satellites_rising_and_setting</a> (self)</td></tr>
+<tr class="separator:a35725d955499bd4b15d860445d43988c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dfce65fe58308d3c8d6f5a154638f57" id="r_a4dfce65fe58308d3c8d6f5a154638f57"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html#a4dfce65fe58308d3c8d6f5a154638f57">test_the_counterpart_takes_this_instance_constellation</a> (self)</td></tr>
+<tr class="separator:a4dfce65fe58308d3c8d6f5a154638f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4514709e9721d7f978d961dffb60133" id="r_ab4514709e9721d7f978d961dffb60133"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html#ab4514709e9721d7f978d961dffb60133">test_a_python_only_configuration_keeps_the_python_physics</a> (self)</td></tr>
+<tr class="separator:ab4514709e9721d7f978d961dffb60133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="test__native__gps_8py_source.html#l00040">40</a> of file <a class="el" href="test__native__gps_8py_source.html">test_native_gps.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9dec65e6bd761f6970d7b334c7670fd1" name="a9dec65e6bd761f6970d7b334c7670fd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dec65e6bd761f6970d7b334c7670fd1">&#9670;&#160;</a></span>check()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_gps.TestGPSCounterpart.check </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__gps_8py_source.html#l00042">42</a> of file <a class="el" href="test__native__gps_8py_source.html">test_native_gps.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   42</span>    <span class="keyword">def </span>check(self, **kw):</div>
+<div class="line"><span class="lineno">   43</span>        make = <span class="keyword">lambda</span>: GPSModel(<span class="stringliteral">&quot;rx&quot;</span>, **kw)</div>
+<div class="line"><span class="lineno">   44</span>        z = make().simulate(600.0, seed=3)</div>
+<div class="line"><span class="lineno">   45</span>        state, covariance = apart(*both(make, z))</div>
+<div class="line"><span class="lineno">   46</span>        self.assertLess(state, 1e-6, kw)</div>
+<div class="line"><span class="lineno">   47</span>        self.assertLess(covariance, 1e-12, kw)</div>
+<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">return</span> z</div>
+<div class="line"><span class="lineno">   49</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab4514709e9721d7f978d961dffb60133" name="ab4514709e9721d7f978d961dffb60133"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4514709e9721d7f978d961dffb60133">&#9670;&#160;</a></span>test_a_python_only_configuration_keeps_the_python_physics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_gps.TestGPSCounterpart.test_a_python_only_configuration_keeps_the_python_physics </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__gps_8py_source.html#l00079">79</a> of file <a class="el" href="test__native__gps_8py_source.html">test_native_gps.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>    <span class="keyword">def </span>test_a_python_only_configuration_keeps_the_python_physics(self):</div>
+<div class="line"><span class="lineno">   80</span>        model = GPSModel(<span class="stringliteral">&quot;rx&quot;</span>, dtype=np.float32)</div>
+<div class="line"><span class="lineno">   81</span>        self.assertIsNone(model.native_handle())</div>
+<div class="line"><span class="lineno">   82</span> </div>
+<div class="line"><span class="lineno">   83</span> </div>
+<div class="line"><span class="lineno">   84</span><span class="preprocessor">@needs_apps</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7f9185f54c529c4f5ea0db08a4cd75ab" name="a7f9185f54c529c4f5ea0db08a4cd75ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f9185f54c529c4f5ea0db08a4cd75ab">&#9670;&#160;</a></span>test_fewer_satellites_another_rate_no_correction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_gps.TestGPSCounterpart.test_fewer_satellites_another_rate_no_correction </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__gps_8py_source.html#l00053">53</a> of file <a class="el" href="test__native__gps_8py_source.html">test_native_gps.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>    <span class="keyword">def </span>test_fewer_satellites_another_rate_no_correction(self):</div>
+<div class="line"><span class="lineno">   54</span>        self.check(n_sat=5, fs=2.0, apply_relativistic=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">   55</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9801a4e6cfce6a4351a5158f1fe56d7d" name="a9801a4e6cfce6a4351a5158f1fe56d7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9801a4e6cfce6a4351a5158f1fe56d7d">&#9670;&#160;</a></span>test_fixed_constellation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_gps.TestGPSCounterpart.test_fixed_constellation </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__gps_8py_source.html#l00050">50</a> of file <a class="el" href="test__native__gps_8py_source.html">test_native_gps.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>    <span class="keyword">def </span>test_fixed_constellation(self):</div>
+<div class="line"><span class="lineno">   51</span>        self.check()</div>
+<div class="line"><span class="lineno">   52</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a35725d955499bd4b15d860445d43988c" name="a35725d955499bd4b15d860445d43988c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35725d955499bd4b15d860445d43988c">&#9670;&#160;</a></span>test_satellites_rising_and_setting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_gps.TestGPSCounterpart.test_satellites_rising_and_setting </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The whole pool of 24, each masked while below the cutoff: the counterpart has 24
+channels and the missing pseudoranges are skipped.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__gps_8py_source.html#l00056">56</a> of file <a class="el" href="test__native__gps_8py_source.html">test_native_gps.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   56</span>    <span class="keyword">def </span>test_satellites_rising_and_setting(self):</div>
+<div class="line"><span class="lineno">   57</span>        <span class="stringliteral">&quot;&quot;&quot;The whole pool of 24, each masked while below the cutoff: the counterpart has 24</span></div>
+<div class="line"><span class="lineno">   58</span><span class="stringliteral">        channels and the missing pseudoranges are skipped.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   59</span>        z = self.check(elevation_mask=10.0)</div>
+<div class="line"><span class="lineno">   60</span>        self.assertEqual(z.shape[1], 24)</div>
+<div class="line"><span class="lineno">   61</span>        self.assertGreater(int(np.isnan(z).sum()), 1000)</div>
+<div class="line"><span class="lineno">   62</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4dfce65fe58308d3c8d6f5a154638f57" name="a4dfce65fe58308d3c8d6f5a154638f57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dfce65fe58308d3c8d6f5a154638f57">&#9670;&#160;</a></span>test_the_counterpart_takes_this_instance_constellation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_gps.TestGPSCounterpart.test_the_counterpart_takes_this_instance_constellation </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__gps_8py_source.html#l00063">63</a> of file <a class="el" href="test__native__gps_8py_source.html">test_native_gps.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   63</span>    <span class="keyword">def </span>test_the_counterpart_takes_this_instance_constellation(self):</div>
+<div class="line"><span class="lineno">   64</span>        model = GPSModel(<span class="stringliteral">&quot;rx&quot;</span>, n_sat=6, receiver_lat=-30.0, receiver_lon=120.0)</div>
+<div class="line"><span class="lineno">   65</span>        handle = model.native_handle()</div>
+<div class="line"><span class="lineno">   66</span>        n, m, l = (core.ffi.new(<span class="stringliteral">&quot;int *&quot;</span>) <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(3))</div>
+<div class="line"><span class="lineno">   67</span>        core.check(core.lib.kalman_model_dims(handle, n, m, l), <span class="stringliteral">&quot;dims&quot;</span>)</div>
+<div class="line"><span class="lineno">   68</span>        self.assertEqual((n[0], m[0]), (5, 6))</div>
+<div class="line"><span class="lineno">   69</span>        <span class="comment"># h of the counterpart against h of the Python model, at a later time</span></div>
+<div class="line"><span class="lineno">   70</span>        x = np.asarray(model.x0, float).reshape(-1) + np.array([10.0, -20.0, 5.0, 3.0, 0.1])</div>
+<div class="line"><span class="lineno">   71</span>        z = np.empty(6)</div>
+<div class="line"><span class="lineno">   72</span>        core.check(core.lib.kalman_model_h(handle, core.cdptr(np.ascontiguousarray(x)), 1234.5, core.dptr(z)), <span class="stringliteral">&quot;h&quot;</span>)</div>
+<div class="line"><span class="lineno">   73</span>        self.assertLess(np.abs(z - model.h(x, t=1234.5).reshape(-1)).max(), 1e-6)</div>
+<div class="line"><span class="lineno">   74</span>        H = np.empty((6, 5))</div>
+<div class="line"><span class="lineno">   75</span>        core.check(core.lib.kalman_model_jacobian_h(handle, core.cdptr(np.ascontiguousarray(x)), 1234.5, core.dptr(H)),</div>
+<div class="line"><span class="lineno">   76</span>                   <span class="stringliteral">&quot;H&quot;</span>)</div>
+<div class="line"><span class="lineno">   77</span>        self.assertLess(np.abs(H - model.H(x, t=1234.5)).max(), 1e-12)</div>
+<div class="line"><span class="lineno">   78</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__native__gps_8py_source.html">test_native_gps.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__native__gps.html">test_native_gps</a></li><li class="navelem"><a class="el" href="classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html">TestGPSCounterpart</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

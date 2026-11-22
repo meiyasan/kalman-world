@@ -1,0 +1,989 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.adapters.netatmo.NetatmoCloud Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.adapters.netatmo.NetatmoCloud Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.adapters.netatmo.NetatmoCloud Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g0a3b9232</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.adapters.netatmo.NetatmoCloud Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.adapters.netatmo.NetatmoCloud:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud__inherit__graph.svg" width="1232" height="115"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a9ca7a159345f7368a07844d198461e24" id="r_a9ca7a159345f7368a07844d198461e24"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a9ca7a159345f7368a07844d198461e24">__init__</a> (self, *<a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a42ef5834184c4c78840483f54c382a71">scale</a>=&quot;max&quot;, <a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae9d5d472cbeff198b6401104fda7db99">token_file</a>=None, opener=None, cache=True)</td></tr>
+<tr class="separator:a9ca7a159345f7368a07844d198461e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f09aacd160e72d47d21c7878e7fec43" id="r_a6f09aacd160e72d47d21c7878e7fec43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a6f09aacd160e72d47d21c7878e7fec43">readings</a> (self, station, module, start, end)</td></tr>
+<tr class="separator:a6f09aacd160e72d47d21c7878e7fec43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b7b18b66fd2253426cc463592dfb002" id="r_a0b7b18b66fd2253426cc463592dfb002"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a0b7b18b66fd2253426cc463592dfb002">fetch</a> (self, station, module=None, start=None, end=None)</td></tr>
+<tr class="separator:a0b7b18b66fd2253426cc463592dfb002"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">modules.framework.provider.KalmanProvider</a></td></tr>
+<tr class="memitem:ab1250874bc661c7ff846a6d241dca2e6 inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_ab1250874bc661c7ff846a6d241dca2e6"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#ab1250874bc661c7ff846a6d241dca2e6">describe</a> (cls)</td></tr>
+<tr class="separator:ab1250874bc661c7ff846a6d241dca2e6 inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee348abacf7577fff754911a3c904097 inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_aee348abacf7577fff754911a3c904097"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#aee348abacf7577fff754911a3c904097">stream</a> (self, **query)</td></tr>
+<tr class="separator:aee348abacf7577fff754911a3c904097 inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad12b0604e821e0b36e51a75a6299b43a inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_ad12b0604e821e0b36e51a75a6299b43a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#ad12b0604e821e0b36e51a75a6299b43a">measurements</a> (self, **query)</td></tr>
+<tr class="separator:ad12b0604e821e0b36e51a75a6299b43a inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3de926789832095a440e9ada8e32752b inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a3de926789832095a440e9ada8e32752b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a3de926789832095a440e9ada8e32752b">truth</a> (self, **query)</td></tr>
+<tr class="separator:a3de926789832095a440e9ada8e32752b inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html">modules.framework.abstract.metadata.KalmanMetadata</a></td></tr>
+<tr class="memitem:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a14a4e351ed86dadadb83ab64e78f0236"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a14a4e351ed86dadadb83ab64e78f0236">name</a> (self)</td></tr>
+<tr class="separator:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4ad79eab0dcb89ded410f2c536759a3a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4ad79eab0dcb89ded410f2c536759a3a">description</a> (self)</td></tr>
+<tr class="separator:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a95528fa2d5aaf13b2f4f12c48720c69e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a95528fa2d5aaf13b2f4f12c48720c69e">version</a> (self)</td></tr>
+<tr class="separator:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4d420229416cbba37ebaa47a52baf5b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4d420229416cbba37ebaa47a52baf5b9">read</a> (cls, filename)</td></tr>
+<tr class="separator:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a0c0e9919afe47470788a45a0734e810d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a0c0e9919afe47470788a45a0734e810d">write</a> (self, filename)</td></tr>
+<tr class="separator:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_add0c479d5879a49d4b6948ed57d951c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#add0c479d5879a49d4b6948ed57d951c5">print</a> (self, **kwargs)</td></tr>
+<tr class="separator:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a42ef5834184c4c78840483f54c382a71" id="r_a42ef5834184c4c78840483f54c382a71"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a42ef5834184c4c78840483f54c382a71">scale</a></td></tr>
+<tr class="separator:a42ef5834184c4c78840483f54c382a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9d5d472cbeff198b6401104fda7db99" id="r_ae9d5d472cbeff198b6401104fda7db99"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae9d5d472cbeff198b6401104fda7db99">token_file</a></td></tr>
+<tr class="separator:ae9d5d472cbeff198b6401104fda7db99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59bea77576288e39a74e72037dca4bd0" id="r_a59bea77576288e39a74e72037dca4bd0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a59bea77576288e39a74e72037dca4bd0">PAGE</a></td></tr>
+<tr class="separator:a59bea77576288e39a74e72037dca4bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a60bef88864d949f2f2f65e5421a4be3c" id="r_a60bef88864d949f2f2f65e5421a4be3c"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a60bef88864d949f2f2f65e5421a4be3c">NAME</a> = &quot;Netatmo Cloud&quot;</td></tr>
+<tr class="separator:a60bef88864d949f2f2f65e5421a4be3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0aa562cdb50d447f28bde7230cc85d6" id="r_ae0aa562cdb50d447f28bde7230cc85d6"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ae0aa562cdb50d447f28bde7230cc85d6">DESCRIPTION</a> = &quot;CO2 <a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a6f09aacd160e72d47d21c7878e7fec43">readings</a> of Netatmo indoor modules, from the Netatmo web <a class="el" href="namespacemodules_1_1adapters_1_1netatmo.html#a8a9ed4355275113c9eed95ab8234fd2d">API</a> (getmeasure).&quot;</td></tr>
+<tr class="separator:ae0aa562cdb50d447f28bde7230cc85d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2bc2a69c00e955c243cc745b71f02cb" id="r_ad2bc2a69c00e955c243cc745b71f02cb"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ad2bc2a69c00e955c243cc745b71f02cb">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:ad2bc2a69c00e955c243cc745b71f02cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70171ac0de4ebddd3ef05419edc65623" id="r_a70171ac0de4ebddd3ef05419edc65623"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a70171ac0de4ebddd3ef05419edc65623">KIND</a> = <a class="el" href="classmodules_1_1framework_1_1constants_1_1_kalman_provider_kind.html#a6d368b9ad670f4e644add890dfc324fd">KalmanProviderKind.REMOTE</a></td></tr>
+<tr class="separator:a70171ac0de4ebddd3ef05419edc65623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabea8843cf1db3f7821c713447391522" id="r_aabea8843cf1db3f7821c713447391522"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#aabea8843cf1db3f7821c713447391522">MEASUREMENTS</a> = ({&quot;name&quot;: &quot;co2&quot;, &quot;units&quot;: &quot;ppm&quot;, &quot;description&quot;: &quot;CO2 of one indoor module&quot;},)</td></tr>
+<tr class="separator:aabea8843cf1db3f7821c713447391522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6426f6cc5f1ec8d9c235897b066ce74" id="r_ac6426f6cc5f1ec8d9c235897b066ce74"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ac6426f6cc5f1ec8d9c235897b066ce74">REQUIRES</a> = (&quot;NETATMO_CLIENT_ID&quot;, &quot;NETATMO_CLIENT_SECRET&quot;, &quot;NETATMO_REFRESH_TOKEN&quot;)</td></tr>
+<tr class="separator:ac6426f6cc5f1ec8d9c235897b066ce74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2945bb3f77c18f33c0783aafdac98c22" id="r_a2945bb3f77c18f33c0783aafdac98c22"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2945bb3f77c18f33c0783aafdac98c22">PAGE</a> = 1024</td></tr>
+<tr class="separator:a2945bb3f77c18f33c0783aafdac98c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17a8409f07908924a7490a1097f4d93d" id="r_a17a8409f07908924a7490a1097f4d93d"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a17a8409f07908924a7490a1097f4d93d">TOKENS</a> = &quot;~/.kalman/netatmo.json&quot;</td></tr>
+<tr class="separator:a17a8409f07908924a7490a1097f4d93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">modules.framework.provider.KalmanProvider</a></td></tr>
+<tr class="memitem:a517d5c19a448c4db7a3c966658628348 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a517d5c19a448c4db7a3c966658628348"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a517d5c19a448c4db7a3c966658628348">NAME</a> = &quot;Kalman Provider&quot;</td></tr>
+<tr class="separator:a517d5c19a448c4db7a3c966658628348 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8165eed2f9c849d9b18a1a981e600bf0 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a8165eed2f9c849d9b18a1a981e600bf0"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a8165eed2f9c849d9b18a1a981e600bf0">DESCRIPTION</a> = &quot;Abstract data/knowledge provider (<a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a5c63744ff727db2bcd14bdf3b3ff5704">fetch</a> / <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#aee348abacf7577fff754911a3c904097">stream</a>).&quot;</td></tr>
+<tr class="separator:a8165eed2f9c849d9b18a1a981e600bf0 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0876be666ed44a2aa575d0b35bffcd9d inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a0876be666ed44a2aa575d0b35bffcd9d"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a0876be666ed44a2aa575d0b35bffcd9d">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:a0876be666ed44a2aa575d0b35bffcd9d inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30c6fdc6f871e3594c22f7bde6070e6b inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a30c6fdc6f871e3594c22f7bde6070e6b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a30c6fdc6f871e3594c22f7bde6070e6b">KIND</a> = None</td></tr>
+<tr class="separator:a30c6fdc6f871e3594c22f7bde6070e6b inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b2f5ec5e0c3cee31a0110e6cbcc1d11 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a0b2f5ec5e0c3cee31a0110e6cbcc1d11"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a0b2f5ec5e0c3cee31a0110e6cbcc1d11">MEASUREMENTS</a> = ()</td></tr>
+<tr class="separator:a0b2f5ec5e0c3cee31a0110e6cbcc1d11 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b172a0fa2031b3e207c1a8ed92ea235 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a4b172a0fa2031b3e207c1a8ed92ea235"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a4b172a0fa2031b3e207c1a8ed92ea235">REQUIRES</a> = ()</td></tr>
+<tr class="separator:a4b172a0fa2031b3e207c1a8ed92ea235 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html">modules.framework.abstract.metadata.KalmanProviderMetadata</a></td></tr>
+<tr class="memitem:ad842a3ee08d2a47bc89ec7c89ebcc345 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata" id="r_ad842a3ee08d2a47bc89ec7c89ebcc345"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html#ad842a3ee08d2a47bc89ec7c89ebcc345">NAME</a> = &quot;Kalman Provider&quot;</td></tr>
+<tr class="separator:ad842a3ee08d2a47bc89ec7c89ebcc345 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72d0ab0bcde8840ce130dad233700418 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata" id="r_a72d0ab0bcde8840ce130dad233700418"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html#a72d0ab0bcde8840ce130dad233700418">DESCRIPTION</a> = &quot;Base class for data/knowledge providers (<a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_provider_a_b_c.html#acb661806d4b391db4920f3d9ce016897">fetch</a> / stream).&quot;</td></tr>
+<tr class="separator:a72d0ab0bcde8840ce130dad233700418 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9500c3894a6a5642d7b69323c3b7dcd7 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata" id="r_a9500c3894a6a5642d7b69323c3b7dcd7"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html#a9500c3894a6a5642d7b69323c3b7dcd7">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:a9500c3894a6a5642d7b69323c3b7dcd7 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a368f2fd38e36498790af069cadabdc8e" id="r_a368f2fd38e36498790af069cadabdc8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a368f2fd38e36498790af069cadabdc8e">_call</a> (self, path, params, *post=False)</td></tr>
+<tr class="separator:a368f2fd38e36498790af069cadabdc8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bac38b4059d9ef3f2225412c7c68250" id="r_a2bac38b4059d9ef3f2225412c7c68250"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a2bac38b4059d9ef3f2225412c7c68250">_kept</a> (self)</td></tr>
+<tr class="separator:a2bac38b4059d9ef3f2225412c7c68250"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01fdd681a362e7ef90da4b6a6031e651" id="r_a01fdd681a362e7ef90da4b6a6031e651"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a01fdd681a362e7ef90da4b6a6031e651">_keep</a> (self, refresh_token)</td></tr>
+<tr class="separator:a01fdd681a362e7ef90da4b6a6031e651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f492d7d43c06ab47372555c8e6a1161" id="r_a7f492d7d43c06ab47372555c8e6a1161"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a7f492d7d43c06ab47372555c8e6a1161">_token</a> (self)</td></tr>
+<tr class="separator:a7f492d7d43c06ab47372555c8e6a1161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">modules.framework.provider.KalmanProvider</a></td></tr>
+<tr class="memitem:a10cad0ae2f6eec30a58620587fd832a6 inherit pro_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a10cad0ae2f6eec30a58620587fd832a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a10cad0ae2f6eec30a58620587fd832a6">_cached</a> (self, key, produce)</td></tr>
+<tr class="separator:a10cad0ae2f6eec30a58620587fd832a6 inherit pro_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a1362f5eb0506db2cc9019b9589377841" id="r_a1362f5eb0506db2cc9019b9589377841"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a1362f5eb0506db2cc9019b9589377841">_open</a></td></tr>
+<tr class="separator:a1362f5eb0506db2cc9019b9589377841"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f86075506c6e8d921eb67531da865bd" id="r_a8f86075506c6e8d921eb67531da865bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a8f86075506c6e8d921eb67531da865bd">_access</a></td></tr>
+<tr class="separator:a8f86075506c6e8d921eb67531da865bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5a4fa4816e9b8f36d4378795e5873b4" id="r_ad5a4fa4816e9b8f36d4378795e5873b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#ad5a4fa4816e9b8f36d4378795e5873b4">_expires</a></td></tr>
+<tr class="separator:ad5a4fa4816e9b8f36d4378795e5873b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">modules.framework.provider.KalmanProvider</a></td></tr>
+<tr class="memitem:a6203617914814a6e9d8dcd593018af17 inherit pro_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a6203617914814a6e9d8dcd593018af17"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a6203617914814a6e9d8dcd593018af17">_cache</a></td></tr>
+<tr class="separator:a6203617914814a6e9d8dcd593018af17 inherit pro_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">The CO2 of Netatmo modules, from the Netatmo web API.
+
+The credentials of a Netatmo app (dev.netatmo.com, scope ``read_station``)
+are outbound secrets, resolved like every provider's
+(:mod:`kalman.providers.credentials`): from the environment,
+``NETATMO_CLIENT_ID``, ``NETATMO_CLIENT_SECRET`` and ``NETATMO_REFRESH_TOKEN``,
+or from ``~/.kalman/credentials.json`` (``netatmo_client_id``, ...). They are
+never in the repository.
+
+Netatmo replaces the refresh token each time it is used, and the old one stops
+working: the new one is kept in ``~/.kalman/netatmo.json`` (``token_file=`` or
+``NETATMO_TOKEN_FILE`` for another place), readable by its owner only, and is
+the one used next time.
+
+``scale``: ``"max"`` for every reading, ``"30min"``, ``"1hour"``, ... for averages.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00122">122</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9ca7a159345f7368a07844d198461e24" name="a9ca7a159345f7368a07844d198461e24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ca7a159345f7368a07844d198461e24">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>scale</em> = <code>&quot;max&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>token_file</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>opener</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cache</em> = <code>True</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a4d2260d67ccb20b4d6a936d448109948">modules.framework.provider.KalmanProvider</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00149">149</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  149</span>    <span class="keyword">def </span>__init__(self, *, scale=&quot;max&quot;, token_file=None, opener=None, cache=True):</div>
+<div class="line"><span class="lineno">  150</span>        super().__init__(cache=cache)</div>
+<div class="line"><span class="lineno">  151</span>        self.scale = scale</div>
+<div class="line"><span class="lineno">  152</span>        self.token_file = os.path.expanduser(token_file <span class="keywordflow">or</span> os.environ.get(<span class="stringliteral">&quot;NETATMO_TOKEN_FILE&quot;</span>) <span class="keywordflow">or</span> self.TOKENS)</div>
+<div class="line"><span class="lineno">  153</span>        self._open = opener <span class="keywordflow">or</span> (<span class="keyword">lambda</span> request: urllib.request.urlopen(request, timeout=30))</div>
+<div class="line"><span class="lineno">  154</span>        self._access, self._expires = <span class="keywordtype">None</span>, 0.0</div>
+<div class="line"><span class="lineno">  155</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a368f2fd38e36498790af069cadabdc8e" name="a368f2fd38e36498790af069cadabdc8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a368f2fd38e36498790af069cadabdc8e">&#9670;&#160;</a></span>_call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud._call </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>post</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00156">156</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  156</span>    <span class="keyword">def </span>_call(self, path, params, *, post=False):</div>
+<div class="line"><span class="lineno">  157</span>        data = urllib.parse.urlencode(params)</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keywordflow">if</span> post:</div>
+<div class="line"><span class="lineno">  159</span>            request = urllib.request.Request(API + path, data=data.encode(), method=<span class="stringliteral">&quot;POST&quot;</span>)</div>
+<div class="line"><span class="lineno">  160</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  161</span>            request = urllib.request.Request(f<span class="stringliteral">&quot;{API}{path}?{data}&quot;</span>)</div>
+<div class="line"><span class="lineno">  162</span>            request.add_header(<span class="stringliteral">&quot;Authorization&quot;</span>, f<span class="stringliteral">&quot;Bearer {self._token()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  163</span>        <span class="keyword">with</span> self._open(request) <span class="keyword">as</span> response:</div>
+<div class="line"><span class="lineno">  164</span>            <span class="keywordflow">return</span> json.loads(response.read().decode())</div>
+<div class="line"><span class="lineno">  165</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a01fdd681a362e7ef90da4b6a6031e651" name="a01fdd681a362e7ef90da4b6a6031e651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01fdd681a362e7ef90da4b6a6031e651">&#9670;&#160;</a></span>_keep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud._keep </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>refresh_token</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Write the new refresh token: owner-only from its creation, replaced in one move.</pre> 
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00174">174</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  174</span>    <span class="keyword">def </span>_keep(self, refresh_token):</div>
+<div class="line"><span class="lineno">  175</span>        <span class="stringliteral">&quot;&quot;&quot;Write the new refresh token: owner-only from its creation, replaced in one move.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  176</span>        os.makedirs(os.path.dirname(self.token_file), mode=0o700, exist_ok=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  177</span>        draft = self.token_file + <span class="stringliteral">&quot;.new&quot;</span></div>
+<div class="line"><span class="lineno">  178</span>        <span class="keyword">with</span> os.fdopen(os.open(draft, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600), <span class="stringliteral">&quot;w&quot;</span>, encoding=<span class="stringliteral">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</div>
+<div class="line"><span class="lineno">  179</span>            json.dump({<span class="stringliteral">&quot;refresh_token&quot;</span>: refresh_token}, f)</div>
+<div class="line"><span class="lineno">  180</span>        os.replace(draft, self.token_file)</div>
+<div class="line"><span class="lineno">  181</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2bac38b4059d9ef3f2225412c7c68250" name="a2bac38b4059d9ef3f2225412c7c68250"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bac38b4059d9ef3f2225412c7c68250">&#9670;&#160;</a></span>_kept()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud._kept </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">The refresh token kept from the last run, or ``None``.</pre> 
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00166">166</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  166</span>    <span class="keyword">def </span>_kept(self):</div>
+<div class="line"><span class="lineno">  167</span>        <span class="stringliteral">&quot;&quot;&quot;The refresh token kept from the last run, or ``None``.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  168</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  169</span>            <span class="keyword">with</span> open(self.token_file, encoding=<span class="stringliteral">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</div>
+<div class="line"><span class="lineno">  170</span>                <span class="keywordflow">return</span> json.load(f).get(<span class="stringliteral">&quot;refresh_token&quot;</span>)</div>
+<div class="line"><span class="lineno">  171</span>        <span class="keywordflow">except</span> (OSError, ValueError):</div>
+<div class="line"><span class="lineno">  172</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  173</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7f492d7d43c06ab47372555c8e6a1161" name="a7f492d7d43c06ab47372555c8e6a1161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f492d7d43c06ab47372555c8e6a1161">&#9670;&#160;</a></span>_token()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud._token </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00182">182</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  182</span>    <span class="keyword">def </span>_token(self):</div>
+<div class="line"><span class="lineno">  183</span>        <span class="keywordflow">if</span> self._access <span class="keywordflow">and</span> _time.time() &lt; self._expires - 60:</div>
+<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">return</span> self._access</div>
+<div class="line"><span class="lineno">  185</span>        secret = <span class="keyword">lambda</span> key: get_credential(f<span class="stringliteral">&quot;netatmo_{key}&quot;</span>, env=f<span class="stringliteral">&quot;NETATMO_{key.upper()}&quot;</span>)   <span class="comment"># fail-closed</span></div>
+<div class="line"><span class="lineno">  186</span>        client_id, client_secret = secret(<span class="stringliteral">&quot;client_id&quot;</span>), secret(<span class="stringliteral">&quot;client_secret&quot;</span>)</div>
+<div class="line"><span class="lineno">  187</span>        kept = self._kept()</div>
+<div class="line"><span class="lineno">  188</span>        given = get_credential(<span class="stringliteral">&quot;netatmo_refresh_token&quot;</span>, env=<span class="stringliteral">&quot;NETATMO_REFRESH_TOKEN&quot;</span>, required=kept <span class="keywordflow">is</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  189</span>        answer = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  190</span>        <span class="keywordflow">for</span> refresh_token <span class="keywordflow">in</span> dict.fromkeys(t <span class="keywordflow">for</span> t <span class="keywordflow">in</span> (kept, given) <span class="keywordflow">if</span> t):      <span class="comment"># the kept one first</span></div>
+<div class="line"><span class="lineno">  191</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  192</span>                answer = self._call(<span class="stringliteral">&quot;/oauth2/token&quot;</span>, {<span class="stringliteral">&quot;grant_type&quot;</span>: <span class="stringliteral">&quot;refresh_token&quot;</span>, <span class="stringliteral">&quot;refresh_token&quot;</span>: refresh_token,</div>
+<div class="line"><span class="lineno">  193</span>                                                      <span class="stringliteral">&quot;client_id&quot;</span>: client_id, <span class="stringliteral">&quot;client_secret&quot;</span>: client_secret},</div>
+<div class="line"><span class="lineno">  194</span>                                    post=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  195</span>                <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  196</span>            <span class="keywordflow">except</span> urllib.error.HTTPError <span class="keyword">as</span> refused:</div>
+<div class="line"><span class="lineno">  197</span>                last = refused</div>
+<div class="line"><span class="lineno">  198</span>        <span class="keywordflow">if</span> answer <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  199</span>            <span class="keywordflow">raise</span> PermissionError(<span class="stringliteral">&quot;NetatmoCloud: Netatmo refused the refresh token; make a new one on dev.netatmo.com &quot;</span></div>
+<div class="line"><span class="lineno">  200</span>                                  f<span class="stringliteral">&quot;and set NETATMO_REFRESH_TOKEN ({last}).&quot;</span>) <span class="keyword">from</span> last</div>
+<div class="line"><span class="lineno">  201</span>        self._access, self._expires = answer[<span class="stringliteral">&quot;access_token&quot;</span>], _time.time() + float(answer.get(<span class="stringliteral">&quot;expires_in&quot;</span>, 10800))</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">if</span> answer.get(<span class="stringliteral">&quot;refresh_token&quot;</span>):</div>
+<div class="line"><span class="lineno">  203</span>            self._keep(answer[<span class="stringliteral">&quot;refresh_token&quot;</span>])</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keywordflow">return</span> self._access</div>
+<div class="line"><span class="lineno">  205</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0b7b18b66fd2253426cc463592dfb002" name="a0b7b18b66fd2253426cc463592dfb002"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b7b18b66fd2253426cc463592dfb002">&#9670;&#160;</a></span>fetch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud.fetch </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>query</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>module</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>start</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>end</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Pull a dataset for ``query`` → payload dict.  Override.</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a5c63744ff727db2bcd14bdf3b3ff5704">modules.framework.provider.KalmanProvider</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00227">227</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  227</span>    <span class="keyword">def </span>fetch(self, station, module=None, start=None, end=None):</div>
+<div class="line"><span class="lineno">  228</span>        times, ppm = self.readings(station, module, start, end)</div>
+<div class="line"><span class="lineno">  229</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;time&quot;</span>: times, <span class="stringliteral">&quot;zk&quot;</span>: ppm.reshape(-1, 1), <span class="stringliteral">&quot;meta&quot;</span>: {<span class="stringliteral">&quot;units&quot;</span>: <span class="stringliteral">&quot;ppm&quot;</span>, <span class="stringliteral">&quot;scale&quot;</span>: self.scale}}</div>
+<div class="line"><span class="lineno">  230</span> </div>
+<div class="line"><span class="lineno">  231</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6f09aacd160e72d47d21c7878e7fec43" name="a6f09aacd160e72d47d21c7878e7fec43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f09aacd160e72d47d21c7878e7fec43">&#9670;&#160;</a></span>readings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud.readings </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>station</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>end</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">``(times, ppm)`` of one module between ``start`` and ``end`` [unix s].</pre> 
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00206">206</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  206</span>    <span class="keyword">def </span>readings(self, station, module, start, end):</div>
+<div class="line"><span class="lineno">  207</span>        <span class="stringliteral">&quot;&quot;&quot;``(times, ppm)`` of one module between ``start`` and ``end`` [unix s].&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  208</span>        <span class="keyword">def </span>produce():</div>
+<div class="line"><span class="lineno">  209</span>            times, ppm, begin = [], [], int(start)</div>
+<div class="line"><span class="lineno">  210</span>            <span class="keywordflow">while</span> begin &lt; int(end):</div>
+<div class="line"><span class="lineno">  211</span>                params = {<span class="stringliteral">&quot;device_id&quot;</span>: station, <span class="stringliteral">&quot;scale&quot;</span>: self.scale, <span class="stringliteral">&quot;type&quot;</span>: <span class="stringliteral">&quot;co2&quot;</span>, <span class="stringliteral">&quot;date_begin&quot;</span>: begin,</div>
+<div class="line"><span class="lineno">  212</span>                          <span class="stringliteral">&quot;date_end&quot;</span>: int(end), <span class="stringliteral">&quot;limit&quot;</span>: self.PAGE, <span class="stringliteral">&quot;optimize&quot;</span>: <span class="stringliteral">&quot;false&quot;</span>, <span class="stringliteral">&quot;real_time&quot;</span>: <span class="stringliteral">&quot;true&quot;</span>}</div>
+<div class="line"><span class="lineno">  213</span>                <span class="keywordflow">if</span> module:</div>
+<div class="line"><span class="lineno">  214</span>                    params[<span class="stringliteral">&quot;module_id&quot;</span>] = module</div>
+<div class="line"><span class="lineno">  215</span>                body = self._call(<span class="stringliteral">&quot;/api/getmeasure&quot;</span>, params).get(<span class="stringliteral">&quot;body&quot;</span>) <span class="keywordflow">or</span> {}</div>
+<div class="line"><span class="lineno">  216</span>                page = sorted((int(t), v[0]) <span class="keywordflow">for</span> t, v <span class="keywordflow">in</span> body.items() <span class="keywordflow">if</span> v <span class="keywordflow">and</span> v[0] <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  217</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> page:</div>
+<div class="line"><span class="lineno">  218</span>                    <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  219</span>                times += [t <span class="keywordflow">for</span> t, _ <span class="keywordflow">in</span> page]</div>
+<div class="line"><span class="lineno">  220</span>                ppm += [v <span class="keywordflow">for</span> _, v <span class="keywordflow">in</span> page]</div>
+<div class="line"><span class="lineno">  221</span>                <span class="keywordflow">if</span> len(page) &lt; self.PAGE:</div>
+<div class="line"><span class="lineno">  222</span>                    <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  223</span>                begin = page[-1][0] + 1</div>
+<div class="line"><span class="lineno">  224</span>            <span class="keywordflow">return</span> np.asarray(times, dtype=float), np.asarray(ppm, dtype=float)</div>
+<div class="line"><span class="lineno">  225</span>        <span class="keywordflow">return</span> self._cached((station, module, int(start), int(end), self.scale), produce)</div>
+<div class="line"><span class="lineno">  226</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8f86075506c6e8d921eb67531da865bd" name="a8f86075506c6e8d921eb67531da865bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f86075506c6e8d921eb67531da865bd">&#9670;&#160;</a></span>_access</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud._access</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00154">154</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="ad5a4fa4816e9b8f36d4378795e5873b4" name="ad5a4fa4816e9b8f36d4378795e5873b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5a4fa4816e9b8f36d4378795e5873b4">&#9670;&#160;</a></span>_expires</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud._expires</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00154">154</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="a1362f5eb0506db2cc9019b9589377841" name="a1362f5eb0506db2cc9019b9589377841"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1362f5eb0506db2cc9019b9589377841">&#9670;&#160;</a></span>_open</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud._open</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00153">153</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="ae0aa562cdb50d447f28bde7230cc85d6" name="ae0aa562cdb50d447f28bde7230cc85d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0aa562cdb50d447f28bde7230cc85d6">&#9670;&#160;</a></span>DESCRIPTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.adapters.netatmo.NetatmoCloud.DESCRIPTION = &quot;CO2 <a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html#a6f09aacd160e72d47d21c7878e7fec43">readings</a> of Netatmo indoor modules, from the Netatmo web <a class="el" href="namespacemodules_1_1adapters_1_1netatmo.html#a8a9ed4355275113c9eed95ab8234fd2d">API</a> (getmeasure).&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00141">141</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="a70171ac0de4ebddd3ef05419edc65623" name="a70171ac0de4ebddd3ef05419edc65623"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70171ac0de4ebddd3ef05419edc65623">&#9670;&#160;</a></span>KIND</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud.KIND = <a class="el" href="classmodules_1_1framework_1_1constants_1_1_kalman_provider_kind.html#a6d368b9ad670f4e644add890dfc324fd">KalmanProviderKind.REMOTE</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00143">143</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="aabea8843cf1db3f7821c713447391522" name="aabea8843cf1db3f7821c713447391522"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabea8843cf1db3f7821c713447391522">&#9670;&#160;</a></span>MEASUREMENTS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple modules.adapters.netatmo.NetatmoCloud.MEASUREMENTS = ({&quot;name&quot;: &quot;co2&quot;, &quot;units&quot;: &quot;ppm&quot;, &quot;description&quot;: &quot;CO2 of one indoor module&quot;},)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00144">144</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="a60bef88864d949f2f2f65e5421a4be3c" name="a60bef88864d949f2f2f65e5421a4be3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60bef88864d949f2f2f65e5421a4be3c">&#9670;&#160;</a></span>NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.adapters.netatmo.NetatmoCloud.NAME = &quot;Netatmo Cloud&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00140">140</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="a2945bb3f77c18f33c0783aafdac98c22" name="a2945bb3f77c18f33c0783aafdac98c22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2945bb3f77c18f33c0783aafdac98c22">&#9670;&#160;</a></span>PAGE <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int modules.adapters.netatmo.NetatmoCloud.PAGE = 1024</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00146">146</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="a59bea77576288e39a74e72037dca4bd0" name="a59bea77576288e39a74e72037dca4bd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59bea77576288e39a74e72037dca4bd0">&#9670;&#160;</a></span>PAGE <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud.PAGE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00212">212</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="ac6426f6cc5f1ec8d9c235897b066ce74" name="ac6426f6cc5f1ec8d9c235897b066ce74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6426f6cc5f1ec8d9c235897b066ce74">&#9670;&#160;</a></span>REQUIRES</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple modules.adapters.netatmo.NetatmoCloud.REQUIRES = (&quot;NETATMO_CLIENT_ID&quot;, &quot;NETATMO_CLIENT_SECRET&quot;, &quot;NETATMO_REFRESH_TOKEN&quot;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00145">145</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="a42ef5834184c4c78840483f54c382a71" name="a42ef5834184c4c78840483f54c382a71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42ef5834184c4c78840483f54c382a71">&#9670;&#160;</a></span>scale</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud.scale</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00151">151</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="ae9d5d472cbeff198b6401104fda7db99" name="ae9d5d472cbeff198b6401104fda7db99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9d5d472cbeff198b6401104fda7db99">&#9670;&#160;</a></span>token_file</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.adapters.netatmo.NetatmoCloud.token_file</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00152">152</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="a17a8409f07908924a7490a1097f4d93d" name="a17a8409f07908924a7490a1097f4d93d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17a8409f07908924a7490a1097f4d93d">&#9670;&#160;</a></span>TOKENS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.adapters.netatmo.NetatmoCloud.TOKENS = &quot;~/.kalman/netatmo.json&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00147">147</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<a id="ad2bc2a69c00e955c243cc745b71f02cb" name="ad2bc2a69c00e955c243cc745b71f02cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2bc2a69c00e955c243cc745b71f02cb">&#9670;&#160;</a></span>VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.adapters.netatmo.NetatmoCloud.VERSION = &quot;1.0&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="netatmo_8py_source.html#l00142">142</a> of file <a class="el" href="netatmo_8py_source.html">netatmo.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/adapters/<a class="el" href="netatmo_8py_source.html">netatmo.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1adapters.html">adapters</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1adapters_1_1netatmo.html">netatmo</a></li><li class="navelem"><a class="el" href="classmodules_1_1adapters_1_1netatmo_1_1_netatmo_cloud.html">NetatmoCloud</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"_sampler_8h_source.html":[12,2,0,3,0,40],
 "_sensor_8cc.html":[12,2,0,8,27],
 "_sensor_8cc_source.html":[12,2,0,8,27],
 "_sensor_8h.html":[12,2,0,3,0,41],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "backend_8py.html#a16913717d7579554eed1c6ab78ec8e60":[12,2,0,5,4,2,3],
 "backend_8py_source.html":[12,2,0,5,4,2],
 "ballistics__root_8cc.html":[12,2,0,2,0,0],
-"ballistics__root_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4":[12,2,0,2,0,0,1],
-"ballistics__root_8cc_source.html":[12,2,0,2,0,0]
+"ballistics__root_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4":[12,2,0,2,0,0,1]
 };

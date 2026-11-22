@@ -482,6 +482,8 @@ var hierarchy =
       [ "tests.test_interferometer.TestInterferometerModelFilter", "classtests_1_1test__interferometer_1_1_test_interferometer_model_filter.html", null ],
       [ "tests.test_interferometer.TestInterferometerModelFit", "classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html", null ],
       [ "tests.test_interferometer.TestLorentzian", "classtests_1_1test__interferometer_1_1_test_lorentzian.html", null ],
+      [ "tests.test_interferometer.TestPerLineSettings", "classtests_1_1test__interferometer_1_1_test_per_line_settings.html", null ],
+      [ "tests.test_interferometer.TestSteadyStateGain", "classtests_1_1test__interferometer_1_1_test_steady_state_gain.html", null ],
       [ "tests.test_interferometer.TestViolinBankController", "classtests_1_1test__interferometer_1_1_test_violin_bank_controller.html", null ],
       [ "tests.test_interferometer.TestWelchPSD", "classtests_1_1test__interferometer_1_1_test_welch_p_s_d.html", null ],
       [ "tests.test_joint.TestBallisticCounterpart", "classtests_1_1test__joint_1_1_test_ballistic_counterpart.html", null ],

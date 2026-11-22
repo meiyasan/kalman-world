@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-1-g0a3b9232</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -140,14 +140,14 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2buildings.html',''); in
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="co2-in-a-room"></a> People in a room breathe out CO2 and ventilation brings outdoor air in. A few CO2 sensors, each reporting at its own rate, read the air at a few points; the filter estimates the CO2 in every part of the room, how many people are in it, and how far a sensor has drifted.</p>
-<h1><a class="anchor" id="the-model-2"></a>
+<h1><a class="anchor" id="the-model-1"></a>
 The model</h1>
 <div class="fragment"><div class="line">state        x = the CO2 concentration in each cell of the room [ppm]</div>
 <div class="line">                 (+ the number of people, with count_people=True)</div>
 <div class="line">dynamics     dc/dt = D lap(c) - lambda (c - c_out) + S / V</div>
 <div class="line">measurement  one CO2 sensor reads one cell</div>
 </div><!-- fragment --><p>The room is a set of cells of a grid; an L-shaped room is the grid without one quarter (<code>l_shaped_room()</code>). <code>D lap(c)</code> mixes neighbouring cells, and no air crosses a wall. <code>lambda</code> is the ventilation in air changes per second, <code>c_out</code> the outdoor concentration, <code>S / V</code> the breath of the occupants spread over the seats.</p>
-<h1><a class="anchor" id="how-it-is-built-2"></a>
+<h1><a class="anchor" id="how-it-is-built-1"></a>
 How it is built</h1>
 <ul>
 <li><b>Linear, so matrices.</b> The balance is linear: its step over a minute is a matrix exponential computed once, and the model runs on the linear engine.</li>
@@ -155,7 +155,7 @@ How it is built</h1>
 <li><b>Sensors at their own rates.</b> <code>model.sensor(name, (row, column), rate=...)</code> gives a CO2 sensor; one that has nothing new gives no number, and the filter skips it.</li>
 <li><b>A drifted sensor is an instrument.</b> <code>compose(sensor, name="B").calibrate(1, 0)</code> gives the model <code>B.gain</code> and <code>B.offset</code>; <code>joint</code> estimates the offset with the field, as long as other sensors read the same air without it.</li>
 </ul>
-<h1><a class="anchor" id="using-it-3"></a>
+<h1><a class="anchor" id="using-it-2"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> RoomCO2Model</div>
 <div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> compose</div>

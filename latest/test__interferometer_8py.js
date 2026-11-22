@@ -12,5 +12,8 @@ var test__interferometer_8py =
     [ "tests.test_interferometer.TestBoostControllerRefactor", "classtests_1_1test__interferometer_1_1_test_boost_controller_refactor.html", "classtests_1_1test__interferometer_1_1_test_boost_controller_refactor" ],
     [ "tests.test_interferometer.TestAdaptiveQRControllerRefactor", "classtests_1_1test__interferometer_1_1_test_adaptive_q_r_controller_refactor.html", "classtests_1_1test__interferometer_1_1_test_adaptive_q_r_controller_refactor" ],
     [ "tests.test_interferometer.TestDetectorSubclasses", "classtests_1_1test__interferometer_1_1_test_detector_subclasses.html", "classtests_1_1test__interferometer_1_1_test_detector_subclasses" ],
-    [ "_sine_psd", "test__interferometer_8py.html#acfc2780fe6fdb4d59f77f866255b05fa", null ]
+    [ "tests.test_interferometer.TestPerLineSettings", "classtests_1_1test__interferometer_1_1_test_per_line_settings.html", "classtests_1_1test__interferometer_1_1_test_per_line_settings" ],
+    [ "tests.test_interferometer.TestSteadyStateGain", "classtests_1_1test__interferometer_1_1_test_steady_state_gain.html", "classtests_1_1test__interferometer_1_1_test_steady_state_gain" ],
+    [ "_sine_psd", "test__interferometer_8py.html#acfc2780fe6fdb4d59f77f866255b05fa", null ],
+    [ "_two_lines", "test__interferometer_8py.html#acc277f82eff7a5376f1f5d282754a7d1", null ]
 ];

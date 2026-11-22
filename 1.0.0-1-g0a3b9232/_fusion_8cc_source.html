@@ -1,0 +1,527 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="src/Models/Fusion.cc Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: src/Models/Fusion.cc Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>src/Models/Fusion.cc Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g0a3b9232</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_fusion_8cc_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Fusion.cc</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_fusion_8cc.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_fusion_8h.html">Kalman/Models/Fusion.h</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_differentiator_8h.html">Kalman/Differentiator.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_kalman_1_1_models.html">Kalman::Models</a></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="}">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a4904baec3b538e602ecd550f27723cc3">   21</a></span>    <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a4904baec3b538e602ecd550f27723cc3">Fusion::Fusion</a>(std::shared_ptr&lt;Model&gt; inner, <a class="code hl_struct" href="struct_kalman_1_1_sensor.html">Sensor</a> sensor)</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        : fInner(std::move(inner)), fSensor(std::move(sensor))</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordflow">if</span> (!fInner) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Models::Fusion: the inner model is null.&quot;</span>);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a4a9f92bc3ffb9cbc32809d9c40ccba9d">Check</a>(fInner-&gt;NState());</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        fNExtra = fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a03dc89eb0f2aed9a86491002c2f434c9">Channels</a>();</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        fNInnerMeasure = fInner-&gt;NMeasure();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a555b3d431a0e61d50c1282aeb3abac51">SetName</a>(fInner-&gt;Name());</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ad80f1196a0e2f8a20f16fe6d17ab528a">Allocate</a>(fInner-&gt;NState(), fNInnerMeasure + fNExtra, fInner-&gt;NControl());</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a31b4fd602e88d38b51ff86ae05e6ac1d">SetSampleRate</a>(fInner-&gt;SampleRate());</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ae068b0068ab650340741a7b8a184eb77">SetT0</a>(fInner-&gt;T0());</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a99ca5300612034715e7db6901b3b7b48">SetTimeUnit</a>(fInner-&gt;TimeUnit());</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ac74fcea987377be712dca59892faab3e">SetDefaultEngine</a>(fInner-&gt;DefaultEngine());</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#ae2621dd78f2f563f8913e981cc1813e4">SetBuiltInSensorName</a>(fInner-&gt;BuiltInSensorName());</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a5a34eec7ad783ac3200e9b3463f22abe">AdoptInitialState</a>();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        Settle();</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#aa4e1dec6da53716870d3b27306e6b6d8">DeclareState</a>(fInner-&gt;StateComponents());</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="comment">// An observable keeps its name unless the model already has one of that</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="comment">// name: it then takes its sensor&#39;s name in front (&quot;gyro2_RATE&quot;).</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        std::vector&lt;Component&gt; channels = fInner-&gt;MeasurementComponents();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        std::vector&lt;Component&gt; added = fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a027b9ff0d3bb7b9dec99c81bf83450fe">Observables</a>();</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;c : added)</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;known : channels)</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="keywordflow">if</span> (known.name == c.name) { c.name = fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#ab08324fa831bb696b767974896f3de79">name</a> + <span class="stringliteral">&quot;_&quot;</span> + c.name; <span class="keywordflow">break</span>; }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            channels.push_back(c);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a1f701c64ae403c9150c130854f2426de">channels</a> = added;                       <span class="comment">// what Sensors() reports is what z carries</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a8433b39e0476c4c3f766d0adaa15ebcf">DeclareMeasurement</a>(std::move(channels));</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    }</div>
+</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordtype">void</span> Fusion::Settle()</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> formulas = fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a69d1a97f45ec1c22c165a5132f89f8e4">IsLinear</a>() || fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a8fcc636f18c2fadcd2409391dda83e6a">jacobian</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordflow">if</span> (fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a69d1a97f45ec1c22c165a5132f89f8e4">IsLinear</a>() &amp;&amp; !fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a82b3ad8a99f4a9b07dfdac5a05b07b42">calibrated</a>)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="comment">// Still what the inner model is: its matrices with one more block, or code.</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <span class="keywordflow">if</span> (fInner-&gt;HasAnalyticJacobian()) <a class="code hl_function" href="class_kalman_1_1_model.html#a136dfe6ea3ee68d6646ce8255fb4501b">SetAnalyticJacobian</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keywordflow">else</span> <a class="code hl_function" href="class_kalman_1_1_model.html#abbc77b9e0f133acbd9db352fd51bffc4">SetDifferentiator</a>(fInner-&gt;Differentiator(), fInner-&gt;Epsilon());</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <a class="code hl_function" href="class_kalman_1_1_model.html#af99c4d25cce381cb7fcc37a9edb687be">SetStructure</a>(fInner-&gt;Structure());</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        }</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">// A function on top of a linear model is no longer its matrices; nor is a</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="comment">// calibrated reading, `gain * G x + offset`, which no matrix H carries. The</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="comment">// rows of the Jacobian without a formula are differenced with the inner</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="comment">// scheme (forward, at its default step, under an inner model that has formulas).</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">if</span> (fInner-&gt;DefaultEngine() == <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b">EngineKind::Linear</a>) <a class="code hl_function" href="class_kalman_1_1_model.html#ac74fcea987377be712dca59892faab3e">SetDefaultEngine</a>(<a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537">EngineKind::Extended</a>);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordflow">if</span> (fInner-&gt;HasAnalyticJacobian() &amp;&amp; formulas &amp;&amp; fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a69d1a97f45ec1c22c165a5132f89f8e4">IsLinear</a>()) <a class="code hl_function" href="class_kalman_1_1_model.html#a136dfe6ea3ee68d6646ce8255fb4501b">SetAnalyticJacobian</a>(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (fInner-&gt;HasAnalyticJacobian()) <a class="code hl_function" href="class_kalman_1_1_model.html#abbc77b9e0f133acbd9db352fd51bffc4">SetDifferentiator</a>(<a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481">DifferentiatorKind::Forward</a>);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">else</span> <a class="code hl_function" href="class_kalman_1_1_model.html#abbc77b9e0f133acbd9db352fd51bffc4">SetDifferentiator</a>(fInner-&gt;Differentiator(), fInner-&gt;Epsilon());</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#af99c4d25cce381cb7fcc37a9edb687be">SetStructure</a>(<a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">StructureKind::Maps</a>);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a5a34eec7ad783ac3200e9b3463f22abe">   77</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a5a34eec7ad783ac3200e9b3463f22abe">Fusion::AdoptInitialState</a>()</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">if</span> (fInner-&gt;X0().Size() == <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>) <a class="code hl_function" href="class_kalman_1_1_model.html#a4fe949c8582b82c25bb7728ddd2136ae">SetInitialState</a>(fInner-&gt;X0());</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">if</span> (fInner-&gt;P0().Rows() == <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>) <a class="code hl_function" href="class_kalman_1_1_model.html#a03439ab774674a982f6c9c255923a9fc">SetInitialCovariance</a>(fInner-&gt;P0());</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    }</div>
+</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="foldopen" id="foldopen00083" data-start="{" data-end="}">
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a6adf153b4cf64d4f64c61312522ab2a2">   83</a></span>    std::vector&lt;Sensor&gt; <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a6adf153b4cf64d4f64c61312522ab2a2">Fusion::Sensors</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        std::vector&lt;Sensor&gt; out = fInner-&gt;Sensors();</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        out.push_back(fSensor);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    }</div>
+</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="comment">// --- parameters: the inner model&#39;s, and the calibration of the added sensor ---------</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordtype">int</span> Fusion::Own(<span class="keyword">const</span> std::string &amp;name)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keyword">const</span> std::string &amp;owner = fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a8c21280f7b7aa8170a857cbb59aa695c">Owner</a>();</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordflow">if</span> (name.size() &lt;= owner.size() + 1 || name.compare(0, owner.size(), owner) != 0 || name[owner.size()] != <span class="charliteral">&#39;.&#39;</span>)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="keyword">const</span> std::string what = name.substr(owner.size() + 1);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">if</span> (fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a82b3ad8a99f4a9b07dfdac5a05b07b42">calibrated</a> &amp;&amp; what == <span class="stringliteral">&quot;gain&quot;</span>) <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keywordflow">if</span> (fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a82b3ad8a99f4a9b07dfdac5a05b07b42">calibrated</a> &amp;&amp; what == <span class="stringliteral">&quot;offset&quot;</span>) <span class="keywordflow">return</span> 2;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keywordflow">return</span> fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a3a630f1a4c79b69ca7672e883ab6af95">HasSetting</a>(what) ? 3 : 0;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    }</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="foldopen" id="foldopen00103" data-start="{" data-end="}">
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#acc92799be5b6bf696dcf2a766aa0b413">  103</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#acc92799be5b6bf696dcf2a766aa0b413">Fusion::Calibrate</a>(<span class="keywordtype">double</span> gain, <span class="keywordtype">double</span> offset)</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a82b3ad8a99f4a9b07dfdac5a05b07b42">calibrated</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#af6980a4f4c47563e535ac05bf3996243">gain</a> = gain;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#aba4309ef11e202f0ca7f5d7eeddc7258">offset</a> = offset;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        Settle();</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    }</div>
+</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="foldopen" id="foldopen00111" data-start="{" data-end="}">
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a5a312408ff0ab96bc1da4e06574c647b">  111</a></span>    std::vector&lt;std::string&gt; <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a5a312408ff0ab96bc1da4e06574c647b">Fusion::ParameterNames</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        std::vector&lt;std::string&gt; names = fInner-&gt;ParameterNames();</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="keywordflow">if</span> (fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a82b3ad8a99f4a9b07dfdac5a05b07b42">calibrated</a>)</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keywordtype">char</span> *suffix : {<span class="stringliteral">&quot;.gain&quot;</span>, <span class="stringliteral">&quot;.offset&quot;</span>})</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            {</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                <span class="keyword">const</span> std::string name = fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a8c21280f7b7aa8170a857cbb59aa695c">Owner</a>() + suffix;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                <span class="keywordflow">if</span> (std::find(names.begin(), names.end(), name) == names.end()) names.push_back(name);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            }</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> std::string &amp;setting : fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a6dfc029ad15b410f82cbe30cf9dbec1b">SettingNames</a>())</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        {</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            <span class="keyword">const</span> std::string name = fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a8c21280f7b7aa8170a857cbb59aa695c">Owner</a>() + <span class="stringliteral">&quot;.&quot;</span> + setting;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            <span class="keywordflow">if</span> (std::find(names.begin(), names.end(), name) == names.end()) names.push_back(name);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        std::sort(names.begin(), names.end());</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keywordflow">return</span> names;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    }</div>
+</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a7549babf0d9c5a9f400914f66b588288">  129</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a7549babf0d9c5a9f400914f66b588288">Fusion::HasParameter</a>(<span class="keyword">const</span> std::string &amp;name)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> Own(name) != 0 || fInner-&gt;HasParameter(name); }</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="foldopen" id="foldopen00131" data-start="{" data-end="}">
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a22a6a6792469dcb61ee8c92af4e52e36">  131</a></span>    <span class="keywordtype">double</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a22a6a6792469dcb61ee8c92af4e52e36">Fusion::Parameter</a>(<span class="keyword">const</span> std::string &amp;name)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keyword">const</span> <span class="keywordtype">int</span> own = Own(name);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <span class="keywordflow">if</span> (own == 3) <span class="keywordflow">return</span> fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a675dd0e66067df4c36b9f1516a39365a">Setting</a>(name.substr(fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a8c21280f7b7aa8170a857cbb59aa695c">Owner</a>().size() + 1));</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <span class="keywordflow">return</span> own == 1 ? fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#af6980a4f4c47563e535ac05bf3996243">gain</a> : own == 2 ? fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#aba4309ef11e202f0ca7f5d7eeddc7258">offset</a> : fInner-&gt;Parameter(name);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    }</div>
+</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="foldopen" id="foldopen00138" data-start="{" data-end="}">
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a3477ef910f24563d6226f80daf681977">  138</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a3477ef910f24563d6226f80daf681977">Fusion::SetParameter</a>(<span class="keyword">const</span> std::string &amp;name, <span class="keywordtype">double</span> value)</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    {</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="keyword">const</span> <span class="keywordtype">int</span> own = Own(name);</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        <span class="keywordflow">if</span> (own == 1) fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#af6980a4f4c47563e535ac05bf3996243">gain</a> = value;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <span class="keywordflow">if</span> (own == 2) fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#aba4309ef11e202f0ca7f5d7eeddc7258">offset</a> = value;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="keywordflow">if</span> (own == 3) fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a78732722641a613825530c8d67b3b787">Set</a>(name.substr(fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a8c21280f7b7aa8170a857cbb59aa695c">Owner</a>().size() + 1), value);</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <span class="comment">// Sensors of one instrument share its calibration and its settings of one name</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <span class="comment">// (where it is): the layers below take them too.</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="keywordflow">if</span> (own == 0 || fInner-&gt;HasParameter(name)) fInner-&gt;SetParameter(name, value);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    }</div>
+</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keywordtype">void</span> Fusion::Sync()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordflow">if</span> (fInner-&gt;SampleRate() != <a class="code hl_variable" href="class_kalman_1_1_model.html#a6ef68825dc1f223aab2e247eb1e082f0">fSampleRate</a>) fInner-&gt;SetSampleRate(<a class="code hl_variable" href="class_kalman_1_1_model.html#a6ef68825dc1f223aab2e247eb1e082f0">fSampleRate</a>);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    }</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> Fusion::Extra(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keywordtype">double</span> t)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keywordflow">return</span> fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a8d6e2e8ebe98dae6483f6c64f6a032f1">Read</a>(x, t);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    }</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    Vector Fusion::Stack(<span class="keyword">const</span> Vector &amp;head, <span class="keyword">const</span> Vector &amp;tail)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        Vector z(<a class="code hl_variable" href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">fNMeasure</a>);</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInnerMeasure; ++i) z(i) = head(i);</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNExtra; ++i) z(fNInnerMeasure + i) = tail(i);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keywordflow">return</span> z;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="foldopen" id="foldopen00167" data-start="{" data-end="}">
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#ad4ef11bd669b3edf2b49c94fe7cda950">  167</a></span>    <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#ad4ef11bd669b3edf2b49c94fe7cda950">Fusion::h</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keywordtype">double</span> t)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        Sync();</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordflow">return</span> Stack(fInner-&gt;h(x, t), Extra(x, t));</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    }</div>
+</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="foldopen" id="foldopen00173" data-start="{" data-end="}">
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#ad50e7de7d90737b2e9e479746061c3c3">  173</a></span>    <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#ad50e7de7d90737b2e9e479746061c3c3">Fusion::MeasureWithNoise</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;v, <span class="keywordtype">double</span> t)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="keywordflow">if</span> (v.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>() != <a class="code hl_variable" href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">fNMeasure</a>)</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Models::Fusion: the measurement noise has &quot;</span> + std::to_string(v.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>())</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                                        + <span class="stringliteral">&quot; components, &quot;</span> + std::to_string(<a class="code hl_variable" href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">fNMeasure</a>) + <span class="stringliteral">&quot; expected.&quot;</span>);</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        Sync();</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> head(fNInnerMeasure);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInnerMeasure; ++i) head(i) = v(i);</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> tail = Extra(x, t);</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNExtra; ++i) tail(i) += v(fNInnerMeasure + i);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        <span class="keywordflow">return</span> Stack(fInner-&gt;MeasureWithNoise(x, head, t), tail);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    }</div>
+</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+<div class="foldopen" id="foldopen00186" data-start="{" data-end="}">
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a41378149fc9051b7888fea2ed8df5faf">  186</a></span>    <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a41378149fc9051b7888fea2ed8df5faf">Fusion::JacobianH</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keywordtype">double</span> t)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        Sync();</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> Hs = fInner-&gt;JacobianH(x, t);</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> G;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> gain = fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a82b3ad8a99f4a9b07dfdac5a05b07b42">calibrated</a> ? fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#af6980a4f4c47563e535ac05bf3996243">gain</a> : 1.;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        <span class="keywordflow">if</span> (fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a69d1a97f45ec1c22c165a5132f89f8e4">IsLinear</a>()) { G = fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a37c93019cbc861058f7cdda7512ef4fd">G</a>; G *= gain; }</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a8fcc636f18c2fadcd2409391dda83e6a">jacobian</a>) { G = fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a8fcc636f18c2fadcd2409391dda83e6a">jacobian</a>(x, t); G *= gain; }</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            G = <a class="code hl_function" href="namespace_kalman_1_1_differentiators.html#afbbd6ce846e557568df7bc6944fc1e20">Differentiators::Jacobian</a>(</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                <a class="code hl_variable" href="class_kalman_1_1_model.html#a64a7186139b943b39b02f9b8aeb75d00">fNumericalScheme</a>, [<span class="keyword">this</span>, t](<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xx) { <span class="keywordflow">return</span> Extra(xx, t); }, x, <a class="code hl_variable" href="class_kalman_1_1_model.html#a776f377faca8ce404397daa5f90ee92f">fEpsilon</a>);</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        <span class="keywordflow">if</span> (G.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Rows</a>() != fNExtra || G.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Cols</a>() != <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>)</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Models::Fusion: the Jacobian of the extra channels is not k x n.&quot;</span>);</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> out(<a class="code hl_variable" href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">fNMeasure</a>, <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, 0.);</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>; ++j)</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        {</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInnerMeasure; ++i) out(i, j) = Hs(i, j);</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNExtra; ++i) out(fNInnerMeasure + i, j) = G(i, j);</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        }</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    }</div>
+</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
+<div class="foldopen" id="foldopen00209" data-start="{" data-end="}">
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#abe0404f9eca4498a029254486187a4de">  209</a></span>    <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#abe0404f9eca4498a029254486187a4de">Fusion::H</a>(<span class="keywordtype">double</span> t)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        <span class="comment">// The matrix a linear engine reads. With a function for the extra</span></div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="comment">// channels there is none: their rows are left at zero, and the engines</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <span class="comment">// that linearise ask JacobianH().</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> Hs = fInner-&gt;H(t);</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> out(<a class="code hl_variable" href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">fNMeasure</a>, <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>, 0.);</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">fNState</a>; ++j)</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInnerMeasure; ++i) out(i, j) = Hs(i, j);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>            <span class="keywordflow">if</span> (fSensor.<a class="code hl_function" href="struct_kalman_1_1_sensor.html#a69d1a97f45ec1c22c165a5132f89f8e4">IsLinear</a>())</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNExtra; ++i)</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                    out(fNInnerMeasure + i, j) = (fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a82b3ad8a99f4a9b07dfdac5a05b07b42">calibrated</a> ? fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#af6980a4f4c47563e535ac05bf3996243">gain</a> : 1.) * fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a37c93019cbc861058f7cdda7512ef4fd">G</a>(i, j);</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        }</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    }</div>
+</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
+<div class="foldopen" id="foldopen00226" data-start="{" data-end="}">
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a2609b1dfb908a8c642926d5946f70cf4">  226</a></span>    <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a2609b1dfb908a8c642926d5946f70cf4">Fusion::R</a>(<span class="keywordtype">double</span> t)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        Sync();</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> Rs = fInner-&gt;R(t);</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> out(<a class="code hl_variable" href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">fNMeasure</a>, <a class="code hl_variable" href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">fNMeasure</a>, 0.);</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNInnerMeasure; ++i)</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; fNInnerMeasure; ++j) out(i, j) = Rs(i, j);</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fNExtra; ++i)</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; fNExtra; ++j) out(fNInnerMeasure + i, fNInnerMeasure + j) = fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a6aa33c07df2dfa541b2b1903150accfd">R</a>(i, j);</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    }</div>
+</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
+<div class="foldopen" id="foldopen00238" data-start="{" data-end="}">
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a140b2b0665bedf7ad5e8901cdc72fe94">  238</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a140b2b0665bedf7ad5e8901cdc72fe94">Fusion::SetDelay</a>(<span class="keywordtype">double</span> delay)</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    {</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        <span class="keywordflow">if</span> (!(delay &gt;= 0.)) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Models::Fusion: a delay cannot be negative.&quot;</span>);</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a3a66468e6c6ffd2f0f6523502db2e9c7">delay</a> = delay;</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    }</div>
+</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
+<div class="foldopen" id="foldopen00244" data-start="{" data-end="}">
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#aaaf73e7304dd0cd4437b22f54811ab08">  244</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#aaaf73e7304dd0cd4437b22f54811ab08">Fusion::CheckDelays</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <span class="keywordflow">if</span> (fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a3a66468e6c6ffd2f0f6523502db2e9c7">delay</a> &gt; 0.)</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Models::Fusion: the sensor &#39;&quot;</span> + fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#ab08324fa831bb696b767974896f3de79">name</a> + <span class="stringliteral">&quot;&#39; reports late (delay &quot;</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                                        + std::to_string(fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#a3a66468e6c6ffd2f0f6523502db2e9c7">delay</a>) + <span class="stringliteral">&quot;) and the model carries no past state &quot;</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                                        <span class="stringliteral">&quot;before it: add the sensors first, then lag the model (Models::Lag).&quot;</span>);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        fInner-&gt;CheckDelays();</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    }</div>
+</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
+<div class="foldopen" id="foldopen00253" data-start="{" data-end="}">
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#a0a10c0b98f4bfe419be88293ec8f8430">  253</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#a0a10c0b98f4bfe419be88293ec8f8430">Fusion::CheckShapes</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        Sync();</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        fInner-&gt;CheckShapes();</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        <a class="code hl_function" href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">Model::CheckShapes</a>();</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    }</div>
+</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
+<div class="foldopen" id="foldopen00260" data-start="{" data-end="}">
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno"><a class="line" href="class_kalman_1_1_models_1_1_fusion.html#ab90271e1d77aaad176b5211d7e6434ab">  260</a></span>    std::string <a class="code hl_function" href="class_kalman_1_1_models_1_1_fusion.html#ab90271e1d77aaad176b5211d7e6434ab">Fusion::Describe</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        std::ostringstream os;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        os &lt;&lt; <a class="code hl_function" href="class_kalman_1_1_model.html#a5d5c563a06b0cf2bc8fda5a568538622">Model::Describe</a>() &lt;&lt; <span class="stringliteral">&quot;; sensor &#39;&quot;</span> &lt;&lt; fSensor.<a class="code hl_variable" href="struct_kalman_1_1_sensor.html#ab08324fa831bb696b767974896f3de79">name</a> &lt;&lt; <span class="stringliteral">&quot;&#39; (&quot;</span> &lt;&lt; fNExtra &lt;&lt; <span class="stringliteral">&quot; channel&quot;</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>           &lt;&lt; (fNExtra == 1 ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;s&quot;</span>) &lt;&lt; <span class="stringliteral">&quot;) added to &quot;</span></div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>           &lt;&lt; fInner-&gt;Describe();</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        <span class="keywordflow">return</span> os.str();</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    }</div>
+</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>}</div>
+<div class="ttc" id="a_differentiator_8h_html"><div class="ttname"><a href="_differentiator_8h.html">Differentiator.h</a></div><div class="ttdoc">Header of the Kalman::Differentiator class.</div></div>
+<div class="ttc" id="a_fusion_8h_html"><div class="ttname"><a href="_fusion_8h.html">Fusion.h</a></div><div class="ttdoc">Header of the Kalman::Models::Fusion class.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html_a571e5d05d267249cd6b396250ccb8ce2"><div class="ttname"><a href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Kalman::Matrix::Rows</a></div><div class="ttdeci">std::size_t Rows() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00097">Matrix.h:97</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html_aac29b6bb3af29976d7626d5ca569ae1c"><div class="ttname"><a href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Kalman::Matrix::Cols</a></div><div class="ttdeci">std::size_t Cols() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00098">Matrix.h:98</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a03439ab774674a982f6c9c255923a9fc"><div class="ttname"><a href="class_kalman_1_1_model.html#a03439ab774674a982f6c9c255923a9fc">Kalman::Model::SetInitialCovariance</a></div><div class="ttdeci">void SetInitialCovariance(const Matrix &amp;P0)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00308">Model.cc:308</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a136dfe6ea3ee68d6646ce8255fb4501b"><div class="ttname"><a href="class_kalman_1_1_model.html#a136dfe6ea3ee68d6646ce8255fb4501b">Kalman::Model::SetAnalyticJacobian</a></div><div class="ttdeci">void SetAnalyticJacobian(bool on)</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00354">Model.h:354</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a31b4fd602e88d38b51ff86ae05e6ac1d"><div class="ttname"><a href="class_kalman_1_1_model.html#a31b4fd602e88d38b51ff86ae05e6ac1d">Kalman::Model::SetSampleRate</a></div><div class="ttdeci">void SetSampleRate(double fs)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00072">Model.cc:72</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a4fe949c8582b82c25bb7728ddd2136ae"><div class="ttname"><a href="class_kalman_1_1_model.html#a4fe949c8582b82c25bb7728ddd2136ae">Kalman::Model::SetInitialState</a></div><div class="ttdeci">void SetInitialState(const Vector &amp;x0)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00301">Model.cc:301</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a53fd4ea5d51ce2663698cb96b5e0e26d"><div class="ttname"><a href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">Kalman::Model::CheckShapes</a></div><div class="ttdeci">virtual void CheckShapes() const</div><div class="ttdoc">Validate every coefficient against (n, m, l).</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00326">Model.cc:326</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a555b3d431a0e61d50c1282aeb3abac51"><div class="ttname"><a href="class_kalman_1_1_model.html#a555b3d431a0e61d50c1282aeb3abac51">Kalman::Model::SetName</a></div><div class="ttdeci">void SetName(std::string name)</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00144">Model.h:144</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a5d5c563a06b0cf2bc8fda5a568538622"><div class="ttname"><a href="class_kalman_1_1_model.html#a5d5c563a06b0cf2bc8fda5a568538622">Kalman::Model::Describe</a></div><div class="ttdeci">virtual std::string Describe() const</div><div class="ttdoc">One-line description, for logs.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00560">Model.cc:560</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a64a7186139b943b39b02f9b8aeb75d00"><div class="ttname"><a href="class_kalman_1_1_model.html#a64a7186139b943b39b02f9b8aeb75d00">Kalman::Model::fNumericalScheme</a></div><div class="ttdeci">DifferentiatorKind fNumericalScheme</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00100">Model.h:100</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a6ef68825dc1f223aab2e247eb1e082f0"><div class="ttname"><a href="class_kalman_1_1_model.html#a6ef68825dc1f223aab2e247eb1e082f0">Kalman::Model::fSampleRate</a></div><div class="ttdeci">double fSampleRate</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00084">Model.h:84</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a740ae5ec1d1610342e092f2bf7986e7f"><div class="ttname"><a href="class_kalman_1_1_model.html#a740ae5ec1d1610342e092f2bf7986e7f">Kalman::Model::fNState</a></div><div class="ttdeci">std::size_t fNState</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00080">Model.h:80</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a776f377faca8ce404397daa5f90ee92f"><div class="ttname"><a href="class_kalman_1_1_model.html#a776f377faca8ce404397daa5f90ee92f">Kalman::Model::fEpsilon</a></div><div class="ttdeci">double fEpsilon</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00101">Model.h:101</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a8433b39e0476c4c3f766d0adaa15ebcf"><div class="ttname"><a href="class_kalman_1_1_model.html#a8433b39e0476c4c3f766d0adaa15ebcf">Kalman::Model::DeclareMeasurement</a></div><div class="ttdeci">void DeclareMeasurement(std::vector&lt; Component &gt; components)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00469">Model.cc:469</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a99ca5300612034715e7db6901b3b7b48"><div class="ttname"><a href="class_kalman_1_1_model.html#a99ca5300612034715e7db6901b3b7b48">Kalman::Model::SetTimeUnit</a></div><div class="ttdeci">void SetTimeUnit(double seconds)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00066">Model.cc:66</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_aa0e2e05201daaaadb274655c3ebd581d"><div class="ttname"><a href="class_kalman_1_1_model.html#aa0e2e05201daaaadb274655c3ebd581d">Kalman::Model::fNMeasure</a></div><div class="ttdeci">std::size_t fNMeasure</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00081">Model.h:81</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_aa4e1dec6da53716870d3b27306e6b6d8"><div class="ttname"><a href="class_kalman_1_1_model.html#aa4e1dec6da53716870d3b27306e6b6d8">Kalman::Model::DeclareState</a></div><div class="ttdeci">void DeclareState(std::vector&lt; Component &gt; components)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00463">Model.cc:463</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_abbc77b9e0f133acbd9db352fd51bffc4"><div class="ttname"><a href="class_kalman_1_1_model.html#abbc77b9e0f133acbd9db352fd51bffc4">Kalman::Model::SetDifferentiator</a></div><div class="ttdeci">void SetDifferentiator(DifferentiatorKind kind, double step=0.)</div><div class="ttdoc">Declare how this model's Jacobians are obtained.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00147">Model.cc:147</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ac74fcea987377be712dca59892faab3e"><div class="ttname"><a href="class_kalman_1_1_model.html#ac74fcea987377be712dca59892faab3e">Kalman::Model::SetDefaultEngine</a></div><div class="ttdeci">void SetDefaultEngine(EngineKind kind)</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00292">Model.h:292</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ad80f1196a0e2f8a20f16fe6d17ab528a"><div class="ttname"><a href="class_kalman_1_1_model.html#ad80f1196a0e2f8a20f16fe6d17ab528a">Kalman::Model::Allocate</a></div><div class="ttdeci">void Allocate(std::size_t n, std::size_t m, std::size_t l)</div><div class="ttdoc">Size every coefficient to (n, m, l) and seed sane defaults.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00041">Model.cc:41</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ae068b0068ab650340741a7b8a184eb77"><div class="ttname"><a href="class_kalman_1_1_model.html#ae068b0068ab650340741a7b8a184eb77">Kalman::Model::SetT0</a></div><div class="ttdeci">void SetT0(double t0)</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00168">Model.h:168</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ae2621dd78f2f563f8913e981cc1813e4"><div class="ttname"><a href="class_kalman_1_1_model.html#ae2621dd78f2f563f8913e981cc1813e4">Kalman::Model::SetBuiltInSensorName</a></div><div class="ttdeci">void SetBuiltInSensorName(std::string name)</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00455">Model.h:455</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_af99c4d25cce381cb7fcc37a9edb687be"><div class="ttname"><a href="class_kalman_1_1_model.html#af99c4d25cce381cb7fcc37a9edb687be">Kalman::Model::SetStructure</a></div><div class="ttdeci">void SetStructure(StructureKind kind)</div><div class="ttdoc">Declare what the model is made of (see Kalman::StructureKind).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00310">Model.h:310</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a0a10c0b98f4bfe419be88293ec8f8430"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a0a10c0b98f4bfe419be88293ec8f8430">Kalman::Models::Fusion::CheckShapes</a></div><div class="ttdeci">void CheckShapes() const override</div><div class="ttdoc">Validate every coefficient against (n, m, l).</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00253">Fusion.cc:253</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a140b2b0665bedf7ad5e8901cdc72fe94"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a140b2b0665bedf7ad5e8901cdc72fe94">Kalman::Models::Fusion::SetDelay</a></div><div class="ttdeci">void SetDelay(double delay)</div><div class="ttdoc">How late the added sensor reports (see Sensor::delay).</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00238">Fusion.cc:238</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a22a6a6792469dcb61ee8c92af4e52e36"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a22a6a6792469dcb61ee8c92af4e52e36">Kalman::Models::Fusion::Parameter</a></div><div class="ttdeci">double Parameter(const std::string &amp;name) const override</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00131">Fusion.cc:131</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a2609b1dfb908a8c642926d5946f70cf4"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a2609b1dfb908a8c642926d5946f70cf4">Kalman::Models::Fusion::R</a></div><div class="ttdeci">Matrix R(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00226">Fusion.cc:226</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a3477ef910f24563d6226f80daf681977"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a3477ef910f24563d6226f80daf681977">Kalman::Models::Fusion::SetParameter</a></div><div class="ttdeci">void SetParameter(const std::string &amp;name, double value) override</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00138">Fusion.cc:138</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a41378149fc9051b7888fea2ed8df5faf"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a41378149fc9051b7888fea2ed8df5faf">Kalman::Models::Fusion::JacobianH</a></div><div class="ttdeci">Matrix JacobianH(const Vector &amp;x, double t=0.) const override</div><div class="ttdoc">dh/dx — H(t) when analytic, central differences otherwise.</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00186">Fusion.cc:186</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a4904baec3b538e602ecd550f27723cc3"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a4904baec3b538e602ecd550f27723cc3">Kalman::Models::Fusion::Fusion</a></div><div class="ttdeci">Fusion(std::shared_ptr&lt; Model &gt; inner, Sensor sensor)</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00021">Fusion.cc:21</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a5a312408ff0ab96bc1da4e06574c647b"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a5a312408ff0ab96bc1da4e06574c647b">Kalman::Models::Fusion::ParameterNames</a></div><div class="ttdeci">std::vector&lt; std::string &gt; ParameterNames() const override</div><div class="ttdoc">The declared names, sorted.</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00111">Fusion.cc:111</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a5a34eec7ad783ac3200e9b3463f22abe"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a5a34eec7ad783ac3200e9b3463f22abe">Kalman::Models::Fusion::AdoptInitialState</a></div><div class="ttdeci">void AdoptInitialState() override</div><div class="ttdoc">The inner model's initial state: the state is the same.</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00077">Fusion.cc:77</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a6adf153b4cf64d4f64c61312522ab2a2"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a6adf153b4cf64d4f64c61312522ab2a2">Kalman::Models::Fusion::Sensors</a></div><div class="ttdeci">std::vector&lt; Sensor &gt; Sensors() const override</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00083">Fusion.cc:83</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_a7549babf0d9c5a9f400914f66b588288"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#a7549babf0d9c5a9f400914f66b588288">Kalman::Models::Fusion::HasParameter</a></div><div class="ttdeci">bool HasParameter(const std::string &amp;name) const override</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00129">Fusion.cc:129</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_aaaf73e7304dd0cd4437b22f54811ab08"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#aaaf73e7304dd0cd4437b22f54811ab08">Kalman::Models::Fusion::CheckDelays</a></div><div class="ttdeci">void CheckDelays() const override</div><div class="ttdoc">Refuse a sensor that reports late on a model that carries no past state.</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00244">Fusion.cc:244</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_ab90271e1d77aaad176b5211d7e6434ab"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#ab90271e1d77aaad176b5211d7e6434ab">Kalman::Models::Fusion::Describe</a></div><div class="ttdeci">std::string Describe() const override</div><div class="ttdoc">One-line description, for logs.</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00260">Fusion.cc:260</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_abe0404f9eca4498a029254486187a4de"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#abe0404f9eca4498a029254486187a4de">Kalman::Models::Fusion::H</a></div><div class="ttdeci">Matrix H(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00209">Fusion.cc:209</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_acc92799be5b6bf696dcf2a766aa0b413"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#acc92799be5b6bf696dcf2a766aa0b413">Kalman::Models::Fusion::Calibrate</a></div><div class="ttdeci">void Calibrate(double gain=1., double offset=0.)</div><div class="ttdoc">Give the added sensor a calibration to carry (see Sensor::calibrated).</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00103">Fusion.cc:103</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_ad4ef11bd669b3edf2b49c94fe7cda950"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#ad4ef11bd669b3edf2b49c94fe7cda950">Kalman::Models::Fusion::h</a></div><div class="ttdeci">Vector h(const Vector &amp;x, double t=0.) const override</div><div class="ttdoc">The observation map. Default: H x.</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00167">Fusion.cc:167</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_fusion_html_ad50e7de7d90737b2e9e479746061c3c3"><div class="ttname"><a href="class_kalman_1_1_models_1_1_fusion.html#ad50e7de7d90737b2e9e479746061c3c3">Kalman::Models::Fusion::MeasureWithNoise</a></div><div class="ttdeci">Vector MeasureWithNoise(const Vector &amp;x, const Vector &amp;v, double t) const override</div><div class="ttdef"><b>Definition</b> <a href="_fusion_8cc_source.html#l00173">Fusion.cc:173</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html_aaacb0bc54c976b6c03f43b1d861d7877"><div class="ttname"><a href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Kalman::Vector::Size</a></div><div class="ttdeci">std::size_t Size() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00050">Matrix.h:50</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_differentiators_html_afbbd6ce846e557568df7bc6944fc1e20"><div class="ttname"><a href="namespace_kalman_1_1_differentiators.html#afbbd6ce846e557568df7bc6944fc1e20">Kalman::Differentiators::Jacobian</a></div><div class="ttdeci">Matrix Jacobian(DifferentiatorKind kind, const Map &amp;fn, const Vector &amp;x, double step=0., const Vector *y0=nullptr)</div><div class="ttdoc">d fn / dx at x with the scheme kind, without building an object (step &lt;= 0: the default).</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8cc_source.html#l00085">Differentiator.cc:85</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_models_html"><div class="ttname"><a href="namespace_kalman_1_1_models.html">Kalman::Models</a></div><div class="ttdef"><b>Definition</b> <a href="_callback_8h_source.html#l00042">Callback.h:43</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481">Kalman::DifferentiatorKind::Forward</a></div><div class="ttdeci">@ Forward</div><div class="ttdoc">one-sided differences (first order)</div></div>
+<div class="ttc" id="anamespace_kalman_html_a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d"><div class="ttname"><a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">Kalman::StructureKind::Maps</a></div><div class="ttdeci">@ Maps</div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b">Kalman::EngineKind::Linear</a></div><div class="ttdeci">@ Linear</div><div class="ttdoc">constant-matrix predict/update (KF)</div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537">Kalman::EngineKind::Extended</a></div><div class="ttdeci">@ Extended</div><div class="ttdoc">Jacobian linearisation (EKF)</div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html"><div class="ttname"><a href="struct_kalman_1_1_sensor.html">Kalman::Sensor</a></div><div class="ttdoc">What acquires a measurement: what it reads of the state, and how well.</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00058">Sensor.h:59</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a027b9ff0d3bb7b9dec99c81bf83450fe"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a027b9ff0d3bb7b9dec99c81bf83450fe">Kalman::Sensor::Observables</a></div><div class="ttdeci">std::vector&lt; Component &gt; Observables() const</div><div class="ttdoc">Its observables: the given ones, or the sensor's name (numbered when k &gt; 1).</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8cc_source.html#l00028">Sensor.cc:28</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a03dc89eb0f2aed9a86491002c2f434c9"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a03dc89eb0f2aed9a86491002c2f434c9">Kalman::Sensor::Channels</a></div><div class="ttdeci">std::size_t Channels() const</div><div class="ttdoc">The number of channels, k.</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00099">Sensor.h:99</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a1f701c64ae403c9150c130854f2426de"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a1f701c64ae403c9150c130854f2426de">Kalman::Sensor::channels</a></div><div class="ttdeci">std::vector&lt; Component &gt; channels</div><div class="ttdoc">its observables; named after the sensor when empty</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00070">Sensor.h:70</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a37c93019cbc861058f7cdda7512ef4fd"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a37c93019cbc861058f7cdda7512ef4fd">Kalman::Sensor::G</a></div><div class="ttdeci">Matrix G</div><div class="ttdoc">(k,n) when the readings are G x</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00067">Sensor.h:67</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a3a630f1a4c79b69ca7672e883ab6af95"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a3a630f1a4c79b69ca7672e883ab6af95">Kalman::Sensor::HasSetting</a></div><div class="ttdeci">bool HasSetting(const std::string &amp;setting) const</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8cc_source.html#l00056">Sensor.cc:56</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a3a66468e6c6ffd2f0f6523502db2e9c7"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a3a66468e6c6ffd2f0f6523502db2e9c7">Kalman::Sensor::delay</a></div><div class="ttdeci">double delay</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00072">Sensor.h:72</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a4a9f92bc3ffb9cbc32809d9c40ccba9d"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a4a9f92bc3ffb9cbc32809d9c40ccba9d">Kalman::Sensor::Check</a></div><div class="ttdeci">void Check(std::size_t n) const</div><div class="ttdoc">Check the sensor against a state of n components.</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8cc_source.html#l00080">Sensor.cc:80</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a675dd0e66067df4c36b9f1516a39365a"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a675dd0e66067df4c36b9f1516a39365a">Kalman::Sensor::Setting</a></div><div class="ttdeci">double Setting(const std::string &amp;setting) const</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8cc_source.html#l00064">Sensor.cc:64</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a69d1a97f45ec1c22c165a5132f89f8e4"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a69d1a97f45ec1c22c165a5132f89f8e4">Kalman::Sensor::IsLinear</a></div><div class="ttdeci">bool IsLinear() const</div><div class="ttdoc">True when the readings are a matrix.</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00101">Sensor.h:101</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a6aa33c07df2dfa541b2b1903150accfd"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a6aa33c07df2dfa541b2b1903150accfd">Kalman::Sensor::R</a></div><div class="ttdeci">Matrix R</div><div class="ttdoc">(k,k) noise covariance</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00068">Sensor.h:68</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a6dfc029ad15b410f82cbe30cf9dbec1b"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a6dfc029ad15b410f82cbe30cf9dbec1b">Kalman::Sensor::SettingNames</a></div><div class="ttdeci">std::vector&lt; std::string &gt; SettingNames() const</div><div class="ttdoc">The names of its settings, in the order they were declared.</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8cc_source.html#l00048">Sensor.cc:48</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a78732722641a613825530c8d67b3b787"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a78732722641a613825530c8d67b3b787">Kalman::Sensor::Set</a></div><div class="ttdeci">void Set(const std::string &amp;setting, double value)</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8cc_source.html#l00072">Sensor.cc:72</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a82b3ad8a99f4a9b07dfdac5a05b07b42"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a82b3ad8a99f4a9b07dfdac5a05b07b42">Kalman::Sensor::calibrated</a></div><div class="ttdeci">bool calibrated</div><div class="ttdoc">whether its reading goes through a gain and an offset</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00080">Sensor.h:80</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a8c21280f7b7aa8170a857cbb59aa695c"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a8c21280f7b7aa8170a857cbb59aa695c">Kalman::Sensor::Owner</a></div><div class="ttdeci">const std::string &amp; Owner() const</div><div class="ttdoc">The name its calibration parameters carry: the instrument's, or its own.</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00118">Sensor.h:118</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a8d6e2e8ebe98dae6483f6c64f6a032f1"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a8d6e2e8ebe98dae6483f6c64f6a032f1">Kalman::Sensor::Read</a></div><div class="ttdeci">Vector Read(const Vector &amp;x, double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8cc_source.html#l00037">Sensor.cc:37</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_a8fcc636f18c2fadcd2409391dda83e6a"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#a8fcc636f18c2fadcd2409391dda83e6a">Kalman::Sensor::jacobian</a></div><div class="ttdeci">MeasureJacobian jacobian</div><div class="ttdoc">dg/dx; differenced when empty</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00069">Sensor.h:69</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_ab08324fa831bb696b767974896f3de79"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#ab08324fa831bb696b767974896f3de79">Kalman::Sensor::name</a></div><div class="ttdeci">std::string name</div><div class="ttdoc">what the sensor is called</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00065">Sensor.h:65</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_aba4309ef11e202f0ca7f5d7eeddc7258"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#aba4309ef11e202f0ca7f5d7eeddc7258">Kalman::Sensor::offset</a></div><div class="ttdeci">double offset</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00082">Sensor.h:82</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html_af6980a4f4c47563e535ac05bf3996243"><div class="ttname"><a href="struct_kalman_1_1_sensor.html#af6980a4f4c47563e535ac05bf3996243">Kalman::Sensor::gain</a></div><div class="ttdeci">double gain</div><div class="ttdoc">z = gain * g(x, t) + offset</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00081">Sensor.h:81</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_36df885461d6bd14211edf06510d126c.html">Models</a></li><li class="navelem"><a class="el" href="_fusion_8cc.html">Fusion.cc</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

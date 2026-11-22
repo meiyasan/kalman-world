@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_buildings.TestOpenings Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_buildings.TestOpenings Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_buildings.TestOpenings Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g0a3b9232</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__buildings_1_1_test_openings.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classtests_1_1test__buildings_1_1_test_openings-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_buildings.TestOpenings Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_buildings.TestOpenings:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__buildings_1_1_test_openings__inherit__graph.svg" width="190" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:abfe778136dd2ae8719821433736476a8" id="r_abfe778136dd2ae8719821433736476a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_openings.html#abfe778136dd2ae8719821433736476a8">test_shut_openings_change_nothing</a> (self)</td></tr>
+<tr class="separator:abfe778136dd2ae8719821433736476a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a4b98629f65e4de20e19d2506a53afb" id="r_a1a4b98629f65e4de20e19d2506a53afb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_openings.html#a1a4b98629f65e4de20e19d2506a53afb">test_fresh_air_adds_to_the_ventilation</a> (self)</td></tr>
+<tr class="separator:a1a4b98629f65e4de20e19d2506a53afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27ab6c732a8006e35cbe9616f8595bf2" id="r_a27ab6c732a8006e35cbe9616f8595bf2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_openings.html#a27ab6c732a8006e35cbe9616f8595bf2">test_a_recirculating_unit_stirs_and_renews_nothing</a> (self)</td></tr>
+<tr class="separator:a27ab6c732a8006e35cbe9616f8595bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cadacf74a0710e55c2b9abe1a396bcb" id="r_a8cadacf74a0710e55c2b9abe1a396bcb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_openings.html#a8cadacf74a0710e55c2b9abe1a396bcb">test_a_window_airs_the_room_from_its_side</a> (self)</td></tr>
+<tr class="separator:a8cadacf74a0710e55c2b9abe1a396bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb76a44f36def449f22129f7884ec4dc" id="r_abb76a44f36def449f22129f7884ec4dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_openings.html#abb76a44f36def449f22129f7884ec4dc">test_a_door_lets_in_the_air_beyond</a> (self)</td></tr>
+<tr class="separator:abb76a44f36def449f22129f7884ec4dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a554b1d8bffa48349ff247b8a1e1b4161" id="r_a554b1d8bffa48349ff247b8a1e1b4161"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_openings.html#a554b1d8bffa48349ff247b8a1e1b4161">test_a_schedule_follows_the_steps</a> (self)</td></tr>
+<tr class="separator:a554b1d8bffa48349ff247b8a1e1b4161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf0f7c9dc0ec92b8ff4239896b927490" id="r_abf0f7c9dc0ec92b8ff4239896b927490"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__buildings_1_1_test_openings.html#abf0f7c9dc0ec92b8ff4239896b927490">test_variant_and_what_is_refused</a> (self)</td></tr>
+<tr class="separator:abf0f7c9dc0ec92b8ff4239896b927490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">A window, a door, an air conditioner: what each does to the balance.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__buildings_8py_source.html#l00101">101</a> of file <a class="el" href="test__buildings_8py_source.html">test_buildings.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="abb76a44f36def449f22129f7884ec4dc" name="abb76a44f36def449f22129f7884ec4dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb76a44f36def449f22129f7884ec4dc">&#9670;&#160;</a></span>test_a_door_lets_in_the_air_beyond()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_buildings.TestOpenings.test_a_door_lets_in_the_air_beyond </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">An empty room whose door gives on a corridor at 900 ppm settles between the two levels.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__buildings_8py_source.html#l00139">139</a> of file <a class="el" href="test__buildings_8py_source.html">test_buildings.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  139</span>    <span class="keyword">def </span>test_a_door_lets_in_the_air_beyond(self):</div>
+<div class="line"><span class="lineno">  140</span>        <span class="stringliteral">&quot;&quot;&quot;An empty room whose door gives on a corridor at 900 ppm settles between the two levels.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  141</span>        room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[door(<span class="stringliteral">&quot;door&quot;</span>, [(0, 5)], flow=0.05, beyond=900.0, open=<span class="keyword">True</span>)])</div>
+<div class="line"><span class="lineno">  142</span>        x = room.x0</div>
+<div class="line"><span class="lineno">  143</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(600):</div>
+<div class="line"><span class="lineno">  144</span>            x = room.f(x, u=np.array([[0.0], [1.0]]))</div>
+<div class="line"><span class="lineno">  145</span>        field = room.field(x)</div>
+<div class="line"><span class="lineno">  146</span>        self.assertGreater(np.nanmin(field), 420.0)</div>
+<div class="line"><span class="lineno">  147</span>        self.assertLess(np.nanmax(field), 900.0)</div>
+<div class="line"><span class="lineno">  148</span>        self.assertEqual(np.unravel_index(np.nanargmax(field), field.shape), (0, 5))</div>
+<div class="line"><span class="lineno">  149</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a27ab6c732a8006e35cbe9616f8595bf2" name="a27ab6c732a8006e35cbe9616f8595bf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27ab6c732a8006e35cbe9616f8595bf2">&#9670;&#160;</a></span>test_a_recirculating_unit_stirs_and_renews_nothing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_buildings.TestOpenings.test_a_recirculating_unit_stirs_and_renews_nothing </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__buildings_8py_source.html#l00115">115</a> of file <a class="el" href="test__buildings_8py_source.html">test_buildings.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  115</span>    <span class="keyword">def </span>test_a_recirculating_unit_stirs_and_renews_nothing(self):</div>
+<div class="line"><span class="lineno">  116</span>        people = np.array([[4.0], [1.0]])</div>
+<div class="line"><span class="lineno">  117</span>        spread = {}</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">for</span> on <span class="keywordflow">in</span> (<span class="keyword">False</span>, <span class="keyword">True</span>):</div>
+<div class="line"><span class="lineno">  119</span>            room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[air_conditioner(ach=0.0, mixing=0.1, on=on)])</div>
+<div class="line"><span class="lineno">  120</span>            ach, _ = ventilation_from_decay(*fall(room))</div>
+<div class="line"><span class="lineno">  121</span>            self.assertAlmostEqual(ach, 2.0, delta=0.01)        <span class="comment"># the fall is the room&#39;s own, on or off</span></div>
+<div class="line"><span class="lineno">  122</span>            x = room.x0</div>
+<div class="line"><span class="lineno">  123</span>            <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(600):</div>
+<div class="line"><span class="lineno">  124</span>                x = room.f(x, u=people)</div>
+<div class="line"><span class="lineno">  125</span>            spread[on] = float(np.ptp(x))</div>
+<div class="line"><span class="lineno">  126</span>        self.assertLess(spread[<span class="keyword">True</span>], 0.5 * spread[<span class="keyword">False</span>])       <span class="comment"># and the room is more even</span></div>
+<div class="line"><span class="lineno">  127</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a554b1d8bffa48349ff247b8a1e1b4161" name="a554b1d8bffa48349ff247b8a1e1b4161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a554b1d8bffa48349ff247b8a1e1b4161">&#9670;&#160;</a></span>test_a_schedule_follows_the_steps()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_buildings.TestOpenings.test_a_schedule_follows_the_steps </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__buildings_8py_source.html#l00150">150</a> of file <a class="el" href="test__buildings_8py_source.html">test_buildings.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  150</span>    <span class="keyword">def </span>test_a_schedule_follows_the_steps(self):</div>
+<div class="line"><span class="lineno">  151</span>        steps = np.zeros(10)</div>
+<div class="line"><span class="lineno">  152</span>        steps[4:7] = 1.0</div>
+<div class="line"><span class="lineno">  153</span>        room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0)], open=steps)])</div>
+<div class="line"><span class="lineno">  154</span>        opened = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0)], open=<span class="keyword">True</span>)])</div>
+<div class="line"><span class="lineno">  155</span>        np.testing.assert_array_equal(room.F(t=3 * 60.0), RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>).F())</div>
+<div class="line"><span class="lineno">  156</span>        np.testing.assert_array_equal(room.F(t=5 * 60.0), opened.F())</div>
+<div class="line"><span class="lineno">  157</span>        np.testing.assert_array_equal(room.F(t=8 * 60.0), RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>).F())</div>
+<div class="line"><span class="lineno">  158</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8cadacf74a0710e55c2b9abe1a396bcb" name="a8cadacf74a0710e55c2b9abe1a396bcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cadacf74a0710e55c2b9abe1a396bcb">&#9670;&#160;</a></span>test_a_window_airs_the_room_from_its_side()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_buildings.TestOpenings.test_a_window_airs_the_room_from_its_side </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__buildings_8py_source.html#l00128">128</a> of file <a class="el" href="test__buildings_8py_source.html">test_buildings.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  128</span>    <span class="keyword">def </span>test_a_window_airs_the_room_from_its_side(self):</div>
+<div class="line"><span class="lineno">  129</span>        opened = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0), (5, 0)], flow=0.1, open=<span class="keyword">True</span>)])</div>
+<div class="line"><span class="lineno">  130</span>        shut = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>)</div>
+<div class="line"><span class="lineno">  131</span>        people = np.array([[4.0], [1.0]])</div>
+<div class="line"><span class="lineno">  132</span>        xo, xs = opened.x0, shut.x0</div>
+<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(600):</div>
+<div class="line"><span class="lineno">  134</span>            xo, xs = opened.f(xo, u=people), shut.f(xs, u=people)</div>
+<div class="line"><span class="lineno">  135</span>        self.assertLess(float(np.mean(xo)), float(np.mean(xs)) - 100.0)</div>
+<div class="line"><span class="lineno">  136</span>        field = opened.field(xo)</div>
+<div class="line"><span class="lineno">  137</span>        self.assertLess(field[4, 0], field[4, 5])                 <span class="comment"># lowest at the window</span></div>
+<div class="line"><span class="lineno">  138</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1a4b98629f65e4de20e19d2506a53afb" name="a1a4b98629f65e4de20e19d2506a53afb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a4b98629f65e4de20e19d2506a53afb">&#9670;&#160;</a></span>test_fresh_air_adds_to_the_ventilation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_buildings.TestOpenings.test_fresh_air_adds_to_the_ventilation </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">An air conditioner with an intake of 3 air changes per hour, in a room at 2: the fall is at 5.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__buildings_8py_source.html#l00110">110</a> of file <a class="el" href="test__buildings_8py_source.html">test_buildings.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  110</span>    <span class="keyword">def </span>test_fresh_air_adds_to_the_ventilation(self):</div>
+<div class="line"><span class="lineno">  111</span>        <span class="stringliteral">&quot;&quot;&quot;An air conditioner with an intake of 3 air changes per hour, in a room at 2: the fall is at 5.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  112</span>        ach, _ = ventilation_from_decay(*fall(RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[air_conditioner(ach=3.0, on=<span class="keyword">True</span>)])))</div>
+<div class="line"><span class="lineno">  113</span>        self.assertAlmostEqual(ach, 5.0, delta=0.01)</div>
+<div class="line"><span class="lineno">  114</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abfe778136dd2ae8719821433736476a8" name="abfe778136dd2ae8719821433736476a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfe778136dd2ae8719821433736476a8">&#9670;&#160;</a></span>test_shut_openings_change_nothing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_buildings.TestOpenings.test_shut_openings_change_nothing </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__buildings_8py_source.html#l00104">104</a> of file <a class="el" href="test__buildings_8py_source.html">test_buildings.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  104</span>    <span class="keyword">def </span>test_shut_openings_change_nothing(self):</div>
+<div class="line"><span class="lineno">  105</span>        plain = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>)</div>
+<div class="line"><span class="lineno">  106</span>        fitted = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0)]), door(<span class="stringliteral">&quot;door&quot;</span>, [(0, 5)]), air_conditioner()])</div>
+<div class="line"><span class="lineno">  107</span>        np.testing.assert_array_equal(fitted.F(), plain.F())</div>
+<div class="line"><span class="lineno">  108</span>        np.testing.assert_array_equal(fitted.B(), plain.B())</div>
+<div class="line"><span class="lineno">  109</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abf0f7c9dc0ec92b8ff4239896b927490" name="abf0f7c9dc0ec92b8ff4239896b927490"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf0f7c9dc0ec92b8ff4239896b927490">&#9670;&#160;</a></span>test_variant_and_what_is_refused()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_buildings.TestOpenings.test_variant_and_what_is_refused </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__buildings_8py_source.html#l00159">159</a> of file <a class="el" href="test__buildings_8py_source.html">test_buildings.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  159</span>    <span class="keyword">def </span>test_variant_and_what_is_refused(self):</div>
+<div class="line"><span class="lineno">  160</span>        room = RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, count_people=<span class="keyword">True</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(4, 0)])])</div>
+<div class="line"><span class="lineno">  161</span>        opened = room.variant(window=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  162</span>        self.assertTrue(opened.count_people)</div>
+<div class="line"><span class="lineno">  163</span>        self.assertFalse(np.array_equal(opened.F(), room.F()))</div>
+<div class="line"><span class="lineno">  164</span>        <span class="keyword">with</span> self.assertRaises(KeyError):</div>
+<div class="line"><span class="lineno">  165</span>            room.variant(skylight=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  166</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><span class="lineno">  167</span>            RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;window&quot;</span>, [(10, 10)])])       <span class="comment"># not in the room</span></div>
+<div class="line"><span class="lineno">  168</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><span class="lineno">  169</span>            RoomCO2Model(<span class="stringliteral">&quot;A&quot;</span>, openings=[window(<span class="stringliteral">&quot;w&quot;</span>, [(4, 0)]), door(<span class="stringliteral">&quot;w&quot;</span>, [(0, 5)])])</div>
+<div class="line"><span class="lineno">  170</span> </div>
+<div class="line"><span class="lineno">  171</span> </div>
+<div class="line"><span class="lineno">  172</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;needs the C++ core&quot;)</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__buildings_8py_source.html">test_buildings.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__buildings.html">test_buildings</a></li><li class="navelem"><a class="el" href="classtests_1_1test__buildings_1_1_test_openings.html">TestOpenings</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

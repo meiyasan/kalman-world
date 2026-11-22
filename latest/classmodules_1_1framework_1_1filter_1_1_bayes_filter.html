@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-1-g0a3b9232</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -288,6 +288,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a5ff1ff0e820e59a7b668658902573b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae43d1186c1678f7dfccb21b4db847dd6" id="r_ae43d1186c1678f7dfccb21b4db847dd6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#ae43d1186c1678f7dfccb21b4db847dd6">posterior</a></td></tr>
 <tr class="separator:ae43d1186c1678f7dfccb21b4db847dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf2a3a7ef5fe6e70b18d8631b068358d" id="r_abf2a3a7ef5fe6e70b18d8631b068358d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#abf2a3a7ef5fe6e70b18d8631b068358d">steady_from</a></td></tr>
+<tr class="separator:abf2a3a7ef5fe6e70b18d8631b068358d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab256013cb70ee6c0f72ac00297e078c1" id="r_ab256013cb70ee6c0f72ac00297e078c1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#ab256013cb70ee6c0f72ac00297e078c1">x</a></td></tr>
 <tr class="separator:ab256013cb70ee6c0f72ac00297e078c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae1bb6550644f67f6762cb85a1cf4864" id="r_aae1bb6550644f67f6762cb85a1cf4864"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#aae1bb6550644f67f6762cb85a1cf4864">P</a></td></tr>
@@ -425,6 +427,10 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:af29fba9507ab82989ac7015f299cd0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2574702296dca3b71a2fb052d41047b9" id="r_a2574702296dca3b71a2fb052d41047b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a2574702296dca3b71a2fb052d41047b9">_engine</a></td></tr>
 <tr class="separator:a2574702296dca3b71a2fb052d41047b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27a39b3ba37b6b541793fb7ac5278afd" id="r_a27a39b3ba37b6b541793fb7ac5278afd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a27a39b3ba37b6b541793fb7ac5278afd">_steady</a></td></tr>
+<tr class="separator:a27a39b3ba37b6b541793fb7ac5278afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48a592ea2e97c370cd2b70d9184c7090" id="r_a48a592ea2e97c370cd2b70d9184c7090"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a48a592ea2e97c370cd2b70d9184c7090">_steady_used</a></td></tr>
+<tr class="separator:a48a592ea2e97c370cd2b70d9184c7090"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ed767505f28bc3492135aebd723ac6a" id="r_a2ed767505f28bc3492135aebd723ac6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a2ed767505f28bc3492135aebd723ac6a">_engine_handle</a></td></tr>
 <tr class="separator:a2ed767505f28bc3492135aebd723ac6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3098cf8910ecdde3295947a6f8b28e60" id="r_a3098cf8910ecdde3295947a6f8b28e60"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a3098cf8910ecdde3295947a6f8b28e60">_particle_draws</a></td></tr>
@@ -633,36 +639,36 @@ against ``model.ALLOWED_ENGINES``.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00629">629</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  629</span>    <span class="keyword">def </span>_backward_native(self, N):</div>
-<div class="line"><span class="lineno">  630</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> lib, as_contiguous, dptr</div>
-<div class="line"><span class="lineno">  631</span> </div>
-<div class="line"><span class="lineno">  632</span>        n = self.model.n</div>
-<div class="line"><span class="lineno">  633</span>        <span class="comment"># One transition for the whole run (a constant-matrix model), or one per</span></div>
-<div class="line"><span class="lineno">  634</span>        <span class="comment"># step: the Jacobians an extended pass recorded, a time-varying F.</span></div>
-<div class="line"><span class="lineno">  635</span>        first = self.transition[0]</div>
-<div class="line"><span class="lineno">  636</span>        constant = all(F <span class="keywordflow">is</span> first <span class="keywordflow">for</span> F <span class="keywordflow">in</span> self.transition)</div>
-<div class="line"><span class="lineno">  637</span>        F = as_contiguous(first <span class="keywordflow">if</span> constant <span class="keywordflow">else</span> np.array([np.asarray(F, dtype=float) <span class="keywordflow">for</span> F <span class="keywordflow">in</span> self.transition]))</div>
-<div class="line"><span class="lineno">  638</span>        sweep = lib.kf_backward_rts <span class="keywordflow">if</span> constant <span class="keywordflow">else</span> lib.kf_backward_rts_steps</div>
-<div class="line"><span class="lineno">  639</span>        x_post  = as_contiguous(np.array([x.reshape(-1) <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> self.posterior]))</div>
-<div class="line"><span class="lineno">  640</span>        P_post  = as_contiguous(np.array([P <span class="keywordflow">for</span> _, P <span class="keywordflow">in</span> self.posterior]))</div>
-<div class="line"><span class="lineno">  641</span>        x_prior = as_contiguous(np.array([x.reshape(-1) <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> self.prior]))</div>
-<div class="line"><span class="lineno">  642</span>        P_prior = as_contiguous(np.array([P <span class="keywordflow">for</span> _, P <span class="keywordflow">in</span> self.prior]))</div>
-<div class="line"><span class="lineno">  643</span> </div>
-<div class="line"><span class="lineno">  644</span>        x_smooth = np.empty((N, n), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  645</span>        P_smooth = np.empty((N, n, n), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  646</span> </div>
-<div class="line"><span class="lineno">  647</span>        sweep(</div>
-<div class="line"><span class="lineno">  648</span>            n, N,</div>
-<div class="line"><span class="lineno">  649</span>            dptr(x_post), dptr(P_post),</div>
-<div class="line"><span class="lineno">  650</span>            dptr(x_prior), dptr(P_prior),</div>
-<div class="line"><span class="lineno">  651</span>            dptr(F),</div>
-<div class="line"><span class="lineno">  652</span>            dptr(x_smooth), dptr(P_smooth),</div>
-<div class="line"><span class="lineno">  653</span>        )</div>
-<div class="line"><span class="lineno">  654</span> </div>
-<div class="line"><span class="lineno">  655</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N):</div>
-<div class="line"><span class="lineno">  656</span>            self.smooth[k] = (x_smooth[k].reshape(n, 1), P_smooth[k])</div>
-<div class="line"><span class="lineno">  657</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00657">657</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  657</span>    <span class="keyword">def </span>_backward_native(self, N):</div>
+<div class="line"><span class="lineno">  658</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> lib, as_contiguous, dptr</div>
+<div class="line"><span class="lineno">  659</span> </div>
+<div class="line"><span class="lineno">  660</span>        n = self.model.n</div>
+<div class="line"><span class="lineno">  661</span>        <span class="comment"># One transition for the whole run (a constant-matrix model), or one per</span></div>
+<div class="line"><span class="lineno">  662</span>        <span class="comment"># step: the Jacobians an extended pass recorded, a time-varying F.</span></div>
+<div class="line"><span class="lineno">  663</span>        first = self.transition[0]</div>
+<div class="line"><span class="lineno">  664</span>        constant = all(F <span class="keywordflow">is</span> first <span class="keywordflow">for</span> F <span class="keywordflow">in</span> self.transition)</div>
+<div class="line"><span class="lineno">  665</span>        F = as_contiguous(first <span class="keywordflow">if</span> constant <span class="keywordflow">else</span> np.array([np.asarray(F, dtype=float) <span class="keywordflow">for</span> F <span class="keywordflow">in</span> self.transition]))</div>
+<div class="line"><span class="lineno">  666</span>        sweep = lib.kf_backward_rts <span class="keywordflow">if</span> constant <span class="keywordflow">else</span> lib.kf_backward_rts_steps</div>
+<div class="line"><span class="lineno">  667</span>        x_post  = as_contiguous(np.array([x.reshape(-1) <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> self.posterior]))</div>
+<div class="line"><span class="lineno">  668</span>        P_post  = as_contiguous(np.array([P <span class="keywordflow">for</span> _, P <span class="keywordflow">in</span> self.posterior]))</div>
+<div class="line"><span class="lineno">  669</span>        x_prior = as_contiguous(np.array([x.reshape(-1) <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> self.prior]))</div>
+<div class="line"><span class="lineno">  670</span>        P_prior = as_contiguous(np.array([P <span class="keywordflow">for</span> _, P <span class="keywordflow">in</span> self.prior]))</div>
+<div class="line"><span class="lineno">  671</span> </div>
+<div class="line"><span class="lineno">  672</span>        x_smooth = np.empty((N, n), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  673</span>        P_smooth = np.empty((N, n, n), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  674</span> </div>
+<div class="line"><span class="lineno">  675</span>        sweep(</div>
+<div class="line"><span class="lineno">  676</span>            n, N,</div>
+<div class="line"><span class="lineno">  677</span>            dptr(x_post), dptr(P_post),</div>
+<div class="line"><span class="lineno">  678</span>            dptr(x_prior), dptr(P_prior),</div>
+<div class="line"><span class="lineno">  679</span>            dptr(F),</div>
+<div class="line"><span class="lineno">  680</span>            dptr(x_smooth), dptr(P_smooth),</div>
+<div class="line"><span class="lineno">  681</span>        )</div>
+<div class="line"><span class="lineno">  682</span> </div>
+<div class="line"><span class="lineno">  683</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N):</div>
+<div class="line"><span class="lineno">  684</span>            self.smooth[k] = (x_smooth[k].reshape(n, 1), P_smooth[k])</div>
+<div class="line"><span class="lineno">  685</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -700,42 +706,42 @@ against ``model.ALLOWED_ENGINES``.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00433">433</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  433</span>    <span class="keyword">def </span>_callback_eligible(self, uk_fn) -&gt; bool:</div>
-<div class="line"><span class="lineno">  434</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> self._closed_loop_eligible():</div>
-<div class="line"><span class="lineno">  435</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  436</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
-<div class="line"><span class="lineno">  437</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
-<div class="line"><span class="lineno">  438</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  439</span>        <span class="keyword">from</span> .engines.extended <span class="keyword">import</span> ExtendedKalmanEngine</div>
-<div class="line"><span class="lineno">  440</span>        <span class="keyword">from</span> .engines.unscented <span class="keyword">import</span> UnscentedKalmanEngine</div>
-<div class="line"><span class="lineno">  441</span>        <span class="keyword">from</span> .engines.particle <span class="keyword">import</span> ParticleEngine</div>
-<div class="line"><span class="lineno">  442</span>        <span class="keyword">from</span> .engines.ensemble <span class="keyword">import</span> EnsembleKalmanEngine</div>
-<div class="line"><span class="lineno">  443</span>        <span class="keyword">from</span> .engine_models <span class="keyword">import</span> KalmanEnsembleModel</div>
-<div class="line"><span class="lineno">  444</span>        <span class="keywordflow">if</span> type(self.engine) <span class="keywordflow">is</span> EnsembleKalmanEngine:</div>
-<div class="line"><span class="lineno">  445</span>            <span class="comment"># A field model&#39;s whole-ensemble path (f or h written for every member</span></div>
-<div class="line"><span class="lineno">  446</span>            <span class="comment"># at once, its own covariance mask) runs in</span></div>
-<div class="line"><span class="lineno">  447</span>            <span class="comment"># C++ when it has a counterpart (libKalmanApps); otherwise the Python engine runs.</span></div>
-<div class="line"><span class="lineno">  448</span>            model = self._model</div>
-<div class="line"><span class="lineno">  449</span>            <span class="keywordflow">if</span> getattr(model, <span class="stringliteral">&quot;BATCHED&quot;</span>, ()) <span class="keywordflow">or</span> isinstance(model, KalmanEnsembleModel):</div>
-<div class="line"><span class="lineno">  450</span>                <span class="keywordflow">return</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> self.engine._native_counterpart(self._model) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  451</span>            <span class="keywordflow">if</span> self.engine._rho_xy <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> self.engine._rho_yy <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  452</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  453</span>        <span class="keywordflow">elif</span> type(self.engine) <span class="keywordflow">not</span> <span class="keywordflow">in</span> (ExtendedKalmanEngine, UnscentedKalmanEngine, ParticleEngine):</div>
-<div class="line"><span class="lineno">  454</span>            <span class="comment"># A linear model in closed loop (a controller function) runs on the</span></div>
-<div class="line"><span class="lineno">  455</span>            <span class="comment"># C++ extended engine, which on a model of matrices is the same</span></div>
-<div class="line"><span class="lineno">  456</span>            <span class="comment"># arithmetic: the Jacobian of F x is F. The model must say it is its</span></div>
-<div class="line"><span class="lineno">  457</span>            <span class="comment"># constant matrices. Matrices given as functions keep the Python loop</span></div>
-<div class="line"><span class="lineno">  458</span>            <span class="comment"># in closed loop: the C++ loop would ask for F twice a step (the step</span></div>
-<div class="line"><span class="lineno">  459</span>            <span class="comment"># and its Jacobian), and a function may count its calls.</span></div>
-<div class="line"><span class="lineno">  460</span>            <span class="keyword">from</span> .engines.linear <span class="keyword">import</span> LinearKalmanEngine</div>
-<div class="line"><span class="lineno">  461</span>            <span class="keyword">from</span> .constants <span class="keyword">import</span> KalmanStructureKind</div>
-<div class="line"><span class="lineno">  462</span>            <span class="keywordflow">if</span> type(self.engine) <span class="keywordflow">is</span> <span class="keywordflow">not</span> LinearKalmanEngine <span class="keywordflow">or</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  463</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  464</span>            <span class="keywordflow">if</span> getattr(self._model, <span class="stringliteral">&quot;structure&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> KalmanStructureKind.MATRICES:</div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00446">446</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  446</span>    <span class="keyword">def </span>_callback_eligible(self, uk_fn) -&gt; bool:</div>
+<div class="line"><span class="lineno">  447</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> self._closed_loop_eligible():</div>
+<div class="line"><span class="lineno">  448</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  449</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  450</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
+<div class="line"><span class="lineno">  451</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  452</span>        <span class="keyword">from</span> .engines.extended <span class="keyword">import</span> ExtendedKalmanEngine</div>
+<div class="line"><span class="lineno">  453</span>        <span class="keyword">from</span> .engines.unscented <span class="keyword">import</span> UnscentedKalmanEngine</div>
+<div class="line"><span class="lineno">  454</span>        <span class="keyword">from</span> .engines.particle <span class="keyword">import</span> ParticleEngine</div>
+<div class="line"><span class="lineno">  455</span>        <span class="keyword">from</span> .engines.ensemble <span class="keyword">import</span> EnsembleKalmanEngine</div>
+<div class="line"><span class="lineno">  456</span>        <span class="keyword">from</span> .engine_models <span class="keyword">import</span> KalmanEnsembleModel</div>
+<div class="line"><span class="lineno">  457</span>        <span class="keywordflow">if</span> type(self.engine) <span class="keywordflow">is</span> EnsembleKalmanEngine:</div>
+<div class="line"><span class="lineno">  458</span>            <span class="comment"># A field model&#39;s whole-ensemble path (f or h written for every member</span></div>
+<div class="line"><span class="lineno">  459</span>            <span class="comment"># at once, its own covariance mask) runs in</span></div>
+<div class="line"><span class="lineno">  460</span>            <span class="comment"># C++ when it has a counterpart (libKalmanApps); otherwise the Python engine runs.</span></div>
+<div class="line"><span class="lineno">  461</span>            model = self._model</div>
+<div class="line"><span class="lineno">  462</span>            <span class="keywordflow">if</span> getattr(model, <span class="stringliteral">&quot;BATCHED&quot;</span>, ()) <span class="keywordflow">or</span> isinstance(model, KalmanEnsembleModel):</div>
+<div class="line"><span class="lineno">  463</span>                <span class="keywordflow">return</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> self.engine._native_counterpart(self._model) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  464</span>            <span class="keywordflow">if</span> self.engine._rho_xy <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> self.engine._rho_yy <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
 <div class="line"><span class="lineno">  465</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  466</span>        <span class="keywordflow">return</span> native.callback_eligible(self._model)</div>
-<div class="line"><span class="lineno">  467</span> </div>
+<div class="line"><span class="lineno">  466</span>        <span class="keywordflow">elif</span> type(self.engine) <span class="keywordflow">not</span> <span class="keywordflow">in</span> (ExtendedKalmanEngine, UnscentedKalmanEngine, ParticleEngine):</div>
+<div class="line"><span class="lineno">  467</span>            <span class="comment"># A linear model in closed loop (a controller function) runs on the</span></div>
+<div class="line"><span class="lineno">  468</span>            <span class="comment"># C++ extended engine, which on a model of matrices is the same</span></div>
+<div class="line"><span class="lineno">  469</span>            <span class="comment"># arithmetic: the Jacobian of F x is F. The model must say it is its</span></div>
+<div class="line"><span class="lineno">  470</span>            <span class="comment"># constant matrices. Matrices given as functions keep the Python loop</span></div>
+<div class="line"><span class="lineno">  471</span>            <span class="comment"># in closed loop: the C++ loop would ask for F twice a step (the step</span></div>
+<div class="line"><span class="lineno">  472</span>            <span class="comment"># and its Jacobian), and a function may count its calls.</span></div>
+<div class="line"><span class="lineno">  473</span>            <span class="keyword">from</span> .engines.linear <span class="keyword">import</span> LinearKalmanEngine</div>
+<div class="line"><span class="lineno">  474</span>            <span class="keyword">from</span> .constants <span class="keyword">import</span> KalmanStructureKind</div>
+<div class="line"><span class="lineno">  475</span>            <span class="keywordflow">if</span> type(self.engine) <span class="keywordflow">is</span> <span class="keywordflow">not</span> LinearKalmanEngine <span class="keywordflow">or</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  476</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  477</span>            <span class="keywordflow">if</span> getattr(self._model, <span class="stringliteral">&quot;structure&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> KalmanStructureKind.MATRICES:</div>
+<div class="line"><span class="lineno">  478</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  479</span>        <span class="keywordflow">return</span> native.callback_eligible(self._model)</div>
+<div class="line"><span class="lineno">  480</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -766,15 +772,15 @@ against ``model.ALLOWED_ENGINES``.
 control (l = 0) may have one too: a controller that commands nothing and
 only retunes the model (adaptive Q and R), which the loop then asks for
 at every step.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00392">392</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  392</span>    <span class="keyword">def </span>_closed_loop_eligible(self) -&gt; bool:</div>
-<div class="line"><span class="lineno">  393</span>        <span class="stringliteral">&quot;&quot;&quot;A controller function can drive the C++ loop. A model that takes no</span></div>
-<div class="line"><span class="lineno">  394</span><span class="stringliteral">        control (l = 0) may have one too: a controller that commands nothing and</span></div>
-<div class="line"><span class="lineno">  395</span><span class="stringliteral">        only retunes the model (adaptive Q and R), which the loop then asks for</span></div>
-<div class="line"><span class="lineno">  396</span><span class="stringliteral">        at every step.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  397</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
-<div class="line"><span class="lineno">  398</span>        <span class="keywordflow">return</span> native.native_loop_enabled()</div>
-<div class="line"><span class="lineno">  399</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00403">403</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  403</span>    <span class="keyword">def </span>_closed_loop_eligible(self) -&gt; bool:</div>
+<div class="line"><span class="lineno">  404</span>        <span class="stringliteral">&quot;&quot;&quot;A controller function can drive the C++ loop. A model that takes no</span></div>
+<div class="line"><span class="lineno">  405</span><span class="stringliteral">        control (l = 0) may have one too: a controller that commands nothing and</span></div>
+<div class="line"><span class="lineno">  406</span><span class="stringliteral">        only retunes the model (adaptive Q and R), which the loop then asks for</span></div>
+<div class="line"><span class="lineno">  407</span><span class="stringliteral">        at every step.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  408</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  409</span>        <span class="keywordflow">return</span> native.native_loop_enabled()</div>
+<div class="line"><span class="lineno">  410</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -803,16 +809,16 @@ at every step.</pre>
 </div><div class="memdoc">
 <pre class="fragment">The C++ engine that stands for this filter's engine on a C++ model
 (a name ``core.create_engine`` takes), or None.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00255">255</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  255</span>    <span class="keyword">def </span>_counterpart_engine(self):</div>
-<div class="line"><span class="lineno">  256</span>        <span class="stringliteral">&quot;&quot;&quot;The C++ engine that stands for this filter&#39;s engine on a C++ model</span></div>
-<div class="line"><span class="lineno">  257</span><span class="stringliteral">        (a name ``core.create_engine`` takes), or None.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  258</span>        <span class="keyword">from</span> .engines.extended <span class="keyword">import</span> ExtendedKalmanEngine</div>
-<div class="line"><span class="lineno">  259</span>        <span class="keyword">from</span> .engines.linear <span class="keyword">import</span> LinearKalmanEngine</div>
-<div class="line"><span class="lineno">  260</span>        <span class="keyword">from</span> .engines.interacting <span class="keyword">import</span> InteractingKalmanEngine</div>
-<div class="line"><span class="lineno">  261</span>        <span class="keywordflow">return</span> {ExtendedKalmanEngine: <span class="stringliteral">&quot;extended&quot;</span>, LinearKalmanEngine: <span class="stringliteral">&quot;linear&quot;</span>,</div>
-<div class="line"><span class="lineno">  262</span>                InteractingKalmanEngine: <span class="stringliteral">&quot;interacting&quot;</span>}.get(type(self.engine))</div>
-<div class="line"><span class="lineno">  263</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00265">265</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  265</span>    <span class="keyword">def </span>_counterpart_engine(self):</div>
+<div class="line"><span class="lineno">  266</span>        <span class="stringliteral">&quot;&quot;&quot;The C++ engine that stands for this filter&#39;s engine on a C++ model</span></div>
+<div class="line"><span class="lineno">  267</span><span class="stringliteral">        (a name ``core.create_engine`` takes), or None.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  268</span>        <span class="keyword">from</span> .engines.extended <span class="keyword">import</span> ExtendedKalmanEngine</div>
+<div class="line"><span class="lineno">  269</span>        <span class="keyword">from</span> .engines.linear <span class="keyword">import</span> LinearKalmanEngine</div>
+<div class="line"><span class="lineno">  270</span>        <span class="keyword">from</span> .engines.interacting <span class="keyword">import</span> InteractingKalmanEngine</div>
+<div class="line"><span class="lineno">  271</span>        <span class="keywordflow">return</span> {ExtendedKalmanEngine: <span class="stringliteral">&quot;extended&quot;</span>, LinearKalmanEngine: <span class="stringliteral">&quot;linear&quot;</span>,</div>
+<div class="line"><span class="lineno">  272</span>                InteractingKalmanEngine: <span class="stringliteral">&quot;interacting&quot;</span>}.get(type(self.engine))</div>
+<div class="line"><span class="lineno">  273</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -841,19 +847,19 @@ at every step.</pre>
 </div><div class="memdoc">
 <pre class="fragment">The same for the engines that draw points over the state: the kind and
 its settings, or None.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00264">264</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  264</span>    <span class="keyword">def </span>_counterpart_sigma_engine(self):</div>
-<div class="line"><span class="lineno">  265</span>        <span class="stringliteral">&quot;&quot;&quot;The same for the engines that draw points over the state: the kind and</span></div>
-<div class="line"><span class="lineno">  266</span><span class="stringliteral">        its settings, or None.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  267</span>        <span class="keyword">from</span> .engines.unscented <span class="keyword">import</span> UnscentedKalmanEngine</div>
-<div class="line"><span class="lineno">  268</span>        <span class="keyword">from</span> .engines.particle <span class="keyword">import</span> ParticleEngine</div>
-<div class="line"><span class="lineno">  269</span>        engine = self.engine</div>
-<div class="line"><span class="lineno">  270</span>        <span class="keywordflow">if</span> type(engine) <span class="keywordflow">not</span> <span class="keywordflow">in</span> (UnscentedKalmanEngine, ParticleEngine):</div>
-<div class="line"><span class="lineno">  271</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  272</span>        <span class="keywordflow">if</span> type(engine) <span class="keywordflow">is</span> UnscentedKalmanEngine:</div>
-<div class="line"><span class="lineno">  273</span>            <span class="keywordflow">return</span> {<span class="stringliteral">&quot;kind&quot;</span>: <span class="stringliteral">&quot;unscented&quot;</span>, <span class="stringliteral">&quot;alpha&quot;</span>: engine.alpha, <span class="stringliteral">&quot;beta&quot;</span>: engine.beta, <span class="stringliteral">&quot;kappa&quot;</span>: engine.kappa}</div>
-<div class="line"><span class="lineno">  274</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;kind&quot;</span>: <span class="stringliteral">&quot;particle&quot;</span>, <span class="stringliteral">&quot;n_particles&quot;</span>: engine.n_particles, <span class="stringliteral">&quot;threshold&quot;</span>: engine.resample_threshold}</div>
-<div class="line"><span class="lineno">  275</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00274">274</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  274</span>    <span class="keyword">def </span>_counterpart_sigma_engine(self):</div>
+<div class="line"><span class="lineno">  275</span>        <span class="stringliteral">&quot;&quot;&quot;The same for the engines that draw points over the state: the kind and</span></div>
+<div class="line"><span class="lineno">  276</span><span class="stringliteral">        its settings, or None.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  277</span>        <span class="keyword">from</span> .engines.unscented <span class="keyword">import</span> UnscentedKalmanEngine</div>
+<div class="line"><span class="lineno">  278</span>        <span class="keyword">from</span> .engines.particle <span class="keyword">import</span> ParticleEngine</div>
+<div class="line"><span class="lineno">  279</span>        engine = self.engine</div>
+<div class="line"><span class="lineno">  280</span>        <span class="keywordflow">if</span> type(engine) <span class="keywordflow">not</span> <span class="keywordflow">in</span> (UnscentedKalmanEngine, ParticleEngine):</div>
+<div class="line"><span class="lineno">  281</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  282</span>        <span class="keywordflow">if</span> type(engine) <span class="keywordflow">is</span> UnscentedKalmanEngine:</div>
+<div class="line"><span class="lineno">  283</span>            <span class="keywordflow">return</span> {<span class="stringliteral">&quot;kind&quot;</span>: <span class="stringliteral">&quot;unscented&quot;</span>, <span class="stringliteral">&quot;alpha&quot;</span>: engine.alpha, <span class="stringliteral">&quot;beta&quot;</span>: engine.beta, <span class="stringliteral">&quot;kappa&quot;</span>: engine.kappa}</div>
+<div class="line"><span class="lineno">  284</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;kind&quot;</span>: <span class="stringliteral">&quot;particle&quot;</span>, <span class="stringliteral">&quot;n_particles&quot;</span>: engine.n_particles, <span class="stringliteral">&quot;threshold&quot;</span>: engine.resample_threshold}</div>
+<div class="line"><span class="lineno">  285</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -881,11 +887,11 @@ its settings, or None.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00706">706</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  706</span>    <span class="keyword">def </span>_diagnostics(self):</div>
-<div class="line"><span class="lineno">  707</span>        <span class="keyword">from</span> .diagnostics <span class="keyword">import</span> KalmanDiagnostics</div>
-<div class="line"><span class="lineno">  708</span>        <span class="keywordflow">return</span> KalmanDiagnostics(self)</div>
-<div class="line"><span class="lineno">  709</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00734">734</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  734</span>    <span class="keyword">def </span>_diagnostics(self):</div>
+<div class="line"><span class="lineno">  735</span>        <span class="keyword">from</span> .diagnostics <span class="keyword">import</span> KalmanDiagnostics</div>
+<div class="line"><span class="lineno">  736</span>        <span class="keywordflow">return</span> KalmanDiagnostics(self)</div>
+<div class="line"><span class="lineno">  737</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -935,33 +941,33 @@ its settings, or None.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00468">468</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  468</span>    <span class="keyword">def </span>_forward_callback(self, zk, uk, uk_fn=None):</div>
-<div class="line"><span class="lineno">  469</span>        <span class="keyword">from</span> .models.native <span class="keyword">import</span> run_callback_filter</div>
-<div class="line"><span class="lineno">  470</span>        <span class="keyword">from</span> .engines.unscented <span class="keyword">import</span> UnscentedKalmanEngine</div>
-<div class="line"><span class="lineno">  471</span>        model, engine = self._model, self.engine</div>
-<div class="line"><span class="lineno">  472</span>        <span class="keyword">from</span> .engines.particle <span class="keyword">import</span> ParticleEngine</div>
-<div class="line"><span class="lineno">  473</span>        <span class="keywordflow">if</span> type(engine) <span class="keywordflow">is</span> UnscentedKalmanEngine:</div>
-<div class="line"><span class="lineno">  474</span>            kind = {<span class="stringliteral">&quot;engine&quot;</span>: <span class="stringliteral">&quot;unscented&quot;</span>, <span class="stringliteral">&quot;alpha&quot;</span>: engine.alpha, <span class="stringliteral">&quot;beta&quot;</span>: engine.beta, <span class="stringliteral">&quot;kappa&quot;</span>: engine.kappa}</div>
-<div class="line"><span class="lineno">  475</span>        <span class="keywordflow">elif</span> type(engine) <span class="keywordflow">is</span> ParticleEngine:</div>
-<div class="line"><span class="lineno">  476</span>            <span class="comment"># The cloud the Python engine drew at reset, and numpy&#39;s draws after it.</span></div>
-<div class="line"><span class="lineno">  477</span>            kind = {<span class="stringliteral">&quot;engine&quot;</span>: self._sigma_engine_handle()}</div>
-<div class="line"><span class="lineno">  478</span>        <span class="keywordflow">elif</span> type(engine).__name__ == <span class="stringliteral">&quot;EnsembleKalmanEngine&quot;</span>:</div>
-<div class="line"><span class="lineno">  479</span>            counterpart = engine._native_counterpart(model)</div>
-<div class="line"><span class="lineno">  480</span>            <span class="keywordflow">if</span> counterpart <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:                    <span class="comment"># a field model: its hooks run in C++ too</span></div>
-<div class="line"><span class="lineno">  481</span>                self._store_pass(engine._forward_native(model, counterpart, zk), zk, uk)</div>
-<div class="line"><span class="lineno">  482</span>                <span class="keywordflow">return</span></div>
-<div class="line"><span class="lineno">  483</span>            kind = {<span class="stringliteral">&quot;engine&quot;</span>: <span class="stringliteral">&quot;ensemble&quot;</span>, <span class="stringliteral">&quot;n_members&quot;</span>: engine.n_members, <span class="stringliteral">&quot;inflation&quot;</span>: engine.inflation,</div>
-<div class="line"><span class="lineno">  484</span>                    <span class="stringliteral">&quot;seed&quot;</span>: int(engine.rng.integers(0, 2**31 - 1))}</div>
-<div class="line"><span class="lineno">  485</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  486</span>            kind = {<span class="stringliteral">&quot;engine&quot;</span>: <span class="stringliteral">&quot;extended&quot;</span>}</div>
-<div class="line"><span class="lineno">  487</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  488</span>            out = run_callback_filter(model, zk, <span class="keywordtype">None</span>, x0=self.x, P0=self.P, control=uk_fn, **kind)</div>
-<div class="line"><span class="lineno">  489</span>            uk = out[<span class="stringliteral">&quot;controls&quot;</span>]</div>
-<div class="line"><span class="lineno">  490</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  491</span>            out = run_callback_filter(model, zk, uk <span class="keywordflow">if</span> model.l &gt; 0 <span class="keywordflow">else</span> <span class="keywordtype">None</span>, x0=self.x, P0=self.P, **kind)</div>
-<div class="line"><span class="lineno">  492</span>        self._store_pass(out, zk, uk)</div>
-<div class="line"><span class="lineno">  493</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00481">481</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  481</span>    <span class="keyword">def </span>_forward_callback(self, zk, uk, uk_fn=None):</div>
+<div class="line"><span class="lineno">  482</span>        <span class="keyword">from</span> .models.native <span class="keyword">import</span> run_callback_filter</div>
+<div class="line"><span class="lineno">  483</span>        <span class="keyword">from</span> .engines.unscented <span class="keyword">import</span> UnscentedKalmanEngine</div>
+<div class="line"><span class="lineno">  484</span>        model, engine = self._model, self.engine</div>
+<div class="line"><span class="lineno">  485</span>        <span class="keyword">from</span> .engines.particle <span class="keyword">import</span> ParticleEngine</div>
+<div class="line"><span class="lineno">  486</span>        <span class="keywordflow">if</span> type(engine) <span class="keywordflow">is</span> UnscentedKalmanEngine:</div>
+<div class="line"><span class="lineno">  487</span>            kind = {<span class="stringliteral">&quot;engine&quot;</span>: <span class="stringliteral">&quot;unscented&quot;</span>, <span class="stringliteral">&quot;alpha&quot;</span>: engine.alpha, <span class="stringliteral">&quot;beta&quot;</span>: engine.beta, <span class="stringliteral">&quot;kappa&quot;</span>: engine.kappa}</div>
+<div class="line"><span class="lineno">  488</span>        <span class="keywordflow">elif</span> type(engine) <span class="keywordflow">is</span> ParticleEngine:</div>
+<div class="line"><span class="lineno">  489</span>            <span class="comment"># The cloud the Python engine drew at reset, and numpy&#39;s draws after it.</span></div>
+<div class="line"><span class="lineno">  490</span>            kind = {<span class="stringliteral">&quot;engine&quot;</span>: self._sigma_engine_handle()}</div>
+<div class="line"><span class="lineno">  491</span>        <span class="keywordflow">elif</span> type(engine).__name__ == <span class="stringliteral">&quot;EnsembleKalmanEngine&quot;</span>:</div>
+<div class="line"><span class="lineno">  492</span>            counterpart = engine._native_counterpart(model)</div>
+<div class="line"><span class="lineno">  493</span>            <span class="keywordflow">if</span> counterpart <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:                    <span class="comment"># a field model: its hooks run in C++ too</span></div>
+<div class="line"><span class="lineno">  494</span>                self._store_pass(engine._forward_native(model, counterpart, zk), zk, uk)</div>
+<div class="line"><span class="lineno">  495</span>                <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  496</span>            kind = {<span class="stringliteral">&quot;engine&quot;</span>: <span class="stringliteral">&quot;ensemble&quot;</span>, <span class="stringliteral">&quot;n_members&quot;</span>: engine.n_members, <span class="stringliteral">&quot;inflation&quot;</span>: engine.inflation,</div>
+<div class="line"><span class="lineno">  497</span>                    <span class="stringliteral">&quot;seed&quot;</span>: int(engine.rng.integers(0, 2**31 - 1))}</div>
+<div class="line"><span class="lineno">  498</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  499</span>            kind = {<span class="stringliteral">&quot;engine&quot;</span>: <span class="stringliteral">&quot;extended&quot;</span>}</div>
+<div class="line"><span class="lineno">  500</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  501</span>            out = run_callback_filter(model, zk, <span class="keywordtype">None</span>, x0=self.x, P0=self.P, control=uk_fn, **kind)</div>
+<div class="line"><span class="lineno">  502</span>            uk = out[<span class="stringliteral">&quot;controls&quot;</span>]</div>
+<div class="line"><span class="lineno">  503</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  504</span>            out = run_callback_filter(model, zk, uk <span class="keywordflow">if</span> model.l &gt; 0 <span class="keywordflow">else</span> <span class="keywordtype">None</span>, x0=self.x, P0=self.P, **kind)</div>
+<div class="line"><span class="lineno">  505</span>        self._store_pass(out, zk, uk)</div>
+<div class="line"><span class="lineno">  506</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1017,33 +1023,35 @@ its settings, or None.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00400">400</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  400</span>    <span class="keyword">def </span>_forward_counterpart(self, handle, zk, uk, uk_fn=None):</div>
-<div class="line"><span class="lineno">  401</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core</div>
-<div class="line"><span class="lineno">  402</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> as_contiguous</div>
-<div class="line"><span class="lineno">  403</span> </div>
-<div class="line"><span class="lineno">  404</span>        model = self._model</div>
-<div class="line"><span class="lineno">  405</span>        n, m = model.n, model.m</div>
-<div class="line"><span class="lineno">  406</span>        lib = core.lib</div>
-<div class="line"><span class="lineno">  407</span> </div>
-<div class="line"><span class="lineno">  408</span>        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))</div>
-<div class="line"><span class="lineno">  409</span>        P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))</div>
-<div class="line"><span class="lineno">  410</span>        core.check(lib.kalman_model_set_x0(handle, core.cdptr(x0)), <span class="stringliteral">&quot;set_x0&quot;</span>)</div>
-<div class="line"><span class="lineno">  411</span>        core.check(lib.kalman_model_set_P0(handle, core.cdptr(P0)), <span class="stringliteral">&quot;set_P0&quot;</span>)</div>
-<div class="line"><span class="lineno">  412</span>        core.check(lib.kalman_model_set_t0(handle, float(model.t0) <span class="keywordflow">if</span> model.t0 <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 0.0),</div>
-<div class="line"><span class="lineno">  413</span>                   <span class="stringliteral">&quot;set_t0&quot;</span>)</div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00411">411</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  411</span>    <span class="keyword">def </span>_forward_counterpart(self, handle, zk, uk, uk_fn=None):</div>
+<div class="line"><span class="lineno">  412</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  413</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> as_contiguous</div>
 <div class="line"><span class="lineno">  414</span> </div>
-<div class="line"><span class="lineno">  415</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  416</span>            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, model.l, zk, control=uk_fn)</div>
-<div class="line"><span class="lineno">  417</span>            uk = out[<span class="stringliteral">&quot;controls&quot;</span>]</div>
-<div class="line"><span class="lineno">  418</span>        <span class="keywordflow">elif</span> model.l &gt; 0:</div>
-<div class="line"><span class="lineno">  419</span>            <span class="comment"># One command per measurement, as the Python loop reads them (a longer</span></div>
-<div class="line"><span class="lineno">  420</span>            <span class="comment"># program is cut, like the loop that stops at the last measurement).</span></div>
-<div class="line"><span class="lineno">  421</span>            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, model.l, zk, uk[:len(zk)])</div>
-<div class="line"><span class="lineno">  422</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  423</span>            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, 0, zk)</div>
-<div class="line"><span class="lineno">  424</span>        self._store_pass(out, zk, uk)</div>
+<div class="line"><span class="lineno">  415</span>        model = self._model</div>
+<div class="line"><span class="lineno">  416</span>        n, m = model.n, model.m</div>
+<div class="line"><span class="lineno">  417</span>        lib = core.lib</div>
+<div class="line"><span class="lineno">  418</span> </div>
+<div class="line"><span class="lineno">  419</span>        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))</div>
+<div class="line"><span class="lineno">  420</span>        P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))</div>
+<div class="line"><span class="lineno">  421</span>        core.check(lib.kalman_model_set_x0(handle, core.cdptr(x0)), <span class="stringliteral">&quot;set_x0&quot;</span>)</div>
+<div class="line"><span class="lineno">  422</span>        core.check(lib.kalman_model_set_P0(handle, core.cdptr(P0)), <span class="stringliteral">&quot;set_P0&quot;</span>)</div>
+<div class="line"><span class="lineno">  423</span>        core.check(lib.kalman_model_set_t0(handle, float(model.t0) <span class="keywordflow">if</span> model.t0 <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 0.0),</div>
+<div class="line"><span class="lineno">  424</span>                   <span class="stringliteral">&quot;set_t0&quot;</span>)</div>
 <div class="line"><span class="lineno">  425</span> </div>
+<div class="line"><span class="lineno">  426</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  427</span>            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, model.l, zk, control=uk_fn)</div>
+<div class="line"><span class="lineno">  428</span>            uk = out[<span class="stringliteral">&quot;controls&quot;</span>]</div>
+<div class="line"><span class="lineno">  429</span>        <span class="keywordflow">elif</span> model.l &gt; 0:</div>
+<div class="line"><span class="lineno">  430</span>            <span class="comment"># One command per measurement, as the Python loop reads them (a longer</span></div>
+<div class="line"><span class="lineno">  431</span>            <span class="comment"># program is cut, like the loop that stops at the last measurement).</span></div>
+<div class="line"><span class="lineno">  432</span>            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, model.l, zk, uk[:len(zk)],</div>
+<div class="line"><span class="lineno">  433</span>                                  steady=getattr(self, <span class="stringliteral">&quot;_steady&quot;</span>, 0.0))</div>
+<div class="line"><span class="lineno">  434</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  435</span>            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, 0, zk,</div>
+<div class="line"><span class="lineno">  436</span>                                  steady=getattr(self, <span class="stringliteral">&quot;_steady&quot;</span>, 0.0))</div>
+<div class="line"><span class="lineno">  437</span>        self._store_pass(out, zk, uk)</div>
+<div class="line"><span class="lineno">  438</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1093,38 +1101,39 @@ its settings, or None.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00329">329</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  329</span>    <span class="keyword">def </span>_forward_matrices(self, zk, uk, uk_fn=None):</div>
-<div class="line"><span class="lineno">  330</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> _stand_in</div>
-<div class="line"><span class="lineno">  331</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core, as_contiguous</div>
-<div class="line"><span class="lineno">  332</span>        <span class="keyword">from</span> .constants <span class="keyword">import</span> KalmanStructureKind</div>
-<div class="line"><span class="lineno">  333</span>        model = self._model</div>
-<div class="line"><span class="lineno">  334</span>        n, m, l = model.n, model.m, model.l</div>
-<div class="line"><span class="lineno">  335</span>        handle = _stand_in(model, model.structure, <span class="keyword">False</span>, len(zk))</div>
-<div class="line"><span class="lineno">  336</span>        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))</div>
-<div class="line"><span class="lineno">  337</span>        P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))</div>
-<div class="line"><span class="lineno">  338</span>        core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), <span class="stringliteral">&quot;set_x0&quot;</span>)</div>
-<div class="line"><span class="lineno">  339</span>        core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), <span class="stringliteral">&quot;set_P0&quot;</span>)</div>
-<div class="line"><span class="lineno">  340</span>        engine = core.create_engine(self._counterpart_engine())</div>
-<div class="line"><span class="lineno">  341</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  342</span>            out = core.run_filter(handle, engine, n, m, l, zk, uk[:len(zk)] <span class="keywordflow">if</span> l &gt; 0 <span class="keywordflow">else</span> <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  343</span>            self._store_pass(out, zk, uk)</div>
-<div class="line"><span class="lineno">  344</span>            <span class="keywordflow">return</span></div>
-<div class="line"><span class="lineno">  345</span> </div>
-<div class="line"><span class="lineno">  346</span>        <span class="comment"># A controller that commands nothing and retunes the model (adaptive Q</span></div>
-<div class="line"><span class="lineno">  347</span>        <span class="comment"># and R, the violin-bank controller): it runs at each step, before the</span></div>
-<div class="line"><span class="lineno">  348</span>        <span class="comment"># prediction as in the Python loop, and the noise it leaves on the model</span></div>
-<div class="line"><span class="lineno">  349</span>        <span class="comment"># is pushed into the C++ model at once.</span></div>
-<div class="line"><span class="lineno">  350</span>        <span class="keyword">def </span>control(x, P, t, nu=None):</div>
-<div class="line"><span class="lineno">  351</span>            uk_fn(x, P, t, nu=nu)</div>
-<div class="line"><span class="lineno">  352</span>            Q = np.ascontiguousarray(np.asarray(model.Q(t=t), dtype=np.float64).reshape(n, n))</div>
-<div class="line"><span class="lineno">  353</span>            R = np.ascontiguousarray(np.asarray(model.R(t=t), dtype=np.float64).reshape(m, m))</div>
-<div class="line"><span class="lineno">  354</span>            core.check(core.lib.kalman_model_set_Q(handle, core.cdptr(Q)), <span class="stringliteral">&quot;set_Q&quot;</span>)</div>
-<div class="line"><span class="lineno">  355</span>            core.check(core.lib.kalman_model_set_R(handle, core.cdptr(R)), <span class="stringliteral">&quot;set_R&quot;</span>)</div>
-<div class="line"><span class="lineno">  356</span>            <span class="keywordflow">return</span> np.zeros(0)</div>
-<div class="line"><span class="lineno">  357</span>        out = core.run_filter(handle, engine, n, m, l, zk, control=control)</div>
-<div class="line"><span class="lineno">  358</span>        self._store_pass(out, zk, np.zeros((len(zk), 0)))</div>
-<div class="line"><span class="lineno">  359</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00339">339</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  339</span>    <span class="keyword">def </span>_forward_matrices(self, zk, uk, uk_fn=None):</div>
+<div class="line"><span class="lineno">  340</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> _stand_in</div>
+<div class="line"><span class="lineno">  341</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core, as_contiguous</div>
+<div class="line"><span class="lineno">  342</span>        <span class="keyword">from</span> .constants <span class="keyword">import</span> KalmanStructureKind</div>
+<div class="line"><span class="lineno">  343</span>        model = self._model</div>
+<div class="line"><span class="lineno">  344</span>        n, m, l = model.n, model.m, model.l</div>
+<div class="line"><span class="lineno">  345</span>        handle = _stand_in(model, model.structure, <span class="keyword">False</span>, len(zk))</div>
+<div class="line"><span class="lineno">  346</span>        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))</div>
+<div class="line"><span class="lineno">  347</span>        P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))</div>
+<div class="line"><span class="lineno">  348</span>        core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), <span class="stringliteral">&quot;set_x0&quot;</span>)</div>
+<div class="line"><span class="lineno">  349</span>        core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), <span class="stringliteral">&quot;set_P0&quot;</span>)</div>
+<div class="line"><span class="lineno">  350</span>        engine = core.create_engine(self._counterpart_engine())</div>
+<div class="line"><span class="lineno">  351</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  352</span>            out = core.run_filter(handle, engine, n, m, l, zk, uk[:len(zk)] <span class="keywordflow">if</span> l &gt; 0 <span class="keywordflow">else</span> <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno">  353</span>                                  steady=getattr(self, <span class="stringliteral">&quot;_steady&quot;</span>, 0.0))</div>
+<div class="line"><span class="lineno">  354</span>            self._store_pass(out, zk, uk)</div>
+<div class="line"><span class="lineno">  355</span>            <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  356</span> </div>
+<div class="line"><span class="lineno">  357</span>        <span class="comment"># A controller that commands nothing and retunes the model (adaptive Q</span></div>
+<div class="line"><span class="lineno">  358</span>        <span class="comment"># and R, the violin-bank controller): it runs at each step, before the</span></div>
+<div class="line"><span class="lineno">  359</span>        <span class="comment"># prediction as in the Python loop, and the noise it leaves on the model</span></div>
+<div class="line"><span class="lineno">  360</span>        <span class="comment"># is pushed into the C++ model at once.</span></div>
+<div class="line"><span class="lineno">  361</span>        <span class="keyword">def </span>control(x, P, t, nu=None):</div>
+<div class="line"><span class="lineno">  362</span>            uk_fn(x, P, t, nu=nu)</div>
+<div class="line"><span class="lineno">  363</span>            Q = np.ascontiguousarray(np.asarray(model.Q(t=t), dtype=np.float64).reshape(n, n))</div>
+<div class="line"><span class="lineno">  364</span>            R = np.ascontiguousarray(np.asarray(model.R(t=t), dtype=np.float64).reshape(m, m))</div>
+<div class="line"><span class="lineno">  365</span>            core.check(core.lib.kalman_model_set_Q(handle, core.cdptr(Q)), <span class="stringliteral">&quot;set_Q&quot;</span>)</div>
+<div class="line"><span class="lineno">  366</span>            core.check(core.lib.kalman_model_set_R(handle, core.cdptr(R)), <span class="stringliteral">&quot;set_R&quot;</span>)</div>
+<div class="line"><span class="lineno">  367</span>            <span class="keywordflow">return</span> np.zeros(0)</div>
+<div class="line"><span class="lineno">  368</span>        out = core.run_filter(handle, engine, n, m, l, zk, control=control)</div>
+<div class="line"><span class="lineno">  369</span>        self._store_pass(out, zk, np.zeros((len(zk), 0)))</div>
+<div class="line"><span class="lineno">  370</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1168,50 +1177,50 @@ its settings, or None.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00538">538</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  538</span>    <span class="keyword">def </span>_forward_native(self, zk, uk):</div>
-<div class="line"><span class="lineno">  539</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> lib, ffi, as_contiguous, dptr</div>
-<div class="line"><span class="lineno">  540</span> </div>
-<div class="line"><span class="lineno">  541</span>        model = self._model</div>
-<div class="line"><span class="lineno">  542</span>        n, m, l = model.n, model.m, model.l</div>
-<div class="line"><span class="lineno">  543</span>        N = len(zk)</div>
-<div class="line"><span class="lineno">  544</span> </div>
-<div class="line"><span class="lineno">  545</span>        F, H, Q, R = (as_contiguous(M()) <span class="keywordflow">for</span> M <span class="keywordflow">in</span> (model.F, model.H, model.Q, model.R))</div>
-<div class="line"><span class="lineno">  546</span>        B, L = model.B(), model.L()</div>
-<div class="line"><span class="lineno">  547</span> </div>
-<div class="line"><span class="lineno">  548</span>        zk_c = as_contiguous(zk)</div>
-<div class="line"><span class="lineno">  549</span>        uk_c = as_contiguous(uk)</div>
-<div class="line"><span class="lineno">  550</span>        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))</div>
-<div class="line"><span class="lineno">  551</span>        P0 = as_contiguous(self.P)</div>
-<div class="line"><span class="lineno">  552</span> </div>
-<div class="line"><span class="lineno">  553</span>        x_prior = np.empty((N, n), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  554</span>        P_prior = np.empty((N, n, n), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  555</span>        x_post  = np.empty((N, n), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  556</span>        P_post  = np.empty((N, n, n), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  557</span>        innovations = np.empty((N, m), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  558</span> </div>
-<div class="line"><span class="lineno">  559</span>        lib.kf_forward_linear(</div>
-<div class="line"><span class="lineno">  560</span>            n, m, l, N,</div>
-<div class="line"><span class="lineno">  561</span>            dptr(F), dptr(H), dptr(Q), dptr(R),</div>
-<div class="line"><span class="lineno">  562</span>            dptr(as_contiguous(B)) <span class="keywordflow">if</span> B <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> ffi.NULL,</div>
-<div class="line"><span class="lineno">  563</span>            dptr(as_contiguous(L)) <span class="keywordflow">if</span> L <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> ffi.NULL,</div>
-<div class="line"><span class="lineno">  564</span>            dptr(zk_c), dptr(uk_c),</div>
-<div class="line"><span class="lineno">  565</span>            dptr(x0), dptr(P0),</div>
-<div class="line"><span class="lineno">  566</span>            dptr(x_prior), dptr(P_prior),</div>
-<div class="line"><span class="lineno">  567</span>            dptr(x_post), dptr(P_post),</div>
-<div class="line"><span class="lineno">  568</span>            dptr(innovations),</div>
-<div class="line"><span class="lineno">  569</span>        )</div>
-<div class="line"><span class="lineno">  570</span> </div>
-<div class="line"><span class="lineno">  571</span>        self.measurement.extend(zk_c)</div>
-<div class="line"><span class="lineno">  572</span>        self.control.extend(uk_c)</div>
-<div class="line"><span class="lineno">  573</span>        self.prior.extend((x_prior[k].reshape(n, 1), P_prior[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
-<div class="line"><span class="lineno">  574</span>        self.posterior.extend((x_post[k].reshape(n, 1), P_post[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
-<div class="line"><span class="lineno">  575</span>        self.transition.extend([F] * N)</div>
-<div class="line"><span class="lineno">  576</span>        self.innovation.extend(innovations[k].reshape(m, 1) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00563">563</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  563</span>    <span class="keyword">def </span>_forward_native(self, zk, uk):</div>
+<div class="line"><span class="lineno">  564</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> lib, ffi, as_contiguous, dptr</div>
+<div class="line"><span class="lineno">  565</span> </div>
+<div class="line"><span class="lineno">  566</span>        model = self._model</div>
+<div class="line"><span class="lineno">  567</span>        n, m, l = model.n, model.m, model.l</div>
+<div class="line"><span class="lineno">  568</span>        N = len(zk)</div>
+<div class="line"><span class="lineno">  569</span> </div>
+<div class="line"><span class="lineno">  570</span>        F, H, Q, R = (as_contiguous(M()) <span class="keywordflow">for</span> M <span class="keywordflow">in</span> (model.F, model.H, model.Q, model.R))</div>
+<div class="line"><span class="lineno">  571</span>        B, L = model.B(), model.L()</div>
+<div class="line"><span class="lineno">  572</span> </div>
+<div class="line"><span class="lineno">  573</span>        zk_c = as_contiguous(zk)</div>
+<div class="line"><span class="lineno">  574</span>        uk_c = as_contiguous(uk)</div>
+<div class="line"><span class="lineno">  575</span>        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))</div>
+<div class="line"><span class="lineno">  576</span>        P0 = as_contiguous(self.P)</div>
 <div class="line"><span class="lineno">  577</span> </div>
-<div class="line"><span class="lineno">  578</span>        self.x = x_post[-1].reshape(n, 1)</div>
-<div class="line"><span class="lineno">  579</span>        self.P = P_post[-1]</div>
-<div class="line"><span class="lineno">  580</span> </div>
+<div class="line"><span class="lineno">  578</span>        x_prior = np.empty((N, n), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  579</span>        P_prior = np.empty((N, n, n), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  580</span>        x_post  = np.empty((N, n), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  581</span>        P_post  = np.empty((N, n, n), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  582</span>        innovations = np.empty((N, m), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  583</span> </div>
+<div class="line"><span class="lineno">  584</span>        lib.kf_forward_linear(</div>
+<div class="line"><span class="lineno">  585</span>            n, m, l, N,</div>
+<div class="line"><span class="lineno">  586</span>            dptr(F), dptr(H), dptr(Q), dptr(R),</div>
+<div class="line"><span class="lineno">  587</span>            dptr(as_contiguous(B)) <span class="keywordflow">if</span> B <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> ffi.NULL,</div>
+<div class="line"><span class="lineno">  588</span>            dptr(as_contiguous(L)) <span class="keywordflow">if</span> L <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> ffi.NULL,</div>
+<div class="line"><span class="lineno">  589</span>            dptr(zk_c), dptr(uk_c),</div>
+<div class="line"><span class="lineno">  590</span>            dptr(x0), dptr(P0),</div>
+<div class="line"><span class="lineno">  591</span>            dptr(x_prior), dptr(P_prior),</div>
+<div class="line"><span class="lineno">  592</span>            dptr(x_post), dptr(P_post),</div>
+<div class="line"><span class="lineno">  593</span>            dptr(innovations),</div>
+<div class="line"><span class="lineno">  594</span>        )</div>
+<div class="line"><span class="lineno">  595</span> </div>
+<div class="line"><span class="lineno">  596</span>        self.measurement.extend(zk_c)</div>
+<div class="line"><span class="lineno">  597</span>        self.control.extend(uk_c)</div>
+<div class="line"><span class="lineno">  598</span>        self.prior.extend((x_prior[k].reshape(n, 1), P_prior[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  599</span>        self.posterior.extend((x_post[k].reshape(n, 1), P_post[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  600</span>        self.transition.extend([F] * N)</div>
+<div class="line"><span class="lineno">  601</span>        self.innovation.extend(innovations[k].reshape(m, 1) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  602</span> </div>
+<div class="line"><span class="lineno">  603</span>        self.x = x_post[-1].reshape(n, 1)</div>
+<div class="line"><span class="lineno">  604</span>        self.P = P_post[-1]</div>
+<div class="line"><span class="lineno">  605</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1255,24 +1264,24 @@ its settings, or None.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00375">375</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  375</span>    <span class="keyword">def </span>_forward_retuned_operation(self, zk, uk_fn):</div>
-<div class="line"><span class="lineno">  376</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core, as_contiguous</div>
-<div class="line"><span class="lineno">  377</span>        model = self._model</div>
-<div class="line"><span class="lineno">  378</span>        n, m = model.n, model.m</div>
-<div class="line"><span class="lineno">  379</span>        handle = model.native_handle()</div>
-<div class="line"><span class="lineno">  380</span>        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))</div>
-<div class="line"><span class="lineno">  381</span>        P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))</div>
-<div class="line"><span class="lineno">  382</span>        core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), <span class="stringliteral">&quot;set_x0&quot;</span>)</div>
-<div class="line"><span class="lineno">  383</span>        core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), <span class="stringliteral">&quot;set_P0&quot;</span>)</div>
-<div class="line"><span class="lineno">  384</span> </div>
-<div class="line"><span class="lineno">  385</span>        <span class="keyword">def </span>control(x, P, t, nu=None):</div>
-<div class="line"><span class="lineno">  386</span>            uk_fn(x, P, t, nu=nu)</div>
-<div class="line"><span class="lineno">  387</span>            model._refresh()</div>
-<div class="line"><span class="lineno">  388</span>            <span class="keywordflow">return</span> np.zeros(0)</div>
-<div class="line"><span class="lineno">  389</span>        out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, 0, zk, control=control)</div>
-<div class="line"><span class="lineno">  390</span>        self._store_pass(out, zk, np.zeros((len(zk), 0)))</div>
-<div class="line"><span class="lineno">  391</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00386">386</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  386</span>    <span class="keyword">def </span>_forward_retuned_operation(self, zk, uk_fn):</div>
+<div class="line"><span class="lineno">  387</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core, as_contiguous</div>
+<div class="line"><span class="lineno">  388</span>        model = self._model</div>
+<div class="line"><span class="lineno">  389</span>        n, m = model.n, model.m</div>
+<div class="line"><span class="lineno">  390</span>        handle = model.native_handle()</div>
+<div class="line"><span class="lineno">  391</span>        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))</div>
+<div class="line"><span class="lineno">  392</span>        P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))</div>
+<div class="line"><span class="lineno">  393</span>        core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), <span class="stringliteral">&quot;set_x0&quot;</span>)</div>
+<div class="line"><span class="lineno">  394</span>        core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), <span class="stringliteral">&quot;set_P0&quot;</span>)</div>
+<div class="line"><span class="lineno">  395</span> </div>
+<div class="line"><span class="lineno">  396</span>        <span class="keyword">def </span>control(x, P, t, nu=None):</div>
+<div class="line"><span class="lineno">  397</span>            uk_fn(x, P, t, nu=nu)</div>
+<div class="line"><span class="lineno">  398</span>            model._refresh()</div>
+<div class="line"><span class="lineno">  399</span>            <span class="keywordflow">return</span> np.zeros(0)</div>
+<div class="line"><span class="lineno">  400</span>        out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, 0, zk, control=control)</div>
+<div class="line"><span class="lineno">  401</span>        self._store_pass(out, zk, np.zeros((len(zk), 0)))</div>
+<div class="line"><span class="lineno">  402</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1434,23 +1443,23 @@ inferred from ``F``/``H`` when those are given.
 <pre class="fragment">The C++ engine for a pass on the counterpart ``handle``. For the engines that
 draw points, the counterpart is told where the Python class takes its noise (as
 an argument of f and h, or added after them), so both draw the same points.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00276">276</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  276</span>    <span class="keyword">def </span>_make_counterpart_engine(self, handle):</div>
-<div class="line"><span class="lineno">  277</span>        <span class="stringliteral">&quot;&quot;&quot;The C++ engine for a pass on the counterpart ``handle``. For the engines that</span></div>
-<div class="line"><span class="lineno">  278</span><span class="stringliteral">        draw points, the counterpart is told where the Python class takes its noise (as</span></div>
-<div class="line"><span class="lineno">  279</span><span class="stringliteral">        an argument of f and h, or added after them), so both draw the same points.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  280</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core</div>
-<div class="line"><span class="lineno">  281</span>        name = self._counterpart_engine()</div>
-<div class="line"><span class="lineno">  282</span>        <span class="keywordflow">if</span> name <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  283</span>            core.check(core.lib.kalman_model_set_noise_inputs(handle, 0, 0), <span class="stringliteral">&quot;set_noise_inputs&quot;</span>)</div>
-<div class="line"><span class="lineno">  284</span>            self._engine_handle = core.create_engine(name)</div>
-<div class="line"><span class="lineno">  285</span>            <span class="keywordflow">return</span> self._engine_handle</div>
-<div class="line"><span class="lineno">  286</span>        engine, model = self.engine, self._model</div>
-<div class="line"><span class="lineno">  287</span>        core.check(core.lib.kalman_model_set_noise_inputs(</div>
-<div class="line"><span class="lineno">  288</span>            handle, int(bool(engine._noise_through_f(model))), int(bool(engine._noise_through_h(model)))),</div>
-<div class="line"><span class="lineno">  289</span>            <span class="stringliteral">&quot;set_noise_inputs&quot;</span>)</div>
-<div class="line"><span class="lineno">  290</span>        <span class="keywordflow">return</span> self._sigma_engine_handle()</div>
-<div class="line"><span class="lineno">  291</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00286">286</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  286</span>    <span class="keyword">def </span>_make_counterpart_engine(self, handle):</div>
+<div class="line"><span class="lineno">  287</span>        <span class="stringliteral">&quot;&quot;&quot;The C++ engine for a pass on the counterpart ``handle``. For the engines that</span></div>
+<div class="line"><span class="lineno">  288</span><span class="stringliteral">        draw points, the counterpart is told where the Python class takes its noise (as</span></div>
+<div class="line"><span class="lineno">  289</span><span class="stringliteral">        an argument of f and h, or added after them), so both draw the same points.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  290</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  291</span>        name = self._counterpart_engine()</div>
+<div class="line"><span class="lineno">  292</span>        <span class="keywordflow">if</span> name <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  293</span>            core.check(core.lib.kalman_model_set_noise_inputs(handle, 0, 0), <span class="stringliteral">&quot;set_noise_inputs&quot;</span>)</div>
+<div class="line"><span class="lineno">  294</span>            self._engine_handle = core.create_engine(name)</div>
+<div class="line"><span class="lineno">  295</span>            <span class="keywordflow">return</span> self._engine_handle</div>
+<div class="line"><span class="lineno">  296</span>        engine, model = self.engine, self._model</div>
+<div class="line"><span class="lineno">  297</span>        core.check(core.lib.kalman_model_set_noise_inputs(</div>
+<div class="line"><span class="lineno">  298</span>            handle, int(bool(engine._noise_through_f(model))), int(bool(engine._noise_through_h(model)))),</div>
+<div class="line"><span class="lineno">  299</span>            <span class="stringliteral">&quot;set_noise_inputs&quot;</span>)</div>
+<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">return</span> self._sigma_engine_handle()</div>
+<div class="line"><span class="lineno">  301</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1488,25 +1497,25 @@ an argument of f and h, or added after them), so both draw the same points.</pre
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00311">311</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  311</span>    <span class="keyword">def </span>_matrices_eligible(self, uk_fn) -&gt; bool:</div>
-<div class="line"><span class="lineno">  312</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
-<div class="line"><span class="lineno">  313</span>        <span class="keyword">from</span> .constants <span class="keyword">import</span> KalmanStructureKind</div>
-<div class="line"><span class="lineno">  314</span>        model = self._model</div>
-<div class="line"><span class="lineno">  315</span>        <span class="comment"># With a controller, only constant matrices: the controller may retune</span></div>
-<div class="line"><span class="lineno">  316</span>        <span class="comment"># Q and R, which are pushed again at every step; a model whose matrices</span></div>
-<div class="line"><span class="lineno">  317</span>        <span class="comment"># are functions of time would have to be asked for them in the loop.</span></div>
-<div class="line"><span class="lineno">  318</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  319</span>            <span class="keywordflow">if</span> getattr(model, <span class="stringliteral">&quot;structure&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> KalmanStructureKind.MATRICES <span class="keywordflow">or</span> model.l &gt; 0:</div>
-<div class="line"><span class="lineno">  320</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  321</span>        <span class="comment"># The linear engine, or the extended one: on a model of matrices the two</span></div>
-<div class="line"><span class="lineno">  322</span>        <span class="comment"># are the same arithmetic (the Jacobian of F x is F).</span></div>
-<div class="line"><span class="lineno">  323</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> native.native_loop_enabled() <span class="keywordflow">or</span> self._counterpart_engine() <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  324</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  325</span>        <span class="keywordflow">if</span> (isinstance(model, native.NativeModel) <span class="keywordflow">and</span> <span class="keywordflow">not</span> getattr(model, <span class="stringliteral">&quot;_time_varying&quot;</span>, <span class="keyword">False</span>)) <span class="keywordflow">or</span> np.dtype(getattr(model, <span class="stringliteral">&quot;dtype&quot;</span>, np.float64)) != np.float64:</div>
-<div class="line"><span class="lineno">  326</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  327</span>        <span class="keywordflow">return</span> model.structure <span class="keywordflow">in</span> (KalmanStructureKind.TIME_VARYING, KalmanStructureKind.MATRICES)</div>
-<div class="line"><span class="lineno">  328</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00321">321</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  321</span>    <span class="keyword">def </span>_matrices_eligible(self, uk_fn) -&gt; bool:</div>
+<div class="line"><span class="lineno">  322</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  323</span>        <span class="keyword">from</span> .constants <span class="keyword">import</span> KalmanStructureKind</div>
+<div class="line"><span class="lineno">  324</span>        model = self._model</div>
+<div class="line"><span class="lineno">  325</span>        <span class="comment"># With a controller, only constant matrices: the controller may retune</span></div>
+<div class="line"><span class="lineno">  326</span>        <span class="comment"># Q and R, which are pushed again at every step; a model whose matrices</span></div>
+<div class="line"><span class="lineno">  327</span>        <span class="comment"># are functions of time would have to be asked for them in the loop.</span></div>
+<div class="line"><span class="lineno">  328</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  329</span>            <span class="keywordflow">if</span> getattr(model, <span class="stringliteral">&quot;structure&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> KalmanStructureKind.MATRICES <span class="keywordflow">or</span> model.l &gt; 0:</div>
+<div class="line"><span class="lineno">  330</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  331</span>        <span class="comment"># The linear engine, or the extended one: on a model of matrices the two</span></div>
+<div class="line"><span class="lineno">  332</span>        <span class="comment"># are the same arithmetic (the Jacobian of F x is F).</span></div>
+<div class="line"><span class="lineno">  333</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> native.native_loop_enabled() <span class="keywordflow">or</span> self._counterpart_engine() <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  334</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  335</span>        <span class="keywordflow">if</span> (isinstance(model, native.NativeModel) <span class="keywordflow">and</span> <span class="keywordflow">not</span> getattr(model, <span class="stringliteral">&quot;_time_varying&quot;</span>, <span class="keyword">False</span>)) <span class="keywordflow">or</span> np.dtype(getattr(model, <span class="stringliteral">&quot;dtype&quot;</span>, np.float64)) != np.float64:</div>
+<div class="line"><span class="lineno">  336</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  337</span>        <span class="keywordflow">return</span> model.structure <span class="keywordflow">in</span> (KalmanStructureKind.TIME_VARYING, KalmanStructureKind.MATRICES)</div>
+<div class="line"><span class="lineno">  338</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1534,17 +1543,17 @@ an argument of f and h, or added after them), so both draw the same points.</pre
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00619">619</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  619</span>    <span class="keyword">def </span>_native_backward_eligible(self) -&gt; bool:</div>
-<div class="line"><span class="lineno">  620</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> HAS_C_ACCEL</div>
-<div class="line"><span class="lineno">  621</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
-<div class="line"><span class="lineno">  622</span>        <span class="keyword">from</span> .engine <span class="keyword">import</span> KalmanEngine</div>
-<div class="line"><span class="lineno">  623</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> HAS_C_ACCEL <span class="keywordflow">or</span> <span class="keywordflow">not</span> self.transition <span class="keywordflow">or</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
-<div class="line"><span class="lineno">  624</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  625</span>        <span class="comment"># The sweep in C++ is the RTS step of KalmanEngine: an engine with a</span></div>
-<div class="line"><span class="lineno">  626</span>        <span class="comment"># smoothing step of its own keeps it.</span></div>
-<div class="line"><span class="lineno">  627</span>        <span class="keywordflow">return</span> type(self.engine)._smooth <span class="keywordflow">is</span> KalmanEngine._smooth</div>
-<div class="line"><span class="lineno">  628</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00647">647</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  647</span>    <span class="keyword">def </span>_native_backward_eligible(self) -&gt; bool:</div>
+<div class="line"><span class="lineno">  648</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> HAS_C_ACCEL</div>
+<div class="line"><span class="lineno">  649</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  650</span>        <span class="keyword">from</span> .engine <span class="keyword">import</span> KalmanEngine</div>
+<div class="line"><span class="lineno">  651</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> HAS_C_ACCEL <span class="keywordflow">or</span> <span class="keywordflow">not</span> self.transition <span class="keywordflow">or</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
+<div class="line"><span class="lineno">  652</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  653</span>        <span class="comment"># The sweep in C++ is the RTS step of KalmanEngine: an engine with a</span></div>
+<div class="line"><span class="lineno">  654</span>        <span class="comment"># smoothing step of its own keeps it.</span></div>
+<div class="line"><span class="lineno">  655</span>        <span class="keywordflow">return</span> type(self.engine)._smooth <span class="keywordflow">is</span> KalmanEngine._smooth</div>
+<div class="line"><span class="lineno">  656</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1582,20 +1591,20 @@ an argument of f and h, or added after them), so both draw the same points.</pre
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00242">242</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  242</span>    <span class="keyword">def </span>_native_counterpart(self, uk_fn):</div>
-<div class="line"><span class="lineno">  243</span>        <span class="comment"># In closed loop the controller may retune the Python model as it runs</span></div>
-<div class="line"><span class="lineno">  244</span>        <span class="comment"># (adaptive Q and R); a counterpart would not see it, so the C++ loop calls the</span></div>
-<div class="line"><span class="lineno">  245</span>        <span class="comment"># Python model instead.</span></div>
-<div class="line"><span class="lineno">  246</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  247</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  248</span>        handle_of = getattr(self._model, <span class="stringliteral">&quot;native_handle&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  249</span>        <span class="keywordflow">if</span> handle_of <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  250</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  251</span>        <span class="keywordflow">if</span> self._counterpart_engine() <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> self._counterpart_sigma_engine() <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  252</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  253</span>        <span class="keywordflow">return</span> handle_of()</div>
-<div class="line"><span class="lineno">  254</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00252">252</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  252</span>    <span class="keyword">def </span>_native_counterpart(self, uk_fn):</div>
+<div class="line"><span class="lineno">  253</span>        <span class="comment"># In closed loop the controller may retune the Python model as it runs</span></div>
+<div class="line"><span class="lineno">  254</span>        <span class="comment"># (adaptive Q and R); a counterpart would not see it, so the C++ loop calls the</span></div>
+<div class="line"><span class="lineno">  255</span>        <span class="comment"># Python model instead.</span></div>
+<div class="line"><span class="lineno">  256</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  257</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  258</span>        handle_of = getattr(self._model, <span class="stringliteral">&quot;native_handle&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  259</span>        <span class="keywordflow">if</span> handle_of <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  260</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  261</span>        <span class="keywordflow">if</span> self._counterpart_engine() <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> self._counterpart_sigma_engine() <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  262</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  263</span>        <span class="keywordflow">return</span> handle_of()</div>
+<div class="line"><span class="lineno">  264</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1633,27 +1642,27 @@ an argument of f and h, or added after them), so both draw the same points.</pre
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00518">518</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  518</span>    <span class="keyword">def </span>_native_forward_eligible(self, uk_fn) -&gt; bool:</div>
-<div class="line"><span class="lineno">  519</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  520</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  521</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> HAS_C_ACCEL</div>
-<div class="line"><span class="lineno">  522</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> HAS_C_ACCEL:</div>
-<div class="line"><span class="lineno">  523</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  524</span>        <span class="keyword">from</span> .engines.linear <span class="keyword">import</span> LinearKalmanEngine</div>
-<div class="line"><span class="lineno">  525</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(self.engine, LinearKalmanEngine):</div>
-<div class="line"><span class="lineno">  526</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  527</span>        model = self._model</div>
-<div class="line"><span class="lineno">  528</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
-<div class="line"><span class="lineno">  529</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
-<div class="line"><span class="lineno">  530</span>            <span class="keywordflow">return</span> <span class="keyword">False</span>                        <span class="comment"># the reference is the Python loop, for linear models too</span></div>
-<div class="line"><span class="lineno">  531</span>        <span class="comment"># A C++ model whose matrices change with time (one read from a file with</span></div>
-<div class="line"><span class="lineno">  532</span>        <span class="comment"># tables) holds no Python callable to give it away: it says so itself.</span></div>
-<div class="line"><span class="lineno">  533</span>        <span class="keyword">from</span> .constants <span class="keyword">import</span> KalmanStructureKind</div>
-<div class="line"><span class="lineno">  534</span>        <span class="keywordflow">if</span> getattr(model, <span class="stringliteral">&quot;structure&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> KalmanStructureKind.TIME_VARYING:</div>
-<div class="line"><span class="lineno">  535</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  536</span>        <span class="keywordflow">return</span> <span class="keywordflow">not</span> any(callable(getattr(model, attr)) <span class="keywordflow">for</span> attr <span class="keywordflow">in</span> (<span class="stringliteral">&quot;_F&quot;</span>, <span class="stringliteral">&quot;_H&quot;</span>, <span class="stringliteral">&quot;_B&quot;</span>, <span class="stringliteral">&quot;_L&quot;</span>, <span class="stringliteral">&quot;_Q&quot;</span>, <span class="stringliteral">&quot;_R&quot;</span>))</div>
-<div class="line"><span class="lineno">  537</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00543">543</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  543</span>    <span class="keyword">def </span>_native_forward_eligible(self, uk_fn) -&gt; bool:</div>
+<div class="line"><span class="lineno">  544</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> getattr(self, <span class="stringliteral">&quot;_steady&quot;</span>, 0.0):</div>
+<div class="line"><span class="lineno">  545</span>            <span class="keywordflow">return</span> <span class="keyword">False</span>                        <span class="comment"># the steady-state gain is Kalman::Filter&#39;s (the matrices path)</span></div>
+<div class="line"><span class="lineno">  546</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> HAS_C_ACCEL</div>
+<div class="line"><span class="lineno">  547</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> HAS_C_ACCEL:</div>
+<div class="line"><span class="lineno">  548</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  549</span>        <span class="keyword">from</span> .engines.linear <span class="keyword">import</span> LinearKalmanEngine</div>
+<div class="line"><span class="lineno">  550</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(self.engine, LinearKalmanEngine):</div>
+<div class="line"><span class="lineno">  551</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  552</span>        model = self._model</div>
+<div class="line"><span class="lineno">  553</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  554</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
+<div class="line"><span class="lineno">  555</span>            <span class="keywordflow">return</span> <span class="keyword">False</span>                        <span class="comment"># the reference is the Python loop, for linear models too</span></div>
+<div class="line"><span class="lineno">  556</span>        <span class="comment"># A C++ model whose matrices change with time (one read from a file with</span></div>
+<div class="line"><span class="lineno">  557</span>        <span class="comment"># tables) holds no Python callable to give it away: it says so itself.</span></div>
+<div class="line"><span class="lineno">  558</span>        <span class="keyword">from</span> .constants <span class="keyword">import</span> KalmanStructureKind</div>
+<div class="line"><span class="lineno">  559</span>        <span class="keywordflow">if</span> getattr(model, <span class="stringliteral">&quot;structure&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> KalmanStructureKind.TIME_VARYING:</div>
+<div class="line"><span class="lineno">  560</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  561</span>        <span class="keywordflow">return</span> <span class="keywordflow">not</span> any(callable(getattr(model, attr)) <span class="keywordflow">for</span> attr <span class="keywordflow">in</span> (<span class="stringliteral">&quot;_F&quot;</span>, <span class="stringliteral">&quot;_H&quot;</span>, <span class="stringliteral">&quot;_B&quot;</span>, <span class="stringliteral">&quot;_L&quot;</span>, <span class="stringliteral">&quot;_Q&quot;</span>, <span class="stringliteral">&quot;_R&quot;</span>))</div>
+<div class="line"><span class="lineno">  562</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1696,16 +1705,16 @@ The only thing the filter needs to know about those results is that each one
 can describe itself — hence the ``to_record(model, flavor)`` contract, which
 keeps the result type (a track, a cluster, …) private to its engine.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00661">661</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  661</span>    <span class="keyword">def </span>_pass_records(self, flavor) -&gt; KalmanRecordCollection:</div>
-<div class="line"><span class="lineno">  662</span>        <span class="stringliteral">&quot;&quot;&quot;Wrap an ``OWNS_PASS`` engine&#39;s output as a collection of records.</span></div>
-<div class="line"><span class="lineno">  663</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  664</span><span class="stringliteral">        The only thing the filter needs to know about those results is that each one</span></div>
-<div class="line"><span class="lineno">  665</span><span class="stringliteral">        can describe itself — hence the ``to_record(model, flavor)`` contract, which</span></div>
-<div class="line"><span class="lineno">  666</span><span class="stringliteral">        keeps the result type (a track, a cluster, …) private to its engine.</span></div>
-<div class="line"><span class="lineno">  667</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  668</span>        <span class="keywordflow">return</span> KalmanRecordCollection(r.to_record(self.model, flavor) <span class="keywordflow">for</span> r <span class="keywordflow">in</span> self.pass_result)</div>
-<div class="line"><span class="lineno">  669</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00689">689</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  689</span>    <span class="keyword">def </span>_pass_records(self, flavor) -&gt; KalmanRecordCollection:</div>
+<div class="line"><span class="lineno">  690</span>        <span class="stringliteral">&quot;&quot;&quot;Wrap an ``OWNS_PASS`` engine&#39;s output as a collection of records.</span></div>
+<div class="line"><span class="lineno">  691</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  692</span><span class="stringliteral">        The only thing the filter needs to know about those results is that each one</span></div>
+<div class="line"><span class="lineno">  693</span><span class="stringliteral">        can describe itself — hence the ``to_record(model, flavor)`` contract, which</span></div>
+<div class="line"><span class="lineno">  694</span><span class="stringliteral">        keeps the result type (a track, a cluster, …) private to its engine.</span></div>
+<div class="line"><span class="lineno">  695</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  696</span>        <span class="keywordflow">return</span> KalmanRecordCollection(r.to_record(self.model, flavor) <span class="keywordflow">for</span> r <span class="keywordflow">in</span> self.pass_result)</div>
+<div class="line"><span class="lineno">  697</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1743,15 +1752,15 @@ keeps the result type (a track, a cluster, …) private to its engine.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00367">367</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  367</span>    <span class="keyword">def </span>_retuned_operation_eligible(self, uk_fn) -&gt; bool:</div>
-<div class="line"><span class="lineno">  368</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
-<div class="line"><span class="lineno">  369</span>        <span class="keyword">from</span> .models.operation <span class="keyword">import</span> OperationModel</div>
-<div class="line"><span class="lineno">  370</span>        model = self._model</div>
-<div class="line"><span class="lineno">  371</span>        <span class="keywordflow">return</span> (uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> isinstance(model, OperationModel) <span class="keywordflow">and</span> model.l == 0</div>
-<div class="line"><span class="lineno">  372</span>                <span class="keywordflow">and</span> native.native_loop_enabled() <span class="keywordflow">and</span> self._counterpart_engine() <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  373</span>                <span class="keywordflow">and</span> <span class="keywordflow">not</span> getattr(model, <span class="stringliteral">&quot;_time_varying&quot;</span>, <span class="keyword">False</span>))</div>
-<div class="line"><span class="lineno">  374</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00378">378</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  378</span>    <span class="keyword">def </span>_retuned_operation_eligible(self, uk_fn) -&gt; bool:</div>
+<div class="line"><span class="lineno">  379</span>        <span class="keyword">from</span> .models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  380</span>        <span class="keyword">from</span> .models.operation <span class="keyword">import</span> OperationModel</div>
+<div class="line"><span class="lineno">  381</span>        model = self._model</div>
+<div class="line"><span class="lineno">  382</span>        <span class="keywordflow">return</span> (uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> isinstance(model, OperationModel) <span class="keywordflow">and</span> model.l == 0</div>
+<div class="line"><span class="lineno">  383</span>                <span class="keywordflow">and</span> native.native_loop_enabled() <span class="keywordflow">and</span> self._counterpart_engine() <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  384</span>                <span class="keywordflow">and</span> <span class="keywordflow">not</span> getattr(model, <span class="stringliteral">&quot;_time_varying&quot;</span>, <span class="keyword">False</span>))</div>
+<div class="line"><span class="lineno">  385</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1781,19 +1790,19 @@ keeps the result type (a track, a cluster, …) private to its engine.
 <pre class="fragment">The C++ engine of a sigma-point or particle filter. The particle one starts
 from the cloud the Python engine drew at reset and draws from numpy as it
 would, so a seeded run gives the Python run's numbers.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00292">292</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  292</span>    <span class="keyword">def </span>_sigma_engine_handle(self):</div>
-<div class="line"><span class="lineno">  293</span>        <span class="stringliteral">&quot;&quot;&quot;The C++ engine of a sigma-point or particle filter. The particle one starts</span></div>
-<div class="line"><span class="lineno">  294</span><span class="stringliteral">        from the cloud the Python engine drew at reset and draws from numpy as it</span></div>
-<div class="line"><span class="lineno">  295</span><span class="stringliteral">        would, so a seeded run gives the Python run&#39;s numbers.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  296</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core</div>
-<div class="line"><span class="lineno">  297</span>        settings = self._counterpart_sigma_engine()</div>
-<div class="line"><span class="lineno">  298</span>        <span class="keywordflow">if</span> settings[<span class="stringliteral">&quot;kind&quot;</span>] != <span class="stringliteral">&quot;particle&quot;</span>:</div>
-<div class="line"><span class="lineno">  299</span>            <span class="keywordflow">return</span> core.create_engine(**settings)</div>
-<div class="line"><span class="lineno">  300</span>        handle, self._particle_draws = core.particle_engine_on_numpy(</div>
-<div class="line"><span class="lineno">  301</span>            settings[<span class="stringliteral">&quot;n_particles&quot;</span>], settings[<span class="stringliteral">&quot;threshold&quot;</span>], self.engine._particles)</div>
-<div class="line"><span class="lineno">  302</span>        <span class="keywordflow">return</span> handle</div>
-<div class="line"><span class="lineno">  303</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00302">302</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  302</span>    <span class="keyword">def </span>_sigma_engine_handle(self):</div>
+<div class="line"><span class="lineno">  303</span>        <span class="stringliteral">&quot;&quot;&quot;The C++ engine of a sigma-point or particle filter. The particle one starts</span></div>
+<div class="line"><span class="lineno">  304</span><span class="stringliteral">        from the cloud the Python engine drew at reset and draws from numpy as it</span></div>
+<div class="line"><span class="lineno">  305</span><span class="stringliteral">        would, so a seeded run gives the Python run&#39;s numbers.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  306</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  307</span>        settings = self._counterpart_sigma_engine()</div>
+<div class="line"><span class="lineno">  308</span>        <span class="keywordflow">if</span> settings[<span class="stringliteral">&quot;kind&quot;</span>] != <span class="stringliteral">&quot;particle&quot;</span>:</div>
+<div class="line"><span class="lineno">  309</span>            <span class="keywordflow">return</span> core.create_engine(**settings)</div>
+<div class="line"><span class="lineno">  310</span>        handle, self._particle_draws = core.particle_engine_on_numpy(</div>
+<div class="line"><span class="lineno">  311</span>            settings[<span class="stringliteral">&quot;n_particles&quot;</span>], settings[<span class="stringliteral">&quot;threshold&quot;</span>], self.engine._particles)</div>
+<div class="line"><span class="lineno">  312</span>        <span class="keywordflow">return</span> handle</div>
+<div class="line"><span class="lineno">  313</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1843,25 +1852,37 @@ would, so a seeded run gives the Python run's numbers.</pre>
 </table>
 </div><div class="memdoc">
 <pre class="fragment">Record a whole pass returned by the C++ filter.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00494">494</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  494</span>    <span class="keyword">def </span>_store_pass(self, out, zk, uk):</div>
-<div class="line"><span class="lineno">  495</span>        <span class="stringliteral">&quot;&quot;&quot;Record a whole pass returned by the C++ filter.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  496</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> as_contiguous</div>
-<div class="line"><span class="lineno">  497</span>        n, m = self._model.n, self._model.m</div>
-<div class="line"><span class="lineno">  498</span>        N = len(zk)</div>
-<div class="line"><span class="lineno">  499</span>        self.measurement.extend(as_contiguous(zk))</div>
-<div class="line"><span class="lineno">  500</span>        self.control.extend(as_contiguous(uk))</div>
-<div class="line"><span class="lineno">  501</span>        self.prior.extend((out[<span class="stringliteral">&quot;x_prior&quot;</span>][k].reshape(n, 1), out[<span class="stringliteral">&quot;P_prior&quot;</span>][k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
-<div class="line"><span class="lineno">  502</span>        self.posterior.extend((out[<span class="stringliteral">&quot;x_post&quot;</span>][k].reshape(n, 1), out[<span class="stringliteral">&quot;P_post&quot;</span>][k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
-<div class="line"><span class="lineno">  503</span>        self.transition.extend(out[<span class="stringliteral">&quot;transitions&quot;</span>][k] <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
-<div class="line"><span class="lineno">  504</span>        self.innovation.extend(out[<span class="stringliteral">&quot;innovations&quot;</span>][k].reshape(m, 1) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
-<div class="line"><span class="lineno">  505</span> </div>
-<div class="line"><span class="lineno">  506</span>        self.x = out[<span class="stringliteral">&quot;x_post&quot;</span>][-1].reshape(n, 1)</div>
-<div class="line"><span class="lineno">  507</span>        self.P = out[<span class="stringliteral">&quot;P_post&quot;</span>][-1]</div>
-<div class="line"><span class="lineno">  508</span>        after = getattr(self.engine, <span class="stringliteral">&quot;_after_native_pass&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  509</span>        <span class="keywordflow">if</span> after <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> getattr(self, <span class="stringliteral">&quot;_engine_handle&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  510</span>            after(self._engine_handle, len(getattr(self._model, <span class="stringliteral">&quot;models&quot;</span>, ())))</div>
-<div class="line"><span class="lineno">  511</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00507">507</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  507</span>    <span class="keyword">def </span>_store_pass(self, out, zk, uk):</div>
+<div class="line"><span class="lineno">  508</span>        <span class="stringliteral">&quot;&quot;&quot;Record a whole pass returned by the C++ filter.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  509</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> as_contiguous</div>
+<div class="line"><span class="lineno">  510</span>        n, m = self._model.n, self._model.m</div>
+<div class="line"><span class="lineno">  511</span>        N = len(zk)</div>
+<div class="line"><span class="lineno">  512</span>        self.measurement.extend(as_contiguous(zk))</div>
+<div class="line"><span class="lineno">  513</span>        self.control.extend(as_contiguous(uk))</div>
+<div class="line"><span class="lineno">  514</span>        <span class="keywordflow">if</span> <span class="stringliteral">&quot;P_last&quot;</span> <span class="keywordflow">in</span> out:</div>
+<div class="line"><span class="lineno">  515</span>            <span class="comment"># The steady-state gain: no covariance per step was kept. Every step</span></div>
+<div class="line"><span class="lineno">  516</span>            <span class="comment"># refers to the one the run ended with (one array, not N copies).</span></div>
+<div class="line"><span class="lineno">  517</span>            self._steady_used, self.steady_from = <span class="keyword">True</span>, out[<span class="stringliteral">&quot;steady_from&quot;</span>]</div>
+<div class="line"><span class="lineno">  518</span>            P = out[<span class="stringliteral">&quot;P_last&quot;</span>]</div>
+<div class="line"><span class="lineno">  519</span>            self.prior.extend((out[<span class="stringliteral">&quot;x_prior&quot;</span>][k].reshape(n, 1), P) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  520</span>            self.posterior.extend((out[<span class="stringliteral">&quot;x_post&quot;</span>][k].reshape(n, 1), P) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  521</span>            self.transition.extend(<span class="keywordtype">None</span> <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  522</span>            self.innovation.extend(out[<span class="stringliteral">&quot;innovations&quot;</span>][k].reshape(m, 1) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  523</span>            self.x = out[<span class="stringliteral">&quot;x_post&quot;</span>][-1].reshape(n, 1)</div>
+<div class="line"><span class="lineno">  524</span>            self.P = P</div>
+<div class="line"><span class="lineno">  525</span>            <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  526</span>        self.prior.extend((out[<span class="stringliteral">&quot;x_prior&quot;</span>][k].reshape(n, 1), out[<span class="stringliteral">&quot;P_prior&quot;</span>][k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  527</span>        self.posterior.extend((out[<span class="stringliteral">&quot;x_post&quot;</span>][k].reshape(n, 1), out[<span class="stringliteral">&quot;P_post&quot;</span>][k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  528</span>        self.transition.extend(out[<span class="stringliteral">&quot;transitions&quot;</span>][k] <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  529</span>        self.innovation.extend(out[<span class="stringliteral">&quot;innovations&quot;</span>][k].reshape(m, 1) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N))</div>
+<div class="line"><span class="lineno">  530</span> </div>
+<div class="line"><span class="lineno">  531</span>        self.x = out[<span class="stringliteral">&quot;x_post&quot;</span>][-1].reshape(n, 1)</div>
+<div class="line"><span class="lineno">  532</span>        self.P = out[<span class="stringliteral">&quot;P_post&quot;</span>][-1]</div>
+<div class="line"><span class="lineno">  533</span>        after = getattr(self.engine, <span class="stringliteral">&quot;_after_native_pass&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  534</span>        <span class="keywordflow">if</span> after <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> getattr(self, <span class="stringliteral">&quot;_engine_handle&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  535</span>            after(self._engine_handle, len(getattr(self._model, <span class="stringliteral">&quot;models&quot;</span>, ())))</div>
+<div class="line"><span class="lineno">  536</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1895,36 +1916,39 @@ would, so a seeded run gives the Python run's numbers.</pre>
 
 <p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1filters_1_1enkf_1_1_ensemble_kalman_filter.html#a7596d1ae8ee7d1a3a2bb00c5193fde91">modules.framework.filters.enkf.EnsembleKalmanFilter</a>, and <a class="el" href="classmodules_1_1framework_1_1filters_1_1pf_1_1_particle_filter.html#a0d58302d0cea9aeb405254705a2bcb87">modules.framework.filters.pf.ParticleFilter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00584">584</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  584</span>    <span class="keyword">def </span>backward(self, **kwargs):</div>
-<div class="line"><span class="lineno">  585</span>        <span class="keywordflow">if</span> self.engine.OWNS_PASS:</div>
-<div class="line"><span class="lineno">  586</span>            <span class="keywordflow">if</span> self.pass_result <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  587</span>                <span class="keywordflow">raise</span> RuntimeError(</div>
-<div class="line"><span class="lineno">  588</span>                    f<span class="stringliteral">&quot;No results to smooth; run {type(self).__name__}.forward() first.&quot;</span>)</div>
-<div class="line"><span class="lineno">  589</span>            self.pass_result = self.engine.backward(self.model, self.pass_result, **kwargs)</div>
-<div class="line"><span class="lineno">  590</span>            self.pass_records = self._pass_records(KalmanStateFlavor.SMOOTHED)</div>
-<div class="line"><span class="lineno">  591</span>            <span class="keywordflow">return</span> self.pass_records</div>
-<div class="line"><span class="lineno">  592</span> </div>
-<div class="line"><span class="lineno">  593</span>        N = len(self.posterior)</div>
-<div class="line"><span class="lineno">  594</span>        <span class="keyword">assert</span> N &gt; 0, <span class="stringliteral">&quot;No posterior estimates available for smoothing. (run forward() first?)&quot;</span></div>
-<div class="line"><span class="lineno">  595</span>        <span class="keyword">assert</span> len(self.prior) == N, <span class="stringliteral">&quot;Prior estimates must match the number of posterior estimates.&quot;</span></div>
-<div class="line"><span class="lineno">  596</span> </div>
-<div class="line"><span class="lineno">  597</span>        self.smooth = np.zeros((N, 2), dtype=object)</div>
-<div class="line"><span class="lineno">  598</span>        self.smooth[-1] = self.posterior[-1]</div>
-<div class="line"><span class="lineno">  599</span> </div>
-<div class="line"><span class="lineno">  600</span>        <span class="keywordflow">if</span> N &gt; 1 <span class="keywordflow">and</span> self._native_backward_eligible():</div>
-<div class="line"><span class="lineno">  601</span>            self._backward_native(N)</div>
-<div class="line"><span class="lineno">  602</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  603</span>            <span class="comment"># transition[k + 1] is the one that took posterior[k] to prior[k + 1]:</span></div>
-<div class="line"><span class="lineno">  604</span>            <span class="comment"># the F of the RTS gain P[k] F^T P_prior[k + 1]^-1.</span></div>
-<div class="line"><span class="lineno">  605</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> <a class="code hl_variable" href="_f_f_t_8cc.html#ac1534bc775e2a5cfa875c4027ff98458">reversed</a>(range(N - 1)):</div>
-<div class="line"><span class="lineno">  606</span>                self.smooth[k] = self.engine._smooth(</div>
-<div class="line"><span class="lineno">  607</span>                    self.model, self.posterior[k], self.prior[k + 1], self.smooth[k + 1], self.transition[k + 1]</div>
-<div class="line"><span class="lineno">  608</span>                )</div>
-<div class="line"><span class="lineno">  609</span> </div>
-<div class="line"><span class="lineno">  610</span>        kwargs.pop(<span class="stringliteral">&quot;smooth&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  611</span>        <span class="keywordflow">return</span> self.get_record(smooth=<span class="keyword">True</span>, **kwargs)</div>
-<div class="line"><span class="lineno">  612</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00609">609</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  609</span>    <span class="keyword">def </span>backward(self, **kwargs):</div>
+<div class="line"><span class="lineno">  610</span>        <span class="keywordflow">if</span> self.engine.OWNS_PASS:</div>
+<div class="line"><span class="lineno">  611</span>            <span class="keywordflow">if</span> self.pass_result <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  612</span>                <span class="keywordflow">raise</span> RuntimeError(</div>
+<div class="line"><span class="lineno">  613</span>                    f<span class="stringliteral">&quot;No results to smooth; run {type(self).__name__}.forward() first.&quot;</span>)</div>
+<div class="line"><span class="lineno">  614</span>            self.pass_result = self.engine.backward(self.model, self.pass_result, **kwargs)</div>
+<div class="line"><span class="lineno">  615</span>            self.pass_records = self._pass_records(KalmanStateFlavor.SMOOTHED)</div>
+<div class="line"><span class="lineno">  616</span>            <span class="keywordflow">return</span> self.pass_records</div>
+<div class="line"><span class="lineno">  617</span> </div>
+<div class="line"><span class="lineno">  618</span>        <span class="keywordflow">if</span> getattr(self, <span class="stringliteral">&quot;_steady_used&quot;</span>, <span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">  619</span>            <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;backward(): the forward pass ran with the steady-state gain and kept no covariance &quot;</span></div>
+<div class="line"><span class="lineno">  620</span>                               <span class="stringliteral">&quot;per step; run forward() without steady= to smooth.&quot;</span>)</div>
+<div class="line"><span class="lineno">  621</span>        N = len(self.posterior)</div>
+<div class="line"><span class="lineno">  622</span>        <span class="keyword">assert</span> N &gt; 0, <span class="stringliteral">&quot;No posterior estimates available for smoothing. (run forward() first?)&quot;</span></div>
+<div class="line"><span class="lineno">  623</span>        <span class="keyword">assert</span> len(self.prior) == N, <span class="stringliteral">&quot;Prior estimates must match the number of posterior estimates.&quot;</span></div>
+<div class="line"><span class="lineno">  624</span> </div>
+<div class="line"><span class="lineno">  625</span>        self.smooth = np.zeros((N, 2), dtype=object)</div>
+<div class="line"><span class="lineno">  626</span>        self.smooth[-1] = self.posterior[-1]</div>
+<div class="line"><span class="lineno">  627</span> </div>
+<div class="line"><span class="lineno">  628</span>        <span class="keywordflow">if</span> N &gt; 1 <span class="keywordflow">and</span> self._native_backward_eligible():</div>
+<div class="line"><span class="lineno">  629</span>            self._backward_native(N)</div>
+<div class="line"><span class="lineno">  630</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  631</span>            <span class="comment"># transition[k + 1] is the one that took posterior[k] to prior[k + 1]:</span></div>
+<div class="line"><span class="lineno">  632</span>            <span class="comment"># the F of the RTS gain P[k] F^T P_prior[k + 1]^-1.</span></div>
+<div class="line"><span class="lineno">  633</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> <a class="code hl_variable" href="_f_f_t_8cc.html#ac1534bc775e2a5cfa875c4027ff98458">reversed</a>(range(N - 1)):</div>
+<div class="line"><span class="lineno">  634</span>                self.smooth[k] = self.engine._smooth(</div>
+<div class="line"><span class="lineno">  635</span>                    self.model, self.posterior[k], self.prior[k + 1], self.smooth[k + 1], self.transition[k + 1]</div>
+<div class="line"><span class="lineno">  636</span>                )</div>
+<div class="line"><span class="lineno">  637</span> </div>
+<div class="line"><span class="lineno">  638</span>        kwargs.pop(<span class="stringliteral">&quot;smooth&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  639</span>        <span class="keywordflow">return</span> self.get_record(smooth=<span class="keyword">True</span>, **kwargs)</div>
+<div class="line"><span class="lineno">  640</span> </div>
 <div class="ttc" id="a_f_f_t_8cc_html_ac1534bc775e2a5cfa875c4027ff98458"><div class="ttname"><a href="_f_f_t_8cc.html#ac1534bc775e2a5cfa875c4027ff98458">reversed</a></div><div class="ttdeci">std::vector&lt; std::size_t &gt; reversed</div><div class="ttdef"><b>Definition</b> <a href="_f_f_t_8cc_source.html#l00032">FFT.cc:32</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1963,14 +1987,14 @@ would, so a seeded run gives the Python run's numbers.</pre>
 <pre class="fragment">Draw the filter-consistency dashboard (innovation, gain, NIS, and NEES if a
 ground-truth ``sample`` is given). Delegates to
 :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.plot`; returns the figure.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00730">730</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  730</span>    <span class="keyword">def </span>diagnostics(self, sample=None, **kwargs):</div>
-<div class="line"><span class="lineno">  731</span>        <span class="stringliteral">&quot;&quot;&quot;Draw the filter-consistency dashboard (innovation, gain, NIS, and NEES if a</span></div>
-<div class="line"><span class="lineno">  732</span><span class="stringliteral">        ground-truth ``sample`` is given). Delegates to</span></div>
-<div class="line"><span class="lineno">  733</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.plot`; returns the figure.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  734</span>        <span class="keywordflow">return</span> self._diagnostics().plot(sample=sample, **kwargs)</div>
-<div class="line"><span class="lineno">  735</span> </div>
-<div class="line"><span class="lineno">  736</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00758">758</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  758</span>    <span class="keyword">def </span>diagnostics(self, sample=None, **kwargs):</div>
+<div class="line"><span class="lineno">  759</span>        <span class="stringliteral">&quot;&quot;&quot;Draw the filter-consistency dashboard (innovation, gain, NIS, and NEES if a</span></div>
+<div class="line"><span class="lineno">  760</span><span class="stringliteral">        ground-truth ``sample`` is given). Delegates to</span></div>
+<div class="line"><span class="lineno">  761</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.plot`; returns the figure.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  762</span>        <span class="keywordflow">return</span> self._diagnostics().plot(sample=sample, **kwargs)</div>
+<div class="line"><span class="lineno">  763</span> </div>
+<div class="line"><span class="lineno">  764</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2064,16 +2088,16 @@ ground-truth ``sample`` is given). Delegates to
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Alias for ``forward`` (``smooth=True`` runs forward then backward).</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00673">673</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  673</span>    <span class="keyword">def </span>filter(self, z, u=None, **kwargs):</div>
-<div class="line"><span class="lineno">  674</span>        <span class="stringliteral">&quot;&quot;&quot;Alias for ``forward`` (``smooth=True`` runs forward then backward).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  675</span>        <span class="keywordflow">if</span> u <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  676</span>            u = kwargs.pop(<span class="stringliteral">&quot;uk&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  677</span>        <span class="keywordflow">if</span> kwargs.pop(<span class="stringliteral">&quot;smooth&quot;</span>, <span class="keyword">False</span>):</div>
-<div class="line"><span class="lineno">  678</span>            self.forward(z, u, record=<span class="keyword">False</span>, **kwargs)</div>
-<div class="line"><span class="lineno">  679</span>            <span class="keywordflow">return</span> self.backward(**kwargs)</div>
-<div class="line"><span class="lineno">  680</span>        <span class="keywordflow">return</span> self.forward(z, u, **kwargs)</div>
-<div class="line"><span class="lineno">  681</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00701">701</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  701</span>    <span class="keyword">def </span>filter(self, z, u=None, **kwargs):</div>
+<div class="line"><span class="lineno">  702</span>        <span class="stringliteral">&quot;&quot;&quot;Alias for ``forward`` (``smooth=True`` runs forward then backward).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  703</span>        <span class="keywordflow">if</span> u <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  704</span>            u = kwargs.pop(<span class="stringliteral">&quot;uk&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  705</span>        <span class="keywordflow">if</span> kwargs.pop(<span class="stringliteral">&quot;smooth&quot;</span>, <span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">  706</span>            self.forward(z, u, record=<span class="keyword">False</span>, **kwargs)</div>
+<div class="line"><span class="lineno">  707</span>            <span class="keywordflow">return</span> self.backward(**kwargs)</div>
+<div class="line"><span class="lineno">  708</span>        <span class="keywordflow">return</span> self.forward(z, u, **kwargs)</div>
+<div class="line"><span class="lineno">  709</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2154,85 +2178,95 @@ ground-truth ``sample`` is given). Delegates to
 <div class="line"><span class="lineno">  154</span> </div>
 <div class="line"><span class="lineno">  155</span>        <span class="comment"># --- a tuner beside the controller: it retunes Q or R at the same point of the step ---</span></div>
 <div class="line"><span class="lineno">  156</span>        tuner = kwargs.pop(<span class="stringliteral">&quot;tuner&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  157</span>        <span class="keywordflow">if</span> tuner <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  158</span>            <span class="keywordflow">if</span> uk <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> callable(uk):</div>
-<div class="line"><span class="lineno">  159</span>                <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;forward(): a tuner goes with a controller (uk=controller, tuner=...) or alone, &quot;</span></div>
-<div class="line"><span class="lineno">  160</span>                                 <span class="stringliteral">&quot;not with a sequence of commands.&quot;</span>)</div>
-<div class="line"><span class="lineno">  161</span>            <span class="keyword">from</span> .tuner <span class="keyword">import</span> with_tuner</div>
-<div class="line"><span class="lineno">  162</span>            uk = with_tuner(uk, tuner)</div>
-<div class="line"><span class="lineno">  163</span> </div>
-<div class="line"><span class="lineno">  164</span>        <span class="comment"># --- detect callable controller (closed-loop) before normalisation ---</span></div>
-<div class="line"><span class="lineno">  165</span>        uk_fn = uk <span class="keywordflow">if</span> callable(uk) <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  166</span> </div>
-<div class="line"><span class="lineno">  167</span>        <span class="comment"># --- normalise measurements / control ---</span></div>
-<div class="line"><span class="lineno">  168</span>        raw = raw.zk <span class="keywordflow">if</span> isinstance(raw, KalmanRecord) <span class="keywordflow">else</span> raw</div>
-<div class="line"><span class="lineno">  169</span>        raw = KalmanRecord._normalize_in(raw, indexing=indexing, dtype=self.model.dtype)</div>
-<div class="line"><span class="lineno">  170</span>        <span class="keyword">assert</span> raw.shape[1] &gt;= 1, f<span class="stringliteral">&quot;raw must have at least 1 column, got {format_shape(raw)}.&quot;</span></div>
+<div class="line"><span class="lineno">  157</span>        <span class="comment"># --- the steady-state gain: once the covariance has settled, a step moves only the mean ---</span></div>
+<div class="line"><span class="lineno">  158</span>        steady = float(kwargs.pop(<span class="stringliteral">&quot;steady&quot;</span>, 0.0) <span class="keywordflow">or</span> 0.0)</div>
+<div class="line"><span class="lineno">  159</span>        <span class="keywordflow">if</span> steady &lt; 0:</div>
+<div class="line"><span class="lineno">  160</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;forward(): steady= is a relative tolerance &gt;= 0 (0 turns it off).&quot;</span>)</div>
+<div class="line"><span class="lineno">  161</span>        self._steady, self._steady_used, self.steady_from = steady, <span class="keyword">False</span>, <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  162</span>        <span class="keywordflow">if</span> tuner <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  163</span>            <span class="keywordflow">if</span> uk <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> callable(uk):</div>
+<div class="line"><span class="lineno">  164</span>                <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;forward(): a tuner goes with a controller (uk=controller, tuner=...) or alone, &quot;</span></div>
+<div class="line"><span class="lineno">  165</span>                                 <span class="stringliteral">&quot;not with a sequence of commands.&quot;</span>)</div>
+<div class="line"><span class="lineno">  166</span>            <span class="keyword">from</span> .tuner <span class="keyword">import</span> with_tuner</div>
+<div class="line"><span class="lineno">  167</span>            uk = with_tuner(uk, tuner)</div>
+<div class="line"><span class="lineno">  168</span> </div>
+<div class="line"><span class="lineno">  169</span>        <span class="comment"># --- detect callable controller (closed-loop) before normalisation ---</span></div>
+<div class="line"><span class="lineno">  170</span>        uk_fn = uk <span class="keywordflow">if</span> callable(uk) <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
 <div class="line"><span class="lineno">  171</span> </div>
-<div class="line"><span class="lineno">  172</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  173</span>            uk = uk.zk <span class="keywordflow">if</span> isinstance(uk, KalmanRecord) <span class="keywordflow">else</span> uk</div>
-<div class="line"><span class="lineno">  174</span>            <span class="keywordflow">if</span> uk <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> len(uk) &lt; 1:</div>
-<div class="line"><span class="lineno">  175</span>                uk = np.zeros((len(raw), self.l))</div>
-<div class="line"><span class="lineno">  176</span>            uk = KalmanRecord._normalize_in(uk, indexing=indexing, dtype=self.model.dtype)</div>
-<div class="line"><span class="lineno">  177</span>            <span class="keywordflow">if</span> self.l &gt; 0:</div>
-<div class="line"><span class="lineno">  178</span>                <span class="keyword">assert</span> uk <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> uk.shape[1] == self.l, \</div>
-<div class="line"><span class="lineno">  179</span>                    f<span class="stringliteral">&quot;Control input uk has wrong number of columns. Expected ({self.l},1), got {format_shape(uk)}.&quot;</span></div>
-<div class="line"><span class="lineno">  180</span> </div>
-<div class="line"><span class="lineno">  181</span>        <span class="comment"># --- prepare_measurements (may alter shapes) ---</span></div>
-<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  183</span>            zk, _ = self.model.prepare_measurements(raw, <span class="keywordtype">None</span>) <span class="keywordflow">if</span> prepare_measurements <span class="keywordflow">else</span> (raw, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  184</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  185</span>            zk, uk = self.model.prepare_measurements(raw, uk) <span class="keywordflow">if</span> prepare_measurements <span class="keywordflow">else</span> (raw, uk)</div>
-<div class="line"><span class="lineno">  186</span>        <span class="keyword">assert</span> zk.shape[1] == self.m, \</div>
-<div class="line"><span class="lineno">  187</span>            f<span class="stringliteral">&quot;Preprocessed zk has incorrect number of columns. Expected ({self.m},1), got {format_shape(zk)}.&quot;</span></div>
-<div class="line"><span class="lineno">  188</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> self.l &gt; 0:</div>
-<div class="line"><span class="lineno">  189</span>            <span class="keyword">assert</span> uk <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> uk.shape[1] == self.l, \</div>
-<div class="line"><span class="lineno">  190</span>                f<span class="stringliteral">&quot;Preprocessed uk has incorrect number of columns. Expected ({self.l},1), got {format_shape(uk)}.&quot;</span></div>
-<div class="line"><span class="lineno">  191</span> </div>
-<div class="line"><span class="lineno">  192</span>        <span class="comment"># --- main loop (engine does predict + masked update); a constant-matrix</span></div>
-<div class="line"><span class="lineno">  193</span>        <span class="comment"># linear model with no control callback can run the whole pass fused in C ---</span></div>
-<div class="line"><span class="lineno">  194</span>        counterpart = self._native_counterpart(uk_fn)</div>
-<div class="line"><span class="lineno">  195</span>        <span class="keywordflow">if</span> counterpart <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  196</span>            self._forward_counterpart(counterpart, zk, uk, uk_fn)</div>
-<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">elif</span> self._retuned_operation_eligible(uk_fn):</div>
-<div class="line"><span class="lineno">  198</span>            self._forward_retuned_operation(zk, uk_fn)</div>
-<div class="line"><span class="lineno">  199</span>        <span class="keywordflow">elif</span> self._native_forward_eligible(uk_fn):</div>
-<div class="line"><span class="lineno">  200</span>            self._forward_native(zk, uk)</div>
-<div class="line"><span class="lineno">  201</span>        <span class="keywordflow">elif</span> self._matrices_eligible(uk_fn):</div>
-<div class="line"><span class="lineno">  202</span>            self._forward_matrices(zk, uk, uk_fn)</div>
-<div class="line"><span class="lineno">  203</span>        <span class="keywordflow">elif</span> self._callback_eligible(uk_fn):</div>
-<div class="line"><span class="lineno">  204</span>            self._forward_callback(zk, uk, uk_fn)</div>
-<div class="line"><span class="lineno">  205</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  206</span>            t = float(self.model.t0) <span class="keywordflow">if</span> self.model.t0 <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 0.0</div>
-<div class="line"><span class="lineno">  207</span>            dt = 1.0 / self.sample_rate() <span class="keywordflow">if</span> self.sample_rate() <span class="keywordflow">else</span> 1.0</div>
-<div class="line"><span class="lineno">  208</span>            nu = np.zeros((self.model.m, 1))</div>
-<div class="line"><span class="lineno">  209</span>            u = np.zeros((max(self.l, 1), 1))</div>
-<div class="line"><span class="lineno">  210</span> </div>
-<div class="line"><span class="lineno">  211</span>            <span class="keywordflow">for</span> idx, z <span class="keywordflow">in</span> enumerate(zk):</div>
-<div class="line"><span class="lineno">  212</span>                <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  213</span>                    u_raw = uk_fn(self.x, self.P, t, nu=nu)</div>
-<div class="line"><span class="lineno">  214</span>                    u = np.asarray(u_raw, dtype=float).reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  215</span>                <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  216</span>                    u = uk[idx]</div>
-<div class="line"><span class="lineno">  217</span> </div>
-<div class="line"><span class="lineno">  218</span>                self.measurement.append(z)</div>
-<div class="line"><span class="lineno">  219</span>                self.control.append(u.ravel() <span class="keywordflow">if</span> np.ndim(u) &gt; 1 <span class="keywordflow">else</span> u)</div>
+<div class="line"><span class="lineno">  172</span>        <span class="comment"># --- normalise measurements / control ---</span></div>
+<div class="line"><span class="lineno">  173</span>        raw = raw.zk <span class="keywordflow">if</span> isinstance(raw, KalmanRecord) <span class="keywordflow">else</span> raw</div>
+<div class="line"><span class="lineno">  174</span>        raw = KalmanRecord._normalize_in(raw, indexing=indexing, dtype=self.model.dtype)</div>
+<div class="line"><span class="lineno">  175</span>        <span class="keyword">assert</span> raw.shape[1] &gt;= 1, f<span class="stringliteral">&quot;raw must have at least 1 column, got {format_shape(raw)}.&quot;</span></div>
+<div class="line"><span class="lineno">  176</span> </div>
+<div class="line"><span class="lineno">  177</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  178</span>            uk = uk.zk <span class="keywordflow">if</span> isinstance(uk, KalmanRecord) <span class="keywordflow">else</span> uk</div>
+<div class="line"><span class="lineno">  179</span>            <span class="keywordflow">if</span> uk <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> len(uk) &lt; 1:</div>
+<div class="line"><span class="lineno">  180</span>                uk = np.zeros((len(raw), self.l))</div>
+<div class="line"><span class="lineno">  181</span>            uk = KalmanRecord._normalize_in(uk, indexing=indexing, dtype=self.model.dtype)</div>
+<div class="line"><span class="lineno">  182</span>            <span class="keywordflow">if</span> self.l &gt; 0:</div>
+<div class="line"><span class="lineno">  183</span>                <span class="keyword">assert</span> uk <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> uk.shape[1] == self.l, \</div>
+<div class="line"><span class="lineno">  184</span>                    f<span class="stringliteral">&quot;Control input uk has wrong number of columns. Expected ({self.l},1), got {format_shape(uk)}.&quot;</span></div>
+<div class="line"><span class="lineno">  185</span> </div>
+<div class="line"><span class="lineno">  186</span>        <span class="comment"># --- prepare_measurements (may alter shapes) ---</span></div>
+<div class="line"><span class="lineno">  187</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  188</span>            zk, _ = self.model.prepare_measurements(raw, <span class="keywordtype">None</span>) <span class="keywordflow">if</span> prepare_measurements <span class="keywordflow">else</span> (raw, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  189</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  190</span>            zk, uk = self.model.prepare_measurements(raw, uk) <span class="keywordflow">if</span> prepare_measurements <span class="keywordflow">else</span> (raw, uk)</div>
+<div class="line"><span class="lineno">  191</span>        <span class="keyword">assert</span> zk.shape[1] == self.m, \</div>
+<div class="line"><span class="lineno">  192</span>            f<span class="stringliteral">&quot;Preprocessed zk has incorrect number of columns. Expected ({self.m},1), got {format_shape(zk)}.&quot;</span></div>
+<div class="line"><span class="lineno">  193</span>        <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> self.l &gt; 0:</div>
+<div class="line"><span class="lineno">  194</span>            <span class="keyword">assert</span> uk <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> uk.shape[1] == self.l, \</div>
+<div class="line"><span class="lineno">  195</span>                f<span class="stringliteral">&quot;Preprocessed uk has incorrect number of columns. Expected ({self.l},1), got {format_shape(uk)}.&quot;</span></div>
+<div class="line"><span class="lineno">  196</span> </div>
+<div class="line"><span class="lineno">  197</span>        <span class="comment"># --- main loop (engine does predict + masked update); a constant-matrix</span></div>
+<div class="line"><span class="lineno">  198</span>        <span class="comment"># linear model with no control callback can run the whole pass fused in C ---</span></div>
+<div class="line"><span class="lineno">  199</span>        <span class="keywordflow">if</span> steady <span class="keywordflow">and</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  200</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;forward(): the steady-state gain takes no controller.&quot;</span>)</div>
+<div class="line"><span class="lineno">  201</span>        counterpart = self._native_counterpart(uk_fn)</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">if</span> counterpart <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  203</span>            self._forward_counterpart(counterpart, zk, uk, uk_fn)</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keywordflow">elif</span> self._retuned_operation_eligible(uk_fn) <span class="keywordflow">and</span> <span class="keywordflow">not</span> steady:</div>
+<div class="line"><span class="lineno">  205</span>            self._forward_retuned_operation(zk, uk_fn)</div>
+<div class="line"><span class="lineno">  206</span>        <span class="keywordflow">elif</span> self._native_forward_eligible(uk_fn):</div>
+<div class="line"><span class="lineno">  207</span>            self._forward_native(zk, uk)</div>
+<div class="line"><span class="lineno">  208</span>        <span class="keywordflow">elif</span> self._matrices_eligible(uk_fn):</div>
+<div class="line"><span class="lineno">  209</span>            self._forward_matrices(zk, uk, uk_fn)</div>
+<div class="line"><span class="lineno">  210</span>        <span class="keywordflow">elif</span> self._callback_eligible(uk_fn) <span class="keywordflow">and</span> <span class="keywordflow">not</span> steady:</div>
+<div class="line"><span class="lineno">  211</span>            self._forward_callback(zk, uk, uk_fn)</div>
+<div class="line"><span class="lineno">  212</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  213</span>            <span class="keywordflow">if</span> steady:</div>
+<div class="line"><span class="lineno">  214</span>                <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;forward(): the steady-state gain runs in the C++ filter, on a model of constant &quot;</span></div>
+<div class="line"><span class="lineno">  215</span>                                 <span class="stringliteral">&quot;matrices; this model and engine run the Python loop.&quot;</span>)</div>
+<div class="line"><span class="lineno">  216</span>            t = float(self.model.t0) <span class="keywordflow">if</span> self.model.t0 <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 0.0</div>
+<div class="line"><span class="lineno">  217</span>            dt = 1.0 / self.sample_rate() <span class="keywordflow">if</span> self.sample_rate() <span class="keywordflow">else</span> 1.0</div>
+<div class="line"><span class="lineno">  218</span>            nu = np.zeros((self.model.m, 1))</div>
+<div class="line"><span class="lineno">  219</span>            u = np.zeros((max(self.l, 1), 1))</div>
 <div class="line"><span class="lineno">  220</span> </div>
-<div class="line"><span class="lineno">  221</span>                self.x, self.P, F = self.engine._predict(self.model, self.x, self.P, u=u, t=t)</div>
-<div class="line"><span class="lineno">  222</span>                self.prior.append((self.x, self.P))</div>
-<div class="line"><span class="lineno">  223</span>                self.transition.append(F)</div>
-<div class="line"><span class="lineno">  224</span> </div>
-<div class="line"><span class="lineno">  225</span>                h_pred = self.model.h(self.x, t=t)</div>
-<div class="line"><span class="lineno">  226</span>                nu = np.asarray(z, dtype=float).reshape(-1, 1) - np.asarray(h_pred, dtype=float).reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  227</span>                self.innovation.append(nu)</div>
-<div class="line"><span class="lineno">  228</span> </div>
-<div class="line"><span class="lineno">  229</span>                self.x, self.P = self.engine._update(self.model, self.x, self.P, z, t=t)</div>
-<div class="line"><span class="lineno">  230</span>                self.posterior.append((self.x, self.P))</div>
-<div class="line"><span class="lineno">  231</span> </div>
-<div class="line"><span class="lineno">  232</span>                t += dt</div>
-<div class="line"><span class="lineno">  233</span> </div>
-<div class="line"><span class="lineno">  234</span>        <span class="keywordflow">return</span> self.get_record(indexing=indexing, adjust_state=adjust_state, finish_output=finish_output) <span class="keywordflow">if</span> record <span class="keywordflow">else</span> self</div>
-<div class="line"><span class="lineno">  235</span> </div>
+<div class="line"><span class="lineno">  221</span>            <span class="keywordflow">for</span> idx, z <span class="keywordflow">in</span> enumerate(zk):</div>
+<div class="line"><span class="lineno">  222</span>                <span class="keywordflow">if</span> uk_fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  223</span>                    u_raw = uk_fn(self.x, self.P, t, nu=nu)</div>
+<div class="line"><span class="lineno">  224</span>                    u = np.asarray(u_raw, dtype=float).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  225</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  226</span>                    u = uk[idx]</div>
+<div class="line"><span class="lineno">  227</span> </div>
+<div class="line"><span class="lineno">  228</span>                self.measurement.append(z)</div>
+<div class="line"><span class="lineno">  229</span>                self.control.append(u.ravel() <span class="keywordflow">if</span> np.ndim(u) &gt; 1 <span class="keywordflow">else</span> u)</div>
+<div class="line"><span class="lineno">  230</span> </div>
+<div class="line"><span class="lineno">  231</span>                self.x, self.P, F = self.engine._predict(self.model, self.x, self.P, u=u, t=t)</div>
+<div class="line"><span class="lineno">  232</span>                self.prior.append((self.x, self.P))</div>
+<div class="line"><span class="lineno">  233</span>                self.transition.append(F)</div>
+<div class="line"><span class="lineno">  234</span> </div>
+<div class="line"><span class="lineno">  235</span>                h_pred = self.model.h(self.x, t=t)</div>
+<div class="line"><span class="lineno">  236</span>                nu = np.asarray(z, dtype=float).reshape(-1, 1) - np.asarray(h_pred, dtype=float).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  237</span>                self.innovation.append(nu)</div>
+<div class="line"><span class="lineno">  238</span> </div>
+<div class="line"><span class="lineno">  239</span>                self.x, self.P = self.engine._update(self.model, self.x, self.P, z, t=t)</div>
+<div class="line"><span class="lineno">  240</span>                self.posterior.append((self.x, self.P))</div>
+<div class="line"><span class="lineno">  241</span> </div>
+<div class="line"><span class="lineno">  242</span>                t += dt</div>
+<div class="line"><span class="lineno">  243</span> </div>
+<div class="line"><span class="lineno">  244</span>        <span class="keywordflow">return</span> self.get_record(indexing=indexing, adjust_state=adjust_state, finish_output=finish_output) <span class="keywordflow">if</span> record <span class="keywordflow">else</span> self</div>
+<div class="line"><span class="lineno">  245</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2253,12 +2287,12 @@ ground-truth ``sample`` is given). Delegates to
 </div><div class="memdoc">
 <pre class="fragment">Per-step Kalman gain K(t) — see
 :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.gains`.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00715">715</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  715</span>    <span class="keyword">def </span>gains(self):</div>
-<div class="line"><span class="lineno">  716</span>        <span class="stringliteral">&quot;&quot;&quot;Per-step Kalman gain K(t) — see</span></div>
-<div class="line"><span class="lineno">  717</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.gains`.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  718</span>        <span class="keywordflow">return</span> self._diagnostics().gains()</div>
-<div class="line"><span class="lineno">  719</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00743">743</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  743</span>    <span class="keyword">def </span>gains(self):</div>
+<div class="line"><span class="lineno">  744</span>        <span class="stringliteral">&quot;&quot;&quot;Per-step Kalman gain K(t) — see</span></div>
+<div class="line"><span class="lineno">  745</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.gains`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  746</span>        <span class="keywordflow">return</span> self._diagnostics().gains()</div>
+<div class="line"><span class="lineno">  747</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2331,12 +2365,12 @@ ground-truth ``sample`` is given). Delegates to
 </div><div class="memdoc">
 <pre class="fragment">Per-step innovation ν and its covariance S — see
 :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.innovations`.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00710">710</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  710</span>    <span class="keyword">def </span>innovations(self):</div>
-<div class="line"><span class="lineno">  711</span>        <span class="stringliteral">&quot;&quot;&quot;Per-step innovation ν and its covariance S — see</span></div>
-<div class="line"><span class="lineno">  712</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.innovations`.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  713</span>        <span class="keywordflow">return</span> self._diagnostics().innovations()</div>
-<div class="line"><span class="lineno">  714</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00738">738</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  738</span>    <span class="keyword">def </span>innovations(self):</div>
+<div class="line"><span class="lineno">  739</span>        <span class="stringliteral">&quot;&quot;&quot;Per-step innovation ν and its covariance S — see</span></div>
+<div class="line"><span class="lineno">  740</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.innovations`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  741</span>        <span class="keywordflow">return</span> self._diagnostics().innovations()</div>
+<div class="line"><span class="lineno">  742</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2367,12 +2401,12 @@ ground-truth ``sample`` is given). Delegates to
 </div><div class="memdoc">
 <pre class="fragment">Normalized Estimation Error Squared (≈ χ²(n), needs truth) — see
 :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.nees`.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00725">725</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  725</span>    <span class="keyword">def </span>nees(self, truth):</div>
-<div class="line"><span class="lineno">  726</span>        <span class="stringliteral">&quot;&quot;&quot;Normalized Estimation Error Squared (≈ χ²(n), needs truth) — see</span></div>
-<div class="line"><span class="lineno">  727</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.nees`.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  728</span>        <span class="keywordflow">return</span> self._diagnostics().nees(truth)</div>
-<div class="line"><span class="lineno">  729</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00753">753</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  753</span>    <span class="keyword">def </span>nees(self, truth):</div>
+<div class="line"><span class="lineno">  754</span>        <span class="stringliteral">&quot;&quot;&quot;Normalized Estimation Error Squared (≈ χ²(n), needs truth) — see</span></div>
+<div class="line"><span class="lineno">  755</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.nees`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  756</span>        <span class="keywordflow">return</span> self._diagnostics().nees(truth)</div>
+<div class="line"><span class="lineno">  757</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2393,12 +2427,12 @@ ground-truth ``sample`` is given). Delegates to
 </div><div class="memdoc">
 <pre class="fragment">Normalized Innovation Squared (≈ χ²(m), no truth needed) — see
 :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.nis`.</pre> 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00720">720</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  720</span>    <span class="keyword">def </span>nis(self):</div>
-<div class="line"><span class="lineno">  721</span>        <span class="stringliteral">&quot;&quot;&quot;Normalized Innovation Squared (≈ χ²(m), no truth needed) — see</span></div>
-<div class="line"><span class="lineno">  722</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.nis`.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  723</span>        <span class="keywordflow">return</span> self._diagnostics().nis()</div>
-<div class="line"><span class="lineno">  724</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00748">748</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  748</span>    <span class="keyword">def </span>nis(self):</div>
+<div class="line"><span class="lineno">  749</span>        <span class="stringliteral">&quot;&quot;&quot;Normalized Innovation Squared (≈ χ²(m), no truth needed) — see</span></div>
+<div class="line"><span class="lineno">  750</span><span class="stringliteral">        :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.nis`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  751</span>        <span class="keywordflow">return</span> self._diagnostics().nis()</div>
+<div class="line"><span class="lineno">  752</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2594,18 +2628,18 @@ ground-truth ``sample`` is given). Delegates to
 
 <p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1filters_1_1enkf_1_1_ensemble_kalman_filter.html#a3b954337710e1c7ef4253fe635623936">modules.framework.filters.enkf.EnsembleKalmanFilter</a>, and <a class="el" href="classmodules_1_1framework_1_1filters_1_1pf_1_1_particle_filter.html#a5727de91cec3b2f57491c1267b3008cb">modules.framework.filters.pf.ParticleFilter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00689">689</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  689</span>    <span class="keyword">def </span>sample(self, duration, **kwargs):</div>
-<div class="line"><span class="lineno">  690</span>        <span class="comment"># A whole-pass engine consumes a whole event, not a time series of single</span></div>
-<div class="line"><span class="lineno">  691</span>        <span class="comment"># measurements, so there is nothing for the time-series sampler to produce.</span></div>
-<div class="line"><span class="lineno">  692</span>        <span class="keywordflow">if</span> self.engine.OWNS_PASS:</div>
-<div class="line"><span class="lineno">  693</span>            <span class="keywordflow">raise</span> NotImplementedError(</div>
-<div class="line"><span class="lineno">  694</span>                f<span class="stringliteral">&quot;{type(self.engine).__name__} consumes a whole pass, not a time series; &quot;</span></div>
-<div class="line"><span class="lineno">  695</span>                f<span class="stringliteral">&quot;generate its input from the model instead &quot;</span></div>
-<div class="line"><span class="lineno">  696</span>                f<span class="stringliteral">&quot;(e.g. {type(self.model).__name__}.generate_event()).&quot;</span>)</div>
-<div class="line"><span class="lineno">  697</span>        <span class="keyword">from</span> .sampler <span class="keyword">import</span> KalmanSampler</div>
-<div class="line"><span class="lineno">  698</span>        <span class="keywordflow">return</span> KalmanSampler(self.model, engine=self.engine).measurement(duration, **kwargs)</div>
-<div class="line"><span class="lineno">  699</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00717">717</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  717</span>    <span class="keyword">def </span>sample(self, duration, **kwargs):</div>
+<div class="line"><span class="lineno">  718</span>        <span class="comment"># A whole-pass engine consumes a whole event, not a time series of single</span></div>
+<div class="line"><span class="lineno">  719</span>        <span class="comment"># measurements, so there is nothing for the time-series sampler to produce.</span></div>
+<div class="line"><span class="lineno">  720</span>        <span class="keywordflow">if</span> self.engine.OWNS_PASS:</div>
+<div class="line"><span class="lineno">  721</span>            <span class="keywordflow">raise</span> NotImplementedError(</div>
+<div class="line"><span class="lineno">  722</span>                f<span class="stringliteral">&quot;{type(self.engine).__name__} consumes a whole pass, not a time series; &quot;</span></div>
+<div class="line"><span class="lineno">  723</span>                f<span class="stringliteral">&quot;generate its input from the model instead &quot;</span></div>
+<div class="line"><span class="lineno">  724</span>                f<span class="stringliteral">&quot;(e.g. {type(self.model).__name__}.generate_event()).&quot;</span>)</div>
+<div class="line"><span class="lineno">  725</span>        <span class="keyword">from</span> .sampler <span class="keyword">import</span> KalmanSampler</div>
+<div class="line"><span class="lineno">  726</span>        <span class="keywordflow">return</span> KalmanSampler(self.model, engine=self.engine).measurement(duration, **kwargs)</div>
+<div class="line"><span class="lineno">  727</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2637,11 +2671,11 @@ ground-truth ``sample`` is given). Delegates to
 <pre class="fragment">Alias for ``backward`` (RTS smoother over the stored forward pass).</pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#a1b09875c5b658ba1dd29bd9a7e8dd343">modules.framework.abstract.metadata.KalmanFilterMetadata</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00682">682</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  682</span>    <span class="keyword">def </span>smooth(self, **kwargs):</div>
-<div class="line"><span class="lineno">  683</span>        <span class="stringliteral">&quot;&quot;&quot;Alias for ``backward`` (RTS smoother over the stored forward pass).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  684</span>        <span class="keywordflow">return</span> self.backward(**kwargs)</div>
-<div class="line"><span class="lineno">  685</span> </div>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00710">710</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  710</span>    <span class="keyword">def </span>smooth(self, **kwargs):</div>
+<div class="line"><span class="lineno">  711</span>        <span class="stringliteral">&quot;&quot;&quot;Alias for ``backward`` (RTS smoother over the stored forward pass).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  712</span>        <span class="keywordflow">return</span> self.backward(**kwargs)</div>
+<div class="line"><span class="lineno">  713</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2742,7 +2776,7 @@ ground-truth ``sample`` is given). Delegates to
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00284">284</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00294">294</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
 
 </div>
 </div>
@@ -2790,7 +2824,55 @@ ground-truth ``sample`` is given). Delegates to
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00300">300</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00310">310</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+
+</div>
+</div>
+<a id="a27a39b3ba37b6b541793fb7ac5278afd" name="a27a39b3ba37b6b541793fb7ac5278afd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27a39b3ba37b6b541793fb7ac5278afd">&#9670;&#160;</a></span>_steady</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.filter.BayesFilter._steady</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00161">161</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+
+</div>
+</div>
+<a id="a48a592ea2e97c370cd2b70d9184c7090" name="a48a592ea2e97c370cd2b70d9184c7090"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48a592ea2e97c370cd2b70d9184c7090">&#9670;&#160;</a></span>_steady_used</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.filter.BayesFilter._steady_used</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00161">161</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
 
 </div>
 </div>
@@ -2830,7 +2912,7 @@ ground-truth ``sample`` is given). Delegates to
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00262">262</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00272">272</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
 
 </div>
 </div>
@@ -2886,7 +2968,7 @@ ground-truth ``sample`` is given). Delegates to
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00607">607</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00635">635</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
 
 </div>
 </div>
@@ -2926,7 +3008,7 @@ ground-truth ``sample`` is given). Delegates to
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00221">221</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00231">231</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
 
 </div>
 </div>
@@ -2990,7 +3072,7 @@ ground-truth ``sample`` is given). Delegates to
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00595">595</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00623">623</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
 
 </div>
 </div>
@@ -3006,7 +3088,23 @@ ground-truth ``sample`` is given). Delegates to
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00597">597</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00625">625</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+
+</div>
+</div>
+<a id="abf2a3a7ef5fe6e70b18d8631b068358d" name="abf2a3a7ef5fe6e70b18d8631b068358d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf2a3a7ef5fe6e70b18d8631b068358d">&#9670;&#160;</a></span>steady_from</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.filter.BayesFilter.steady_from</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00161">161</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
 
 </div>
 </div>
@@ -3046,7 +3144,7 @@ ground-truth ``sample`` is given). Delegates to
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00221">221</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="filter_8py_source.html#l00231">231</a> of file <a class="el" href="filter_8py_source.html">filter.py</a>.</p>
 
 </div>
 </div>

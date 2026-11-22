@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-1-g0a3b9232</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -190,6 +190,16 @@ Running one</h1>
 <div class="line">record = kf.filter(zk, smooth=<span class="keyword">True</span>)     <span class="comment"># both, in one call</span></div>
 <div class="line">truth = kf.sample(10.0)                 <span class="comment"># synthetic truth + measurements</span></div>
 </div><!-- fragment --><p><code>forward(raw, uk=None, *, record=True, **kwargs)</code> accepts a control sequence <code>uk</code> — or a <b>callable controller</b>, see <a class="el" href="md_docs_28___control-and-_routing.html">Control and Routing</a>. <code>record=False</code> skips building the <code>KalmanRecord</code> when you only want the run state.</p>
+<h2><a class="anchor" id="the-steady-state-gain"></a>
+The steady-state gain</h2>
+<p>For a model of constant matrices the covariance settles, and with it the gain. <code>kf.forward(zk, steady=1e-9)</code> freezes both once the corrected covariance changes by less than that relative tolerance from one step to the next; from then on a step moves only the mean (<code>x = F x</code>, <code>x += K (z - H x)</code>), with no covariance arithmetic. <code>kf.steady_from</code> is the step it froze at.</p>
+<ul>
+<li>The means are the full filter's, to the tolerance: it is a speed option, not an approximation of the model.</li>
+<li>No covariance is kept per step: every step of the record carries the last one, and <code>backward()</code> is refused. A long run of a large model then holds <code>n</code> numbers a step instead of <code>3 n^2</code>.</li>
+<li>A step with a missing channel runs in full and unfreezes it; it freezes again once it has settled. Data with many gaps gains little.</li>
+<li>It runs in <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code> (<code>SetSteadyState</code>), on the linear engine, with no controller; anything else is refused.</li>
+<li>A model whose lines are very narrow (a high <code>Q</code>) settles slowly: the covariance freezes after a few damping times, not before.</li>
+</ul>
 <h2><a class="anchor" id="the-record"></a>
 The record</h2>
 <p>Every run returns a frozen <code>KalmanRecord</code>:</p>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0</span>
+   &#160;<span id="projectnumber">1.0.0-1-g0a3b9232</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -147,12 +147,15 @@ $(document).ready(function(){initNavTree('01__linear_8cc.html',''); initResizabl
 <div class="textblock"><code>#include &quot;<a class="el" href="_kalman_8h_source.html">Kalman/Kalman.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_check_8h_source.html">Check.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_fixtures_8h_source.html">Fixtures.h</a>&quot;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;cstdio&gt;</code><br />
 <code>#include &lt;limits&gt;</code><br />
+<code>#include &lt;stdexcept&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for 01_linear.cc:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="01__linear_8cc__incl.svg" width="5255" height="726"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="01__linear_8cc__incl.svg" width="5671" height="726"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="01__linear_8cc_source.html">Go to the source code of this file.</a></p>
@@ -182,121 +185,157 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="01__linear_8cc_source.html#l00014">14</a> of file <a class="el" href="01__linear_8cc_source.html">01_linear.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   15</span>{</div>
-<div class="line"><span class="lineno">   16</span>    <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>(1, 100.);</div>
-<div class="line"><span class="lineno">   17</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetProcessNoise(0.5);</div>
-<div class="line"><span class="lineno">   18</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetMeasurementNoise(0.2);</div>
-<div class="line"><span class="lineno">   19</span> </div>
-<div class="line"><span class="lineno">   20</span>    <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> x0(2); x0(0) = 0.; x0(1) = 1.;</div>
-<div class="line"><span class="lineno">   21</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetInitialState(x0);</div>
-<div class="line"><span class="lineno">   22</span> </div>
-<div class="line"><span class="lineno">   23</span>    <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> sampler(&amp;model, 12345);</div>
-<div class="line"><span class="lineno">   24</span>    sampler.Generate(2000, x0);</div>
-<div class="line"><span class="lineno">   25</span> </div>
-<div class="line"><span class="lineno">   26</span>    <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> filter(&amp;model);</div>
-<div class="line"><span class="lineno">   27</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> fwd = filter.Forward(sampler.Measurements());</div>
-<div class="line"><span class="lineno">   28</span> </div>
-<div class="line"><span class="lineno">   29</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">NSteps</a>() == 2000, <span class="stringliteral">&quot;forward: one record entry per measurement&quot;</span>);</div>
-<div class="line"><span class="lineno">   30</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a1680e387f3c6ef25c553d96151c85e6b">NState</a>() == 2 &amp;&amp; fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a106a70ab6b68ce3fa3b53ab63772e2e7">NMeasure</a>() == 1, <span class="stringliteral">&quot;forward: record carries (n, m) = (2, 1)&quot;</span>);</div>
-<div class="line"><span class="lineno">   31</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a0bb8b5165ffff79c2830383ebccd3a77">Flavor</a>() == StateFlavor::Posterior, <span class="stringliteral">&quot;forward: record tagged Posterior&quot;</span>);</div>
-<div class="line"><span class="lineno">   32</span> </div>
-<div class="line"><span class="lineno">   33</span>    <span class="comment">// A consistent filter has NIS ~ m and NEES ~ n. These are the checks that</span></div>
-<div class="line"><span class="lineno">   34</span>    <span class="comment">// actually catch a wrong Q: the estimates can look fine on a plot while the</span></div>
-<div class="line"><span class="lineno">   35</span>    <span class="comment">// covariance is badly scaled.</span></div>
-<div class="line"><span class="lineno">   36</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> nis = filter.MeanNIS();</div>
-<div class="line"><span class="lineno">   37</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(nis &gt; 0.6 &amp;&amp; nis &lt; 1.6, <span class="stringliteral">&quot;forward: mean NIS consistent with m = 1&quot;</span>);</div>
-<div class="line"><span class="lineno">   38</span> </div>
-<div class="line"><span class="lineno">   39</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> nees = filter.MeanNEES(sampler.Truth());</div>
-<div class="line"><span class="lineno">   40</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(nees &gt; 1.2 &amp;&amp; nees &lt; 3.2, <span class="stringliteral">&quot;forward: mean NEES consistent with n = 2&quot;</span>);</div>
-<div class="line"><span class="lineno">   41</span> </div>
-<div class="line"><span class="lineno">   42</span>    <span class="comment">// Filtering must beat the raw measurement.</span></div>
-<div class="line"><span class="lineno">   43</span>    <span class="keywordtype">double</span> eraw = 0.;</div>
-<div class="line"><span class="lineno">   44</span>    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; 2000; ++k)</div>
-<div class="line"><span class="lineno">   45</span>        eraw += std::pow(sampler.Measurements()[k](0) - sampler.Truth()[k](0), 2);</div>
-<div class="line"><span class="lineno">   46</span>    eraw = std::sqrt(eraw / 2000.);</div>
-<div class="line"><span class="lineno">   47</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> efilt = fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(0, sampler.Truth());</div>
-<div class="line"><span class="lineno">   48</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(efilt &lt; eraw, <span class="stringliteral">&quot;forward: filtered position beats the raw measurement&quot;</span>);</div>
-<div class="line"><span class="lineno">   49</span> </div>
-<div class="line"><span class="lineno">   50</span>    <span class="comment">// --- RTS smoother -------------------------------------------------------</span></div>
-<div class="line"><span class="lineno">   51</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> sm = filter.Backward();</div>
-<div class="line"><span class="lineno">   52</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(sm.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a0bb8b5165ffff79c2830383ebccd3a77">Flavor</a>() == StateFlavor::Smoothed, <span class="stringliteral">&quot;backward: record tagged Smoothed&quot;</span>);</div>
-<div class="line"><span class="lineno">   53</span> </div>
-<div class="line"><span class="lineno">   54</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> esm = sm.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(0, sampler.Truth());</div>
-<div class="line"><span class="lineno">   55</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(esm &lt; efilt, <span class="stringliteral">&quot;backward: smoothing strictly improves on filtering&quot;</span>);</div>
-<div class="line"><span class="lineno">   56</span> </div>
-<div class="line"><span class="lineno">   57</span>    <span class="keywordtype">bool</span> tighter = <span class="keyword">true</span>;</div>
+<p class="definition">Definition at line <a class="el" href="01__linear_8cc_source.html#l00028">28</a> of file <a class="el" href="01__linear_8cc_source.html">01_linear.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   29</span>{</div>
+<div class="line"><span class="lineno">   30</span>    <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>(1, 100.);</div>
+<div class="line"><span class="lineno">   31</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetProcessNoise(0.5);</div>
+<div class="line"><span class="lineno">   32</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetMeasurementNoise(0.2);</div>
+<div class="line"><span class="lineno">   33</span> </div>
+<div class="line"><span class="lineno">   34</span>    <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> x0(2); x0(0) = 0.; x0(1) = 1.;</div>
+<div class="line"><span class="lineno">   35</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetInitialState(x0);</div>
+<div class="line"><span class="lineno">   36</span> </div>
+<div class="line"><span class="lineno">   37</span>    <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> sampler(&amp;model, 12345);</div>
+<div class="line"><span class="lineno">   38</span>    sampler.Generate(2000, x0);</div>
+<div class="line"><span class="lineno">   39</span> </div>
+<div class="line"><span class="lineno">   40</span>    <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> filter(&amp;model);</div>
+<div class="line"><span class="lineno">   41</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> fwd = filter.Forward(sampler.Measurements());</div>
+<div class="line"><span class="lineno">   42</span> </div>
+<div class="line"><span class="lineno">   43</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">NSteps</a>() == 2000, <span class="stringliteral">&quot;forward: one record entry per measurement&quot;</span>);</div>
+<div class="line"><span class="lineno">   44</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a1680e387f3c6ef25c553d96151c85e6b">NState</a>() == 2 &amp;&amp; fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a106a70ab6b68ce3fa3b53ab63772e2e7">NMeasure</a>() == 1, <span class="stringliteral">&quot;forward: record carries (n, m) = (2, 1)&quot;</span>);</div>
+<div class="line"><span class="lineno">   45</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a0bb8b5165ffff79c2830383ebccd3a77">Flavor</a>() == StateFlavor::Posterior, <span class="stringliteral">&quot;forward: record tagged Posterior&quot;</span>);</div>
+<div class="line"><span class="lineno">   46</span> </div>
+<div class="line"><span class="lineno">   47</span>    <span class="comment">// A consistent filter has NIS ~ m and NEES ~ n. These are the checks that</span></div>
+<div class="line"><span class="lineno">   48</span>    <span class="comment">// actually catch a wrong Q: the estimates can look fine on a plot while the</span></div>
+<div class="line"><span class="lineno">   49</span>    <span class="comment">// covariance is badly scaled.</span></div>
+<div class="line"><span class="lineno">   50</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> nis = filter.MeanNIS();</div>
+<div class="line"><span class="lineno">   51</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(nis &gt; 0.6 &amp;&amp; nis &lt; 1.6, <span class="stringliteral">&quot;forward: mean NIS consistent with m = 1&quot;</span>);</div>
+<div class="line"><span class="lineno">   52</span> </div>
+<div class="line"><span class="lineno">   53</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> nees = filter.MeanNEES(sampler.Truth());</div>
+<div class="line"><span class="lineno">   54</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(nees &gt; 1.2 &amp;&amp; nees &lt; 3.2, <span class="stringliteral">&quot;forward: mean NEES consistent with n = 2&quot;</span>);</div>
+<div class="line"><span class="lineno">   55</span> </div>
+<div class="line"><span class="lineno">   56</span>    <span class="comment">// Filtering must beat the raw measurement.</span></div>
+<div class="line"><span class="lineno">   57</span>    <span class="keywordtype">double</span> eraw = 0.;</div>
 <div class="line"><span class="lineno">   58</span>    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; 2000; ++k)</div>
-<div class="line"><span class="lineno">   59</span>        <span class="keywordflow">if</span> (sm.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(k)(0, 0) &gt; fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(k)(0, 0) * (1. + 1e-9)) tighter = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   60</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(tighter, <span class="stringliteral">&quot;backward: smoothed covariance never exceeds the filtered one&quot;</span>);</div>
-<div class="line"><span class="lineno">   61</span> </div>
-<div class="line"><span class="lineno">   62</span>    <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(sm.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(1999)(0), fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(1999)(0), 1e-12,</div>
-<div class="line"><span class="lineno">   63</span>                <span class="stringliteral">&quot;backward: last smoothed state equals the last posterior&quot;</span>);</div>
-<div class="line"><span class="lineno">   64</span> </div>
-<div class="line"><span class="lineno">   65</span>    <span class="comment">// --- missing measurements ----------------------------------------------</span></div>
-<div class="line"><span class="lineno">   66</span>    {</div>
-<div class="line"><span class="lineno">   67</span>        <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> gappy(&amp;model, 999);</div>
-<div class="line"><span class="lineno">   68</span>        gappy.Generate(500, x0);</div>
-<div class="line"><span class="lineno">   69</span>        gappy.DropChannel(0, 0.3);</div>
+<div class="line"><span class="lineno">   59</span>        eraw += std::pow(sampler.Measurements()[k](0) - sampler.Truth()[k](0), 2);</div>
+<div class="line"><span class="lineno">   60</span>    eraw = std::sqrt(eraw / 2000.);</div>
+<div class="line"><span class="lineno">   61</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> efilt = fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(0, sampler.Truth());</div>
+<div class="line"><span class="lineno">   62</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(efilt &lt; eraw, <span class="stringliteral">&quot;forward: filtered position beats the raw measurement&quot;</span>);</div>
+<div class="line"><span class="lineno">   63</span> </div>
+<div class="line"><span class="lineno">   64</span>    <span class="comment">// --- RTS smoother -------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">   65</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> sm = filter.Backward();</div>
+<div class="line"><span class="lineno">   66</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(sm.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a0bb8b5165ffff79c2830383ebccd3a77">Flavor</a>() == StateFlavor::Smoothed, <span class="stringliteral">&quot;backward: record tagged Smoothed&quot;</span>);</div>
+<div class="line"><span class="lineno">   67</span> </div>
+<div class="line"><span class="lineno">   68</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> esm = sm.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(0, sampler.Truth());</div>
+<div class="line"><span class="lineno">   69</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(esm &lt; efilt, <span class="stringliteral">&quot;backward: smoothing strictly improves on filtering&quot;</span>);</div>
 <div class="line"><span class="lineno">   70</span> </div>
-<div class="line"><span class="lineno">   71</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> kf(&amp;model);</div>
-<div class="line"><span class="lineno">   72</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = kf.Forward(gappy.Measurements());</div>
-<div class="line"><span class="lineno">   73</span> </div>
-<div class="line"><span class="lineno">   74</span>        <span class="keywordtype">bool</span> finite = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">NSteps</a>(); ++k)</div>
-<div class="line"><span class="lineno">   76</span>            <span class="keywordflow">if</span> (!std::isfinite(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(0)) || !std::isfinite(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(k)(0, 0)))</div>
-<div class="line"><span class="lineno">   77</span>                finite = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   78</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(finite, <span class="stringliteral">&quot;dropout: 30% missing leaves every estimate finite&quot;</span>);</div>
-<div class="line"><span class="lineno">   79</span>    }</div>
+<div class="line"><span class="lineno">   71</span>    <span class="keywordtype">bool</span> tighter = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   72</span>    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; 2000; ++k)</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">if</span> (sm.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(k)(0, 0) &gt; fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(k)(0, 0) * (1. + 1e-9)) tighter = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   74</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(tighter, <span class="stringliteral">&quot;backward: smoothed covariance never exceeds the filtered one&quot;</span>);</div>
+<div class="line"><span class="lineno">   75</span> </div>
+<div class="line"><span class="lineno">   76</span>    <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(sm.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(1999)(0), fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(1999)(0), 1e-12,</div>
+<div class="line"><span class="lineno">   77</span>                <span class="stringliteral">&quot;backward: last smoothed state equals the last posterior&quot;</span>);</div>
+<div class="line"><span class="lineno">   78</span> </div>
+<div class="line"><span class="lineno">   79</span>    <span class="comment">// --- missing measurements ----------------------------------------------</span></div>
 <div class="line"><span class="lineno">   80</span>    {</div>
-<div class="line"><span class="lineno">   81</span>        <span class="comment">// An entirely missing measurement is a pure prediction, so uncertainty grows.</span></div>
-<div class="line"><span class="lineno">   82</span>        std::vector&lt;Vector&gt; blind;</div>
-<div class="line"><span class="lineno">   83</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; 20; ++k)</div>
-<div class="line"><span class="lineno">   84</span>        {</div>
-<div class="line"><span class="lineno">   85</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> z(1);</div>
-<div class="line"><span class="lineno">   86</span>            z(0) = std::numeric_limits&lt;double&gt;::quiet_NaN();</div>
-<div class="line"><span class="lineno">   87</span>            blind.push_back(z);</div>
-<div class="line"><span class="lineno">   88</span>        }</div>
-<div class="line"><span class="lineno">   89</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> kf(&amp;model);</div>
-<div class="line"><span class="lineno">   90</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = kf.Forward(blind);</div>
-<div class="line"><span class="lineno">   91</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(19)(0, 0) &gt; rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(0)(0, 0),</div>
-<div class="line"><span class="lineno">   92</span>              <span class="stringliteral">&quot;dropout: an all-NaN run grows the covariance&quot;</span>);</div>
-<div class="line"><span class="lineno">   93</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(std::isnan(kf.NIS()[0]), <span class="stringliteral">&quot;dropout: an unmeasured step reports NaN NIS&quot;</span>);</div>
-<div class="line"><span class="lineno">   94</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(std::isnan(kf.MeanNIS()), <span class="stringliteral">&quot;dropout: a fully blind run has no mean NIS&quot;</span>);</div>
-<div class="line"><span class="lineno">   95</span>    }</div>
-<div class="line"><span class="lineno">   96</span> </div>
-<div class="line"><span class="lineno">   97</span>    <span class="comment">// --- 2-D model -----------------------------------------------------------</span></div>
-<div class="line"><span class="lineno">   98</span>    {</div>
-<div class="line"><span class="lineno">   99</span>        <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> plane(2, 50.);</div>
-<div class="line"><span class="lineno">  100</span>        plane.SetProcessNoise(0.3);</div>
-<div class="line"><span class="lineno">  101</span>        plane.SetMeasurementNoise(0.1);</div>
-<div class="line"><span class="lineno">  102</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(plane.NState() == 4 &amp;&amp; plane.NMeasure() == 2, <span class="stringliteral">&quot;2-D: state (px,vx,py,vy)&quot;</span>);</div>
-<div class="line"><span class="lineno">  103</span> </div>
-<div class="line"><span class="lineno">  104</span>        <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> s2(&amp;plane, 5);</div>
-<div class="line"><span class="lineno">  105</span>        s2.Generate(300);</div>
-<div class="line"><span class="lineno">  106</span> </div>
-<div class="line"><span class="lineno">  107</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> kf(&amp;plane);</div>
-<div class="line"><span class="lineno">  108</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = kf.Forward(s2.Measurements());</div>
-<div class="line"><span class="lineno">  109</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">NSteps</a>() == 300, <span class="stringliteral">&quot;2-D: runs&quot;</span>);</div>
-<div class="line"><span class="lineno">  110</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(kf.MeanNIS() &gt; 1.2 &amp;&amp; kf.MeanNIS() &lt; 3.2, <span class="stringliteral">&quot;2-D: mean NIS consistent with m = 2&quot;</span>);</div>
-<div class="line"><span class="lineno">  111</span>    }</div>
-<div class="line"><span class="lineno">  112</span> </div>
-<div class="line"><span class="lineno">  113</span>    <span class="comment">// --- the record&#39;s derived series ----------------------------------------</span></div>
-<div class="line"><span class="lineno">  114</span>    {</div>
-<div class="line"><span class="lineno">  115</span>        <span class="keyword">const</span> std::vector&lt;double&gt; series = fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a29abf206739b1aed5061cdee8e5600d9">Series</a>(0);</div>
-<div class="line"><span class="lineno">  116</span>        <span class="keyword">const</span> std::vector&lt;double&gt; <a class="code hl_variable" href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">sigma</a> = fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a665355072cd1a113780559c56079ca7f">Sigma</a>(0);</div>
-<div class="line"><span class="lineno">  117</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(series.size() == 2000 &amp;&amp; <a class="code hl_variable" href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">sigma</a>.size() == 2000, <span class="stringliteral">&quot;record: series span the run&quot;</span>);</div>
-<div class="line"><span class="lineno">  118</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(sigma[1999] &gt; 0., <span class="stringliteral">&quot;record: sigma is positive&quot;</span>);</div>
-<div class="line"><span class="lineno">  119</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(sigma[1999] &lt; sigma[0], <span class="stringliteral">&quot;record: uncertainty shrinks as evidence accumulates&quot;</span>);</div>
-<div class="line"><span class="lineno">  120</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a7302a1d991c54c0805ea1469c4a13742">Time</a>(0), 0., 1e-12, <span class="stringliteral">&quot;record: starts at t0&quot;</span>);</div>
-<div class="line"><span class="lineno">  121</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a7302a1d991c54c0805ea1469c4a13742">Time</a>(100), 1.0, 1e-9, <span class="stringliteral">&quot;record: time advances at 1/fs&quot;</span>);</div>
-<div class="line"><span class="lineno">  122</span>    }</div>
-<div class="line"><span class="lineno">  123</span> </div>
-<div class="line"><span class="lineno">  124</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_check.html#a9ed42acec2d36cf39daa24ede8a31f95">Check::Summary</a>(<span class="stringliteral">&quot;linear&quot;</span>);</div>
-<div class="line"><span class="lineno">  125</span>}</div>
+<div class="line"><span class="lineno">   81</span>        <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> gappy(&amp;model, 999);</div>
+<div class="line"><span class="lineno">   82</span>        gappy.Generate(500, x0);</div>
+<div class="line"><span class="lineno">   83</span>        gappy.DropChannel(0, 0.3);</div>
+<div class="line"><span class="lineno">   84</span> </div>
+<div class="line"><span class="lineno">   85</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> kf(&amp;model);</div>
+<div class="line"><span class="lineno">   86</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = kf.Forward(gappy.Measurements());</div>
+<div class="line"><span class="lineno">   87</span> </div>
+<div class="line"><span class="lineno">   88</span>        <span class="keywordtype">bool</span> finite = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">NSteps</a>(); ++k)</div>
+<div class="line"><span class="lineno">   90</span>            <span class="keywordflow">if</span> (!std::isfinite(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(0)) || !std::isfinite(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(k)(0, 0)))</div>
+<div class="line"><span class="lineno">   91</span>                finite = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   92</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(finite, <span class="stringliteral">&quot;dropout: 30% missing leaves every estimate finite&quot;</span>);</div>
+<div class="line"><span class="lineno">   93</span>    }</div>
+<div class="line"><span class="lineno">   94</span>    {</div>
+<div class="line"><span class="lineno">   95</span>        <span class="comment">// An entirely missing measurement is a pure prediction, so uncertainty grows.</span></div>
+<div class="line"><span class="lineno">   96</span>        std::vector&lt;Vector&gt; blind;</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; 20; ++k)</div>
+<div class="line"><span class="lineno">   98</span>        {</div>
+<div class="line"><span class="lineno">   99</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> z(1);</div>
+<div class="line"><span class="lineno">  100</span>            z(0) = std::numeric_limits&lt;double&gt;::quiet_NaN();</div>
+<div class="line"><span class="lineno">  101</span>            blind.push_back(z);</div>
+<div class="line"><span class="lineno">  102</span>        }</div>
+<div class="line"><span class="lineno">  103</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> kf(&amp;model);</div>
+<div class="line"><span class="lineno">  104</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = kf.Forward(blind);</div>
+<div class="line"><span class="lineno">  105</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(19)(0, 0) &gt; rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(0)(0, 0),</div>
+<div class="line"><span class="lineno">  106</span>              <span class="stringliteral">&quot;dropout: an all-NaN run grows the covariance&quot;</span>);</div>
+<div class="line"><span class="lineno">  107</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(std::isnan(kf.NIS()[0]), <span class="stringliteral">&quot;dropout: an unmeasured step reports NaN NIS&quot;</span>);</div>
+<div class="line"><span class="lineno">  108</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(std::isnan(kf.MeanNIS()), <span class="stringliteral">&quot;dropout: a fully blind run has no mean NIS&quot;</span>);</div>
+<div class="line"><span class="lineno">  109</span>    }</div>
+<div class="line"><span class="lineno">  110</span> </div>
+<div class="line"><span class="lineno">  111</span>    <span class="comment">// --- 2-D model -----------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  112</span>    {</div>
+<div class="line"><span class="lineno">  113</span>        <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> plane(2, 50.);</div>
+<div class="line"><span class="lineno">  114</span>        plane.SetProcessNoise(0.3);</div>
+<div class="line"><span class="lineno">  115</span>        plane.SetMeasurementNoise(0.1);</div>
+<div class="line"><span class="lineno">  116</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(plane.NState() == 4 &amp;&amp; plane.NMeasure() == 2, <span class="stringliteral">&quot;2-D: state (px,vx,py,vy)&quot;</span>);</div>
+<div class="line"><span class="lineno">  117</span> </div>
+<div class="line"><span class="lineno">  118</span>        <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> s2(&amp;plane, 5);</div>
+<div class="line"><span class="lineno">  119</span>        s2.Generate(300);</div>
+<div class="line"><span class="lineno">  120</span> </div>
+<div class="line"><span class="lineno">  121</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> kf(&amp;plane);</div>
+<div class="line"><span class="lineno">  122</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = kf.Forward(s2.Measurements());</div>
+<div class="line"><span class="lineno">  123</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">NSteps</a>() == 300, <span class="stringliteral">&quot;2-D: runs&quot;</span>);</div>
+<div class="line"><span class="lineno">  124</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(kf.MeanNIS() &gt; 1.2 &amp;&amp; kf.MeanNIS() &lt; 3.2, <span class="stringliteral">&quot;2-D: mean NIS consistent with m = 2&quot;</span>);</div>
+<div class="line"><span class="lineno">  125</span>    }</div>
+<div class="line"><span class="lineno">  126</span> </div>
+<div class="line"><span class="lineno">  127</span>    <span class="comment">// --- the record&#39;s derived series ----------------------------------------</span></div>
+<div class="line"><span class="lineno">  128</span>    {</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keyword">const</span> std::vector&lt;double&gt; series = fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a29abf206739b1aed5061cdee8e5600d9">Series</a>(0);</div>
+<div class="line"><span class="lineno">  130</span>        <span class="keyword">const</span> std::vector&lt;double&gt; <a class="code hl_variable" href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">sigma</a> = fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a665355072cd1a113780559c56079ca7f">Sigma</a>(0);</div>
+<div class="line"><span class="lineno">  131</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(series.size() == 2000 &amp;&amp; <a class="code hl_variable" href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">sigma</a>.size() == 2000, <span class="stringliteral">&quot;record: series span the run&quot;</span>);</div>
+<div class="line"><span class="lineno">  132</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(sigma[1999] &gt; 0., <span class="stringliteral">&quot;record: sigma is positive&quot;</span>);</div>
+<div class="line"><span class="lineno">  133</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(sigma[1999] &lt; sigma[0], <span class="stringliteral">&quot;record: uncertainty shrinks as evidence accumulates&quot;</span>);</div>
+<div class="line"><span class="lineno">  134</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a7302a1d991c54c0805ea1469c4a13742">Time</a>(0), 0., 1e-12, <span class="stringliteral">&quot;record: starts at t0&quot;</span>);</div>
+<div class="line"><span class="lineno">  135</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(fwd.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a7302a1d991c54c0805ea1469c4a13742">Time</a>(100), 1.0, 1e-9, <span class="stringliteral">&quot;record: time advances at 1/fs&quot;</span>);</div>
+<div class="line"><span class="lineno">  136</span>    }</div>
+<div class="line"><span class="lineno">  137</span> </div>
+<div class="line"><span class="lineno">  138</span>    <span class="comment">// --- the steady-state gain --------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  139</span>    <span class="comment">// A model of constant matrices: once the covariance has settled, freezing it and</span></div>
+<div class="line"><span class="lineno">  140</span>    <span class="comment">// the gain changes nothing but the cost. A dropout runs in full and freezes again.</span></div>
+<div class="line"><span class="lineno">  141</span>    {</div>
+<div class="line"><span class="lineno">  142</span>        std::vector&lt;Vector&gt; z = sampler.Measurements();</div>
+<div class="line"><span class="lineno">  143</span>        <span class="keywordflow">for</span> (std::size_t k = 900; k &lt; 910; ++k) z[k](0) = std::numeric_limits&lt;double&gt;::quiet_NaN();</div>
+<div class="line"><span class="lineno">  144</span> </div>
+<div class="line"><span class="lineno">  145</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> full(&amp;model);</div>
+<div class="line"><span class="lineno">  146</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> a = full.Forward(z);</div>
+<div class="line"><span class="lineno">  147</span> </div>
+<div class="line"><span class="lineno">  148</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> steady(&amp;model);</div>
+<div class="line"><span class="lineno">  149</span>        steady.SetSteadyState(1e-9);</div>
+<div class="line"><span class="lineno">  150</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> b = steady.Forward(z);</div>
+<div class="line"><span class="lineno">  151</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(steady.SteadyFrom() != <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(-1) &amp;&amp; steady.SteadyFrom() &lt; 900,</div>
+<div class="line"><span class="lineno">  152</span>              <span class="stringliteral">&quot;steady: the covariance freezes before the dropout&quot;</span>);</div>
+<div class="line"><span class="lineno">  153</span> </div>
+<div class="line"><span class="lineno">  154</span>        <span class="keywordtype">double</span> worst = 0.;</div>
+<div class="line"><span class="lineno">  155</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; 2000; ++k)</div>
+<div class="line"><span class="lineno">  156</span>            worst = std::max(worst, std::abs(a.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(0) - b.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(0)));</div>
+<div class="line"><span class="lineno">  157</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(worst &lt; 1e-6, <span class="stringliteral">&quot;steady: the same means as the full filter to 1e-6 (noise 0.2), dropout included&quot;</span>);</div>
+<div class="line"><span class="lineno">  158</span> </div>
+<div class="line"><span class="lineno">  159</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> lean(&amp;model);</div>
+<div class="line"><span class="lineno">  160</span>        lean.SetSteadyState(1e-9);</div>
+<div class="line"><span class="lineno">  161</span>        lean.SetKeepCovariances(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  162</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> c = lean.Forward(z);</div>
+<div class="line"><span class="lineno">  163</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(std::abs(c.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(1999)(0) - b.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(1999)(0)) &lt; 1e-12, <span class="stringliteral">&quot;steady: without the covariances, the same means&quot;</span>);</div>
+<div class="line"><span class="lineno">  164</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(lean.PosteriorCovariances()[1999].Empty(), <span class="stringliteral">&quot;steady: no covariance kept per step&quot;</span>);</div>
+<div class="line"><span class="lineno">  165</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { lean.Backward(); }), <span class="stringliteral">&quot;steady: no smoothing without the covariances&quot;</span>);</div>
+<div class="line"><span class="lineno">  166</span> </div>
+<div class="line"><span class="lineno">  167</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { steady.SetSteadyState(-1.); }), <span class="stringliteral">&quot;steady: a negative tolerance is refused&quot;</span>);</div>
+<div class="line"><span class="lineno">  168</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_e_k_f.html">Filters::EKF</a> ekf(&amp;model);</div>
+<div class="line"><span class="lineno">  169</span>        ekf.SetSteadyState(1e-12);</div>
+<div class="line"><span class="lineno">  170</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { ekf.Forward(z); }), <span class="stringliteral">&quot;steady: refused on another engine than the linear one&quot;</span>);</div>
+<div class="line"><span class="lineno">  171</span>    }</div>
+<div class="line"><span class="lineno">  172</span> </div>
+<div class="line"><span class="lineno">  173</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_check.html#a9ed42acec2d36cf39daa24ede8a31f95">Check::Summary</a>(<span class="stringliteral">&quot;linear&quot;</span>);</div>
+<div class="line"><span class="lineno">  174</span>}</div>
 <div class="ttc" id="a_check_8h_html_a98ef4241b35c5906aeba89abe3cefd8f"><div class="ttname"><a href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a></div><div class="ttdeci">#define CHECK_CLOSE(got, want, tol, what)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00049">Check.h:49</a></div></div>
 <div class="ttc" id="a_check_8h_html_af78f878a664d9956c852a668fc3419ab"><div class="ttname"><a href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a></div><div class="ttdeci">#define CHECK(cond, what)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00048">Check.h:48</a></div></div>
 <div class="ttc" id="aclass_fixture_1_1_constant_velocity_html"><div class="ttname"><a href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a></div><div class="ttdoc">Constant velocity with white-noise acceleration — the canonical linear model.</div><div class="ttdef"><b>Definition</b> <a href="_fixtures_8h_source.html#l00043">Fixtures.h:44</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_e_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_e_k_f.html">Kalman::Filters::EKF</a></div><div class="ttdoc">The extended Kalman filter — a model driven by Kalman::Engines::Extended.</div><div class="ttdef"><b>Definition</b> <a href="_e_k_f_8h_source.html#l00034">EKF.h:35</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_filters_1_1_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_k_f.html">Kalman::Filters::KF</a></div><div class="ttdoc">The standard Kalman filter — a model driven by Kalman::Engines::Linear.</div><div class="ttdef"><b>Definition</b> <a href="_k_f_8h_source.html#l00036">KF.h:37</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html">Kalman::IO::Record</a></div><div class="ttdoc">One filtered (or smoothed) pass: time, state, covariance, measurement.</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00038">Record.h:39</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_a0bb8b5165ffff79c2830383ebccd3a77"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#a0bb8b5165ffff79c2830383ebccd3a77">Kalman::IO::Record::Flavor</a></div><div class="ttdeci">StateFlavor Flavor() const</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00065">Record.h:65</a></div></div>

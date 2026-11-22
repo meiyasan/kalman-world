@@ -4,5 +4,5 @@ var searchData=
   ['qc_1',['Qc',['../classmodules_1_1framework_1_1model_1_1_kalman_model.html#af2ffbff8da470eb715cdf72c46af22e7',1,'modules::framework::model::KalmanModel']]],
   ['qcost_2',['QCost',['../class_kalman_1_1_controller.html#acd7681c955e7a6bf11ea7cbacdccd3e5',1,'Kalman::Controller']]],
   ['qd_3',['Qd',['../classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html#a940112a3e3e3b53efa361253413ff9b3',1,'modules::apps::ballistics::extended::BallisticModel']]],
-  ['quality_4',['quality',['../struct_kalman_1_1_tracking_1_1_candidate.html#abf12a8d002946d872db5cd6535bb4e4a',1,'Kalman::Tracking::Candidate::Quality()'],['../classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_track_candidate.html#aefc1f3c5e0faaeb67a777bb259c069e6',1,'modules.framework.engines.combinatorial.TrackCandidate.quality()']]]
+  ['quality_4',['quality',['../classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_track_candidate.html#aefc1f3c5e0faaeb67a777bb259c069e6',1,'modules.framework.engines.combinatorial.TrackCandidate.quality()'],['../struct_kalman_1_1_tracking_1_1_candidate.html#abf12a8d002946d872db5cd6535bb4e4a',1,'Kalman::Tracking::Candidate::Quality()']]]
 ];

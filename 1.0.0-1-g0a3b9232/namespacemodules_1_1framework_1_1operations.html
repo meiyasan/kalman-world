@@ -1,0 +1,485 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.operations Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.operations Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.operations Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g0a3b9232</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacemodules_1_1framework_1_1operations.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.operations Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ae5d25ca1165a83f8233c3bee54a1776f" id="r_ae5d25ca1165a83f8233c3bee54a1776f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1operations.html#ae5d25ca1165a83f8233c3bee54a1776f">joint</a> (model, parameters, **kwargs)</td></tr>
+<tr class="separator:ae5d25ca1165a83f8233c3bee54a1776f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5118932e6f5f50f42d6aa8a5cac5e15b" id="r_a5118932e6f5f50f42d6aa8a5cac5e15b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1operations.html#a5118932e6f5f50f42d6aa8a5cac5e15b">add_sensor</a> (model, sensor)</td></tr>
+<tr class="separator:a5118932e6f5f50f42d6aa8a5cac5e15b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3028fe541ba291ecef04b8dbb6cd253" id="r_ae3028fe541ba291ecef04b8dbb6cd253"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a> (model, depth)</td></tr>
+<tr class="separator:ae3028fe541ba291ecef04b8dbb6cd253"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6191fe4ee927cd9645179bfdde237b88" id="r_a6191fe4ee927cd9645179bfdde237b88"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1operations.html#a6191fe4ee927cd9645179bfdde237b88">route</a> (models, transition, initial_probs=None, **kwargs)</td></tr>
+<tr class="separator:a6191fe4ee927cd9645179bfdde237b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa223758ddbabd227804cc681ba815694" id="r_aa223758ddbabd227804cc681ba815694"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1operations.html#aa223758ddbabd227804cc681ba815694">add_instrument</a> (model, instrument)</td></tr>
+<tr class="separator:aa223758ddbabd227804cc681ba815694"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89ebac09da9dd9a3d124d3a922aadf49" id="r_a89ebac09da9dd9a3d124d3a922aadf49"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1operations.html#a89ebac09da9dd9a3d124d3a922aadf49">compose</a> (*parts, name=None, rate=None, readout=None, names=None, **kwargs)</td></tr>
+<tr class="separator:a89ebac09da9dd9a3d124d3a922aadf49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">The model operations as functions.
+
+Each builds a model from other models, and is also a method of
+:class:`~kalman.framework.model.KalmanModel` and a class of
+``kalman.framework.models``: ``joint(m, p)``, ``m.joint(p)`` and ``Joint(m, p)``
+are the same model, and likewise ``add_sensor`` and ``Fusion``, ``lag`` and ``Lag``.
+
+``compose`` puts things side by side: models into a composite model
+(``compose(a, b)``, ``a.compose(b)``, ``Composite(a, b)``), sensors into an
+instrument (:class:`~.instrument.KalmanInstrument`).
+</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="aa223758ddbabd227804cc681ba815694" name="aa223758ddbabd227804cc681ba815694"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa223758ddbabd227804cc681ba815694">&#9670;&#160;</a></span>add_instrument()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.operations.add_instrument </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>instrument</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">``model`` read by every sensor of ``instrument`` (a
+:class:`~.instrument.KalmanInstrument`), as a new model.</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2operations_8py_source.html#l00042">42</a> of file <a class="el" href="modules_2framework_2operations_8py_source.html">operations.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   42</span><span class="keyword">def </span>add_instrument(model, instrument):</div>
+<div class="line"><span class="lineno">   43</span>    <span class="stringliteral">&quot;&quot;&quot;``model`` read by every sensor of ``instrument`` (a</span></div>
+<div class="line"><span class="lineno">   44</span><span class="stringliteral">    :class:`~.instrument.KalmanInstrument`), as a new model.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   45</span>    <span class="keywordflow">return</span> model.add_instrument(instrument)</div>
+<div class="line"><span class="lineno">   46</span> </div>
+<div class="line"><span class="lineno">   47</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5118932e6f5f50f42d6aa8a5cac5e15b" name="a5118932e6f5f50f42d6aa8a5cac5e15b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5118932e6f5f50f42d6aa8a5cac5e15b">&#9670;&#160;</a></span>add_sensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.operations.add_sensor </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sensor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">``model`` read by one more ``sensor`` (a :class:`~.sensor.KalmanSensor`), as a new
+model. See :class:`~.models.fusion.Fusion`.</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2operations_8py_source.html#l00022">22</a> of file <a class="el" href="modules_2framework_2operations_8py_source.html">operations.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   22</span><span class="keyword">def </span>add_sensor(model, sensor):</div>
+<div class="line"><span class="lineno">   23</span>    <span class="stringliteral">&quot;&quot;&quot;``model`` read by one more ``sensor`` (a :class:`~.sensor.KalmanSensor`), as a new</span></div>
+<div class="line"><span class="lineno">   24</span><span class="stringliteral">    model. See :class:`~.models.fusion.Fusion`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   25</span>    <span class="keywordflow">return</span> model.add_sensor(sensor)</div>
+<div class="line"><span class="lineno">   26</span> </div>
+<div class="line"><span class="lineno">   27</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a89ebac09da9dd9a3d124d3a922aadf49" name="a89ebac09da9dd9a3d124d3a922aadf49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89ebac09da9dd9a3d124d3a922aadf49">&#9670;&#160;</a></span>compose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.operations.compose </td>
+          <td>(</td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>parts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>name</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>rate</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>readout</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>names</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Things side by side.
+
+Models, each with its own state, as one model (:class:`~.models.compose.Composite`):
+``compose(a, b)``, or ``compose(a, b, readout=KalmanReadout.SUMMED)`` when they
+share one measurement; ``names=`` calls the parts.
+
+Sensors as one instrument: ``compose(thermometer, co2, name="station", rate=0.5)``.
+Without a name it is named after its sensors (``"thermometer+co2"``).</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2operations_8py_source.html#l00048">48</a> of file <a class="el" href="modules_2framework_2operations_8py_source.html">operations.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   48</span><span class="keyword">def </span>compose(*parts, name=None, rate=None, readout=None, names=None, **kwargs):</div>
+<div class="line"><span class="lineno">   49</span>    <span class="stringliteral">&quot;&quot;&quot;Things side by side.</span></div>
+<div class="line"><span class="lineno">   50</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   51</span><span class="stringliteral">    Models, each with its own state, as one model (:class:`~.models.compose.Composite`):</span></div>
+<div class="line"><span class="lineno">   52</span><span class="stringliteral">    ``compose(a, b)``, or ``compose(a, b, readout=KalmanReadout.SUMMED)`` when they</span></div>
+<div class="line"><span class="lineno">   53</span><span class="stringliteral">    share one measurement; ``names=`` calls the parts.</span></div>
+<div class="line"><span class="lineno">   54</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   55</span><span class="stringliteral">    Sensors as one instrument: ``compose(thermometer, co2, name=&quot;station&quot;, rate=0.5)``.</span></div>
+<div class="line"><span class="lineno">   56</span><span class="stringliteral">    Without a name it is named after its sensors (``&quot;thermometer+co2&quot;``).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   57</span>    <span class="keyword">from</span> .instrument <span class="keyword">import</span> KalmanInstrument</div>
+<div class="line"><span class="lineno">   58</span>    <span class="keyword">from</span> .model <span class="keyword">import</span> KalmanModel</div>
+<div class="line"><span class="lineno">   59</span>    <span class="keyword">from</span> .sensor <span class="keyword">import</span> KalmanSensor</div>
+<div class="line"><span class="lineno">   60</span>    <span class="keywordflow">if</span> len(parts) == 1 <span class="keywordflow">and</span> isinstance(parts[0], (list, tuple)):</div>
+<div class="line"><span class="lineno">   61</span>        parts = tuple(parts[0])</div>
+<div class="line"><span class="lineno">   62</span>    <span class="keywordflow">if</span> parts <span class="keywordflow">and</span> all(isinstance(part, KalmanModel) <span class="keywordflow">for</span> part <span class="keywordflow">in</span> parts):</div>
+<div class="line"><span class="lineno">   63</span>        <span class="keywordflow">if</span> name <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> rate <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   64</span>            <span class="keywordflow">raise</span> TypeError(<span class="stringliteral">&quot;compose: name= and rate= are an instrument&#39;s; models take readout= and names=.&quot;</span>)</div>
+<div class="line"><span class="lineno">   65</span>        <span class="keyword">from</span> .constants <span class="keyword">import</span> KalmanReadout</div>
+<div class="line"><span class="lineno">   66</span>        <span class="keyword">from</span> .models.compose <span class="keyword">import</span> Composite</div>
+<div class="line"><span class="lineno">   67</span>        <span class="keywordflow">return</span> Composite(*parts, readout=readout <span class="keywordflow">or</span> KalmanReadout.STACKED, names=names, **kwargs)</div>
+<div class="line"><span class="lineno">   68</span>    <span class="keywordflow">if</span> readout <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> names <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> kwargs:</div>
+<div class="line"><span class="lineno">   69</span>        <span class="keywordflow">raise</span> TypeError(<span class="stringliteral">&quot;compose: readout= and names= are for models; sensors take name= and rate=.&quot;</span>)</div>
+<div class="line"><span class="lineno">   70</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> parts <span class="keywordflow">or</span> <span class="keywordflow">not</span> all(isinstance(part, KalmanSensor) <span class="keywordflow">for</span> part <span class="keywordflow">in</span> parts):</div>
+<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">raise</span> TypeError(<span class="stringliteral">&quot;compose: models, or sensors, are expected, got &quot;</span></div>
+<div class="line"><span class="lineno">   72</span>                        f<span class="stringliteral">&quot;{[type(part).__name__ for part in parts]}.&quot;</span>)</div>
+<div class="line"><span class="lineno">   73</span>    <span class="keywordflow">return</span> KalmanInstrument(name <span class="keywordflow">or</span> <span class="stringliteral">&quot;+&quot;</span>.join(part.name <span class="keywordflow">for</span> part <span class="keywordflow">in</span> parts), parts, rate=rate)</div>
+<div class="line"><span class="lineno">   74</span> </div>
+<div class="line"><span class="lineno">   75</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae5d25ca1165a83f8233c3bee54a1776f" name="ae5d25ca1165a83f8233c3bee54a1776f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5d25ca1165a83f8233c3bee54a1776f">&#9670;&#160;</a></span>joint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.operations.joint </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>parameters</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">``model`` with some of its ``parameters`` estimated along with its state:
+``joint(shell, {"c_drag": (sigma, drift)})``. See :class:`~.models.joint.Joint`.</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2operations_8py_source.html#l00016">16</a> of file <a class="el" href="modules_2framework_2operations_8py_source.html">operations.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   16</span><span class="keyword">def </span>joint(model, parameters, **kwargs):</div>
+<div class="line"><span class="lineno">   17</span>    <span class="stringliteral">&quot;&quot;&quot;``model`` with some of its ``parameters`` estimated along with its state:</span></div>
+<div class="line"><span class="lineno">   18</span><span class="stringliteral">    ``joint(shell, {&quot;c_drag&quot;: (sigma, drift)})``. See :class:`~.models.joint.Joint`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   19</span>    <span class="keywordflow">return</span> model.joint(parameters, **kwargs)</div>
+<div class="line"><span class="lineno">   20</span> </div>
+<div class="line"><span class="lineno">   21</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae3028fe541ba291ecef04b8dbb6cd253" name="ae3028fe541ba291ecef04b8dbb6cd253"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3028fe541ba291ecef04b8dbb6cd253">&#9670;&#160;</a></span>lag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.operations.lag </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>depth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">``model`` carrying its last ``depth`` states, for sensors that report late and
+fixed-lag smoothing. See :class:`~.models.lag.Lag`.</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2operations_8py_source.html#l00028">28</a> of file <a class="el" href="modules_2framework_2operations_8py_source.html">operations.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   28</span><span class="keyword">def </span>lag(model, depth):</div>
+<div class="line"><span class="lineno">   29</span>    <span class="stringliteral">&quot;&quot;&quot;``model`` carrying its last ``depth`` states, for sensors that report late and</span></div>
+<div class="line"><span class="lineno">   30</span><span class="stringliteral">    fixed-lag smoothing. See :class:`~.models.lag.Lag`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   31</span>    <span class="keywordflow">return</span> model.lag(depth)</div>
+<div class="line"><span class="lineno">   32</span> </div>
+<div class="line"><span class="lineno">   33</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6191fe4ee927cd9645179bfdde237b88" name="a6191fe4ee927cd9645179bfdde237b88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6191fe4ee927cd9645179bfdde237b88">&#9670;&#160;</a></span>route()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.operations.route </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>models</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>transition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>initial_probs</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">``models`` as the modes of one system that changes regime, with a probability
+on each; ``transition`` is the Markov matrix between them. See
+:class:`~.models.route.Router`.</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2operations_8py_source.html#l00034">34</a> of file <a class="el" href="modules_2framework_2operations_8py_source.html">operations.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   34</span><span class="keyword">def </span>route(models, transition, initial_probs=None, **kwargs):</div>
+<div class="line"><span class="lineno">   35</span>    <span class="stringliteral">&quot;&quot;&quot;``models`` as the modes of one system that changes regime, with a probability</span></div>
+<div class="line"><span class="lineno">   36</span><span class="stringliteral">    on each; ``transition`` is the Markov matrix between them. See</span></div>
+<div class="line"><span class="lineno">   37</span><span class="stringliteral">    :class:`~.models.route.Router`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   38</span>    <span class="keyword">from</span> .models.route <span class="keyword">import</span> Router</div>
+<div class="line"><span class="lineno">   39</span>    <span class="keywordflow">return</span> Router(models, transition, initial_probs, **kwargs)</div>
+<div class="line"><span class="lineno">   40</span> </div>
+<div class="line"><span class="lineno">   41</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1operations.html">operations</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

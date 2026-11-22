@@ -47,6 +47,8 @@ var classmodules_1_1framework_1_1filter_1_1_bayes_filter =
     [ "_engine_handle", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a2ed767505f28bc3492135aebd723ac6a", null ],
     [ "_model", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#af29fba9507ab82989ac7015f299cd0e2", null ],
     [ "_particle_draws", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a3098cf8910ecdde3295947a6f8b28e60", null ],
+    [ "_steady", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a27a39b3ba37b6b541793fb7ac5278afd", null ],
+    [ "_steady_used", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a48a592ea2e97c370cd2b70d9184c7090", null ],
     [ "engine", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a34019eafcf964fe7a52bae4100eabf91", null ],
     [ "epsilon", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#ac67b1503ee83ad926b668c9cc303054b", null ],
     [ "model", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#ac428524fd671ce20704c9b38c35dd272", null ],
@@ -56,5 +58,6 @@ var classmodules_1_1framework_1_1filter_1_1_bayes_filter =
     [ "posterior", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#ae43d1186c1678f7dfccb21b4db847dd6", null ],
     [ "prior", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a378f5ccce36b3c8984364988e84090da", null ],
     [ "smooth", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#acf90b0a7cd43ad9488abd0e31df9da84", null ],
+    [ "steady_from", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#abf2a3a7ef5fe6e70b18d8631b068358d", null ],
     [ "x", "classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#ab256013cb70ee6c0f72ac00297e078c1", null ]
 ];

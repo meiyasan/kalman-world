@@ -10,7 +10,10 @@ var namespacetests_1_1test__interferometer =
     [ "TestInterferometerModelFilter", "classtests_1_1test__interferometer_1_1_test_interferometer_model_filter.html", "classtests_1_1test__interferometer_1_1_test_interferometer_model_filter" ],
     [ "TestInterferometerModelFit", "classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html", "classtests_1_1test__interferometer_1_1_test_interferometer_model_fit" ],
     [ "TestLorentzian", "classtests_1_1test__interferometer_1_1_test_lorentzian.html", "classtests_1_1test__interferometer_1_1_test_lorentzian" ],
+    [ "TestPerLineSettings", "classtests_1_1test__interferometer_1_1_test_per_line_settings.html", "classtests_1_1test__interferometer_1_1_test_per_line_settings" ],
+    [ "TestSteadyStateGain", "classtests_1_1test__interferometer_1_1_test_steady_state_gain.html", "classtests_1_1test__interferometer_1_1_test_steady_state_gain" ],
     [ "TestViolinBankController", "classtests_1_1test__interferometer_1_1_test_violin_bank_controller.html", "classtests_1_1test__interferometer_1_1_test_violin_bank_controller" ],
     [ "TestWelchPSD", "classtests_1_1test__interferometer_1_1_test_welch_p_s_d.html", "classtests_1_1test__interferometer_1_1_test_welch_p_s_d" ],
-    [ "_sine_psd", "namespacetests_1_1test__interferometer.html#acfc2780fe6fdb4d59f77f866255b05fa", null ]
+    [ "_sine_psd", "namespacetests_1_1test__interferometer.html#acfc2780fe6fdb4d59f77f866255b05fa", null ],
+    [ "_two_lines", "namespacetests_1_1test__interferometer.html#acc277f82eff7a5376f1f5d282754a7d1", null ]
 ];

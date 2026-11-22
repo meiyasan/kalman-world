@@ -54,6 +54,7 @@ var _c_a_p_i_8cc =
     [ "kalman_factory_plugin_count", "_c_a_p_i_8cc.html#a24a5b3879d06689f3f4c60898e96d3cc", null ],
     [ "kalman_filter_run", "_c_a_p_i_8cc.html#ac97ec41b50a7339d7856260591fe5141", null ],
     [ "kalman_filter_run_closed_loop", "_c_a_p_i_8cc.html#a41019fa23f9fb925131bc59d205b810a", null ],
+    [ "kalman_filter_run_steady", "_c_a_p_i_8cc.html#a5ab2dce9af374814ca588f9f4747d007", null ],
     [ "kalman_integrate", "_c_a_p_i_8cc.html#adcae8c7f5c4383d2245b853fe737fe85", null ],
     [ "kalman_jacobian", "_c_a_p_i_8cc.html#a7536ff61820c377ee266444d7c87dc36", null ],
     [ "kalman_last_error", "_c_a_p_i_8cc.html#a13ce4bd1cadfa0c316e26d05b05f6e93", null ],
