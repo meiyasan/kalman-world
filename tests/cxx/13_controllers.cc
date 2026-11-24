@@ -493,6 +493,28 @@ int main()
         CHECK_CLOSE(p.CostLog().back().second, 1. + 0.25, 1e-15, "callback: the cost is charged on the clipped command");
     }
 
+    // --- a box on the command: Model::SetControlBounds -------------------------------------
+    {
+        Models::Callback plant("boxed", 1, 1, 1, [](void *, const double *x, const double *u, double, double *out)
+                               { out[0] = x[0] + (u ? u[0] : 0.); return 0; },
+                               [](void *, const double *x, double, double *z) { z[0] = x[0]; return 0; });
+        plant.SetControlBounds(Vector(1, -0.5), Vector(1, 0.25));
+        CHECK_CLOSE(plant.LimitControl(Vector(1, 3.))(0), 0.25, 0., "box: a callback model with no clip function clips to its box");
+        CHECK_CLOSE(plant.LimitControl(Vector(1, -3.))(0), -0.5, 0., "box: the lower bound");
+        CHECK_CLOSE(plant.LimitControl(Vector(1, 0.1))(0), 0.1, 0., "box: inside, the command is unchanged");
+        Controllers::Proportional p(&plant, Matrix(1, 1, 4.));
+        p(Vector(1, 1.), Matrix::Identity(1), 0.);
+        CHECK_CLOSE(p.CostLog().back().second, 1. + 0.25, 1e-15, "box: the cost is charged on the clipped command");
+        bool threw = false;
+        try { plant.LimitControl(Vector(2, 0.)); } catch (const std::invalid_argument &) { threw = true; }
+        CHECK(threw, "box: a command of another size is refused");
+        threw = false;
+        try { plant.SetControlBounds(Vector(1, 1.), Vector(1, 0.)); } catch (const std::invalid_argument &) { threw = true; }
+        CHECK(threw, "box: a lower bound above the upper one is refused");
+        plant.SetControlBounds(Vector(), Vector());
+        CHECK_CLOSE(plant.LimitControl(Vector(1, 3.))(0), 3., 0., "box: removed, no limit");
+    }
+
     // --- a tuner is its own role; a filter takes a controller and a tuner -------------------------
     {
         Fixture::ControlledVelocity plant(fs);

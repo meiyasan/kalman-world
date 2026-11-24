@@ -32,6 +32,7 @@ class ThresholdRouter(KalmanRouter):
     """
 
     NATIVE = "threshold"
+    PREPARED_ROUTE = True
 
     def __init__(self, m: int = 1, window: int = 5, soft: bool = False):
         self.m      = int(m)

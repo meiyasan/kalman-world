@@ -102,6 +102,33 @@ class TestRoutersAgreeWithTheirReference(unittest.TestCase):
         router.m = 3
         self.assertEqual(int(np.argmax(router(nis, np.ones(2) / 2, np.ones(2)))), 1)
 
+    def test_the_prepared_call_follows_new_inputs_and_settings(self):
+        # After the first route, Bayesian and Threshold reuse a call prepared for the
+        # shape; new values go through it, and a changed setting prepares it again.
+        for router in (BayesianRouter(), ThresholdRouter(m=1, window=4, soft=True)):
+            for seed in range(5):
+                nis, c, L = inputs(9, 3, seed)
+                np.testing.assert_allclose(router(nis, c, L), reference_route(router, nis, c, L), rtol=0, atol=1e-15)
+            self.assertIsNotNone(router.__dict__.get("_route_call"), type(router).__name__)
+        router.window = 2
+        self.assertIsNone(router.__dict__.get("_route_call"))
+        nis, c, L = inputs(9, 3, 7)
+        np.testing.assert_allclose(router(nis, c, L), reference_route(router, nis, c, L), rtol=0, atol=1e-15)
+
+    def test_a_prepared_hybrid_follows_a_changed_child(self):
+        # Hybrid's prepared call holds its children's C++ routers; a change to a child,
+        # or to a child of a child, prepares it again.
+        inner = ThresholdRouter(m=1, window=3)
+        hybrid = HybridRouter(BayesianRouter(), HybridRouter(inner, BayesianRouter(), alpha=0.3), alpha=0.6)
+        nis, c, L = inputs(6, 2, 1)
+        for _ in range(3):
+            np.testing.assert_allclose(hybrid(nis, c, L), reference_route(hybrid, nis, c, L), rtol=0, atol=1e-15)
+        self.assertIsNotNone(hybrid.__dict__.get("_route_call"))
+        inner.m = 3
+        np.testing.assert_allclose(hybrid(nis, c, L), reference_route(hybrid, nis, c, L), rtol=0, atol=1e-15)
+        hybrid.router_a = ThresholdRouter(m=2, window=2)
+        np.testing.assert_allclose(hybrid(nis, c, L), reference_route(hybrid, nis, c, L), rtol=0, atol=1e-15)
+
 
 @unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")
 class TestInsideARoutedPass(unittest.TestCase):

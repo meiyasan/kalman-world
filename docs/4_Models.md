@@ -123,6 +123,7 @@ Two rules that bite here:
 | `prepare_measurements` / `adjust_state` / `finish_output` | signal conditioning hooks around the filter loop |
 | `states` / `observables` | labelled state and measurement enums, used by plots — synthesized as `X0…Xn-1` / `Z0…Zm-1` when not declared |
 | `limit_control()` | actuator limits, honoured by the control-cost accounting |
+| `control_bounds` | a box on the command, `(lower, upper)`: the default `limit_control()` clips to it, and a C++ controller clips to the same box without calling Python |
 | `control_cost()` | default `Qcost`/`Rcost` for controllers |
 | `plot(record, sample=…)` | the model's signature figure |
 

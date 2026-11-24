@@ -325,6 +325,51 @@ class TestEveryControllerAgreesWithItsReference(unittest.TestCase):
         x, P, t, nu = next(beliefs(1))
         np.testing.assert_allclose(c._policy(x, P, t, nu=nu), -(x[0] - c.x_ref[0]).reshape(1, 1), atol=1e-15)
 
+    def test_one_call_crosses_once(self):
+        # Proportional, PID and LQR make the whole call (policy, update, cost) in one
+        # C++ call, prepared on the first call; the tuners and MPPI do not.
+        m = lane()
+        for c in (ProportionalKalmanController(m, Kp=np.array([[0.1, 0.7, 0.0]]), **cost_of(m)),
+                  PIDKalmanController(m, Kp=np.array([[0.1, 0.7, 0.0]]), **cost_of(m)),
+                  LQRKalmanController(m, **cost_of(m)).fit()):
+            drive(c, 2)
+            self.assertTrue(c.__dict__.get("_command"), type(c).__name__)
+        boost = BoostKalmanTuner(m, boost_factor=5.0, threshold=2.0, window=5)
+        drive(boost, 2)
+        self.assertFalse(boost.__dict__.get("_command"))
+
+    def test_the_cxx_controller_holds_a_copy_of_the_gains(self):
+        # The gains are read-only once the C++ controller holds them: an edit in place
+        # is refused, and a new array, assigned, reaches C++ on the next call.
+        m = lane()
+        c = ProportionalKalmanController(m, Kp=np.array([[0.1, 0.7, 0.0]]), **cost_of(m))
+        drive(c, 2)
+        with self.assertRaises(ValueError):
+            c.Kp[0, 0] = 5.0
+        c.Kp = np.array([[1.0, 0.0, 0.0]])
+        x, P, t, nu = next(beliefs(1))
+        np.testing.assert_allclose(c(x, P, t, nu=nu), -(x[0] - c.x_ref[0]).reshape(1, 1), atol=1e-15)
+
+    def test_a_new_lqr_gain_reaches_cxx_through_the_call(self):
+        m = lane()
+        c = LQRKalmanController(m, **cost_of(m)).fit()
+        drive(c, 2)
+        c.K = np.array([[0.2, 0.5, 0.0]])
+        x, P, t, nu = next(beliefs(1))
+        np.testing.assert_allclose(c(x, P, t, nu=nu), -c.K @ (x - c.x_ref), rtol=0, atol=1e-15)
+
+    def test_a_changed_steering_limit_reaches_cxx(self):
+        # The car's limit is a box (control_bounds) that C++ applies with no call back
+        # into Python; changing it after the controller ran changes the logged cost.
+        m = lane()
+        make = lambda: ProportionalKalmanController(m, Kp=np.array([[10.0, 0.0, 0.0]]), **cost_of(m))
+        cxx, ref = make(), reference(make())
+        drive(cxx, 2), drive(ref, 2)
+        self.assertIsNot(cxx.__dict__.get("_native_bounds"), None)
+        m.steer_limit = 0.02
+        drive(cxx, 3, seed=1), drive(ref, 3, seed=1)
+        np.testing.assert_allclose([c for _, c in cxx.cost_log], [c for _, c in ref.cost_log], rtol=1e-12, atol=1e-14)
+
     def test_copies_and_pickles_build_their_own(self):
         m = lane()
         c = PIDKalmanController(m, Kp=np.array([[0.1, 0.7, 0.0]]), Ki=np.array([[0.02, 0.0, 0.0]]))

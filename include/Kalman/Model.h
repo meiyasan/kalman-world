@@ -95,6 +95,9 @@ namespace Kalman
             Vector fX0;                 // (n) initial state mean
             Matrix fP0;                 // (n,n) initial state covariance
 
+            Vector fControlLower;       // (l) box limits on the command; empty => none
+            Vector fControlUpper;
+
             EngineKind fDefaultEngine = EngineKind::Linear;
             bool fAnalyticJacobian = true;  // false => differentiate f()/h() numerically
             DifferentiatorKind fNumericalScheme = DifferentiatorKind::Central;   // used when not analytic
@@ -224,11 +227,20 @@ namespace Kalman
             /**
              * \brief Actuator-limit hook: the command the plant can actually deliver.
              *
-             * Identity by default. A model with real limits (a steering clip, a
-             * thrust ceiling) overrides it so a controller's logged cost and an MPPI
-             * rollout see the same constraint `f()` enforces internally.
+             * By default each command component is clipped to the box of
+             * SetControlBounds(), and the command is returned as it is when no box is
+             * set. A model with a limit that is not a box overrides it, so a
+             * controller's logged cost and an MPPI rollout see the same constraint
+             * `f()` enforces internally.
              */
-            virtual Vector LimitControl(const Vector &u) const { return u; }
+            virtual Vector LimitControl(const Vector &u) const;
+
+            /// Box limits on the command, one entry per command component: the default
+            /// LimitControl() clips component i to [lower(i), upper(i)] (an infinite
+            /// bound leaves that side free). Two empty vectors remove the box.
+            void SetControlBounds(const Vector &lower, const Vector &upper);
+            const Vector &ControlLower() const { return fControlLower; }
+            const Vector &ControlUpper() const { return fControlUpper; }
 
             // --- f and h for many states ----------------------------------------------
             // f and h take one state or many. An engine that carries many states

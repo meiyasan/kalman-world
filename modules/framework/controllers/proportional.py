@@ -13,6 +13,7 @@ class ProportionalKalmanController(KalmanController):
     """
 
     NATIVE = "proportional"
+    ONE_CROSSING = True
 
     def __init__(self, model, Kp, **kw):
         super().__init__(model, **kw)

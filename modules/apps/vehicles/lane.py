@@ -109,12 +109,16 @@ class CarLaneModel(NativeCounterpart, ExtendedKalmanModel):
         return {"wheelbase": self.wheelbase, "steer_limit": self.steer_limit,
                 "substeps": float(self.substeps()), "integrator": float(native_integrator_kind(self))}
 
-    def limit_control(self, u):
-        """Steering-angle actuator limit: ``|delta| <= steer_limit``."""
-        u_arr = np.asarray(u, float).reshape(-1).copy()
-        if len(u_arr) > 0:
-            u_arr[0] = np.clip(u_arr[0], -self.steer_limit, self.steer_limit)
-        return u_arr.reshape(-1, 1)
+    @property
+    def steer_limit(self):
+        """Largest steering angle [rad]: the command is clipped to ``|delta| <= steer_limit``
+        (:attr:`control_bounds`, which the C++ side applies too)."""
+        return self._steer_limit
+
+    @steer_limit.setter
+    def steer_limit(self, value):
+        self._steer_limit = float(value)
+        self.control_bounds = (np.array([[-self._steer_limit]]), np.array([[self._steer_limit]]))
 
     # Explicit Euler steps (RK4 would shift the trajectory).
     DEFAULT_INTEGRATOR = KalmanIntegratorKind.EULER

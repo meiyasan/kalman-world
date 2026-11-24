@@ -117,10 +117,30 @@ class KalmanRouter(ABC):
     #: ``None`` for a router that decides in Python.
     NATIVE: str | None = None
 
+    #: Whether route() may use a C++ call prepared once per shape (the buffers and the
+    #: C pointers into them made once). A router whose decision depends on other
+    #: routers (Hybrid) says what in :meth:`_route_token`.
+    PREPARED_ROUTE: bool = False
+
+    def __setattr__(self, name, value):
+        # A change to the router drops its prepared call, and counts as a new version for
+        # the routers that use this one (a Hybrid's prepared call checks it).
+        d = self.__dict__
+        d.pop("_route_call", None)
+        if name != "_route_call":
+            d["_version"] = d.get("_version", 0) + 1
+        object.__setattr__(self, name, value)
+
+    def _route_token(self):
+        """What a prepared call depends on besides this router's own settings, checked at
+        every call; ``None`` for nothing."""
+        return None
+
     def __getstate__(self):
         # The C++ handle does not pickle or copy; a copy builds its own on first use.
         state = self.__dict__.copy()
         state.pop("_native_state", None)
+        state.pop("_route_call", None)
         return state
 
     def _native_owner(self):
@@ -164,6 +184,11 @@ class KalmanRouter(ABC):
 
     def _native_route(self, nis_arr, c, likelihoods):
         """The C++ router's ``mu``, or ``None`` when the reference must run."""
+        prepared = self.__dict__.get("_route_call")
+        if prepared is not None:
+            mu = self._prepared_route(prepared, nis_arr, c, likelihoods)
+            if mu is not None:
+                return mu
         c = np.asarray(c)
         likelihoods = np.asarray(likelihoods)
         nis_arr = np.asarray(nis_arr)
@@ -182,11 +207,53 @@ class KalmanRouter(ABC):
         handle, errors = found
         errors.clear()
         try:
-            return core.route(handle, nis_arr, c, likelihoods)
+            mu = core.route(handle, nis_arr, c, likelihoods)
         except RuntimeError:
             if errors:
                 raise errors[0]
             raise
+        if self.PREPARED_ROUTE and rows is not None:
+            self._route_call = self._prepare_route(handle, errors, M, rows)
+        return mu
+
+    def _prepare_route(self, handle, errors, M, rows):
+        """The call for ``M`` modes and the latest ``rows`` NIS rows: buffers and the
+        C pointers into them, made once."""
+        from ..models import native
+        from ..native import core
+        c, lk, mu, nis = np.empty(M), np.empty(M), np.empty(M), np.empty((max(rows, 1), M))
+        ptr = core.ffi.from_buffer
+        return (native, M, rows, core.lib.kalman_router_route, handle, errors, c, lk, mu, nis,
+                ptr("double[]", c), ptr("double[]", lk), ptr("double[]", mu), ptr("double[]", nis), core.ffi.NULL, core,
+                self._route_token())
+
+    def _prepared_route(self, prepared, nis_arr, c, likelihoods):
+        """``mu`` from the prepared call, or ``None`` when the inputs are not its shape
+        or type (the general path then decides)."""
+        (native, M, rows, call, handle, errors, cb, lb, mub, nb, cp, lp, mup, np_, null, core, token) = prepared
+        if not native.USE_NATIVE_LOOP:
+            return None
+        if token is not None and self._route_token() != token:
+            self.__dict__.pop("_route_call", None)      # a router it uses was changed
+            return None
+        if type(c) is not np.ndarray or type(likelihoods) is not np.ndarray or type(nis_arr) is not np.ndarray:
+            return None
+        if c.shape != (M,) or likelihoods.shape != (M,) or nis_arr.ndim != 2 or nis_arr.shape[1] != M:
+            return None
+        try:
+            np.copyto(cb, c)
+            np.copyto(lb, likelihoods)
+            k = min(rows, nis_arr.shape[0])
+            if k:
+                np.copyto(nb[:k], nis_arr[nis_arr.shape[0] - k:])
+        except (TypeError, ValueError):                 # complex, object: not for the C API
+            return None
+        errors.clear()
+        if call(handle, k, M, np_ if k else null, cp, lp, mup) < 0:
+            if errors:
+                raise errors[0]
+            core.check(-1, "kalman_router_route")
+        return mub.copy()
 
     @staticmethod
     def _normalise(mu: np.ndarray) -> np.ndarray:

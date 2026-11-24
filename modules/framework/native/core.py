@@ -154,6 +154,7 @@ const char *kalman_model_describe(const kalman_model_t *model);
 int kalman_model_dims(const kalman_model_t *model, int *n, int *m, int *l);
 double kalman_model_sample_rate(const kalman_model_t *model);
 int    kalman_model_set_sample_rate(kalman_model_t *model, double fs);
+int    kalman_model_set_control_bounds(kalman_model_t *model, int l, const double *lower, const double *upper);
 double kalman_model_t0(const kalman_model_t *model);
 int    kalman_model_set_t0(kalman_model_t *model, double t0);
 int kalman_model_engine(const kalman_model_t *model);
@@ -1057,6 +1058,18 @@ def controller_command(handle, x, P, t, nu, n, m, L):
     u, cost = np.empty((L, 1)), ffi.new("double *")
     check(lib.kalman_controller_command(handle, xs, Ps, float(t), nus, _buf(u), cost), "kalman_controller_command")
     return u, float(cost[0])
+
+
+def model_set_control_bounds(handle, bounds, L):
+    """Model::SetControlBounds from ``bounds`` = ``(lower, upper)``, L values each,
+    or ``None`` to remove the box."""
+    if bounds is None:
+        check(lib.kalman_model_set_control_bounds(handle, 0, ffi.NULL, ffi.NULL), "kalman_model_set_control_bounds")
+        return
+    lower = np.ascontiguousarray(np.asarray(bounds[0], dtype=np.float64).reshape(L))
+    upper = np.ascontiguousarray(np.asarray(bounds[1], dtype=np.float64).reshape(L))
+    check(lib.kalman_model_set_control_bounds(handle, int(L), cdptr(lower), cdptr(upper)),
+          "kalman_model_set_control_bounds")
 
 
 def controller_reset(handle):

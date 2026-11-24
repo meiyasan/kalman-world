@@ -312,6 +312,10 @@ int kalman_model_dims(const kalman_model_t *model, int *n, int *m, int *l);
 double kalman_model_sample_rate(const kalman_model_t *model);
 int    kalman_model_set_sample_rate(kalman_model_t *model, double fs);
 
+/// Box limits on the command (Model::SetControlBounds): `lower` and `upper`, l values each.
+/// NULL for both, or l = 0, removes the box.
+int    kalman_model_set_control_bounds(kalman_model_t *model, int l, const double *lower, const double *upper);
+
 double kalman_model_t0(const kalman_model_t *model);
 int    kalman_model_set_t0(kalman_model_t *model, double t0);
 

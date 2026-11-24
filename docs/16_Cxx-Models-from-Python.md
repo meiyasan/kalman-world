@@ -94,20 +94,40 @@ shipped):
 
 | Call | C++ | Python |
 |---|---|---|
-| Proportional, PID, LQR policy (one call with its logging) | 12 to 15 us | 6 to 9 us |
-| LQR `fit()` (the Riccati equation) | 420 us | 210 us (scipy) |
-| Boost, AdaptiveQR | 40 us | 37 to 40 us |
-| MPPI 100 x 40 x 3 on the car (a Python `f`) | 219 ms | 201 ms |
-| MPPI 100 x 40 x 3 on a C++ model (the example pendulum) | 18 ms | 70 ms |
-| Bayesian, Threshold route | 4.5 to 6 us | 1.7 to 4.5 us |
-| Hybrid(Bayes, Threshold) route | 13 us | 14 us |
+| Proportional, PID, LQR (one call: policy, update, cost) | 4.4 to 4.6 us | 10 to 19 us |
+| LQR `fit()` (the Riccati equation) | 174 us | 555 us (scipy) |
+| Boost, AdaptiveQR | 85 to 89 us | 85 to 86 us |
+| MPPI 100 x 40 x 3 on the car (a Python `f`) | 194 ms | 227 ms |
+| MPPI 100 x 40 x 3 on a C++ model (the example pendulum) | 1.6 ms | 88 ms |
+| Bayesian, Threshold route | 2.0 to 2.6 us | 3.3 to 7.9 us |
+| Hybrid(Bayes, Threshold) route | 4.2 to 4.4 us | 10.6 us |
 
-So the C++ path is slower where the work is a few numpy operations: the
-crossing (about 4 us) costs more than the arithmetic it replaces. It is level
-where Python callbacks dominate (the adapters, MPPI on a Python model: the
-model's `f` runs either way), and faster where nothing comes back to Python
-(MPPI on a C++ model, 3.9 times). The Riccati solve is 2 times slower than
-scipy's but more accurate (residual 1e-16 against 1e-14), and runs once.
+A call that does a few multiplications is decided by what surrounds it, so the
+C++ path is built to cross once and do nothing else:
+
+- **One crossing per call.** Proportional, PID, LQR and MPC make the policy,
+  the update and the cost in one call (`Controller::Command`,
+  `kalman_controller_command`). The tuners keep the step-by-step path, because
+  their update rescales the Python model's noise in between, and so does MPPI,
+  whose random draws are made in Python before each policy call.
+- **Prepared once.** The buffers for the belief and the command, and the C
+  pointers into them, are made on the first call; a router prepares them once
+  per shape. Later calls copy the inputs in and call.
+- **No per-call checks.** The C++ object is kept while the configuration is the
+  same. Assigning an attribute prepares the call again; the public arrays a C++
+  controller copied (gains, cost weights, set point, limits) are made
+  read-only, so an edit in place is refused instead of being ignored. A
+  Hybrid's prepared call checks that neither child, nor a child of a child, has
+  been changed.
+- **No call back to clip.** A model whose actuator limit is a box declares it as
+  `control_bounds` (the lane-keeping car's steering limit is one); the C++ model
+  gets the same box (`Model::SetControlBounds`) and clips without calling
+  Python. A model whose `limit_control` is not a box is still called back.
+
+The tuners stay level because their Python update runs either way. MPPI on a
+Python model is level to slightly faster: the model's `f` runs in Python on
+both paths. Nothing comes back to Python with a C++ model, and MPPI is then 55
+times faster.
 
 ## Install and check
 

@@ -18,6 +18,7 @@ class LQRKalmanController(KalmanController):
     """
 
     NATIVE = "lqr"
+    ONE_CROSSING = True
 
     def __init__(self, model, **kw):
         super().__init__(model, **kw)
@@ -69,6 +70,18 @@ class LQRKalmanController(KalmanController):
 
     def _native_key(self):
         return self._cost_key()
+
+    def _command_ready(self, handle):
+        # The one-crossing call needs the gain in the C++ LQR: fitted by scipy or set
+        # by hand, it is pushed once here; assigning a new K prepares the call again.
+        if self.K is None or self._gains_key(self.K) is None:
+            return False
+        gain = np.asarray(self.K, dtype=np.float64).tobytes()
+        if self.__dict__.get("_native_gain") != gain:
+            from ..native import core
+            core.lqr_set_gain(handle, self.K, int(self.model.n), max(int(self.model.l), 1))
+            self._native_gain = gain
+        return True
 
     def _native_create(self, model_handle):
         from ..native import core

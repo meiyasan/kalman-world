@@ -94,6 +94,29 @@ namespace Kalman
         return out;
     }
 
+    Vector Model::LimitControl(const Vector &u) const
+    {
+        if (fControlLower.Empty()) return u;
+        if (u.Size() != fControlLower.Size())
+            throw std::invalid_argument("Kalman::Model::LimitControl: a command of " + std::to_string(u.Size())
+                                        + " values for bounds of " + std::to_string(fControlLower.Size()) + ".");
+        Vector out = u;
+        for (std::size_t i = 0; i < out.Size(); ++i)
+            out(i) = std::min(std::max(out(i), fControlLower(i)), fControlUpper(i));
+        return out;
+    }
+
+    void Model::SetControlBounds(const Vector &lower, const Vector &upper)
+    {
+        if (lower.Size() != upper.Size())
+            throw std::invalid_argument("Kalman::Model::SetControlBounds: the lower and upper bounds differ in size.");
+        for (std::size_t i = 0; i < lower.Size(); ++i)
+            if (!(lower(i) <= upper(i)))
+                throw std::invalid_argument("Kalman::Model::SetControlBounds: a lower bound above its upper bound.");
+        fControlLower = lower;
+        fControlUpper = upper;
+    }
+
     Vector Model::MeasureWithNoise(const Vector &x, const Vector &v, double t) const
     {
         Vector out = h(x, t);

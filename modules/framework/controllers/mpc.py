@@ -33,6 +33,7 @@ class MPCKalmanController(KalmanController):
     """
 
     NATIVE = "mpc"
+    ONE_CROSSING = True
 
     def __init__(self, model, horizon=20, u_min=None, u_max=None, du_max=None, n_iterations=1, **kw):
         self.horizon = int(horizon)

@@ -947,6 +947,20 @@ int kalman_model_set_sample_rate(kalman_model_t *model, double fs)
     return Guard([&] { Deref(model).SetSampleRate(fs); return 0; });
 }
 
+int kalman_model_set_control_bounds(kalman_model_t *model, int l, const double *lower, const double *upper)
+{
+    return Guard([&] {
+        if (l < 0) throw std::invalid_argument("negative command dimension");
+        if (l == 0 || (!lower && !upper)) {
+            Deref(model).SetControlBounds(Kalman::Vector(), Kalman::Vector());
+            return 0;
+        }
+        if (!lower || !upper) throw std::invalid_argument("give both bounds, or neither");
+        Deref(model).SetControlBounds(Vec(lower, std::size_t(l), "lower"), Vec(upper, std::size_t(l), "upper"));
+        return 0;
+    });
+}
+
 double kalman_model_t0(const kalman_model_t *model)
 {
     double t0 = 0.;

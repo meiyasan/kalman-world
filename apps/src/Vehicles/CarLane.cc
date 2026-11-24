@@ -45,6 +45,7 @@ namespace Kalman::Apps::Vehicles
     {
         fWheelbase = Parameter("wheelbase");
         fSteerLimit = Parameter("steer_limit");
+        SetControlBounds(Vector(1, -fSteerLimit), Vector(1, fSteerLimit));   // what LimitControl reports
         SetSubsteps(static_cast<std::size_t>(std::max(1., Parameter("substeps"))));
         const IntegratorKind kind = static_cast<IntegratorKind>(static_cast<int>(Parameter("integrator")));
         if (kind != DefaultIntegrator()) SetIntegrator(kind);

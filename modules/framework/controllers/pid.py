@@ -17,6 +17,7 @@ class PIDKalmanController(KalmanController):
     """
 
     NATIVE = "pid"
+    ONE_CROSSING = True
 
     def __init__(self, model, Kp, Ki=None, Kd=None, **kw):
         super().__init__(model, **kw)

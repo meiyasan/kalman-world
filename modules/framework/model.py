@@ -515,13 +515,24 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         x = self.x0 if x is None else x
         return self._jacobian(lambda uu: self.f(as_col(x), u=uu, w=None, t=t), as_col(u))
 
+    #: Box limits on the command, ``(lower, upper)``, each a column with one entry per
+    #: command (an infinite bound leaves that side free), or ``None`` for no limit.
+    #: :meth:`limit_control` clips to it, and a C++ controller gets the same box
+    #: (Model::SetControlBounds), so neither its cost nor an MPPI rollout calls back
+    #: into Python to clip. Change it by assigning a new pair.
+    control_bounds = None
+
     def limit_control(self, u: np.ndarray) -> np.ndarray:
         """Actuator-limit hook: map a controller's raw command to what the plant can
-        actually deliver. Identity by default; models with real actuator limits (e.g. a
-        steering-angle clip) override this so callers — controllers logging cost, or
-        anything else that needs the *deliverable* command rather than the raw one — see
-        the same constraint the model enforces internally in ``f()``."""
-        return u
+        actually deliver. By default the command is clipped to :attr:`control_bounds`,
+        and returned as it is when there are none. A model whose limit is not a box
+        overrides this, so that callers — controllers logging cost, or anything else
+        that needs the *deliverable* command rather than the raw one — see the same
+        constraint the model enforces internally in ``f()``."""
+        bounds = self.control_bounds
+        if bounds is None:
+            return u
+        return np.minimum(np.maximum(np.asarray(u, dtype=float).reshape(-1, 1), bounds[0]), bounds[1])
 
     def L(self, x: Optional[np.ndarray] = None, u: Optional[np.ndarray] = None,
            w: Optional[np.ndarray] = None, t: Optional[float] = None) -> Optional[np.ndarray]:

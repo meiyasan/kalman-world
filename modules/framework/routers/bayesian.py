@@ -24,6 +24,7 @@ class BayesianRouter(KalmanRouter):
     """
 
     NATIVE = "bayesian"
+    PREPARED_ROUTE = True
 
     def route(self, nis_arr, c, likelihoods):
         mu = self._native_route(nis_arr, c, likelihoods)

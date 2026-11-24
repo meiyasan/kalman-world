@@ -2,6 +2,10 @@
 from __future__ import annotations
 import numpy as np
 
+#: ``_native_bounds`` of a controller whose C++ model clips by itself (a model written
+#: in C++, or a Python limit_control called back): nothing to keep in step.
+_OWN_LIMIT = object()
+
 
 class KalmanController:
     """Callable controller: ``u = ctrl(x̂, P, t, nu=ν)``.
@@ -26,6 +30,12 @@ class KalmanController:
     #: or ``None`` for a policy written in Python.
     NATIVE: str | None = None
 
+    #: Whether the C++ controller makes the whole call (policy, update and cost) in
+    #: one crossing, Controller::Command. The tuners keep the step-by-step path,
+    #: because their update rescales the Python model's noise in between, and so does
+    #: MPPI, whose random draws are made in Python before each policy call.
+    ONE_CROSSING: bool = False
+
     def __init__(self, model, x_ref=None, Qcost=None, Rcost=None):
         self.model = model
         self.x_ref = (np.zeros((model.n, 1)) if x_ref is None
@@ -35,7 +45,22 @@ class KalmanController:
         self.Rcost = np.eye(l) if Rcost is None else np.asarray(Rcost, dtype=float)
         self.reset()
 
+    def __setattr__(self, name, value):
+        # A change to the controller drops its prepared one-crossing call; the next
+        # call prepares it again from the new configuration.
+        self.__dict__.pop("_command", None)
+        object.__setattr__(self, name, value)
+
     def __call__(self, x_hat, P, t, *, nu=None):
+        command = self.__dict__.get("_command")
+        if command is None:
+            command = self._command_prepare()
+            if command is not None:
+                self._command = command
+        if command:
+            u = self._command_call(command, x_hat, P, t, nu)
+            if u is not None:
+                return u
         x_hat = np.asarray(x_hat, dtype=float).reshape(-1, 1)
         u = np.asarray(self._policy(x_hat, P, t, nu=nu), dtype=float).reshape(-1, 1)
 
@@ -79,6 +104,7 @@ class KalmanController:
         # The C++ handle does not pickle or copy; a copy builds its own on first use.
         state = self.__dict__.copy()
         state.pop("_native_state", None)
+        state.pop("_command", None)
         return state
 
     def _native_key(self):
@@ -121,6 +147,9 @@ class KalmanController:
         key = (id(self.model),) + tuple(key)
         state = self.__dict__.get("_native_state")
         if state is not None and state[0] == key:
+            pushed = self.__dict__.get("_native_bounds", _OWN_LIMIT)
+            if pushed is not _OWN_LIMIT and pushed is not self.model.control_bounds:
+                self._push_bounds(state[2])             # the model's box was changed: the C++ copy follows
             return state[1]
         model_handle, keep = self._native_model()
         handle = self._native_create(model_handle)
@@ -134,12 +163,23 @@ class KalmanController:
         from .models.native import NativeModel
         from .model import KalmanModel
         if isinstance(self.model, NativeModel) and not self._native_reads_noise():
+            self._native_bounds = _OWN_LIMIT
             return self.model._handle, (self.model, [])
         handle, keep = native.callback_handle(self.model, "extended", live_noise=True)
         errors = keep[-1]
         if type(self.model).limit_control is not KalmanModel.limit_control:
+            self._native_bounds = _OWN_LIMIT
             keep = (*keep[:-1], self._limit_callback(handle, errors), errors)
+        else:
+            self._push_bounds(handle)                   # a box: clipped in C++, no call back
         return handle, keep
+
+    def _push_bounds(self, model_handle):
+        """Give the C++ model the Python model's box (``control_bounds``)."""
+        from .native import core
+        bounds = self.model.control_bounds
+        core.model_set_control_bounds(model_handle, bounds, max(int(self.model.l), 1))
+        self._native_bounds = bounds
 
     def _limit_callback(self, handle, errors):
         from .native import core
@@ -172,6 +212,91 @@ class KalmanController:
             if errors:
                 raise errors[0]
             raise
+
+    # ------------------------------------------------------------------
+    # One crossing per call: Controller::Command
+    # ------------------------------------------------------------------
+    def _command_ready(self, handle) -> bool:
+        """Whatever the C++ controller needs before its first command (an LQR's
+        gain); ``False`` when the step-by-step path must run instead."""
+        return True
+
+    def _command_prepare(self):
+        """Prepare the one-crossing call: the C++ controller, buffers for the belief
+        and the command, and the C pointers into them, made once. ``False`` when this
+        configuration takes the step-by-step path, ``None`` when it does for now
+        only (the Python reference is switched on).
+
+        The controller's public arrays (gains, cost weights, set point, limits) are
+        made read-only, because the C++ controller holds a copy of them: a change is
+        made by assigning a new array, which prepares the call again."""
+        if not self.ONE_CROSSING:
+            return False
+        from .models import native
+        if not native.native_loop_enabled():
+            return None
+        handle = self._native_handle()
+        if handle is None or not self._command_ready(handle):
+            return False
+        from .native import core
+        n, m, L = int(self.model.n), int(self.model.m), max(int(self.model.l), 1)
+        x, P, nu, u = np.empty(n), np.empty(n * n), np.empty(m), np.empty(L)
+        ptr = core.ffi.from_buffer
+        for name, value in list(self.__dict__.items()):
+            if not name.startswith("_") and isinstance(value, np.ndarray):
+                if value.base is not None:              # a view: freeze a copy, not the caller's array
+                    value = value.copy()
+                    object.__setattr__(self, name, value)
+                value.setflags(write=False)
+        return (native, self.model.fs, core.lib.kalman_controller_command, handle,
+                x, P, nu, u, ptr("double[]", x), ptr("double[]", P), ptr("double[]", nu), ptr("double[]", u),
+                core.ffi.new("double *"), core.ffi.NULL, n, m, L, self._native_state[3][-1], core,
+                self.__dict__.get("_native_bounds", _OWN_LIMIT))
+
+    def _command_call(self, command, x_hat, P, t, nu):
+        """One call through Controller::Command: the command ``(L, 1)``, with the cost
+        and the command logged here as on the step-by-step path; ``None`` when the
+        inputs are not what the C API takes (the step-by-step path then decides)."""
+        (native, fs, call, handle, xb, Pb, nub, ub, xp, Pp, nup, up, costp, null, n, m, L, errors, core,
+         bounds) = command
+        model = self.model
+        if not native.USE_NATIVE_LOOP or model.fs != fs:
+            return None
+        if bounds is not _OWN_LIMIT and model.control_bounds is not bounds:
+            self.__dict__.pop("_command", None)         # the box changed: prepared again after this call
+            return None
+        try:
+            x = x_hat if type(x_hat) is np.ndarray else np.asarray(x_hat)
+            if x.size != n:
+                return None
+            np.copyto(xb, x.reshape(n))
+            if P is None:
+                Pp_ = null
+            else:
+                Pa = P if type(P) is np.ndarray else np.asarray(P)
+                if Pa.size != n * n:
+                    return None
+                np.copyto(Pb, Pa.reshape(n * n))
+                Pp_ = Pp
+            if nu is None:
+                nup_ = null
+            else:
+                na = nu if type(nu) is np.ndarray else np.asarray(nu)
+                if na.size != m:
+                    return None
+                np.copyto(nub, na.reshape(m))
+                nup_ = nup
+        except TypeError:                               # complex, object: not for the C API
+            return None
+        errors.clear()
+        if call(handle, xp, Pp_, 0.0 if t is None else float(t), nup_, up, costp) < 0:
+            if errors:
+                raise errors[0]
+            core.check(-1, "kalman_controller_command")
+        u = ub.reshape(L, 1).copy()
+        self.cost_log.append((t, costp[0]))
+        self.u_log.append((t, u.copy()))
+        return u
 
     def _native_belief(self, x_hat, P, nu):
         """``(x, P, nu)`` as the C API takes them, or ``None`` when they are not

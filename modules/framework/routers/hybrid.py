@@ -34,6 +34,7 @@ class HybridRouter(KalmanRouter):
     """
 
     NATIVE = "hybrid"
+    PREPARED_ROUTE = True
 
     def __init__(self,
                  router_a: KalmanRouter,
@@ -106,6 +107,19 @@ class HybridRouter(KalmanRouter):
     def _native_rows(self):
         self._native_router()                           # sets _rows for the current children
         return self.__dict__.get("_rows")
+
+    def _route_token(self):
+        # The prepared call holds the children's C++ routers: it stands while neither child
+        # (nor a child of a child) has been changed since.
+        return tuple(self._version_of(r) for r in (self.router_a, self.router_b))
+
+    @staticmethod
+    def _version_of(router):
+        if isinstance(router, HybridRouter):
+            return (router.__dict__.get("_version", 0), router._route_token())
+        if isinstance(router, KalmanRouter):
+            return router.__dict__.get("_version", 0)
+        return id(router)                               # a callable, called back as it is
 
     def fit(self, nis_arrays, labels_arrays, **kwargs) -> "HybridRouter":
         self.router_a.fit(nis_arrays, labels_arrays, **kwargs)

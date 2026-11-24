@@ -115,7 +115,7 @@ namespace Kalman::Models
 
     Vector Callback::LimitControl(const Vector &u) const
     {
-        if (!fClip || u.Empty()) return u;
+        if (!fClip || u.Empty()) return Model::LimitControl(u);
         const std::vector<double> uin = Flat(u);
         std::vector<double> out(u.Size());
         Check(fClip(fUser, uin.data(), out.data()), "clip");
